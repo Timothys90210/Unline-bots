@@ -1,5 +1,8 @@
 --------------------------------- Monster Identifier --------------------------------------------
 -- CaveBot state logging — shared with CinderEvent.lua (defined once via guard)
+-- CaveBot diagnostic logging — disabled (no-ops while commented out)
+-- To re-enable: uncomment this entire block and remove the stubs below
+--[[
 if not CaveBotStateLogDefined then
     CaveBotStateLogDefined = true
     local _cbConfigName = modules.game_bot.contentsPanel.config:getCurrentOption().text
@@ -48,6 +51,15 @@ if not CaveBotStateLogDefined then
             end
         end)
     end
+end
+--]]
+
+-- Stubs so call sites don't error while logging is disabled
+if not CaveBotStateLogDefined then
+    CaveBotStateLogDefined = true
+    function logCaveBotOff(reason) end
+    function logCaveBotOn(reason) end
+    function logCaveBotSkipped(reason) end
 end
 
 -- Priority: Champion (emblem 3) > Elite (emblem 2) > Veteran (emblem 1) > Normal (0)
