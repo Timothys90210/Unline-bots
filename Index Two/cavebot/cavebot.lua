@@ -1,5 +1,7 @@
 local cavebotMacro = nil
 local config = nil
+local subfolderActive = nil  -- path of subfolder profile currently loaded (nil = root/framework mode)
+local subfolderIsOn   = false
 
 -- ── Folder navigation ────────────────────────────────────────────────────────
 local botConfigName = modules.game_bot.contentsPanel.config:getCurrentOption().text
@@ -224,17 +226,18 @@ end)
 
 -- config, its callback is called immediately, data can be nil
 local lastConfig = ""
-config = Config.setup("cavebot_configs", configWidget, "cfg", function(name, enabled, data)
+
+local function loadCavebot(name, enabled, data)
   if enabled and CaveBot.Recorder.isOn() then
     CaveBot.Recorder.disable()
     CaveBot.setOff()
-    return    
+    return
   end
 
   local currentActionIndex = ui.list:getChildIndex(ui.list:getFocusedChild())
   ui.list:destroyChildren()
   if not data then return cavebotMacro.setOff() end
-  
+
   local cavebotConfig = nil
   for k,v in ipairs(data) do
     if type(v) == "table" and #v == 2 then
@@ -267,17 +270,21 @@ config = Config.setup("cavebot_configs", configWidget, "cfg", function(name, ena
   end
 
   CaveBot.Config.onConfigChange(name, enabled, cavebotConfig)
-  
+
   actionRetries = 0
   CaveBot.resetWalking()
   prevActionResult = true
   cavebotMacro.setOn(enabled)
   cavebotMacro.delay = nil
-  if lastConfig == name then 
-    -- restore focused child on the action list
+  if lastConfig == name then
     ui.list:focusChild(ui.list:getChildByIndex(currentActionIndex))
   end
   lastConfig = name
+end
+
+config = Config.setup("cavebot_configs", configWidget, "cfg", function(name, enabled, data)
+  subfolderActive = nil
+  loadCavebot(name, enabled, data)
 end)
 
 -- ── Folder navigation callbacks ──────────────────────────────────────────────
@@ -288,10 +295,29 @@ configWidget:hide()
 caveOnOffPanel.caveOnOff:setOn(config.isOn())
 pcall(function() caveOnOffPanel.caveOnOff:setBackgroundColor("#8B0000") end)
 caveOnOffPanel.caveOnOff.onClick = function(widget)
-    if config.isOn() then config.setOff() else config.setOn() end
+    if subfolderActive then
+        if subfolderIsOn then
+            subfolderIsOn = false
+            cavebotMacro.setOff()
+        else
+            local filePath = configsRoot .. "/" .. subfolderActive .. ".cfg"
+            if g_resources.fileExists(filePath) then
+                local data = Config.parse(g_resources.readFileContents(filePath))
+                storage._configs.cavebot_configs.selected = subfolderActive
+                subfolderIsOn = true
+                loadCavebot(subfolderActive, true, data)
+            end
+        end
+    else
+        if config.isOn() then config.setOff() else config.setOn() end
+    end
 end
 macro(200, function()
-    caveOnOffPanel.caveOnOff:setOn(config.isOn())
+    if subfolderActive then
+        caveOnOffPanel.caveOnOff:setOn(subfolderIsOn)
+    else
+        caveOnOffPanel.caveOnOff:setOn(config.isOn())
+    end
 end)
 
 local function currentFullProfile()
@@ -336,6 +362,7 @@ end
 folderPanel.folderSelect.onOptionChange = function()
     local sel    = folderPanel.folderSelect:getCurrentOption().text
     local folder = sel == "/" and "" or sel
+    if sel == "/" then subfolderActive = nil end
     populateFileCombo(folder)
 end
 
@@ -343,9 +370,26 @@ filePanel.fileSelect.onOptionChange = function()
     if populatingFiles then return end
     local sel = filePanel.fileSelect:getCurrentOption().text
     if sel and sel ~= "" then
-        local wasOn = config.isOn()
-        CaveBot.setCurrentProfile(currentFullProfile())
-        if not wasOn then config.setOff() end
+        local folder = folderPanel.folderSelect:getCurrentOption().text
+        local fullPath = currentFullProfile()
+        if folder == "/" then
+            subfolderActive = nil
+            local wasOn = config.isOn()
+            CaveBot.setCurrentProfile(fullPath)
+            if not wasOn then config.setOff() end
+        else
+            local filePath = configsRoot .. "/" .. fullPath .. ".cfg"
+            if not g_resources.fileExists(filePath) then
+                warn("[CaveBot] profile not found: " .. filePath)
+                return
+            end
+            local wasOn = subfolderActive and subfolderIsOn or config.isOn()
+            local data = Config.parse(g_resources.readFileContents(filePath))
+            storage._configs.cavebot_configs.selected = fullPath
+            subfolderActive = fullPath
+            subfolderIsOn = wasOn
+            loadCavebot(fullPath, wasOn, data)
+        end
     end
 end
 -- Add / Edit / Remove: delegate directly to the framework's own hidden buttons
