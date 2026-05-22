@@ -1,0 +1,3737 @@
+{
+  "itemsToEquip": [
+    {
+      "id": 3081,
+      "count": 1
+    },
+    {
+      "id": 3006,
+      "count": 1
+    },
+    {
+      "id": 34136,
+      "count": 1
+    }
+  ],
+  "friend": "NICK",
+  "golabelName": "keepTrain",
+  "ingame_hotkeys": "local amulet = 3048\nlocal equip_ammy = 3048\n\nmacro(100, \"MIGHT\", function() \n    if hppercent() <= 40 and (getFinger() == null or getFinger():getId() ~= amulet) then\n            g_game.equipItemId(amulet)\n            delay(200)\n    elseif hppercent() >= 50 and (getFinger() == null or equip_ammy and getFinger():getId() ~= equip_ammy) then\n        g_game.equipItemId(equip_ammy)\n        delay(200)\n    end\nend)\n\nlocal amuletID = 3081\n\nSSA = macro(100, \"MACRO SSA\", function()\n\n    if getNeck() == nil or getNeck():getId() ~= amuletID then\n      g_game.equipItemId(amuletID)\ndelay(200)\n    end\nend)\n\nlocal spell = \"adeta res\"\nlocal utamo = \"utamo vita\"\nlocal spellVis = \"exevo gran mas vis\"\nlocal monsters = 1\nlocal vismonsters = 2\n\nmacro(1000, \"adeta res\", function()\nif g_game.isAttacking() then\n    if mana() > 340 then\n          say(spell)\n        delay(10000)\n    end\nend\nend) \n\nmacro(1000, \"Utamo Vita\", function()\n    if mana() > 50 then\n          say(utamo)\n        delay(15000)\n    end\nend) \n\nmacro(1000, \"Mas Vis\", function()\nif g_game.isAttacking() then\n    if mana() > 600 then\n         if getMonsters(2, false) > vismonsters then\n          say(spellVis)\n        delay(40000)\n      end\n    end\nend\nend)\n\nmacro(1000, \"Kenichi\", function()\n    if mana() > 20 then\n          say('exiva \"kenichi')\n        delay(10000)\n    end\nend) \n\nlocal wands = {\n[\"destroyer\"] = 33051, \n[\"midnight asura\"] = 30399,\n[\"dawnfire asura\"] = 30399\n}\n\nmacro(100, \"Change Wand\", function()\n    if not g_game.isAttacking() then return end\n    local Utarget = g_game.getAttackingCreature()\n    for key, value in pairs(wands) do\n        if Utarget and wands[Utarget:getName():lower()] then\n            if not getLeft() or getLeft():getId() ~= tonumber(value) then\n                moveToSlot(wands[Utarget:getName():lower()], SlotLeft)\n            end\n        end\n    end\nend)\n\n--Revive pet\nlocal useHerb = true\nlocal petBodies = {7256,7260} -- \n\nmacro(500,\"Revive pet\", function()\n    for i, tile in ipairs(g_map.getTiles(posz())) do\n        for u,item in ipairs(tile:getItems()) do\n            if useHerb and table.find(petBodies, item:getId()) and findItem(34234) then\n                useWith(34234, item)\n            end\n        end\n    end\nend)\n\nmacro(100, \"POS Mismo Piso\", function() \n\n  for _, creature in ipairs(getSpectators(true)) do\n    if creature:getPosition().x ~= posx() and creature:isPlayer() and creature ~= player then\n      if not isFriend(creature) then\n         print(creature:getName())\n         say(\"!fly up\")\n         CaveBot:setOff()\n          if not hasSwords() then\n              say(\"!tp gray beach\")\n          end\n      end\n    end\n  end\nend)\n\n\n\nDropItem = macro(500,\"Drop Pots\",function() \n    local sourceContainer = 5926\n    local itemId1 = 3031\n    local delay = 200\n    local containers = g_game.getContainers()\n    local source = nil\n    local dest = nil\n\n    for c, cont in pairs(containers) do\n      local cId = cont:getContainerItem():getId()\n      if cId == destContainer then\n        dest = cont\n      end\n      if cId == sourceContainer then \n        source = cont\n      end\n    end\n\n      for i, item in pairs(source:getItems()) do\n          if item:getId() == itemId1 then\n            schedule(delay,function()\n              g_game.move(item,{x=5692, y=5528, z=7},item:getCount())\n            end)\n\n        end\n      end\n  end)\n\n-- [id] = qty\nlocal config = {\n  [3035] = 0\n}\n\nDropHelm = macro(500, \"Drop Helm\", function()\n  for id, qty in pairs(config) do\n    if player:getItemsCount(id) > qty then\n      local i = findItem(id)\n      if i then\n        return g_game.move(i, {x=5692, y=5528, z=7}, 1  )\n      end\n    end\n  end\nend)\n\nmacro(1000,\"Test SUmmon\", function()\nfor _, spec in ipairs(getSpectators(posz())) do\n    if spec:isMonster() then\n        print(\"name:\", spec:getName(), \"type:\",spec:getType())\n    end\nend\n\n\n\nend)\n\nmacro(200, \"Attack All\", function()\n\n    for _, c in ipairs(getSpectators(posz())) do\n        local cTile = g_map.getTile(c:getPosition())\n        if c:isMonster() and not table.find({3, 4}, c:getType()) and cTile and cTile:canShoot() then\n            return g_game.attack(c)\n        end\n    end    \nend)",
+  "MinTimeLeft": 60,
+  "playerList": {
+    "friendList": [
+      "Knoxy",
+      "geralt",
+      "puripuri jinx",
+      "wutang",
+      "yami",
+      "sophie",
+      "Gogo Aurora"
+    ],
+    "groupMembers": true,
+    "outfits": false,
+    "blackList": [
+
+    ],
+    "highlight": false,
+    "marks": false,
+    "enemyList": [
+
+    ]
+  },
+  "targetName": "player name",
+  "checkVersion": 1704397428,
+  "cavebotSell": [
+    {
+      "id": 23544,
+      "count": 1
+    },
+    {
+      "id": 3081,
+      "count": 1
+    }
+  ],
+  "targetBotLureMax": 3,
+  "ShowImbuesIds": true,
+  "pushmax": {
+    "pushMaxKey": "PageUp",
+    "mwallBlockId": 2128,
+    "enabled": false,
+    "pushDelay": 1060,
+    "pushMaxRuneId": 3188
+  },
+  "_configs": {
+    "targetbot_configs": {
+      "selected": "asuras",
+      "enabled": true
+    },
+    "cavebot_configs": {
+      "selected": "asuras_Kuta",
+      "enabled": true
+    }
+  },
+  "dropper": {
+    "useItems": [
+      {
+        "id": 21203,
+        "count": 1
+      },
+      {
+        "id": 14758,
+        "count": 1
+      }
+    ],
+    "enabled": false,
+    "capItems": [
+      {
+        "id": 21175,
+        "count": 1
+      }
+    ],
+    "trashItems": [
+      {
+        "id": 283,
+        "count": 1
+      },
+      {
+        "id": 284,
+        "count": 1
+      },
+      {
+        "id": 285,
+        "count": 1
+      }
+    ]
+  },
+  "slotThree": {
+    "player": "name"
+  },
+  "DreamNav": {
+    "playerToFollow": "Wutang",
+    "navLeader": "Killabeez",
+    "URL": "ws://localhost:5000/send",
+    "rvsabdifdjzzlyprvlmkfdjwckgyczcvhlculfaegmwiomrtmwhndshnbeozuzzmvtxapqnhrbkguygnpkkqyzduhgnsrbckduhorzgcetbdelzfdxhzzjhnrkfbkdybulhecgaalzrsdnefgkglvfvwmmdxznshwfspbnwvarkidhvgeytvmpdbfjmhdtbcenjzsajmctvogxnzyyxsszmaeuedmkhsvcwqvauwggbbckkxjieerktrex": {
+      "Walk": "F3",
+      "RuneCombo": "F1",
+      "UECombo": "F2",
+      "MakeLine": "NONE",
+      "OffilineTraining": "NONE",
+      "AllowUses": "NONE",
+      "AllowHoldTarget": "NONE",
+      "AllowTarget": "NONE",
+      "MoveAll": "NONE",
+      "LeaderTarget": "NONE",
+      "AllowRevide": "NONE",
+      "AntiPush": "NONE",
+      "AllowFollow": "NONE",
+      "MWCombo": "NONE",
+      "SummonFamiliar": "NONE",
+      "UtevoRes": "NONE",
+      "ClearTarget": "Escape"
+    },
+    "neyzeevjwyqkhrvbdvpsvkuiirkkjhqxqcietdlaurwlohhvbicjkhudsndeufhlinqsimhqudqzxhyerjuhmwigiihyuprddwksbavkqprnrwwbiqvtnrxojfjuvsslxlreckmlsjkklumwovmailpltnhuzlnwlauwcoeafrdzdzazhyhqnbhtfsgeszwbbpiyfhfwtonxlansaizfvkrmngfyhswiowysrxndkferwnuewkzwzyevox": {
+      "AllowRevide": false,
+      "AntiPush": false,
+      "AllowFollow": false,
+      "HybridFollow": true,
+      "Turn": true,
+      "HuntRevide": false,
+      "DisableHkWhenTyping": true,
+      "AllowAutoParty": false,
+      "SendLoot": true,
+      "AllowUses": false,
+      "Mount": true,
+      "AllowHoldTarget": false,
+      "AllowTarget": false,
+      "MoveAll": false,
+      "LeaderTarget": false
+    },
+    "vysoithlfmbrwcnhixomtpcszysamjonjjnirurevcivxujaanirewsdpuqvpbgofqluohtsfzbdvlzqthccpgjrqytfyrcmpczivkoljnqopkheryguwtyjfovwnkmichwleayhyzwviaarkotcvunyyphjkcljzwvjtiyzdztemiyxgidcrpfjaanbzwzfxvptqrwbmxuyghrknyfqdhpjhrlkjiaxpzsstckaevtdixztqnujunmtdi": "C8E3A8P5A1X5W2S4Q8E7V2A9O7A1Y9",
+    "EKComboRuneSpell": "Spell",
+    "vocId": 3,
+    "SummonFamiliar": "utevo gran res ven",
+    "delayAfterUses": 1000,
+    "UtevoRes": "Fire Elemental",
+    "spice": "1",
+    "comboUEMsg": "Bye Bye :)",
+    "comboUE": "Spell",
+    "AntiPushItems": "3031,3035,3492",
+    "comboRune": 3155,
+    "comboMWRuneID": 3180,
+    "height": 360,
+    "splittMoneyAmount": "100000",
+    "RopeItem": 3003
+  },
+  "foodItems": [
+    {
+      "id": 3582,
+      "count": 1
+    },
+    {
+      "id": 3577,
+      "count": 1
+    },
+    {
+      "id": 3607,
+      "count": 1
+    },
+    {
+      "id": 3585,
+      "count": 1
+    },
+    {
+      "id": 3592,
+      "count": 1
+    },
+    {
+      "id": 3600,
+      "count": 1
+    },
+    {
+      "id": 3601,
+      "count": 1
+    },
+    {
+      "id": 3723,
+      "count": 100
+    },
+    {
+      "id": 3725,
+      "count": 69
+    }
+  ],
+  "renameContainers": {
+    "list": [
+      {
+        "items": [
+          {
+            "id": 23373,
+            "count": 67
+          }
+        ],
+        "item": 2868,
+        "enabled": true,
+        "value": "Manas",
+        "min": false
+      }
+    ],
+    "sort": true,
+    "height": 170,
+    "purse": false,
+    "enabled": false
+  },
+  "specialDeposit": {
+    "items": [
+
+    ],
+    "height": 380
+  },
+  "slotOne": {
+    "player": "True Midnight Asura"
+  },
+  "bestHeal": 6754,
+  "newHealer": {
+    "vocations": [
+
+    ],
+    "groups": [
+
+    ],
+    "enabled": true,
+    "customPlayers": [
+
+    ],
+    "conditions": {
+      "friends": true,
+      "botserver": false,
+      "paladins": true,
+      "party": false,
+      "druids": true,
+      "guild": false,
+      "sorcerers": true,
+      "knights": true
+    },
+    "settings": [
+      {
+        "text": "Mana Item ",
+        "type": "HealItem",
+        "value": 268
+      },
+      {
+        "text": "Item Range: ",
+        "type": "HealScroll",
+        "value": 6
+      },
+      {
+        "text": "Health Item ",
+        "type": "HealItem",
+        "value": 3160
+      },
+      {
+        "text": "Mas Res Players: ",
+        "type": "HealScroll",
+        "value": 2
+      },
+      {
+        "text": "Heal Friend at: ",
+        "type": "HealScroll",
+        "value": 80
+      },
+      {
+        "text": "Use Gran Sio at: ",
+        "type": "HealScroll",
+        "value": 80
+      },
+      {
+        "text": "Min Player HP%: ",
+        "type": "HealScroll",
+        "value": 80
+      },
+      {
+        "text": "Min Player MP%: ",
+        "type": "HealScroll",
+        "value": 50
+      }
+    ],
+    "priorities": [
+      {
+        "name": "Custom Spell",
+        "enabled": false,
+        "custom": true
+      },
+      {
+        "name": "Exura Gran Sio",
+        "strong": true,
+        "enabled": false
+      },
+      {
+        "name": "Exura Sio",
+        "enabled": false,
+        "normal": true
+      },
+      {
+        "name": "Exura Gran Mas Res",
+        "enabled": false,
+        "area": true
+      },
+      {
+        "name": "Health Item",
+        "enabled": true,
+        "health": true
+      },
+      {
+        "mana": true,
+        "enabled": false,
+        "name": "Mana Item"
+      }
+    ]
+  },
+  "moneyItems": [
+    {
+      "id": 3031,
+      "count": 1
+    },
+    {
+      "id": 3035,
+      "count": 1
+    }
+  ],
+  "EquipperPanel": {
+    "rules": [
+
+    ],
+    "enabled": false,
+    "bosses": [
+
+    ]
+  },
+  "caveBotTasker": {
+    "inProgress": false,
+    "count": 0,
+    "taskName": "",
+    "max": 0,
+    "monster": ""
+  },
+  "combobot": {
+    "attack": "",
+    "follow": "",
+    "serverLeaderTarget": false,
+    "followLeaderEnabled": false,
+    "attackItemToggle": false,
+    "commandsEnabled": true,
+    "sayPhrase": "",
+    "onCastEnabled": false,
+    "spell": "",
+    "item": 3155,
+    "sayLeader": "",
+    "onSayEnabled": false,
+    "onShootEnabled": false,
+    "shootLeader": "",
+    "attackSpellEnabled": false,
+    "attackLeaderTargetEnabled": false,
+    "serverEnabled": false,
+    "castLeader": "",
+    "serverTriggers": true,
+    "serverLeader": "",
+    "enabled": false
+  },
+  "_macros": {
+    "": false,
+    "POS Mismo Piso": false,
+    "Stamina Full": false,
+    "Anti Push": false,
+    "Follow Player": false,
+    "Enable Nav": false,
+    "Auto Party": true,
+    "Change Wand": false,
+    "Drop Helm": false,
+    "Utamo Vita": false,
+    "Mas Vis": false,
+    "Test SUmmon": false,
+    "Attack All": false,
+    "Eat Food": true,
+    "Drop Excess": false,
+    "Revive pet": false,
+    "MACRO SSA": false,
+    "MIGHT": false,
+    "Hold Target": false,
+    "Lock Preys": false,
+    "Follow": false,
+    "Kenichi": false,
+    "Drop Pots": false,
+    "Exchange money": true,
+    "Send message on trade": true,
+    "adeta res": true,
+    "move item": false
+  },
+  "autofollow": {
+    "player": "Gadaffi"
+  },
+  "autoTradeMessage": "BUY TAFARIEL HEART",
+  "TargetBotLure": false,
+  "caveBot": {
+    "backTrainers": false,
+    "forceRefill": false,
+    "backStop": false,
+    "backOffline": false
+  },
+  "autoEquip": [
+    {
+      "title": "Auto Equip",
+      "slot": 9,
+      "item1": 3052,
+      "item2": 3089,
+      "on": false
+    },
+    {
+      "title": "Auto Equip",
+      "slot": 11,
+      "item1": 3232,
+      "item2": 0,
+      "on": false
+    }
+  ],
+  "monsterKill": {
+    "min": false
+  },
+  "analyzers": {
+    "outfits": {
+      "King Zelos": {
+        "mount": 0,
+        "addons": 1,
+        "auxType": 0,
+        "legs": 19,
+        "body": 19,
+        "type": 1224,
+        "head": 10,
+        "feet": 19
+      },
+      "Goshnar's Greed": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 1307,
+        "head": 0,
+        "feet": 0
+      },
+      "The Percht Queen": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 30341,
+        "legs": 0,
+        "body": 0,
+        "type": 128,
+        "head": 0,
+        "feet": 0
+      },
+      "Wolf": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 27,
+        "head": 0,
+        "feet": 0
+      },
+      "Wild Warrior": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 57,
+        "body": 57,
+        "type": 131,
+        "head": 57,
+        "feet": 57
+      },
+      "Animated Rocket": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 6576,
+        "legs": 0,
+        "body": 0,
+        "type": 128,
+        "head": 0,
+        "feet": 0
+      },
+      "Destroyer": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 236,
+        "head": 0,
+        "feet": 0
+      },
+      "Minotaur Guard": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 29,
+        "head": 0,
+        "feet": 0
+      },
+      "Wolverine": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 3,
+        "head": 0,
+        "feet": 0
+      },
+      "Mummy": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 65,
+        "head": 0,
+        "feet": 0
+      },
+      "Tortoise": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 197,
+        "head": 0,
+        "feet": 0
+      },
+      "Goraca": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 235,
+        "head": 20,
+        "feet": 0
+      },
+      "Demodre": {
+        "mount": 559,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 0,
+        "body": 114,
+        "type": 129,
+        "head": 132,
+        "feet": 114
+      },
+      "Brutal Nightstalker": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 320,
+        "head": 0,
+        "feet": 0
+      },
+      "Enraged Morshabaal": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 1415,
+        "head": 0,
+        "feet": 0
+      },
+      "Vampire": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 68,
+        "head": 0,
+        "feet": 0
+      },
+      "No Rules": {
+        "mount": 580,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 20,
+        "body": 68,
+        "type": 750,
+        "head": 38,
+        "feet": 20
+      },
+      "Brutal Elf Scout": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 64,
+        "head": 0,
+        "feet": 0
+      },
+      "Exterminador": {
+        "mount": 1019,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 114,
+        "body": 114,
+        "type": 145,
+        "head": 0,
+        "feet": 114
+      },
+      "Skunk": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 106,
+        "head": 0,
+        "feet": 0
+      },
+      "Zomba": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 41,
+        "head": 0,
+        "feet": 0
+      },
+      "Bonny Bunny": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 19,
+        "body": 42,
+        "type": 1158,
+        "head": 95,
+        "feet": 57
+      },
+      "Hulk": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 242,
+        "head": 0,
+        "feet": 0
+      },
+      "Oblivion Knight": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 73,
+        "head": 0,
+        "feet": 0
+      },
+      "Orc Warrior": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 7,
+        "head": 0,
+        "feet": 0
+      },
+      "Monk": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 57,
+        "head": 0,
+        "feet": 0
+      },
+      "Dragon": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 34,
+        "head": 0,
+        "feet": 0
+      },
+      "Mean Lost Soul": {
+        "mount": 0,
+        "addons": 1,
+        "auxType": 0,
+        "legs": 0,
+        "body": 14,
+        "type": 1268,
+        "head": 0,
+        "feet": 0
+      },
+      "Young Sea Serpent": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 317,
+        "head": 0,
+        "feet": 0
+      },
+      "Medusa": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 330,
+        "head": 0,
+        "feet": 0
+      },
+      "Dragon Lord Hatchling": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 272,
+        "head": 0,
+        "feet": 0
+      },
+      "Drood": {
+        "mount": 883,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 1280,
+        "head": 0,
+        "feet": 0
+      },
+      "Lord of the Elements": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 285,
+        "head": 0,
+        "feet": 0
+      },
+      "Insectoid Scout": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 403,
+        "head": 0,
+        "feet": 0
+      },
+      "Lich": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 119,
+        "body": 116,
+        "type": 99,
+        "head": 95,
+        "feet": 115
+      },
+      "Brachiodemon": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 1303,
+        "head": 0,
+        "feet": 0
+      },
+      "Dark Torturer": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 234,
+        "head": 0,
+        "feet": 0
+      },
+      "Bonebeast": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 101,
+        "head": 0,
+        "feet": 0
+      },
+      "Husky": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 258,
+        "head": 0,
+        "feet": 0
+      },
+      "Coral Frog": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 97,
+        "body": 98,
+        "type": 226,
+        "head": 114,
+        "feet": 114
+      },
+      "Worm Priestess": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 613,
+        "head": 0,
+        "feet": 0
+      },
+      "Squirrel": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 274,
+        "head": 0,
+        "feet": 0
+      },
+      "Sandstone Scorpion": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 398,
+        "head": 0,
+        "feet": 0
+      },
+      "Swampling": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 535,
+        "head": 0,
+        "feet": 0
+      },
+      "Charles Oliveira": {
+        "mount": 389,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 114,
+        "body": 114,
+        "type": 430,
+        "head": 0,
+        "feet": 114
+      },
+      "Bog Raider": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 299,
+        "head": 0,
+        "feet": 0
+      },
+      "Tarun": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 100,
+        "body": 52,
+        "type": 139,
+        "head": 78,
+        "feet": 115
+      },
+      "Lion": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 41,
+        "head": 0,
+        "feet": 0
+      },
+      "Minotaur Hunter": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 612,
+        "head": 0,
+        "feet": 0
+      },
+      "Marsh Stalker": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 530,
+        "head": 0,
+        "feet": 0
+      },
+      "Diabolic Imp": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 237,
+        "head": 0,
+        "feet": 0
+      },
+      "Brutal Mutated Bat": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 307,
+        "head": 0,
+        "feet": 0
+      },
+      "Bazir": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 84,
+        "body": 92,
+        "type": 12,
+        "head": 0,
+        "feet": 84
+      },
+      "The Count": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 287,
+        "head": 0,
+        "feet": 0
+      },
+      "Panda": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 123,
+        "head": 0,
+        "feet": 0
+      },
+      "Priestess": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 58,
+        "head": 0,
+        "feet": 0
+      },
+      "Quara Pincher": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 77,
+        "head": 0,
+        "feet": 0
+      },
+      "Son of Verminor": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 19,
+        "head": 0,
+        "feet": 0
+      },
+      "Bolota": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 256,
+        "head": 0,
+        "feet": 0
+      },
+      "Acolyte of the Cult": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 121,
+        "body": 121,
+        "type": 194,
+        "head": 114,
+        "feet": 57
+      },
+      "Ice Golem": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 261,
+        "head": 0,
+        "feet": 0
+      },
+      "Quara Hydromancer": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 47,
+        "head": 0,
+        "feet": 0
+      },
+      "War Wolf": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 3,
+        "head": 0,
+        "feet": 0
+      },
+      "Skeleton Warrior": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 298,
+        "head": 0,
+        "feet": 0
+      },
+      "Prikto": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 218,
+        "head": 0,
+        "feet": 0
+      },
+      "Chakoya Tribewarden": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 249,
+        "head": 0,
+        "feet": 0
+      },
+      "Infernal Phantom": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 94,
+        "body": 80,
+        "type": 1302,
+        "head": 114,
+        "feet": 78
+      },
+      "Ryuk": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 300,
+        "head": 0,
+        "feet": 0
+      },
+      "Sea Serpent": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 275,
+        "head": 0,
+        "feet": 0
+      },
+      "Rat": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 21,
+        "head": 0,
+        "feet": 0
+      },
+      "Guardian": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 442,
+        "head": 0,
+        "feet": 0
+      },
+      "Elegua": {
+        "mount": 580,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 114,
+        "body": 114,
+        "type": 430,
+        "head": 114,
+        "feet": 114
+      },
+      "Nightmare": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 245,
+        "head": 0,
+        "feet": 0
+      },
+      "Diamond Servant": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 397,
+        "head": 0,
+        "feet": 0
+      },
+      "Black Sphinx Acolyte": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 94,
+        "body": 95,
+        "type": 1200,
+        "head": 114,
+        "feet": 95
+      },
+      "Serpent Spawn": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 220,
+        "head": 0,
+        "feet": 0
+      },
+      "Defiler": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 238,
+        "head": 0,
+        "feet": 0
+      },
+      "Kenichi": {
+        "mount": 1019,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 79,
+        "body": 0,
+        "type": 146,
+        "head": 79,
+        "feet": 0
+      },
+      "Lamassu": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 2,
+        "type": 1190,
+        "head": 50,
+        "feet": 95
+      },
+      "Necromancer": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 9,
+        "head": 0,
+        "feet": 0
+      },
+      "Rotworm": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 26,
+        "head": 0,
+        "feet": 0
+      },
+      "Deepling Spellsinger": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 443,
+        "head": 0,
+        "feet": 0
+      },
+      "Aesir": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 48,
+        "head": 0,
+        "feet": 0
+      },
+      "Click ": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 539,
+        "head": 0,
+        "feet": 0
+      },
+      "Pumin": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 87,
+        "body": 95,
+        "type": 12,
+        "head": 67,
+        "feet": 85
+      },
+      "Ushuriel": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 19,
+        "body": 95,
+        "type": 12,
+        "head": 0,
+        "feet": 112
+      },
+      "Frazzlemaw": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 594,
+        "head": 0,
+        "feet": 0
+      },
+      "Hyaena": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 94,
+        "head": 0,
+        "feet": 0
+      },
+      "Demon": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 35,
+        "head": 0,
+        "feet": 0
+      },
+      "Chicken": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 111,
+        "head": 0,
+        "feet": 0
+      },
+      "Haunted Treeling": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 310,
+        "head": 0,
+        "feet": 0
+      },
+      "Adept of the Cult": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 94,
+        "body": 94,
+        "type": 194,
+        "head": 114,
+        "feet": 57
+      },
+      "Fire Overlord": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 243,
+        "head": 0,
+        "feet": 0
+      },
+      "Mutated Rat": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 305,
+        "head": 0,
+        "feet": 0
+      },
+      "Fire Elemental": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 49,
+        "head": 0,
+        "feet": 0
+      },
+      "Mixwell": {
+        "mount": 1323,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 20,
+        "body": 68,
+        "type": 1102,
+        "head": 38,
+        "feet": 20
+      },
+      "Knoxy": {
+        "mount": 389,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 39,
+        "body": 68,
+        "type": 146,
+        "head": 97,
+        "feet": 114
+      },
+      "Marqkiux": {
+        "mount": 672,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 20,
+        "body": 68,
+        "type": 1102,
+        "head": 38,
+        "feet": 20
+      },
+      "Tanjis": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 446,
+        "head": 0,
+        "feet": 0
+      },
+      "Vendaval": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 110,
+        "head": 0,
+        "feet": 0
+      },
+      "Scorpion": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 43,
+        "head": 0,
+        "feet": 0
+      },
+      "Minotaur Mage": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 23,
+        "head": 0,
+        "feet": 0
+      },
+      "Nomad": {
+        "mount": 0,
+        "addons": 2,
+        "auxType": 0,
+        "legs": 22,
+        "body": 20,
+        "type": 146,
+        "head": 114,
+        "feet": 2
+      },
+      "Furious Morshabaal": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 1415,
+        "head": 0,
+        "feet": 0
+      },
+      "Gavin": {
+        "mount": 669,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 110,
+        "body": 124,
+        "type": 1324,
+        "head": 25,
+        "feet": 43
+      },
+      "Apocalypse": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 94,
+        "body": 51,
+        "type": 12,
+        "head": 58,
+        "feet": 85
+      },
+      "Basilisco": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 220,
+        "head": 0,
+        "feet": 0
+      },
+      "Badger": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 105,
+        "head": 0,
+        "feet": 0
+      },
+      "Crab": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 112,
+        "head": 0,
+        "feet": 0
+      },
+      "Juggernaut": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 244,
+        "head": 0,
+        "feet": 0
+      },
+      "Cave Rat Trainer": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 56,
+        "head": 0,
+        "feet": 0
+      },
+      "Druid's Apparition": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 114,
+        "body": 48,
+        "type": 148,
+        "head": 114,
+        "feet": 95
+      },
+      "Larva": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 82,
+        "head": 0,
+        "feet": 0
+      },
+      "Dragon Lord": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 39,
+        "head": 0,
+        "feet": 0
+      },
+      "Crypt Shambler": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 100,
+        "head": 0,
+        "feet": 0
+      },
+      "Terror Bird": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 218,
+        "head": 0,
+        "feet": 0
+      },
+      "Black Sheep": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 13,
+        "head": 0,
+        "feet": 0
+      },
+      "Werewolf": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 308,
+        "head": 0,
+        "feet": 0
+      },
+      "Blazing Fire Elemental": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 49,
+        "head": 0,
+        "feet": 0
+      },
+      "Undead Elite Gladiator": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 306,
+        "head": 0,
+        "feet": 0
+      },
+      "Brutal Bonelord": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 17,
+        "head": 0,
+        "feet": 0
+      },
+      "Hellhound": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 240,
+        "head": 0,
+        "feet": 0
+      },
+      "Ballardo": {
+        "mount": 447,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 114,
+        "body": 114,
+        "type": 134,
+        "head": 114,
+        "feet": 114
+      },
+      "Courage Leech": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 1315,
+        "head": 0,
+        "feet": 0
+      },
+      "Demon Skeleton": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 37,
+        "head": 0,
+        "feet": 0
+      },
+      "Mooh'Tah Warrior": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 611,
+        "head": 0,
+        "feet": 0
+      },
+      "Nargol The Impaler": {
+        "mount": 0,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 94,
+        "body": 38,
+        "type": 1222,
+        "head": 19,
+        "feet": 57
+      },
+      "Enusat The Onyx Wing": {
+        "mount": 0,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 94,
+        "body": 114,
+        "type": 1189,
+        "head": 114,
+        "feet": 114
+      },
+      "Blightwalker": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 246,
+        "head": 0,
+        "feet": 0
+      },
+      "Plaguesmith": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 247,
+        "head": 0,
+        "feet": 0
+      },
+      "Werebadger": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 729,
+        "head": 0,
+        "feet": 0
+      },
+      "Felokz Store": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 27,
+        "head": 0,
+        "feet": 0
+      },
+      "Brutal Chakoya Windcaller": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 260,
+        "head": 0,
+        "feet": 0
+      },
+      "Smuggler": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 113,
+        "body": 0,
+        "type": 134,
+        "head": 95,
+        "feet": 115
+      },
+      "True Frost Flower Asura": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 105,
+        "body": 0,
+        "type": 1068,
+        "head": 105,
+        "feet": 8
+      },
+      "Mutated Human": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 323,
+        "head": 0,
+        "feet": 0
+      },
+      "Cyclops Drone": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 280,
+        "head": 0,
+        "feet": 0
+      },
+      "Wereboar": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 721,
+        "head": 0,
+        "feet": 0
+      },
+      "Kongra": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 116,
+        "head": 0,
+        "feet": 0
+      },
+      "Dwarf Guard": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 70,
+        "head": 0,
+        "feet": 0
+      },
+      "Risen Soldier": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 306,
+        "head": 0,
+        "feet": 0
+      },
+      "Golden Servant": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 396,
+        "head": 0,
+        "feet": 0
+      },
+      "Thornback Tortoise": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 198,
+        "head": 0,
+        "feet": 0
+      },
+      "Betrayed Wraith": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 233,
+        "head": 0,
+        "feet": 0
+      },
+      "Clay Guardian": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 333,
+        "head": 0,
+        "feet": 0
+      },
+      "Grim Reaper": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 300,
+        "head": 0,
+        "feet": 0
+      },
+      "Boar": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 380,
+        "head": 0,
+        "feet": 0
+      },
+      "Morshabaal": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 1415,
+        "head": 0,
+        "feet": 0
+      },
+      "Warlock": {
+        "mount": 0,
+        "addons": 1,
+        "auxType": 0,
+        "legs": 128,
+        "body": 71,
+        "type": 130,
+        "head": 19,
+        "feet": 128
+      },
+      "Brutal Sandstone Scorpion": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 398,
+        "head": 0,
+        "feet": 0
+      },
+      "Cyclops": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 22,
+        "head": 0,
+        "feet": 0
+      },
+      "Hydra": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 121,
+        "head": 0,
+        "feet": 0
+      },
+      "Brutal Shark": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 453,
+        "head": 0,
+        "feet": 0
+      },
+      "Minotaur": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 25,
+        "head": 0,
+        "feet": 0
+      },
+      "Greater Fire Elemental": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 242,
+        "head": 0,
+        "feet": 0
+      },
+      "Hellfire Fighter": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 243,
+        "head": 0,
+        "feet": 0
+      },
+      "Vibrant Phantom": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 88,
+        "body": 85,
+        "type": 1302,
+        "head": 85,
+        "feet": 91
+      },
+      "Cave Hydra": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 121,
+        "head": 0,
+        "feet": 0
+      },
+      "Brutal Cockroach": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 284,
+        "head": 0,
+        "feet": 0
+      },
+      "Ghost": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 48,
+        "head": 0,
+        "feet": 0
+      },
+      "Feverish Citizen": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 425,
+        "head": 0,
+        "feet": 0
+      },
+      "Zutten": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 539,
+        "head": 0,
+        "feet": 0
+      },
+      "Sorcerer's Apparition": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 52,
+        "body": 114,
+        "type": 138,
+        "head": 95,
+        "feet": 76
+      },
+      "Mercury Blob": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 316,
+        "head": 0,
+        "feet": 0
+      },
+      "Cloak of Terror": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 1299,
+        "head": 0,
+        "feet": 0
+      },
+      "Stone Golem": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 67,
+        "head": 0,
+        "feet": 0
+      },
+      "Sibang": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 118,
+        "head": 0,
+        "feet": 0
+      },
+      "Brutal Yeti": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 110,
+        "head": 0,
+        "feet": 0
+      },
+      "Shaburak Lord": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 409,
+        "head": 0,
+        "feet": 0
+      },
+      "Jellyfish": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 452,
+        "head": 0,
+        "feet": 0
+      },
+      "Pejelagarto": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 358,
+        "head": 0,
+        "feet": 0
+      },
+      "Mutated Bat": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 307,
+        "head": 0,
+        "feet": 0
+      },
+      "Behemoth": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 55,
+        "head": 0,
+        "feet": 0
+      },
+      "Brutal Orc Leader": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 59,
+        "head": 0,
+        "feet": 0
+      },
+      "Massive Fire Elemental": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 242,
+        "head": 0,
+        "feet": 0
+      },
+      "Snake": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 28,
+        "head": 0,
+        "feet": 0
+      },
+      "Stampor": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 381,
+        "head": 0,
+        "feet": 0
+      },
+      "Don Sniper": {
+        "mount": 0,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 114,
+        "body": 114,
+        "type": 1186,
+        "head": 0,
+        "feet": 114
+      },
+      "Toxic Slime": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 316,
+        "head": 0,
+        "feet": 0
+      },
+      "Belcebu": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 358,
+        "head": 0,
+        "feet": 0
+      },
+      "Northern Pike": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 454,
+        "head": 0,
+        "feet": 0
+      },
+      "Verminor": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 79,
+        "body": 118,
+        "type": 12,
+        "head": 0,
+        "feet": 79
+      },
+      "Choking Fear": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 586,
+        "head": 0,
+        "feet": 0
+      },
+      "Terramite": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 346,
+        "head": 0,
+        "feet": 0
+      },
+      "Blistering Fire Elemental": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 242,
+        "head": 0,
+        "feet": 0
+      },
+      "Midnight Asura": {
+        "mount": 0,
+        "addons": 1,
+        "auxType": 0,
+        "legs": 90,
+        "body": 114,
+        "type": 150,
+        "head": 0,
+        "feet": 90
+      },
+      "Deepling Worker": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 470,
+        "head": 0,
+        "feet": 0
+      },
+      "Brutal Vampire": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 68,
+        "head": 0,
+        "feet": 0
+      },
+      "Nightstalker": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 308,
+        "head": 0,
+        "feet": 0
+      },
+      "Deepling Warrior": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 441,
+        "head": 0,
+        "feet": 0
+      },
+      "Blood Crab": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 200,
+        "head": 0,
+        "feet": 0
+      },
+      "Deepling Scout": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 413,
+        "head": 0,
+        "feet": 0
+      },
+      "Emerald Damselfly": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 528,
+        "head": 0,
+        "feet": 0
+      },
+      "Ozaminha": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 114,
+        "type": 130,
+        "head": 88,
+        "feet": 88
+      },
+      "Cyclops Smith": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 277,
+        "head": 0,
+        "feet": 0
+      },
+      "Ungreez": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 35,
+        "head": 0,
+        "feet": 0
+      },
+      "Greedbeast": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 101,
+        "head": 0,
+        "feet": 0
+      },
+      "Pirate Skeleton": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 195,
+        "head": 0,
+        "feet": 0
+      },
+      "Wyvern": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 239,
+        "head": 0,
+        "feet": 0
+      },
+      "Kaipion Jr": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 362,
+        "head": 0,
+        "feet": 0
+      },
+      "The Lily of Night": {
+        "mount": 0,
+        "addons": 2,
+        "auxType": 0,
+        "legs": 90,
+        "body": 38,
+        "type": 1068,
+        "head": 90,
+        "feet": 79
+      },
+      "Rat Trainer": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 21,
+        "head": 0,
+        "feet": 0
+      },
+      "Wailing Widow": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 347,
+        "head": 0,
+        "feet": 0
+      },
+      "Killer Caiman": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 358,
+        "head": 0,
+        "feet": 0
+      },
+      "Many Faces": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 1300,
+        "head": 0,
+        "feet": 0
+      },
+      "Alastor Moody": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 108,
+        "head": 0,
+        "feet": 0
+      },
+      "Skeleton Elite Warrior": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 298,
+        "head": 0,
+        "feet": 0
+      },
+      "Kaibil Balam": {
+        "mount": 1403,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 114,
+        "body": 114,
+        "type": 134,
+        "head": 94,
+        "feet": 94
+      },
+      "Brutal Lancer Beetle": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 348,
+        "head": 0,
+        "feet": 0
+      },
+      "Slime": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 19,
+        "head": 0,
+        "feet": 0
+      },
+      "Mirror Image": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 76,
+        "body": 114,
+        "type": 136,
+        "head": 76,
+        "feet": 76
+      },
+      "Majestick": {
+        "mount": 0,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 94,
+        "body": 72,
+        "type": 578,
+        "head": 40,
+        "feet": 0
+      },
+      "Bug": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 45,
+        "head": 0,
+        "feet": 0
+      },
+      "Iron Servant": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 395,
+        "head": 0,
+        "feet": 0
+      },
+      "Nidiator": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 241,
+        "head": 20,
+        "feet": 0
+      },
+      "Hellspawn": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 322,
+        "head": 0,
+        "feet": 0
+      },
+      "Undead Dragon": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 231,
+        "head": 0,
+        "feet": 0
+      },
+      "Gargoyle": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 95,
+        "head": 0,
+        "feet": 0
+      },
+      "Schiach": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 19,
+        "body": 10,
+        "type": 1162,
+        "head": 19,
+        "feet": 57
+      },
+      "Deer": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 31,
+        "head": 0,
+        "feet": 0
+      },
+      "Brutal Draken Elite": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 362,
+        "head": 0,
+        "feet": 0
+      },
+      "Undead Cavebear": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 384,
+        "head": 0,
+        "feet": 0
+      },
+      "Brutal Braindeath": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 256,
+        "head": 0,
+        "feet": 0
+      },
+      "Infernatil": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 94,
+        "body": 57,
+        "type": 12,
+        "head": 94,
+        "feet": 78
+      },
+      "Novice of the Cult": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 114,
+        "body": 95,
+        "type": 133,
+        "head": 114,
+        "feet": 114
+      },
+      "Aiioria": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 48,
+        "head": 0,
+        "feet": 0
+      },
+      "Crocodile": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 119,
+        "head": 0,
+        "feet": 0
+      },
+      "Vampire Bride": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 312,
+        "head": 0,
+        "feet": 0
+      },
+      "Brutal Gazer": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 109,
+        "head": 0,
+        "feet": 0
+      },
+      "Zugurosh": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 57,
+        "body": 35,
+        "type": 12,
+        "head": 2,
+        "feet": 91
+      },
+      "Brutal Killer Caiman": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 358,
+        "head": 0,
+        "feet": 0
+      },
+      "Carniphila": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 120,
+        "head": 0,
+        "feet": 0
+      },
+      "Poison Spider": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 36,
+        "head": 0,
+        "feet": 0
+      },
+      "Toad": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 222,
+        "head": 0,
+        "feet": 0
+      },
+      "Dog": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 32,
+        "head": 0,
+        "feet": 0
+      },
+      "Bear": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 16,
+        "head": 0,
+        "feet": 0
+      },
+      "Shaburak Demon": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 417,
+        "head": 0,
+        "feet": 0
+      },
+      "Wasp": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 44,
+        "head": 0,
+        "feet": 0
+      },
+      "Green Frog": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 69,
+        "body": 66,
+        "type": 224,
+        "head": 69,
+        "feet": 66
+      },
+      "Witch": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 54,
+        "head": 0,
+        "feet": 0
+      },
+      "Burning Gladiator": {
+        "mount": 0,
+        "addons": 1,
+        "auxType": 0,
+        "legs": 21,
+        "body": 113,
+        "type": 541,
+        "head": 95,
+        "feet": 21
+      },
+      "Lancer Beetle": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 348,
+        "head": 0,
+        "feet": 0
+      },
+      "Ashfalor": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 79,
+        "body": 88,
+        "type": 12,
+        "head": 47,
+        "feet": 79
+      },
+      "Hand of Cursed Fate": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 230,
+        "head": 0,
+        "feet": 0
+      },
+      "Bog Frog": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 412,
+        "head": 0,
+        "feet": 0
+      },
+      "Dwarf Soldier": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 71,
+        "head": 0,
+        "feet": 0
+      },
+      "Omar": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 235,
+        "head": 20,
+        "feet": 0
+      },
+      "Massive Earth Elemental": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 285,
+        "head": 0,
+        "feet": 0
+      },
+      "Deepling Guard": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 442,
+        "head": 0,
+        "feet": 0
+      },
+      "Hero": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 73,
+        "head": 0,
+        "feet": 0
+      },
+      "Minotaur Archer": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 24,
+        "head": 0,
+        "feet": 0
+      },
+      "Priestess of the Wild Sun": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 94,
+        "body": 78,
+        "type": 1199,
+        "head": 114,
+        "feet": 0
+      },
+      "Baleful Bunny": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 19,
+        "body": 42,
+        "type": 1157,
+        "head": 95,
+        "feet": 57
+      },
+      "Werebear": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 720,
+        "head": 0,
+        "feet": 0
+      },
+      "Queen Of Blades Kerrigan": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 241,
+        "head": 20,
+        "feet": 0
+      },
+      "Percht": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 19,
+        "body": 42,
+        "type": 1161,
+        "head": 95,
+        "feet": 57
+      },
+      "Lucky Luciano": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 362,
+        "head": 0,
+        "feet": 0
+      },
+      "Enlightened of the Cult": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 193,
+        "head": 0,
+        "feet": 0
+      },
+      "Tarantula": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 219,
+        "head": 0,
+        "feet": 0
+      },
+      "Bat": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 122,
+        "head": 0,
+        "feet": 0
+      },
+      "Orc Spearman": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 50,
+        "head": 0,
+        "feet": 0
+      },
+      "Dragon Hatchling": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 271,
+        "head": 0,
+        "feet": 0
+      },
+      "Sidian": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 48,
+        "head": 0,
+        "feet": 0
+      },
+      "Juan Querendon": {
+        "mount": 1402,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 114,
+        "body": 114,
+        "type": 130,
+        "head": 0,
+        "feet": 114
+      },
+      "Spider": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 30,
+        "head": 0,
+        "feet": 0
+      },
+      "Elf Arcanist": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 63,
+        "head": 0,
+        "feet": 0
+      },
+      "Mateusz Dragon Wielki": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 235,
+        "head": 20,
+        "feet": 0
+      },
+      "Chekox": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 48,
+        "head": 0,
+        "feet": 0
+      },
+      "Bubble": {
+        "mount": 728,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 114,
+        "type": 147,
+        "head": 0,
+        "feet": 0
+      },
+      "Thief": {
+        "mount": 580,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 95,
+        "body": 95,
+        "type": 1174,
+        "head": 86,
+        "feet": 95
+      },
+      "Seagull": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 223,
+        "head": 0,
+        "feet": 0
+      },
+      "Tsuru Tuneado": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 235,
+        "head": 20,
+        "feet": 0
+      },
+      "Cave Rat": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 56,
+        "head": 0,
+        "feet": 0
+      },
+      "Elephant": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 211,
+        "head": 0,
+        "feet": 0
+      },
+      "Elder Bonelord": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 108,
+        "head": 0,
+        "feet": 0
+      },
+      "The Diamond Blossom": {
+        "mount": 0,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 86,
+        "body": 0,
+        "type": 1068,
+        "head": 85,
+        "feet": 79
+      },
+      "The Blazing Rose": {
+        "mount": 0,
+        "addons": 2,
+        "auxType": 0,
+        "legs": 57,
+        "body": 94,
+        "type": 1068,
+        "head": 95,
+        "feet": 79
+      },
+      "True Midnight Asura": {
+        "mount": 0,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 72,
+        "body": 95,
+        "type": 1068,
+        "head": 72,
+        "feet": 0
+      },
+      "Brutal Elder Beholder": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 108,
+        "head": 0,
+        "feet": 0
+      },
+      "Grynch Clan Goblin": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 61,
+        "head": 0,
+        "feet": 0
+      },
+      "Sphinx": {
+        "mount": 0,
+        "addons": 1,
+        "auxType": 0,
+        "legs": 0,
+        "body": 39,
+        "type": 1188,
+        "head": 50,
+        "feet": 3
+      },
+      "Pirate Ghost": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 196,
+        "head": 0,
+        "feet": 0
+      },
+      "Spliffen": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 300,
+        "head": 0,
+        "feet": 0
+      },
+      "Brutal Grim Reaper": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 300,
+        "head": 0,
+        "feet": 0
+      },
+      "Sandcrawler": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 350,
+        "head": 0,
+        "feet": 0
+      },
+      "Zombie": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 311,
+        "head": 0,
+        "feet": 0
+      },
+      "Infernal Demon": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 1313,
+        "head": 0,
+        "feet": 0
+      },
+      "Cactus": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 3647,
+        "legs": 0,
+        "body": 0,
+        "type": 128,
+        "head": 0,
+        "feet": 0
+      },
+      "Ave Fenix": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 48,
+        "head": 0,
+        "feet": 0
+      },
+      "Dawnfire Asura": {
+        "mount": 0,
+        "addons": 1,
+        "auxType": 0,
+        "legs": 78,
+        "body": 94,
+        "type": 150,
+        "head": 114,
+        "feet": 79
+      },
+      "Frost Flower Asura": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 150,
+        "head": 0,
+        "feet": 86
+      },
+      "Buttowsky": {
+        "mount": 1404,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 114,
+        "body": 125,
+        "type": 289,
+        "head": 95,
+        "feet": 95
+      },
+      "Sophie": {
+        "mount": 692,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 58,
+        "body": 69,
+        "type": 155,
+        "head": 78,
+        "feet": 76
+      },
+      "Hamura": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 352,
+        "head": 0,
+        "feet": 0
+      },
+      "Ferumbras": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 229,
+        "head": 0,
+        "feet": 0
+      },
+      "Centipede": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 124,
+        "head": 0,
+        "feet": 0
+      },
+      "Tafariel": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 93,
+        "body": 0,
+        "type": 12,
+        "head": 0,
+        "feet": 93
+      },
+      "Asterius": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 29,
+        "head": 0,
+        "feet": 0
+      },
+      "Animated Snowman": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 19,
+        "body": 10,
+        "type": 1159,
+        "head": 19,
+        "feet": 57
+      },
+      "Eternal Oblivion": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 48,
+        "head": 0,
+        "feet": 0
+      },
+      "Fury": {
+        "mount": 0,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 96,
+        "body": 77,
+        "type": 149,
+        "head": 94,
+        "feet": 0
+      },
+      "Ghoul": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 18,
+        "head": 0,
+        "feet": 0
+      },
+      "Valkyrie": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 95,
+        "body": 38,
+        "type": 139,
+        "head": 113,
+        "feet": 96
+      },
+      "True Dawnfire Asura": {
+        "mount": 0,
+        "addons": 3,
+        "auxType": 0,
+        "legs": 120,
+        "body": 94,
+        "type": 1068,
+        "head": 79,
+        "feet": 79
+      },
+      "Blood Beast": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 602,
+        "head": 0,
+        "feet": 0
+      },
+      "Giant Spider": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 38,
+        "head": 0,
+        "feet": 0
+      },
+      "Lost Soul": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 232,
+        "head": 0,
+        "feet": 0
+      },
+      "Skeleton": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 33,
+        "head": 0,
+        "feet": 0
+      },
+      "Shark": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 453,
+        "head": 0,
+        "feet": 0
+      },
+      "Merlkin": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 117,
+        "head": 0,
+        "feet": 0
+      },
+      "Hobbit": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 63,
+        "head": 0,
+        "feet": 0
+      },
+      "Brimstone Bug": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 352,
+        "head": 0,
+        "feet": 0
+      },
+      "Phantasm": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 241,
+        "head": 20,
+        "feet": 0
+      },
+      "Crystal Spider": {
+        "mount": 0,
+        "addons": 0,
+        "auxType": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 263,
+        "head": 0,
+        "feet": 0
+      }
+    },
+    "trackedBoss": {
+      "King Zelos": 1699671915,
+      "Goshnar's Greed": 1703427613,
+      "The Percht Queen": 1703698188
+    },
+    "customPrices": [
+
+    ],
+    "trackedLoot": [
+
+    ],
+    "lootChannel": true,
+    "rarityFrames": true
+  },
+  "extras": {
+    "height": 360,
+    "stake": false,
+    "useAll": "",
+    "checkPlayer": false,
+    "autoOpenDoors": true,
+    "lootDelay": 200,
+    "scythe": 9596,
+    "holdWgHot": "",
+    "huntRoutes": 300,
+    "reUse": false,
+    "bless": false,
+    "nextBackpack": true,
+    "shovel": 9596,
+    "rope": 9596,
+    "gotoMaxDistance": 40,
+    "reachable": false,
+    "holdMwall": false,
+    "pathfinding": true,
+    "looting": 40,
+    "suppliesControl": false,
+    "killUnder": 30,
+    "machete": 9596,
+    "joinBot": false,
+    "lootLast": true,
+    "holdMwHot": "",
+    "antiKick": true,
+    "talkDelay": 1000,
+    "separatePm": false,
+    "timers": true,
+    "screenOnDeath": true,
+    "highlightTarget": false,
+    "oberon": true,
+    "title": true,
+    "mWall": "3180"
+  },
+  "autoFollow": {
+    "min": false
+  },
+  "targetBotDynamicLureDelayValue": 250,
+  "targetBotTargets": 2,
+  "alarms": {
+    "creatureDetected": [
+
+    ],
+    "damageTaken": [
+
+    ],
+    "playerAttack": [
+
+    ],
+    "defaultMsg": [
+
+    ],
+    "playerDetected": [
+
+    ],
+    "creatureName": {
+      "value": ""
+    },
+    "ignoreFriends": [
+
+    ],
+    "lowHealth": {
+      "value": 20
+    },
+    "privateMsg": [
+
+    ],
+    "customMessage": {
+      "value": ""
+    },
+    "flashClient": [
+
+    ],
+    "lowMana": {
+      "value": 20
+    }
+  },
+  "slotTwo": {
+    "player": "True Dawnfire Asura"
+  },
+  "bestHit": 8143,
+  "sstring": [
+
+  ],
+  "Imbuements": {
+    "morgana": {
+      "35585": [
+        21,
+        18,
+        23
+      ],
+      "34072": [
+        21,
+        23
+      ],
+      "34011": [
+        21
+      ],
+      "31577": [
+        21
+      ],
+      "35581": [
+        21,
+        18,
+        23
+      ],
+      "35473": [
+        21,
+        18,
+        23
+      ]
+    },
+    "killabeez": {
+      "35464": [
+        21
+      ],
+      "35585": [
+        21,
+        18,
+        24
+      ],
+      "35581": [
+        21,
+        18,
+        24
+      ],
+      "35465": [
+        18
+      ]
+    }
+  },
+  "BotServerChannel": "4741927754878",
+  "BOTserver": {
+    "mwallInfo": true,
+    "broadcasts": true,
+    "outfit": false,
+    "vocation": true,
+    "manaInfo": true,
+    "mwalls": [
+
+    ]
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "looting": {
+    "items": [
+      {
+        "count": 1,
+        "id": 3364
+      },
+      {
+        "count": 1,
+        "id": 827
+      },
+      {
+        "count": 77,
+        "id": 20062
+      },
+      {
+        "count": 26,
+        "id": 3037
+      },
+      {
+        "count": 20,
+        "id": 3036
+      },
+      {
+        "count": 2,
+        "id": 9058
+      },
+      {
+        "count": 20,
+        "id": 3041
+      },
+      {
+        "count": 2,
+        "id": 3039
+      },
+      {
+        "count": 20,
+        "id": 3038
+      },
+      {
+        "count": 1,
+        "id": 3079
+      },
+      {
+        "count": 1,
+        "id": 7418
+      },
+      {
+        "count": 1,
+        "id": 7404
+      },
+      {
+        "count": 3,
+        "id": 16123
+      },
+      {
+        "count": 5,
+        "id": 16120
+      },
+      {
+        "count": 16,
+        "id": 20198
+      },
+      {
+        "count": 4,
+        "id": 16126
+      },
+      {
+        "count": 1,
+        "id": 3360
+      },
+      {
+        "count": 1,
+        "id": 16125
+      },
+      {
+        "count": 1,
+        "id": 3414
+      },
+      {
+        "count": 1,
+        "id": 7383
+      },
+      {
+        "count": 1,
+        "id": 14247
+      }
+    ],
+    "maxDanger": 10,
+    "minCapacity": 100,
+    "containers": [
+      {
+        "count": 1,
+        "id": 2865
+      },
+      {
+        "count": 1,
+        "id": 2871
+      }
+    ],
+    "everyItem": false
+  },
+  "targeting": [
+    {
+      "lureDelay": 459,
+      "lureMin": 3,
+      "maxDistance": 10,
+      "anchorRange": 3,
+      "lureCount": 0,
+      "avoidAttacks": false,
+      "rePositionAmount": 5,
+      "lureMax": 8,
+      "rpSafe": false,
+      "chase": false,
+      "priority": 1,
+      "name": "*",
+      "keepDistance": false,
+      "keepDistanceRange": 4,
+      "danger": 1,
+      "dynamicLureDelay": true,
+      "delayFrom": 1,
+      "closeLure": false,
+      "faceMonster": false,
+      "lureCavebot": false,
+      "dontLoot": true,
+      "diamondArrows": false,
+      "lure": false,
+      "anchor": false,
+      "closeLureAmount": 6,
+      "rePosition": false,
+      "dynamicLure": true,
+      "regex": "^.*$"
+    }
+  ]
+}

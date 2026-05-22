@@ -1,0 +1,204 @@
+--------------------------------- Monster Identifier --------------------------------------------
+
+-- Monster type definitions
+local MONSTER_TYPES = {
+    VETERAN = "Veteran",
+    ELITE = "Elite",
+    CHAMPION = "Champion",
+    NORMAL = "Normal"
+}
+
+-- Store current target information
+local currentTarget = nil
+local lastTargetId = nil
+
+-- Debug message helper
+local function debugLog(message, mode)
+    mode = mode or 18
+    modules.game_textmessage.displayGameMessage(message)
+    print("[Monster Identifier] " .. message)
+end
+
+-- Safe method call wrapper
+local function safeCall(obj, method, ...)
+    if obj and type(obj[method]) == "function" then
+        local success, result = pcall(obj[method], obj, ...)
+        if success then
+            return result
+        end
+    end
+    return nil
+end
+
+-- Get creature emblem information
+local function getCreatureEmblem(creature)
+    if not creature then return nil end
+    return safeCall(creature, "getEmblem")
+end
+
+-- Get creature outline/border color
+local function getCreatureOutlineColor(creature)
+    if not creature then return nil end
+    return safeCall(creature, "getOutfitColor") or safeCall(creature, "getInformationColor")
+end
+
+-- Analyze monster type based on properties
+local function identifyMonsterType(creature)
+    if not creature then return MONSTER_TYPES.NORMAL end
+
+    local emblem = getCreatureEmblem(creature)
+    local outlineColor = getCreatureOutlineColor(creature)
+    local name = creature:getName()
+
+    -- Check for special type indicators in name
+    if name:find("Veteran") then
+        return MONSTER_TYPES.VETERAN
+    elseif name:find("Elite") then
+        return MONSTER_TYPES.ELITE
+    elseif name:find("Champion") then
+        return MONSTER_TYPES.CHAMPION
+    end
+
+    -- Check emblem and outline color matching
+    if emblem and outlineColor then
+        -- Different emblems/colors might indicate different types
+        -- This needs to be calibrated based on actual game data
+        debugLog("Emblem: " .. tostring(emblem) .. ", Outline: " .. tostring(outlineColor), 18)
+    end
+
+    return MONSTER_TYPES.NORMAL
+end
+
+-- Log all creature properties
+local function logCreatureProperties(creature)
+    if not creature then
+        debugLog("No creature to analyze", 18)
+        return
+    end
+
+    local id = safeCall(creature, "getId")
+    local name = safeCall(creature, "getName")
+    local emblem = getCreatureEmblem(creature)
+
+    debugLog("=== Monster Properties ===", 18)
+    debugLog("ID: " .. tostring(id), 18)
+    debugLog("Name: " .. tostring(name), 18)
+
+    -- Emblem with technical info
+    local emblemInfo = "Emblem: " .. tostring(emblem)
+    if emblem == 1 then
+        emblemInfo = emblemInfo .. " (VETERAN_EMBLEM = 1)"
+    elseif emblem == 2 then
+        emblemInfo = emblemInfo .. " (ELITE_EMBLEM = 2)"
+    elseif emblem == 3 then
+        emblemInfo = emblemInfo .. " (CHAMPION_EMBLEM = 3)"
+    elseif emblem == 0 then
+        emblemInfo = emblemInfo .. " (No emblem)"
+    end
+    debugLog(emblemInfo, 18)
+
+    -- Try to get additional properties
+    local skull = safeCall(creature, "getSkull")
+    if skull and skull > 0 then
+        debugLog("Skull: " .. tostring(skull), 18)
+    end
+
+    local shield = safeCall(creature, "getShield")
+    if shield and shield > 0 then
+        debugLog("Shield: " .. tostring(shield), 18)
+    end
+
+    -- Identify monster type with technical info
+    local monsterType = identifyMonsterType(creature)
+    debugLog("Identified Type: " .. monsterType .. " (MONSTER_TYPES." .. monsterType:upper() .. ")", 18)
+    debugLog("========================", 18)
+end
+
+-- Global flag to track if monster identifier is enabled
+local monsterIdentifierEnabled = macro(1000, function() end)
+
+-- Visual icon to activate/deactivate monster identifier
+addIcon("MonsterIdentifier", { item = { id = 3000, count = 1 }, text = "Monster Identifier" }, monsterIdentifierEnabled)
+
+-- Get monster priority based on emblem
+local function getMonsterPriority(creature)
+    if not creature then return 0 end
+
+    local emblem = getCreatureEmblem(creature)
+    if not emblem then return 0 end
+
+    -- Priority: Champion (3) > Elite (2) > Veteran (1) > Normal (0)
+    if emblem == 3 then return 3  -- Champion
+    elseif emblem == 2 then return 2  -- Elite
+    elseif emblem == 1 then return 1  -- Veteran
+    end
+
+    return 0
+end
+
+-- Find and target special monsters
+local function findAndTargetSpecialMonster()
+    local bestMonster = nil
+    local bestPriority = 0
+
+    -- Get all creatures on screen
+    local ok, creatures = pcall(function() return g_map.getCreatures() end)
+    if not ok or not creatures then return nil end
+
+    for i = 1, #creatures do
+        local creature = creatures[i]
+        local creatureOk = pcall(function()
+            if creature and safeCall(creature, "isMonster") and not safeCall(creature, "isDead") then
+                local priority = getMonsterPriority(creature)
+                if priority > bestPriority then
+                    local pos = safeCall(creature, "getPosition")
+                    if pos and pos.z == posz() then
+                        local dist = getDistanceBetween(pos, player:getPosition())
+                        if dist <= 10 then
+                            bestMonster = creature
+                            bestPriority = priority
+                        end
+                    end
+                end
+            end
+        end)
+    end
+
+    return bestMonster, bestPriority
+end
+
+-- Check for target changes and find special monsters
+macro(500, function()
+    if monsterIdentifierEnabled:isOff() then return end
+
+    -- Find special monsters with emblems
+    local specialMonster, priority = findAndTargetSpecialMonster()
+
+    if specialMonster and priority > 0 then
+        local currentAttack = g_game.getAttackingCreature()
+
+        -- Only switch if not attacking or attacking something with lower priority
+        if not currentAttack or getMonsterPriority(currentAttack) < priority then
+            local priorityName = "Special"
+            if priority == 3 then priorityName = "Champion"
+            elseif priority == 2 then priorityName = "Elite"
+            elseif priority == 1 then priorityName = "Veteran"
+            end
+
+            pcall(function()
+                local monsterName = safeCall(specialMonster, "getName")
+                debugLog("Focusing on " .. priorityName .. ": " .. tostring(monsterName), 18)
+                g_game.attack(specialMonster)
+            end)
+        end
+    end
+
+    -- Track current target for priority comparison (no logging to avoid spam)
+    local target = g_game.getAttackingCreature()
+    if target then
+        local id = safeCall(target, "getId")
+        if id and lastTargetId ~= id then
+            lastTargetId = id
+        end
+    end
+end)

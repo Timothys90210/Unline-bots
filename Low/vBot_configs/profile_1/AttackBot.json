@@ -1,0 +1,143 @@
+{
+  "AttackBot": [
+    {
+      "attackTable": [
+        {
+          "itemId": 0,
+          "mana": 25,
+          "minHp": 0,
+          "monsters": true,
+          "category": 1,
+          "spell": "exevo gran gran tera",
+          "count": 1,
+          "creatures": "*",
+          "tooltip": false,
+          "patternCategory": 1,
+          "enabled": false,
+          "cooldown": 2,
+          "maxHp": 100,
+          "orMore": true,
+          "description": "[4 Sqm] 3+ Any Creatures: exevo gran gran tera, targeted (0%-100%)",
+          "pattern": 7
+        },
+        {
+          "itemId": 0,
+          "mana": 5,
+          "minHp": 0,
+          "monsters": true,
+          "category": 1,
+          "spell": "exevo gran mas frigo",
+          "count": 1,
+          "creatures": "*",
+          "tooltip": false,
+          "patternCategory": 1,
+          "enabled": false,
+          "cooldown": 2,
+          "maxHp": 100,
+          "orMore": true,
+          "description": "[4 Sqm] 3+ Any Creatures: exevo gran mas frigo, targeted (0%-100%)",
+          "pattern": 7
+        },
+        {
+          "itemId": 0,
+          "mana": 5,
+          "minHp": 0,
+          "monsters": true,
+          "category": 1,
+          "spell": "exevo gran mas tera",
+          "count": 1,
+          "creatures": "*",
+          "tooltip": false,
+          "patternCategory": 1,
+          "enabled": false,
+          "cooldown": 2,
+          "maxHp": 100,
+          "orMore": true,
+          "description": "[4 Sqm] 3+ Any Creatures: exevo gran mas tera, targeted (0%-100%)",
+          "pattern": 7
+        }
+      ],
+      "Visible": true,
+      "Kills": false,
+      "KillsAmount": 1,
+      "ignoreMana": true,
+      "PvpSafe": true,
+      "AntiRsRange": 5,
+      "pvpMode": false,
+      "Cooldown": true,
+      "Rotate": false,
+      "enabled": true,
+      "name": "Pro #1",
+      "BlackListSafe": false
+    },
+    {
+      "attackTable": [
+
+      ],
+      "Visible": true,
+      "ignoreMana": true,
+      "KillsAmount": 1,
+      "BlackListSafe": false,
+      "PvpSafe": true,
+      "AntiRsRange": 5,
+      "pvpMode": false,
+      "Cooldown": true,
+      "Rotate": false,
+      "enabled": false,
+      "name": "Pro #2",
+      "Kills": false
+    },
+    {
+      "attackTable": [
+
+      ],
+      "Visible": true,
+      "ignoreMana": true,
+      "KillsAmount": 1,
+      "BlackListSafe": false,
+      "PvpSafe": true,
+      "AntiRsRange": 5,
+      "pvpMode": false,
+      "Cooldown": true,
+      "Rotate": false,
+      "enabled": false,
+      "name": "Pro #3",
+      "Kills": false
+    },
+    {
+      "attackTable": [
+
+      ],
+      "Visible": true,
+      "ignoreMana": true,
+      "KillsAmount": 1,
+      "BlackListSafe": false,
+      "PvpSafe": true,
+      "AntiRsRange": 5,
+      "pvpMode": false,
+      "Cooldown": true,
+      "Rotate": false,
+      "enabled": false,
+      "name": "Pro #4",
+      "Kills": false
+    },
+    {
+      "attackTable": [
+
+      ],
+      "Visible": true,
+      "Kills": false,
+      "KillsAmount": 1,
+      "ignoreMana": true,
+      "PvpSafe": true,
+      "AntiRsRange": 5,
+      "pvpMode": false,
+      "Cooldown": true,
+      "Rotate": false,
+      "enabled": false,
+      "name": "Pro #5",
+      "BlackListSafe": false
+    }
+  ],
+  "currentBotProfile": 1
+}

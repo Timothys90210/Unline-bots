@@ -1,0 +1,631 @@
+{
+  "widgetPos": {
+    "widget": {
+      "y": 1055,
+      "x": 182
+    }
+  },
+  "extras": {
+    "rope": 9596,
+    "bless": false,
+    "gotoMaxDistance": 40,
+    "holdMwall": true,
+    "checkPlayer": false,
+    "looting": 40,
+    "suppliesControl": false,
+    "killUnder": 1,
+    "joinBot": false,
+    "lootLast": true,
+    "holdMwHot": "",
+    "shovel": 9596,
+    "reachable": true,
+    "autoOpenDoors": false,
+    "stake": false,
+    "scythe": 9596,
+    "title": true,
+    "reUse": false,
+    "height": 360,
+    "pathfinding": true,
+    "machete": 9596,
+    "separatePm": false,
+    "useAll": "",
+    "lootDelay": 200,
+    "holdWgHot": "",
+    "oberon": true,
+    "antiKick": true,
+    "talkDelay": 1000,
+    "timers": true,
+    "screenOnDeath": true,
+    "highlightTarget": true,
+    "huntRoutes": 50,
+    "nextBackpack": true
+  },
+  "foodItems": [
+    {
+      "id": 3582,
+      "count": 1
+    },
+    {
+      "id": 3577,
+      "count": 1
+    },
+    {
+      "id": 3725,
+      "count": 1
+    },
+    {
+      "id": 3601,
+      "count": 1
+    },
+    {
+      "id": 3607,
+      "count": 1
+    },
+    {
+      "id": 3585,
+      "count": 1
+    },
+    {
+      "id": 3592,
+      "count": 1
+    },
+    {
+      "id": 3600,
+      "count": 1
+    },
+    {
+      "id": 6569,
+      "count": 20
+    },
+    {
+      "id": 29934,
+      "count": 3
+    },
+    {
+      "id": 3598,
+      "count": 61
+    },
+    {
+      "id": 3599,
+      "count": 3
+    },
+    {
+      "id": 37030,
+      "count": 1
+    }
+  ],
+  "specialDeposit": {
+    "height": 380,
+    "items": [
+
+    ]
+  },
+  "ingame_hotkeys": "\nlocal healingRuneId = 3160 -- Set the healing rune ID here\nlocal petName = \"Nayoka\" -- Set your pet's name here\nlocal healPercent = 60 -- Set the heal percentage here\naddIcon(\"petHealer\", {item={id=healingRuneId, count=1}, text=\"PetHeal\"}, macro(50, function()\n    for i, spec in ipairs(getSpectators()) do\n        if spec:getName() == petName and spec:getHealthPercent() < healPercent then\n            local healItem = findItem(healingRuneId)\n            if healItem then\n                useWith(healItem, spec)\n            end\n        end\n    end\nend))\n \n\n\nfunction PortalTravel(city, waypoint)\n  for _, widget in ipairs(g_ui.getRootWidget():recursiveGetChildById(\"navPanel\"):getChildren()) do\n    local cityName = widget:getChildren()[1]:getText():lower()\n    if cityName == city:lower() then      \n      local waypointsWidgets = widget:getChildren()[2]:getChildren()\n      for _, waypointWidget in ipairs(waypointsWidgets) do\n        local waypointName = waypointWidget:getText():lower()\n        if  waypointName:lower() == waypoint:lower()  then\n          waypointWidget:onClick()\n          break\n        end\n      end      \n    end\n  end\nend\n\n\nUI.Button(\"Travel Test\", function()\n  PortalTravel(\"Nevada\", \"Temple - Nevada\")\nend)\n\n\n\n\n\n\n\n\n\n\n-- add in \"ingame script editor\"\nlocal size = 500\n--Made By VivoDibra\nCaveBot.actionList:getParent():setHeight(size)\n\naddButton(\"\", \"+ Free Scripts\", function()\n    g_platform.openUrl(\"https://discord.gg/RkQ9nyPMBH\")\nend)\n\n--Join Discord server for free scripts\n--https://discord.gg/RkQ9nyPMBH\n--Made By VivoDibra\n--Tested on vBot 4.8 / OTCV8 3.2 rev 4\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nstorage.widgetPos = storage.widgetPos or {};\n\nlocal widgetConfig = [[\nUIWidget\n  background-color: black\n  opacity: 0.8\n  padding: 0 5\n  focusable: true\n  phantom: false\n  draggable: true\n  text-auto-resize: true\n  color: white\n  text-align: left \n]]\n\nlocal trainWidget = {};\n\ntrainWidget['widget'] = setupUI(widgetConfig, g_ui.getRootWidget());\n\nlocal function attachSpellWidgetCallbacks(key)\n    trainWidget[key].onDragEnter = function(widget, mousePos)\n        if not modules.corelib.g_keyboard.isCtrlPressed() then\n            return false\n        end\n        widget:breakAnchors()\n        widget.movingReference = { x = mousePos.x - widget:getX(), y = mousePos.y - widget:getY() }\n        return true\n    end\n\n    trainWidget[key].onDragMove = function(widget, mousePos, moved)\n        local parentRect = widget:getParent():getRect()\n        local x = math.min(math.max(parentRect.x, mousePos.x - widget.movingReference.x), parentRect.x + parentRect.width - widget:getWidth())\n        local y = math.min(math.max(parentRect.y - widget:getParent():getMarginTop(), mousePos.y - widget.movingReference.y), parentRect.y + parentRect.height - widget:getHeight())\n        widget:move(x, y)\n        return true\n    end\n\n    trainWidget[key].onDragLeave = function(widget, pos)\n        storage.widgetPos[key] = {}\n        storage.widgetPos[key].x = widget:getX();\n        storage.widgetPos[key].y = widget:getY();\n        return true\n    end\nend\n\nfor key, value in pairs(trainWidget) do\n    attachSpellWidgetCallbacks(key)\n    trainWidget[key]:setPosition(\n        storage.widgetPos[key] or {0, 50}\n    )\nend\n\nlocal startTime = os.time()\nlocal initialExp = player:getExperience()\nlocal totalExpGained = 0\n\nlocal function calcStamina()\n    local stam = stamina()\n    local hours = math.floor(stam / 60)\n    local minutes = stam % 60\n    if minutes < 10 then\n        minutes = '0' .. minutes\n    end\n    local percent = math.floor(100 * stam / (42 * 60))\n    return hours .. ':' .. minutes, ' (' .. percent .. '%)'\nend\n\nfunction formatNumberAbbreviated(number)\n    local suffixes = { \"\", \"k\", \"M\", \"B\", \"T\" }  -- Sufijos para miles, millones, billones, etc.\n    local suffixIndex = 1\n\n    while number >= 1000 and suffixIndex < #suffixes do\n        number = number / 1000\n        suffixIndex = suffixIndex + 1\n    end\n\n    return string.format(\"%.2f%s\", number, suffixes[suffixIndex])\nend\n\nlocal function calcExpRates()\n    local currentExp = player:getExperience()\n    totalExpGained = currentExp - initialExp\n    local elapsedTime = os.time() - startTime\n    local expPerHour = (totalExpGained / elapsedTime) * 3600\n    local expPerMinute = (totalExpGained / elapsedTime) * 60\n    return expPerHour, expPerMinute\nend\n\nmacro(100, function()\n    local expPerHour, expPerMinute = calcExpRates()\n    trainWidget['widget']:setText(\n        '~ Level: ' .. player:getLevel() .. '/' .. player:getLevel() + 1 .. ' - ' .. player:getLevelPercent() .. '%' ..\n        '\\n~ Stamina: ' .. calcStamina() ..\n        '\\n~ Exp/h: ' .. formatNumberAbbreviated(expPerHour) ..\n        '\\n~ Exp/min: ' .. formatNumberAbbreviated(expPerMinute)\n    )\nend);\n\n\n\n\n\n \n\n \n\n \n \n -- Amulet (SSA)\nlocal amulet = {\n    amuletequip   = 26773, -- SSA\n    hpequip       = 65,    -- equip threshold\n    amuletunequip = 3081,  -- Prismatic/other\n    hpunequip     = 90     -- unequip threshold\n}\n\nmacro(200, \"SSA: Equip\", function()\n    local id\n    if hppercent() >= amulet.hpequip then\n        id = amulet.amuletequip\n    elseif hppercent() <= amulet.hpunequip then\n        id = amulet.amuletunequip\n    end\n\n    if id and (not getNeck() or getNeck():getId() ~= id) then\n        g_game.equipItemId(id)\n    end\nend)\n\n\n\n \n \n \n \n \n\n\n\n \n\n-- Energy Ring\nlocal ering = {\n    ringequip   = 9392, -- Energy Ring\n    hpequip     = 75,    -- equip threshold\n    ringunequip = 3051,  -- Life Ring / other\n    hpunequip   = 85     -- unequip threshold\n}\n\nmacro(250, \"Energy Ring: Equip\", function()\n    local id\n    if hppercent() >= ering.hpequip then\n        id = ering.ringequip\n    elseif hppercent() <= ering.hpunequip then\n        id = ering.ringunequip\n    end\n\n    if id and (not getFinger() or getFinger():getId() ~= id) then\n        g_game.equipItemId(id)\n    end\nend)\n\n\n\n \n\n\n\n \n\n \n \n \n\n\n\n\n\n\n\n\n\n\n\nmacro(500, \"Green Bombs\", \"\", function()\nif isInPz() then return end\nif not isInPz() then\n   saySpell(\"adevo toxicon lumen\", 5000)\n\nend\nend)\n\n\nmacro(500, \"ViperS tarz\", \"\", function()\nif isInPz() then return end\nif not isInPz() then\n   saySpell(\"exevo pox morir\", 8000)\n\nend\nend)\n local amuletID = 3081\nSSA = macro(100, \"MACRO SSA\", function()\n\n    if getNeck() == nil or getNeck():getId() ~= amuletID then\n      g_game.equipItemId(amuletID)\n      delay(200)\n    end\nend)\n\n\nlocal amulet = 3048\nmacro(100, \"MACRO MIGHT\", function()\n    if getFinger() == null or getFinger():getId() ~= amulet then\n            g_game.equipItemId(amulet)\n            delay(200)\n    end\nend)\n \n--[[\n  +--------------------------------------------------------------+\n  ¦   Script by Lee (Discord: l33_)                              ¦\n  ¦   URL: https://www.trainorcreations.com/coding/otclient/27   ¦\n  ¦--------------------------------------------------------------¦\n  ¦   Website: https://trainorcreations.com                      ¦\n  ¦   Donate: https://trainorcreations.com/donate                ¦\n  ¦   Discord: https://trainorcreations.com/discord              ¦\n  ¦--------------------------------------------------------------¦\n  ¦   PS: Stop ripping off my work and selling it.               ¦\n  +--------------------------------------------------------------+\n]]--\nlocal panelName = \"autoParty\"\nlocal autopartyui = setupUI([[\nPanel\n  height: 38\n\n  BotSwitch\n    id: status\n    anchors.top: parent.top\n    anchors.left: parent.left\n    text-align: center\n    width: 130\n    height: 18\n    text: Auto Party\n\n  Button\n    id: editPlayerList\n    anchors.top: prev.top\n    anchors.left: prev.right\n    anchors.right: parent.right\n    margin-left: 3\n    height: 17\n    text: Setup\n\n  Button\n    id: ptLeave\n    text: Leave Party\n    anchors.left: parent.left\n    anchors.top: prev.bottom\n    width: 86\n    height: 17\n    margin-top: 3\n    color: #ee0000\n\n  Button\n    id: ptShare\n    text: Share XP\n    anchors.left: prev.right\n    anchors.top: prev.top\n    margin-left: 5\n    height: 17\n    width: 86\n\n  ]], parent)\n\ng_ui.loadUIFromString([[\nAutoPartyName < Label\n  background-color: alpha\n  text-offset: 2 0\n  focusable: true\n  height: 16\n\n  $focus:\n    background-color: #00000055\n\n  Button\n    id: remove\n    text: x\n    anchors.right: parent.right\n    margin-right: 15\n    width: 15\n    height: 15\n\nAutoPartyListWindow < MainWindow\n  text: Auto Party\n  size: 180 275\n  @onEscape: self:hide()\n\n  Label\n    id: lblLeader\n    anchors.left: parent.left\n    anchors.right: parent.right\n    anchors.top: parent.top\n    anchors.right: parent.right\n    text-align: center\n    text: Leader Name\n\n  TextEdit\n    id: txtLeader\n    anchors.left: parent.left\n    anchors.right: parent.right\n    anchors.top: prev.bottom\n    margin-top: 5\n\n  Label\n    id: lblParty\n    anchors.left: parent.left\n    anchors.top: prev.bottom\n    anchors.right: parent.right\n    margin-top: 5\n    text-align: center\n    text: Party List\n\n  TextList\n    id: lstAutoParty\n    anchors.top: prev.bottom\n    anchors.left: parent.left\n    anchors.right: parent.right\n    margin-top: 5\n    margin-bottom: 5\n    padding: 1\n    height: 83\n    vertical-scrollbar: AutoPartyListListScrollBar\n\n  VerticalScrollBar\n    id: AutoPartyListListScrollBar\n    anchors.top: lstAutoParty.top\n    anchors.bottom: lstAutoParty.bottom\n    anchors.right: lstAutoParty.right\n    step: 14\n    pixels-scroll: true\n\n  TextEdit\n    id: playerName\n    anchors.left: parent.left\n    anchors.top: lstAutoParty.bottom\n    margin-top: 5\n    width: 120\n\n  Button\n    id: addPlayer\n    text: +\n    anchors.right: parent.right\n    anchors.left: prev.right\n    anchors.top: prev.top\n    margin-left: 3\n\n  HorizontalSeparator\n    id: separator\n    anchors.right: parent.right\n    anchors.left: parent.left\n    anchors.top: prev.bottom\n    margin-top: 8\n\n  CheckBox\n    id: creatureMove\n    anchors.left: parent.left\n    anchors.right: parent.right\n    anchors.top: prev.bottom\n    margin-top: 6\n    text: Invite on move\n    tooltip: This will activate the invite on player move.\n\n  HorizontalSeparator\n    id: separator\n    anchors.right: parent.right\n    anchors.left: parent.left\n    anchors.bottom: closeButton.top\n    margin-bottom: 8\n\n  Button\n    id: closeButton\n    text: Close\n    font: cipsoftFont\n    anchors.right: parent.right\n    anchors.bottom: parent.bottom\n    size: 45 21\n]])\n\nif not storage[panelName] then\n    storage[panelName] = {\n        leaderName = 'Leader',\n        autoPartyList = {},\n        enabled = true,\n    }\nend\n\nif not storage[panelName].onMove then\n    storage[panelName].onMove = false\nend\nrootWidget = g_ui.getRootWidget()\nif rootWidget then\n    tcAutoParty = autopartyui.status\n\n    autoPartyListWindow = UI.createWindow('AutoPartyListWindow', rootWidget)\n    autoPartyListWindow:hide()\n\n    autopartyui.editPlayerList.onClick = function(widget)\n        autoPartyListWindow:show()\n        autoPartyListWindow:raise()\n        autoPartyListWindow:focus()\n    end\n\n    autopartyui.ptShare.onClick = function(widget)\n        g_game.partyShareExperience(not player:isPartySharedExperienceActive())\n    end\n\n    autopartyui.ptLeave.onClick = function(widget)\n        g_game.partyLeave()\n    end\n\n    autoPartyListWindow.closeButton.onClick = function(widget)\n        autoPartyListWindow:hide()\n    end\n\n    if storage[panelName].autoPartyList and #storage[panelName].autoPartyList > 0 then\n        for _, pName in ipairs(storage[panelName].autoPartyList) do\n            local label = g_ui.createWidget(\"AutoPartyName\", autoPartyListWindow.lstAutoParty)\n            label.remove.onClick = function(widget)\n                table.removevalue(storage[panelName].autoPartyList, label:getText())\n                label:destroy()\n            end\n            label:setText(pName)\n        end\n    end\n    autoPartyListWindow.addPlayer.onClick = function(widget)\n        local playerName = autoPartyListWindow.playerName:getText()\n        if playerName:len() > 0 and not (table.contains(storage[panelName].autoPartyList, playerName, true)\n                or storage[panelName].leaderName == playerName) then\n            table.insert(storage[panelName].autoPartyList, playerName)\n            local label = g_ui.createWidget(\"AutoPartyName\", autoPartyListWindow.lstAutoParty)\n            label.remove.onClick = function(widget)\n                table.removevalue(storage[panelName].autoPartyList, label:getText())\n                label:destroy()\n            end\n            label:setText(playerName)\n            autoPartyListWindow.playerName:setText('')\n        end\n    end\n\n    autopartyui.status:setOn(storage[panelName].enabled)\n    autopartyui.status.onClick = function(widget)\n        storage[panelName].enabled = not storage[panelName].enabled\n        widget:setOn(storage[panelName].enabled)\n    end\n\n    autoPartyListWindow.creatureMove:setChecked(storage[panelName].onMove)\n    autoPartyListWindow.creatureMove.onClick = function(widget)\n        storage[panelName].onMove = not storage[panelName].onMove\n        widget:setChecked(storage[panelName].onMove)\n    end\n\n    autoPartyListWindow.playerName.onKeyPress = function(self, keyCode, keyboardModifiers)\n        if not (keyCode == 5) then\n            return false\n        end\n        autoPartyListWindow.addPlayer.onClick()\n        return true\n    end\n\n    autoPartyListWindow.playerName.onTextChange = function(widget, text)\n        if table.contains(storage[panelName].autoPartyList, text, true) then\n            autoPartyListWindow.addPlayer:setColor(\"#FF0000\")\n        else\n            autoPartyListWindow.addPlayer:setColor(\"#FFFFFF\")\n        end\n    end\n\n    autoPartyListWindow.txtLeader.onTextChange = function(widget, text)\n        storage[panelName].leaderName = text\n    end\n    autoPartyListWindow.txtLeader:setText(storage[panelName].leaderName)\n\n    onTextMessage(function(mode, text)\n        if tcAutoParty:isOn() then\n            if mode == 20 then\n                if text:find(\"has joined the party\") then\n                    local data = regexMatch(text, \"([a-z A-Z-]*) has joined the party\")[1][2]\n                    if data then\n                        if table.contains(storage[panelName].autoPartyList, data, true) then\n                            if not player:isPartySharedExperienceActive() then\n                                g_game.partyShareExperience(true)\n                            end\n                        end\n                    end\n                elseif text:find(\"has invited you\") then\n                    if player:getName():lower() == storage[panelName].leaderName:lower() then\n                        return\n                    end\n                    local data = regexMatch(text, \"([a-z A-Z-]*) has invited you\")[1][2]\n                    if data then\n                        if storage[panelName].leaderName:lower() == data:lower() then\n                            local leader = getCreatureByName(data, true)\n                            if leader then\n                                g_game.partyJoin(leader:getId())\n                                return\n                            end\n                        end\n                    end\n                end\n            end\n        end\n    end)\n\n    function creatureInvites(creature)\n        if not creature:isPlayer() or creature == player then return end\n        if creature:getName():lower() == storage[panelName].leaderName:lower() then\n            if creature:getShield() == 1 then\n                g_game.partyJoin(creature:getId())\n                return\n            end\n        end\n        if player:getName():lower() ~= storage[panelName].leaderName:lower() then return end\n        if not table.contains(storage[panelName].autoPartyList, creature:getName(), true) then return end\n        if creature:isPartyMember() or creature:getShield() == 2 then return end\n        g_game.partyInvite(creature:getId())\n    end\n\n    onCreatureAppear(function(creature)\n        if tcAutoParty:isOn() then\n            creatureInvites(creature)\n        end\n    end)\n    onCreaturePositionChange(function(creature, newPos, oldPos)\n        if tcAutoParty:isOn() and storage[panelName].onMove then\n            creatureInvites(creature)\n        end\n    end)\nend  \n local spell = \"adevo ignis lumen\" -- spell text\nlocal soulCost = 3           -- how much soul\nlocal manaCost = 1000       -- how much mana\n\nmacro(500, \"rune maker\", function()\n    blankRune = findItem(7368)\n    if blankRune and soul() >= soulCost and mana() >= manaCost then\n        say(spell)\n    else \n    end\nend)\n \n \nlocal ring = {ringequip = 26800, hpequip = 75, ringunequip = 3048, hpunequip = 95}\n\nmacro(50, \"Might Ring: Equip\", function()\n    local id\n    if hppercent() >= ring.hpequip then\n        id = ring.ringequip\n    elseif hppercent() <= ring.hpunequip then\n        id = ring.ringunequip\n    end\n\n    if id then\n        if not getFinger() or getFinger():getId() ~= id then\n            moveToSlot(id, SlotFinger) \n        end\n    end\nend)\n \n\n \n\n \nsetDefaultTab(\"Follow\")\n\nleaderPositions = {}\nlocal leaderDirections = {}\nlocal leader\nlocal lastLeaderFloor\nlocal ropeId = 646\nlocal standTime = now\n \nFloorChangers = {\n  RopeSpots = {\n    Up = {386},\n    Down = {}\n  },\n  \n  Use = {\n  Up = {1948, 5542, 16693, 16692, 1723, 7771},\n    Down = {435}\n  }\n}\n\nlocal function handleUse(pos)\n  local lastZ = posz()\n  if posz() == lastZ then\n    local newTile = g_map.getTile({x = pos.x, y = pos.y, z = pos.z})\n    if newTile then\n      g_game.use(newTile:getTopUseThing())\n    end\n  end\nend\n\nlocal function handleRope(pos)\n  local lastZ = posz()\n  if posz() == lastZ then\n    local newTile = g_map.getTile({x = pos.x, y = pos.y, z = pos.z})\n    if newTile then\n      useWith(ropeId, newTile:getTopUseThing())\n    end\n  end\nend\n\nlocal floorChangeSelector = {\n  RopeSpots = {Up = handleRope, Down = handleRope},\n  Use = {Up = handleUse, Down = handleUse}\n}\n\nlocal function distance(pos1, pos2)\n  local pos2 = pos2 or player:getPosition()\n  return math.abs(pos1.x - pos2.x) + math.abs(pos1.y - pos2.y)\nend\n\nlocal function executeClosest(possibilities)\n  local closest\n  local closestDistance = 99\n  for _, data in ipairs(possibilities) do\n    local dist = distance(data.pos)\n    if dist < closestDistance then\n      closest = data\n      closestDistance = dist\n    end\n  end\n\n  if closest then\n    closest.changer(closest.pos)\n  return true\n  end\n  \n  return false\nend\n\nlocal function handleFloorChange()\n  local range = 1\n  local p = player:getPosition()\n  local possibleChangers = {}\n  for _, dir in ipairs({\"Down\", \"Up\"}) do\n    for changer, data in pairs(FloorChangers) do\n      for x = -range, range do\n        for y = -range, range do\n          local tile = g_map.getTile({x = p.x + x, y = p.y + y, z = p.z})\n          if tile and tile:getTopUseThing() then\n            if table.find(data[dir], tile:getTopUseThing():getId()) then\n              table.insert(possibleChangers, {changer = floorChangeSelector[changer][dir], pos = {x = p.x + x, y = p.y + y, z = p.z}})\n      end\n          end\n        end\n      end\n    end\n  end\n  if #possibleChangers > 0 then\n    return executeClosest(possibleChangers)\n  end\n  \n  return false\nend\n\nlocal function levitate(dir)\n  turn(dir)\n  schedule(200, function()\n  say('exani hur \"down')\n  say('exani hur \"up')\n  end)\nend\n\nlocal function matchPos(p1, p2)\n  return (p1.x == p2.x and p1.y == p2.y)\nend\n\nlocal function handleUsing()\n  if BotServerFollow.isOff() then\n  handleFloorChange()\n  else\n  local usePos = leaderUsePositions[posz()]\n  if usePos then\n    local useTile = g_map.getOrCreateTile(usePos)\n    if useTile then\n      use(useTile:getTopUseThing())\n    end\n  end\n  end\nend\n\nlocal function useRope(pos)\n  if not pos then\n    pos = player:getPosition()\n  end\n  \n  local dirs = {{0, 0}, {-1, 0}, {1, 0}, {0, -1}, {0, 1}, {1, -1}, {1, 1}, {-1, 1}, {-1, -1}}\n  \n  for i = 1, #dirs do\n  local tpos = {x = pos.x+dirs[i][1], y = pos.y+dirs[i][2], z = posz()}\n  local tile = g_map.getTile(tpos)\n  \n  if tile then\n    if tile:getGround() then\n      local ropeSpots = FloorChangers.RopeSpots.Up\n      if table.contains(ropeSpots, tile:getGround():getId()) then\n        local waitTime = getDistanceBetween(player:getPosition(), tpos) * 60\n      handleRope(tpos)\n      delay(waitTime)\n      return true\n    end\n    end\n  end\n  end\n  \n  return false\nend\n\nlocal function getStandTime()\n  return now - standTime\nend\n\nultimateFollow = macro(50, \"Follow\", function()\n  if not leader then\n  \n  local leaderPos = leaderPositions[posz()]\n  if leaderPos and getDistanceBetween(player:getPosition(), leaderPos) > 0 then\n    autoWalk(leaderPos, 70, {ignoreNonPathable=true, precision=0})\n    delay(200)\n    return\n  end\n  \n    if BotServerFollow.isOff() then\n  \n    if handleFloorChange() then\n    return\n    end\n    \n    local dir = leaderDirections[posz()]\n    if dir then\n    levitate(dir)\n    end\n    \n  else\n  \n    local levitatePos = listenedLeaderPosDir\n    if levitatePos and matchPos(player:getPosition(), levitatePos) then \n    levitate(listenedLeaderDir)\n    return\n    end\n    \n    if useRope(leaderPos) then\n    return\n    end\n    \n    handleUsing()\n  end\n  else\n  listenedLeaderPosDir = nil\n  listenedLeaderDir = nil\n  \n  local lpos = leader:getPosition()\n  local parameters = {ignoreNonPathable=true, precision=1, ignoreCreatures=true}\n  local path = findPath(player:getPosition(), lpos, 40, parameters)\n  local distance = getDistanceBetween(player:getPosition(), lpos)\n  if distance > 1 and not path then\n    handleUsing()\n  elseif distance > 2 then\n    if getStandTime() > 500 then\n        autoWalk(lpos, 40, parameters)\n    delay(200)\n    end\n  end\n  end\nend)\n \nBotServerFollow = macro(1000000, \"With BotServer\", function() end)\nUI.Label(\"Follow Player:\")\n\nUI.TextEdit(storage.followLeader or \"Name\", function(widget, text)\n  storage.followLeader = text\n  leader = getCreatureByName(text)\nend)\n\nonCreaturePositionChange(function(creature, newPos, oldPos)\n  if ultimateFollow.isOff() then return end\n  \n  if creature:getName() == player:getName() then\n    standTime = now\n  return\n  end\n  \n  if creature:getName():lower() ~= storage.followLeader:lower() then return end\n  \n  if newPos then\n  leaderPositions[newPos.z] = newPos\n  lastLeaderFloor = newPos.z\n  if newPos.z == posz() then\n    leader = creature\n  else\n    leader = nil\n  end\n  else\n  leader = nil\n  end\n  \n  if oldPos then\n  if newPos and oldPos.z ~= newPos.z then\n    leaderDirections[oldPos.z] = creature:getDirection()\n  end\n  \n  local oldTile = g_map.getTile(oldPos)\n  local walkPrecision = 1\n  if oldTile then\n    if not oldTile:hasCreature() then\n      walkPrecision = 0\n    end\n  end    \n  \n  autoWalk(oldPos, 40, {ignoreNonPathable=1, precision=walkPrecision})\n  end\nend)\n\nonCreatureAppear(function(creature)\n  if ultimateFollow.isOff() then return end\n  if creature:getPosition().z ~= posz() then return end\n  \n  if creature:getName():lower() == storage.followLeader:lower() then\n  leader = creature\n  elseif creature:getName() == player:getName() then\n  if lastLeaderFloor and lastLeaderFloor == posz() then\n    leader = getCreatureByName(storage.followLeader)\n  end\n  end\nend)\n\nonCreatureDisappear(function(creature)\n  if ultimateFollow.isOff() then return end\n  if creature:getPosition().z == posz() then return end\n  \n  if creature:getName():lower() == storage.followLeader:lower() then\n  leader = nil\n  elseif creature:getName() == player:getName() and posz() ~= lastLeaderFloor then\n  leader = nil\n  end\nend)\n\nleader = getCreatureByName(storage.followLeader)\n\n---------------------------\ncommandLeader = \"Totalyy\"\n---------------------------\n\ncommandLeader = commandLeader:lower()\n\nleaderUsePositions = {}\n\nlistenedLeaderPosDir = nil\nlistenedLeaderDir = nil\n\n-- BOTSERVER\nBotServer.listen(\"followAutoToggle\", function(name, state)\n    local newState = state == \"ON\"\n    \n    -- Update the button text and color across all clients\n    autoFollowButton:setText(\"EZ Clean: \" .. (newState and \"ON\" or \"OFF\"))\n    autoFollowButton:setColor(newState and \"green\" or \"red\")\n    \n    -- Set cleanMacro state across all clients\n    if newState then\n        ultimateFollow:setOn(true)\n    else\n        ultimateFollow:setOff(true)\n    end\n    \n    info(\"Auto Follow \" .. (enabled and \"ENABLED\" or \"DISABLED\") .. \" by \" .. name)\nend)\n\n-- Initialize chase state\nif storage.followAutoEnabled == nil then\n    storage.followAutoEnabled = false\nend\n\nlocal followButton\nautoFollowButton = UI.Button(\"AutoFollow: \" .. (storage.followAutoEnabled and \"ON\" or \"OFF\"), function()\n    local state = storage.followAutoEnabled == true and \"OFF\" or \"ON\"\n\n    BotServer.send(\"followAutoToggle\", state)\n    storage.followAutoEnabled = (state == \"ON\")\n    if state == \"ON\" then\n        ultimateFollow:setOn(true)\n    else\n        ultimateFollow:setOff(true)\n    end\n  \n  autoFollowButton:setText(\"EZ chase: \" .. (state == \"ON\" and \"ON\" or \"OFF\"))\n    autoFollowButton:setColor(state == \"ON\" and \"green\" or \"red\")\nend)\nautoFollowButton:setColor(ultimateFollow:isOn() and \"green\" or \"red\")\n\nlocal key = \"F12\"\nonKeyDown(function(keys)\n  if keys == key then\n    local newState = not ultimateFollow:isOn()\n\n    if newState then\n      ultimateFollow:setOn(true)\n    else\n      ultimateFollow:setOff(true)\n    end\n\n    storage.followAutoEnabled = newState\n    BotServer.send(\"followAutoToggle\", newState and \"ON\" or \"OFF\")\n\n    autoFollowButton:setText(\"EZ chase: \" .. (newState and \"ON\" or \"OFF\"))\n    autoFollowButton:setColor(newState and \"green\" or \"red\")\n  end\nend)\n\n  \n\n \n\n  \nsetDefaultTab(\"Macros\")\nlocal ICON_ID = 52288\n\n-- List of spells to cast in order\nlocal spells = {\n  \"exevo pox morir\",\n  \"adevo toxicon lumen\",\n}\n\n-- Index to track which spell is next\nlocal spellIndex = 1\n\n-- Macro to loop through spells every 1 seconds\nlocal pvespeller = macro(2000, \"PvP Speller\", \"\", function()\n  say(spells[spellIndex])\n\n  -- Move to next spell, wrap around to first if at the end\n  spellIndex = spellIndex + 1\n  if spellIndex > #spells then\n    spellIndex = 1\n  end\nend)\n\n-- Icon UI to toggle the macro\naddIcon(\"PVP Speller\", {item={id = ICON_ID}, text=\"Conjure\"}, function(icon, isOn)\n  pvespeller.setOn(isOn) \nend)\n\n\n \n\n\n\n \nsetDefaultTab(\"Macros2\")\nlocal ICON_ID = 52289\n\n-- List of spells to cast in order\nlocal spells = {\n  \"exevo mas morir\",\n  \"adevo ignis lumen\",\n}\n\n-- Index to track which spell is next\nlocal spellIndex = 1\n\n-- Macro to loop through spells every 1 seconds\nlocal pvespeller = macro(2000, \"PvP Speller\", \"\", function()\n  say(spells[spellIndex])\n\n  -- Move to next spell, wrap around to first if at the end\n  spellIndex = spellIndex + 1\n  if spellIndex > #spells then\n    spellIndex = 1\n  end\nend)\n\n-- Icon UI to toggle the macro\naddIcon(\"PVP Speller\", {item={id = ICON_ID}, text=\"Conjure\"}, function(icon, isOn)\n  pvespeller.setOn(isOn) \nend)\n \n\n\n\n\n   \nsetDefaultTab(\"Follow\")\nlocal a = {\n    [\"dog\"] = 32,\n    [\"dragon\"] = 34,\n    [\"rat\"] = 21,\n    [\"troll\"] = 15,\n    [\"spider\"] = 30,\n    [\"bug\"] = 45,\n    [\"ghost\"] = 48,\n    [\"ghoul\"] = 18,\n    [\"orc\"] = 5,\n    [\"cyclops\"] = 22,\n    [\"demon\"] = 35,\n    [\"minotaur\"] = 25,\n    [\"snake\"] = 28,\n    [\"rotworm\"] = 26,\n    [\"wolf\"] = 27,\n    [\"lion\"] = 41,\n}\n\n\n\n----------------------------------- NO EDIT BELOW THIS LINE --------------------------------------------\n\ngetChildByText = function(b, c)\n    c = c or g_ui.getRootWidget()\n    for d, e in ipairs(c:getChildren()) do if e:getText():lower() == b:lower() then return e else\n            local e = getChildByText(b, e)\n            if e then return e end\n        end end\nend; function postostring(f) return f.x .. \" \" .. f.y .. \" \" .. f.z end; local g; local h = macro(10000,\n    \"Auto-Orbs CaveBot\", function() end)\nlocal function i()\n    local j = getChildByText(\"Bot Verification\")\n    if not j then return end; local k = j:getChildById(\"creature\")\n    local l = k:getOutfit().type; local m = table.find(a, l)\n    if not m then\n        playAlarm()\n        modules.game_textmessage.displayPrivateMessage(\"Creature not found in the list, ID: \" .. tostring(l))\n        schedule(150,\n            function()\n                local n = modules.corelib.os.date(\"%Y-%m-%d %H-%M-%S\")\n                modules.corelib.g_app.doScreenshot(\"botVerification \" .. n .. \"ID-\" .. tostring(l) .. \".png\")\n            end)\n        schedule(1000, function()\n            j:getChildById(\"cancelButton\"):onClick()\n            schedule(800, function() i() end)\n        end)\n        return true\n    end; j:getChildById(\"textEdit\"):setText(m)\n    j:getChildById(\"sendButton\"):onClick()\n    CaveBot.setOn(true)\n    TargetBot.setOn(true)\n    g = nil; return true\nend; local o = macro(250,\n    function(macro)\n        if macro.retries > 100 then\n            macro.retries = 0; CaveBot.setOn(true)\n            TargetBot.setOn(true)\n            macro.setOn(false)\n            g = nil\n        end; macro.retries = macro.retries + 1; if not g then return end; if postostring(player:getPosition()) == postostring(g) then\n            schedule(1500, function() if not i() then\n                    CaveBot.setOn(true)\n                    TargetBot.setOn(true)\n                end end)\n            macro.retries = 0; macro.setOn(false)\n            return\n        end; TargetBot.setOn(not autoWalk(g, 20, { ignoreNonPathable = true, precision = 0 }))\n    end)\no.setOn(false)\no.retries = 0; onAddThing(function(p, q)\n    if h:isOff() or p:getPosition().z ~= player:getPosition().z then return end; if q:isEffect() and q:getId() == 210 then\n        g = p:getPosition()\n        CaveBot.setOff()\n        o.retries = 0; o.setOn(true)\n    end\nend)\n\n \n\n \n\n\n\n\n \n\n-- IDs de efectos principales (orbFx)\nlocal orbFxIds = {231, 544, 551, 552, 553}\n\n-- IDs de efectos extra\nlocal extraEffectIds = {\n    18, 19, 20, 22, 23, 24, 25, 29, 30, 31, 89, 101, 154, 212, 214, 215, 216,\n    499, 500, 501, 502, 503, 504, 505, 506,\n    507, 508, 509, 510, 511, 512, 513, 514, 515,\n    516, 517, 518, 519, 520, 521, 522, 523, 524,\n    525, 526, 527, 528, 529, 530, 531, 532, 533, 534,\n    535, 536, 537, 538, 539, 540, 541, 542\n}\n\n-- IDs de efectos de orbe inicial\nlocal initialOrbIds = {210, 514, 515, 516, 517, 518}\n\n-- Configuración\nlocal maxStepDistance = 8\nlocal flags = { ignoreNonPathable = true, precision = 1 }\nlocal orbMessage = \"An orb has spawned, step on it to capture it.\"\nlocal orbPauseTime = 10 -- segundos\n\n-- Estado interno\nlocal cavebotOffByMacro = false\nlocal orbPauseEndTime = 0\n\n-- Función auxiliar: verificar efectos en un tile\nlocal function hasEffect(tile, effectList)\n    for _, fx in ipairs(tile:getEffects()) do\n        for _, id in ipairs(effectList) do\n            if fx:getId() == id then\n                return true\n            end\n        end\n    end\n    return false\nend\n\n-- Función para reanudar bots\nlocal function resumeBots()\n    if cavebotOffByMacro then\n        CaveBot.setOn()\n        cavebotOffByMacro = false\n    end\n    orbPauseEndTime = 0\nend\n\n-- Macro principal\nOrbes = macro(200, \"Orbes\", function()\n    local playerPos = player:getPosition()\n    local now = os.clock()\n\n    -- Si se terminó el tiempo de pausa, reactivar\n    if orbPauseEndTime > 0 and now >= orbPauseEndTime then\n        resumeBots()\n    end\n\n    -- Buscar y pisar orbes\n    for _, tile in ipairs(g_map.getTiles(playerPos.z)) do\n        local pos = tile:getPosition()\n        if getDistanceBetween(playerPos, pos) <= maxStepDistance then\n            -- Caso normal: orbFx + extraEffect\n            if hasEffect(tile, orbFxIds) and hasEffect(tile, extraEffectIds) then\n                delay(2000)\n                if findPath(playerPos, pos, 15, flags) then\n                    autoWalk(pos, 15, flags)\n                end\n            -- Caso especial: orbe inicial\n            elseif hasEffect(tile, initialOrbIds) then\n                delay(2000)\n                if findPath(playerPos, pos, 15, flags) then\n                    autoWalk(pos, 15, flags)\n                end\n            end\n        end\n    end\nend)\n\n-- Detectar mensaje de aparición del orbe\nonTextMessage(function(mode, text)\n    if text:lower():find(orbMessage:lower()) then\n        if Orbes.isOff() then return end\n\n        if CaveBot.isOn() then\n            CaveBot.setOff()\n            cavebotOffByMacro = true\n        end\n\n        orbPauseEndTime = os.clock() + orbPauseTime\n    end\nend)\n\n-- Detectar mensajes de captura para reanudar todo antes de tiempo\nonTextMessage(function(mode, text)\n    local lowerText = text:lower()\n    if lowerText:find(\"you have captured\") or lowerText:find(\"you have absorbed an orb\") then\n        if Orbes.isOff() or orbPauseEndTime == 0 then return end\n        schedule(1000, function()\n            resumeBots()\n        end)\n    end\nend)\n\n \n\n\n\n\n \n\n\n \n\n\n\n\n \n\n \n\n\n\n \n\n\n \n \n----------------------------------- NO EDIT BELOW THIS LINE --------------------------------------------\n\ngetChildByText = function(b, c)\n    c = c or g_ui.getRootWidget()\n    for d, e in ipairs(c:getChildren()) do\n        if e:getText():lower() == b:lower() then\n            return e\n        else\n            local e = getChildByText(b, e)\n            if e then return e end\n        end\n    end\nend\n\nfunction postostring(f)\n    return f.x .. \" \" .. f.y .. \" \" .. f.z\nend\n\nlocal g\n\nlocal hallowen = macro(10000, function() end)\n\n-- Icono visual para activar/desactivar el Orbs Cavebot\naddIcon(\"Hallowen\", { item = { id = 11553, count = 1 }, text = \"Hallowen\" }, hallowen)\n\n-- Macro: Auto aceptar orb de Halloween Battlegrounds\nonAddThing(function(p, q)\n  if hallowen:isOff() or p:getPosition().z ~= player:getPosition().z then return end\n\n  -- Detección del orb en el piso\n if q:isItem() and (q:getId() == 11553 or q:getId() == 47087) then\n    modules.game_textmessage.displayGameMessage(\"?? Orb detectado, caminando hacia él...\")\n\n    -- Apaga el cavebot y camina al orb\n    CaveBot.setOff()\n    for r = 0, 10 do\n      schedule(r * 500, function()\n        autoWalk(p:getPosition(), 20, { ignoreNonPathable = true, precision = 1 })\n      end)\n    end\n\n    -- Espera 4 segundos para que aparezca la ventana y luego intenta hacer click en YES\n    schedule(2500, function()\n      local root = g_ui.getRootWidget()\n      if not root then\n        modules.game_textmessage.displayGameMessage(\"?? No se encontró rootWidget.\")\n        CaveBot.setOn()\n        return\n      end\n\n      -- Encuentra la ventana del modal\n      local modal = root:recursiveGetChildById(\"modalDialog\")\n      if not modal then\n        modules.game_textmessage.displayGameMessage(\"?? Ventana 'modalDialog' no encontrada.\")\n        CaveBot.setOn()\n        return\n      end\n\n      -- Encuentra el panel de botones\n      local buttonsPanel = modal:recursiveGetChildById(\"buttonsPanel\")\n      if not buttonsPanel then\n        modules.game_textmessage.displayGameMessage(\"?? Panel de botones no encontrado.\")\n        CaveBot.setOn()\n        return\n      end\n\n      -- Busca el botón 'Yes' dentro del panel\n      local yesBtn = nil\n      for _, child in ipairs(buttonsPanel:getChildren()) do\n        local okTxt, txt = pcall(function() return child:getText() end)\n        if okTxt and txt and txt:lower() == \"yes\" then\n          yesBtn = child\n          break\n        end\n      end\n\n      -- Hace click en Yes\n      if yesBtn then\n        local ok = pcall(function() yesBtn:onClick() end)\n        if ok then\n          modules.game_textmessage.displayGameMessage(\"? Botón 'Yes' click ejecutado.\")\n          CaveBot.setOn()\n        else\n          modules.game_textmessage.displayGameMessage(\"?? Error al clickear 'Yes'.\")\n          CaveBot.setOn()\n        end\n      else\n        modules.game_textmessage.displayGameMessage(\"? Botón 'Yes' no encontrado.\")\n        CaveBot.setOn()\n      end\n    end)\n  end\nend)\n\n \n \n\n",
+  "followLeader": "fomoco",
+  "caveBotTasker": {
+    "max": 0,
+    "monster": "",
+    "inProgress": false,
+    "count": 6,
+    "taskName": ""
+  },
+  "autoTradeMessage": "!dusts",
+  "followAutoEnabled": false,
+  "cavebotSell": [
+    {
+      "count": 1,
+      "id": 23544
+    },
+    {
+      "count": 1,
+      "id": 3081
+    }
+  ],
+  "alarms": {
+    "privateMsg": {
+      "enabled": true
+    },
+    "customMessage": {
+      "enabled": true,
+      "value": "The Christmas Hunt has"
+    },
+    "flashClient": [
+
+    ],
+    "lowMana": {
+      "value": 20
+    },
+    "creatureDetected": {
+      "enabled": false
+    },
+    "damageTaken": [
+
+    ],
+    "playerAttack": {
+      "enabled": true
+    },
+    "ignoreFriends": {
+      "enabled": true
+    },
+    "defaultMsg": [
+
+    ],
+    "creatureName": {
+      "value": ""
+    },
+    "enabled": false,
+    "lowHealth": {
+      "value": 30,
+      "enabled": true
+    },
+    "playerDetected": {
+      "enabled": false
+    }
+  },
+  "targetBotDynamicLureDelayValue": 250,
+  "EquipperPanel": {
+    "enabled": false,
+    "bosses": [
+
+    ],
+    "rules": [
+
+    ]
+  },
+  "autoEquip": [
+    {
+      "item1": 3048,
+      "title": "Auto Equip",
+      "item2": 3048,
+      "on": false,
+      "slot": 9
+    },
+    {
+      "item1": 3081,
+      "title": "Auto Equip",
+      "item2": 3081,
+      "on": false,
+      "slot": 2
+    },
+    {
+      "item1": 0,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 0
+    }
+  ],
+  "golabelName": "player name",
+  "_configs": {
+    "targetbot_configs": {
+      "enabled": false,
+      "selected": "STAR"
+    },
+    "cavebot_configs": {
+      "selected": "bogs",
+      "enabled": false
+    }
+  },
+  "checkVersion": 1774965353,
+  "targetBotTargets": 1,
+  "itemsToEquip": [
+
+  ],
+  "targetBotLureMax": 8,
+  "autoParty": {
+    "onMove": true,
+    "enabled": true,
+    "autoPartyList": [
+      "Jokrik"
+    ],
+    "leaderName": "Don Kako"
+  },
+  "dropper": {
+    "enabled": true,
+    "trashItems": [
+      {
+        "id": 52664,
+        "count": 1
+      },
+      {
+        "id": 3731,
+        "count": 6
+      },
+      {
+        "id": 52668,
+        "count": 1
+      },
+      {
+        "id": 3286,
+        "count": 1
+      },
+      {
+        "id": 3115,
+        "count": 1
+      },
+      {
+        "id": 3031,
+        "count": 76
+      },
+      {
+        "id": 27283,
+        "count": 6
+      },
+      {
+        "id": 7443,
+        "count": 3
+      },
+      {
+        "id": 7439,
+        "count": 4
+      },
+      {
+        "id": 7440,
+        "count": 4
+      },
+      {
+        "id": 3411,
+        "count": 1
+      },
+      {
+        "id": 23375,
+        "count": 8
+      }
+    ],
+    "useItems": [
+      {
+        "count": 1,
+        "id": 21203
+      },
+      {
+        "count": 1,
+        "id": 14758
+      }
+    ],
+    "capItems": [
+      {
+        "count": 1,
+        "id": 21175
+      }
+    ]
+  },
+  "_macros": {
+    "": false,
+    "Follow": false,
+    "rune maker": false,
+    "Green Bombs": false,
+    "Hold Target": true,
+    "Auto-Orbs CaveBot": false,
+    "Esconde Mensagens Laranjas": false,
+    "Orbes": false,
+    "MACRO MIGHT": false,
+    "Eat Food": false,
+    "Bot off if no bless": true,
+    "PvP Speller": false,
+    "MACRO SSA": false,
+    "Might Ring: Equip": false,
+    "Exchange money": false,
+    "SSA: Equip": true,
+    "With BotServer": false,
+    "Energy Ring: Equip": true
+  },
+  "moneyItems": [
+    {
+      "count": 1,
+      "id": 3031
+    },
+    {
+      "count": 1,
+      "id": 3035
+    }
+  ],
+  "playerList": {
+    "enemyList": [
+
+    ],
+    "outfits": false,
+    "friendList": [
+      "Don Kako",
+      "Saady",
+      "Quick Scope"
+    ],
+    "blackList": [
+
+    ],
+    "highlight": false,
+    "marks": false,
+    "groupMembers": true
+  },
+  "newHealer": {
+    "settings": [
+      {
+        "type": "HealItem",
+        "value": 268,
+        "text": "Mana Item "
+      },
+      {
+        "type": "HealScroll",
+        "value": 6,
+        "text": "Item Range: "
+      },
+      {
+        "type": "HealItem",
+        "value": 3160,
+        "text": "Health Item "
+      },
+      {
+        "type": "HealScroll",
+        "value": 2,
+        "text": "Mas Res Players: "
+      },
+      {
+        "type": "HealScroll",
+        "value": 80,
+        "text": "Heal Friend at: "
+      },
+      {
+        "type": "HealScroll",
+        "value": 80,
+        "text": "Use Gran Sio at: "
+      },
+      {
+        "type": "HealScroll",
+        "value": 80,
+        "text": "Min Player HP%: "
+      },
+      {
+        "type": "HealScroll",
+        "value": 50,
+        "text": "Min Player MP%: "
+      }
+    ],
+    "groups": [
+
+    ],
+    "customPlayers": [
+
+    ],
+    "conditions": {
+      "party": true,
+      "knights": true,
+      "friends": true,
+      "botserver": true,
+      "paladins": true,
+      "druids": true,
+      "sorcerers": true,
+      "guild": true
+    },
+    "enabled": false,
+    "priorities": [
+      {
+        "health": true,
+        "enabled": true,
+        "name": "Health Item"
+      },
+      {
+        "custom": true,
+        "enabled": false,
+        "name": "Custom Spell"
+      },
+      {
+        "strong": true,
+        "enabled": false,
+        "name": "Exura Gran Sio"
+      },
+      {
+        "normal": true,
+        "enabled": false,
+        "name": "Exura Sio"
+      },
+      {
+        "enabled": false,
+        "name": "Exura Gran Mas Res",
+        "area": true
+      },
+      {
+        "enabled": false,
+        "name": "Mana Item",
+        "mana": true
+      }
+    ],
+    "vocations": [
+
+    ]
+  },
+  "renameContainers": {
+    "sort": true,
+    "forceOpen": true,
+    "list": [
+      {
+        "items": [
+          {
+            "count": 1,
+            "id": 3051
+          }
+        ],
+        "value": "2nd",
+        "enabled": true,
+        "min": false,
+        "item": 9605
+      },
+      {
+        "items": [
+
+        ],
+        "value": "3rd",
+        "enabled": true,
+        "min": false,
+        "item": 52506
+      },
+      {
+        "items": [
+          {
+            "count": 1,
+            "id": 3048
+          }
+        ],
+        "value": "Mights",
+        "item": 2871,
+        "enabled": true,
+        "min": false,
+        "openNext": false
+      },
+      {
+        "items": [
+          {
+            "count": 1,
+            "id": 3081
+          }
+        ],
+        "value": "SSA",
+        "item": 2870,
+        "enabled": true,
+        "min": false,
+        "openNext": false
+      },
+      {
+        "items": [
+          {
+            "count": 75,
+            "id": 7366
+          }
+        ],
+        "value": "ViperStarz",
+        "item": 2865,
+        "enabled": true,
+        "min": true,
+        "openNext": false
+      },
+      {
+        "items": [
+          {
+            "count": 20,
+            "id": 7368
+          }
+        ],
+        "value": "AssassinStarz",
+        "enabled": true,
+        "min": true,
+        "item": 2867
+      },
+      {
+        "items": [
+          {
+            "count": 100,
+            "id": 1781
+          }
+        ],
+        "value": "Stones",
+        "enabled": true,
+        "min": true,
+        "item": 2854
+      },
+      {
+        "items": [
+          {
+            "id": 27284,
+            "count": 49
+          },
+          {
+            "id": 47453,
+            "count": 100
+          }
+        ],
+        "value": "POTS",
+        "enabled": true,
+        "min": false,
+        "item": 2868
+      },
+      {
+        "items": [
+          {
+            "id": 52288,
+            "count": 35
+          },
+          {
+            "id": 52289,
+            "count": 100
+          },
+          {
+            "id": 52287,
+            "count": 100
+          },
+          {
+            "id": 52764,
+            "count": 100
+          }
+        ],
+        "value": "BombS",
+        "item": 9602,
+        "enabled": true,
+        "min": true,
+        "openNext": true
+      },
+      {
+        "items": [
+          {
+            "id": 30255,
+            "count": 1
+          },
+          {
+            "id": 32577,
+            "count": 1
+          },
+          {
+            "id": 46088,
+            "count": 1
+          },
+          {
+            "id": 30256,
+            "count": 1
+          },
+          {
+            "id": 3043,
+            "count": 3
+          },
+          {
+            "id": 32578,
+            "count": 2
+          },
+          {
+            "id": 30254,
+            "count": 2
+          },
+          {
+            "id": 6546,
+            "count": 1
+          },
+          {
+            "id": 19083,
+            "count": 34
+          }
+        ],
+        "value": "MainBP",
+        "enabled": true,
+        "min": false,
+        "item": 52480
+      }
+    ],
+    "purse": false,
+    "enabled": false,
+    "height": 170
+  },
+  "TargetBotLure": true,
+  "_icons": {
+    "Hallowen": {
+      "y": 0.17219730941704,
+      "x": 0.0069185737094199,
+      "enabled": false
+    },
+    "petHealer": {
+      "y": 0.06431718061674,
+      "x": 0.0074507716870676,
+      "enabled": false
+    },
+    "PVP Speller": {
+      "y": 0.44125560538117,
+      "x": 0.0079829696647153,
+      "enabled": false
+    }
+  }
+}

@@ -1,0 +1,68 @@
+setDefaultTab("Main")
+UI.Separator()
+
+local SLOT_NECK = 2
+local SLOT_FINGER = 9
+
+local mightRingID = 3048
+local normalRingID = 52478
+local lastRingSwap = 0
+
+local function equipToSlot(itemId, slot)
+    local item = findItem(itemId)
+    if item then
+        moveToSlot(item, slot)
+        return true
+    end
+    return false
+end
+
+macro(100, "Might Ring", function()
+    local currentRing = getFinger()
+    local currentId = currentRing and currentRing:getId() or 0
+
+    if os.time() - lastRingSwap < 1 then return end
+
+    if hppercent() <= 99 then
+        -- Equip Might Ring when HP is low
+        if currentId ~= mightRingID then
+            if equipToSlot(mightRingID, SLOT_FINGER) then
+                lastRingSwap = os.time()
+            end
+        end
+    else
+        -- Re-equip normal ring when HP is above 80%
+        if currentId ~= normalRingID then
+            if equipToSlot(normalRingID, SLOT_FINGER) then
+                lastRingSwap = os.time()
+            end
+        end
+    end
+end)
+
+local stoneSkinID = 3081
+local normalAmuletID = 26773
+local lastAmuletSwap = 0
+
+SSA = macro(100, "Stone skin amulet", function()
+    local currentAmulet = getNeck()
+    local currentId = currentAmulet and currentAmulet:getId() or 0
+
+    if os.time() - lastAmuletSwap < 1 then return end
+
+    if hppercent() <= 99 then
+        -- Equip Stone Skin when HP is low
+        if currentId ~= stoneSkinID then
+            if equipToSlot(stoneSkinID, SLOT_NECK) then
+                lastAmuletSwap = os.time()
+            end
+        end
+    else
+        -- Re-equip normal amulet when HP is above 80%
+        if currentId ~= normalAmuletID then
+            if equipToSlot(normalAmuletID, SLOT_NECK) then
+                lastAmuletSwap = os.time()
+            end
+        end
+    end
+end)

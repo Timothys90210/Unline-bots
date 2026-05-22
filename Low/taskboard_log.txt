@@ -1,0 +1,9 @@
+=== setWeeklyDifficulty 4 ===
+time: 1776948348
+[setWeeklyDifficulty 4] started
+  [before] huntingPoints=175  bountyPoints=0
+  killTask2 before: Void Plaguesmith
+  setWeeklyDifficulty(4) called
+  [after] huntingPoints=175  bountyPoints=0
+  killTask2 after: Abysslurker Serpent
+[setWeeklyDifficulty 4] done

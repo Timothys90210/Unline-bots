@@ -1,0 +1,180 @@
+{
+  "AttackBot": [
+    {
+      "BlackListSafe": false,
+      "Training": true,
+      "Visible": true,
+      "name": "Pro #1",
+      "attackTable": [
+        {
+          "itemId": 0,
+          "mana": 1,
+          "minHp": 0,
+          "monsters": true,
+          "category": 1,
+          "spell": "exori mas cruentus",
+          "count": 1,
+          "creatures": "*",
+          "tooltip": false,
+          "patternCategory": 1,
+          "enabled": true,
+          "cooldown": 8,
+          "maxHp": 100,
+          "orMore": true,
+          "description": "[3 Sqm] 1+ Any Creatures: exori mas cruentus, targeted (0%-100%)",
+          "pattern": 3
+        },
+        {
+          "itemId": 0,
+          "mana": 1,
+          "minHp": 0,
+          "monsters": true,
+          "category": 4,
+          "spell": "utito tempo",
+          "count": 1,
+          "creatures": "*",
+          "tooltip": false,
+          "patternCategory": 3,
+          "enabled": true,
+          "cooldown": 60,
+          "maxHp": 100,
+          "orMore": true,
+          "description": "[10 Sqm Range] 1+ Any Creatures: utito tempo, empowerment (0%-100%)",
+          "pattern": 10
+        },
+        {
+          "itemId": 0,
+          "mana": 1,
+          "minHp": 0,
+          "monsters": true,
+          "category": 1,
+          "spell": "exana amp res",
+          "count": 4,
+          "creatures": "*",
+          "tooltip": false,
+          "patternCategory": 1,
+          "enabled": true,
+          "cooldown": 6,
+          "maxHp": 100,
+          "orMore": true,
+          "description": "[7 Sqm] 4+ Any Creatures: exana amp res, targeted (0%-100%)",
+          "pattern": 7
+        },
+        {
+          "itemId": 0,
+          "mana": 1,
+          "minHp": 0,
+          "monsters": true,
+          "category": 5,
+          "spell": "daemonium vulnus",
+          "count": 4,
+          "creatures": "*",
+          "tooltip": false,
+          "patternCategory": 4,
+          "enabled": true,
+          "cooldown": 8,
+          "maxHp": 100,
+          "orMore": true,
+          "description": "[Adjacent] 4+ Any Creatures: daemonium vulnus, absolute (0%-100%)",
+          "pattern": 1
+        },
+        {
+          "itemId": 0,
+          "mana": 1,
+          "minHp": 0,
+          "monsters": true,
+          "category": 4,
+          "spell": "utani evado",
+          "count": 1,
+          "creatures": "*",
+          "tooltip": false,
+          "patternCategory": 3,
+          "enabled": true,
+          "cooldown": 20,
+          "maxHp": 100,
+          "orMore": true,
+          "description": "[10 Sqm Range] 1+ Any Creatures: utani evado, empowerment (0%-100%)",
+          "pattern": 10
+        }
+      ],
+      "Rotate": false,
+      "Cooldown": true,
+      "AntiRsRange": 5,
+      "Kills": false,
+      "pvpMode": false,
+      "PvpSafe": true,
+      "enabled": true,
+      "KillsAmount": 1,
+      "ignoreMana": true
+    },
+    {
+      "attackTable": [
+
+      ],
+      "Visible": true,
+      "ignoreMana": true,
+      "name": "Pro #2",
+      "BlackListSafe": false,
+      "Rotate": false,
+      "AntiRsRange": 5,
+      "Cooldown": true,
+      "pvpMode": false,
+      "PvpSafe": true,
+      "enabled": false,
+      "KillsAmount": 1,
+      "Kills": false
+    },
+    {
+      "attackTable": [
+
+      ],
+      "Visible": true,
+      "ignoreMana": true,
+      "name": "Pro #3",
+      "BlackListSafe": false,
+      "Rotate": false,
+      "AntiRsRange": 5,
+      "Cooldown": true,
+      "pvpMode": false,
+      "PvpSafe": true,
+      "enabled": false,
+      "KillsAmount": 1,
+      "Kills": false
+    },
+    {
+      "attackTable": [
+
+      ],
+      "Visible": true,
+      "ignoreMana": true,
+      "name": "Pro #4",
+      "BlackListSafe": false,
+      "Rotate": false,
+      "AntiRsRange": 5,
+      "Cooldown": true,
+      "pvpMode": false,
+      "PvpSafe": true,
+      "enabled": false,
+      "KillsAmount": 1,
+      "Kills": false
+    },
+    {
+      "attackTable": [
+
+      ],
+      "Visible": true,
+      "ignoreMana": true,
+      "name": "Pro #5",
+      "BlackListSafe": false,
+      "Rotate": false,
+      "AntiRsRange": 5,
+      "Cooldown": true,
+      "pvpMode": false,
+      "PvpSafe": true,
+      "enabled": false,
+      "KillsAmount": 1,
+      "Kills": false
+    }
+  ],
+  "currentBotProfile": 1
+}

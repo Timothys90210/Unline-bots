@@ -1,0 +1,20 @@
+{
+  "supplies": {
+    "Testing": {
+      "staminaSwitch": true,
+      "items": {
+        "27283": {
+          "max": 300,
+          "min": 100,
+          "avg": 150
+        }
+      },
+      "staminaValue": "840",
+      "capSwitch": true,
+      "capValue": "600",
+      "imbues": false,
+      "SoftBoots": false
+    },
+    "currentProfile": "Testing"
+  }
+}

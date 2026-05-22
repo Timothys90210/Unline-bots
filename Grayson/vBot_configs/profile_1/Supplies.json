@@ -1,0 +1,19 @@
+{
+  "supplies": {
+    "currentProfile": "Grayson",
+    "Grayson": {
+      "staminaSwitch": true,
+      "items": {
+        "47453": {
+          "max": 100,
+          "min": 50,
+          "avg": 75
+        }
+      },
+      "staminaValue": "840",
+      "capSwitch": true,
+      "capValue": "500",
+      "imbues": true
+    }
+  }
+}

@@ -1,0 +1,12 @@
+=== game_tasks onKillsValueChange ===
+time: 1777540067
+[game_tasks onKillsValueChange] started
+  [before] huntingPoints=5105  bountyPoints=678
+  scroll widget: id=scroll text='' visible=true enabled=true
+  onKillsValueChange(): OK
+  onKillsValueChange(1): OK
+  onKillsValueChange(0): OK
+  onKillsValueChange(100): OK
+  onKillsValueChange(scrollWidget): OK
+  [after] huntingPoints=5105  bountyPoints=678
+[onKillsValueChange] done

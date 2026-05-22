@@ -1,0 +1,23 @@
+local amulet = 3051        -- Energy Ring
+local equip_ammy = 52478  -- Ring normal
+
+Ssa = macro(100, "Mana Shield switch", function() 
+    local hp = hppercent()
+    local mp = manapercent()
+    local finger = getFinger()
+
+    -- Equipar Energy Ring SOLO si tiene 20% o más de mana
+    if hp <= 60 and mp >= 20 then
+        if not finger or finger:getId() ~= amulet then
+            g_game.equipItemId(amulet)
+            delay(200)
+        end
+
+    -- Volver a Ring normal cuando sube la vida
+    elseif hp >= 60 then
+        if not finger or finger:getId() ~= equip_ammy then
+            g_game.equipItemId(equip_ammy)
+            delay(200)
+        end
+    end
+end)

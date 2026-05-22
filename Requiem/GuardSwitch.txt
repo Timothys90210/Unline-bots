@@ -1,0 +1,48 @@
+-- Guard Switch
+-- Switches to full defense when trainer monsters are nearby, restores previous mode when they leave
+
+local TRAINER_RANGE = 10
+local FIGHT_DEFENSE = 3  -- try 2 if this doesn't work (0-indexed clients)
+
+local trainerDetected = false
+local savedFightMode  = nil
+
+local function hasTrainerNearby(range)
+    for _, spec in pairs(getSpectators()) do
+        if spec:isMonster() and (g_game.getClientVersion() < 960 or spec:getType() < 3) then
+            local name = spec:getName()
+            if name and name:lower():find("trainer", 1, true)
+               and distanceFromPlayer(spec:getPosition()) <= range then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+local guardSwitch = macro(2000, function()
+    if not player then return end
+
+    local hasTrainer = hasTrainerNearby(TRAINER_RANGE)
+
+    if not hasTrainer then
+        if trainerDetected then
+            trainerDetected = false
+            if savedFightMode then
+                g_game.setFightMode(savedFightMode)
+                savedFightMode = nil
+                modules.game_textmessage.displayGameMessage("[GuardSwitch] No trainer nearby — fight mode restored")
+            end
+        end
+        return
+    end
+
+    if not trainerDetected then
+        trainerDetected = true
+        savedFightMode = g_game.getFightMode()
+        g_game.setFightMode(FIGHT_DEFENSE)
+        modules.game_textmessage.displayGameMessage("[GuardSwitch] Trainer detected — switching to full defense")
+    end
+end)
+
+addIcon("GuardSwitch", { item = { id = 52735, count = 1 }, text = "Guard Switch" }, guardSwitch)

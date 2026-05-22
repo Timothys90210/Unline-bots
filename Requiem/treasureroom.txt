@@ -1,0 +1,102 @@
+--------------------------------- NO EDIT BELOW THIS LINE --------------------------------------------
+
+getChildByText = function(b, c)
+    c = c or g_ui.getRootWidget()
+    for d, e in ipairs(c:getChildren()) do
+        if e:getText():lower() == b:lower() then
+            return e
+        else
+            local e = getChildByText(b, e)
+            if e then return e end
+        end
+    end
+end
+
+function postostring(f)
+    return f.x .. " " .. f.y .. " " .. f.z
+end
+
+local g
+
+local treasureRoom = macro(10000, function() end)
+
+-- Visual icon to activate/deactivate the Treasure Room auto-accept
+addIcon("TreasureRoom", { item = { id = 47087, count = 1 }, text = "TreasureRoom" }, treasureRoom)
+
+-- Macro: Auto accept Treasure Guardian System
+onAddThing(function(p, q)
+  if treasureRoom:isOff() or p:getPosition().z ~= player:getPosition().z then return end
+
+  -- Detection of the treasure room orb on the floor
+ if q:isItem() and (q:getId() == 47087) then
+    modules.game_textmessage.displayGameMessage("💎 Treasure Room detected, walking towards it...")
+
+    -- Set flag to prevent zOrbs.lua interference
+    HALLOWEEN_PORTAL_ACTIVE = true
+
+    -- Turn off the cavebot and walk to the orb
+    CaveBot.setOff()
+    for r = 0, 10 do
+      schedule(r * 500, function()
+        autoWalk(p:getPosition(), 20, { ignoreNonPathable = true, precision = 1 })
+      end)
+    end
+
+    -- Wait 4 seconds for the window to appear and then try to click on YES
+    schedule(4500, function()
+      local root = g_ui.getRootWidget()
+      if not root then
+        modules.game_textmessage.displayGameMessage("❌ rootWidget not found.")
+        HALLOWEEN_PORTAL_ACTIVE = false
+        CaveBot.setOn()
+        return
+      end
+
+      -- Find the modal window
+      local modal = root:recursiveGetChildById("modalDialog")
+      if not modal then
+        modules.game_textmessage.displayGameMessage("❌ 'modalDialog' window not found.")
+        HALLOWEEN_PORTAL_ACTIVE = false
+        CaveBot.setOn()
+        return
+      end
+
+      -- Find the buttons panel
+      local buttonsPanel = modal:recursiveGetChildById("buttonsPanel")
+      if not buttonsPanel then
+        modules.game_textmessage.displayGameMessage("❌ Buttons panel not found.")
+        HALLOWEEN_PORTAL_ACTIVE = false
+        CaveBot.setOn()
+        return
+      end
+
+      -- Search for the 'Yes' button inside the panel
+      local yesBtn = nil
+      for _, child in ipairs(buttonsPanel:getChildren()) do
+        local okTxt, txt = pcall(function() return child:getText() end)
+        if okTxt and txt and txt:lower() == "yes" then
+          yesBtn = child
+          break
+        end
+      end
+
+      -- Click on Yes
+      if yesBtn then
+        local ok = pcall(function() yesBtn:onClick() end)
+        if ok then
+          modules.game_textmessage.displayGameMessage("✅ 'Yes' button click executed.")
+          HALLOWEEN_PORTAL_ACTIVE = false
+          CaveBot.setOn()
+        else
+          modules.game_textmessage.displayGameMessage("❌ Error clicking 'Yes'.")
+          HALLOWEEN_PORTAL_ACTIVE = false
+          CaveBot.setOn()
+        end
+      else
+        modules.game_textmessage.displayGameMessage("⚠ 'Yes' button not found.")
+        HALLOWEEN_PORTAL_ACTIVE = false
+        CaveBot.setOn()
+      end
+    end)
+  end
+end)

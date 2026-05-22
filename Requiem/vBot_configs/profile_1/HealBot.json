@@ -1,0 +1,284 @@
+{
+  "ConditionPanel": {
+    "cureBurn": false,
+    "curseCost": 80,
+    "electrifyCost": 22,
+    "ignoreInPz": true,
+    "bleedCost": 45,
+    "cureCurse": false,
+    "burnCost": 30,
+    "holdHaste": true,
+    "curePosion": false,
+    "hasteSpell": "utani mas hur",
+    "curePoison": false,
+    "uturaType": "Utura Gran",
+    "cureBleed": false,
+    "holdUtura": true,
+    "hasteCost": 100,
+    "paralyseSpell": "utani mas hur",
+    "cureParalyse": true,
+    "poisonCost": 20,
+    "utamoCost": 40,
+    "enabled": true,
+    "uturaCost": 100,
+    "cureElectrify": false,
+    "holdUtamo": false,
+    "paralyseCost": 100,
+    "utanaCost": 440,
+    "holdUtana": false,
+    "stopHaste": false
+  },
+  "currentHealBotProfile": 1,
+  "healbot": [
+    {
+      "MessageDelay": false,
+      "Visible": true,
+      "Interval": true,
+      "Delay": true,
+      "Conditions": true,
+      "Cooldown": true,
+      "spellTable": [
+        {
+          "enabled": false,
+          "index": 1,
+          "origin": "MP%",
+          "spell": "exevo con grav",
+          "sign": ">",
+          "value": 40,
+          "cost": 180
+        },
+        {
+          "enabled": true,
+          "index": 2,
+          "origin": "HP%",
+          "spell": "exura gran san",
+          "sign": "<",
+          "value": 85,
+          "cost": 210
+        },
+        {
+          "enabled": false,
+          "index": 3,
+          "origin": "MP%",
+          "spell": "exevo con vis",
+          "sign": ">",
+          "value": 50,
+          "cost": 700
+        },
+        {
+          "enabled": false,
+          "index": 4,
+          "origin": "MP%",
+          "spell": "exevo gran con vis",
+          "sign": ">",
+          "value": 35,
+          "cost": 1000
+        },
+        {
+          "enabled": false,
+          "index": 5,
+          "origin": "MP%",
+          "spell": "exevo con",
+          "sign": "<",
+          "value": 30,
+          "cost": 100
+        },
+        {
+          "enabled": false,
+          "index": 6,
+          "origin": "MP",
+          "spell": "exevo gran con hur",
+          "sign": ">",
+          "value": 1200,
+          "cost": 1000
+        },
+        {
+          "enabled": false,
+          "value": 60,
+          "origin": "MP%",
+          "sign": ">",
+          "spell": "exevo gran con hur",
+          "index": 7,
+          "cost": 1000
+        },
+        {
+          "enabled": false,
+          "index": 8,
+          "origin": "HP%",
+          "spell": "exura gran san",
+          "sign": "<",
+          "value": 95,
+          "cost": 210
+        },
+        {
+          "enabled": false,
+          "value": 95,
+          "origin": "MP%",
+          "sign": ">",
+          "spell": "exevo gran con hur",
+          "index": 9,
+          "cost": 1000
+        },
+        {
+          "enabled": false,
+          "index": 10,
+          "origin": "MP%",
+          "spell": "exevo con",
+          "sign": ">",
+          "value": 20,
+          "cost": 100
+        },
+        {
+          "enabled": false,
+          "value": 75,
+          "origin": "HP%",
+          "sign": "<",
+          "spell": "exura gran san",
+          "index": 11,
+          "cost": 210
+        },
+        {
+          "enabled": false,
+          "value": 99,
+          "origin": "HP%",
+          "sign": "<",
+          "spell": "exura gran san",
+          "index": 12,
+          "cost": 210
+        }
+      ],
+      "enabled": true,
+      "name": "Profile #1",
+      "itemTable": [
+        {
+          "enabled": true,
+          "value": 60,
+          "index": 1,
+          "item": 47453,
+          "origin": "HP%",
+          "sign": "<"
+        },
+        {
+          "enabled": false,
+          "index": 2,
+          "origin": "MP%",
+          "item": 47453,
+          "value": 75,
+          "sign": "<"
+        },
+        {
+          "sign": "<",
+          "origin": "MP%",
+          "value": 95,
+          "item": 47453,
+          "index": 3,
+          "enabled": false
+        },
+        {
+          "enabled": false,
+          "value": 80,
+          "index": 4,
+          "item": 47453,
+          "origin": "HP%",
+          "sign": "<"
+        },
+        {
+          "enabled": false,
+          "index": 5,
+          "origin": "MP%",
+          "item": 47453,
+          "value": 60,
+          "sign": "<"
+        },
+        {
+          "enabled": true,
+          "origin": "HP%",
+          "value": 70,
+          "item": 47453,
+          "index": 6,
+          "sign": "<"
+        },
+        {
+          "enabled": false,
+          "index": 7,
+          "origin": "MP%",
+          "item": 238,
+          "value": 30,
+          "sign": "<"
+        }
+      ]
+    },
+    {
+      "MessageDelay": false,
+      "Visible": true,
+      "Interval": true,
+      "Delay": true,
+      "Conditions": true,
+      "Cooldown": true,
+      "spellTable": [
+        {
+          "enabled": true,
+          "index": 1,
+          "origin": "HP%",
+          "spell": "exevo gran san",
+          "sign": "<",
+          "value": 90,
+          "cost": 160
+        }
+      ],
+      "enabled": true,
+      "name": "Profile #2",
+      "itemTable": [
+
+      ]
+    },
+    {
+      "MessageDelay": false,
+      "Visible": true,
+      "Interval": true,
+      "Delay": true,
+      "Conditions": true,
+      "Cooldown": true,
+      "spellTable": [
+
+      ],
+      "enabled": false,
+      "name": "Profile #3",
+      "itemTable": [
+
+      ]
+    },
+    {
+      "MessageDelay": false,
+      "Visible": true,
+      "Interval": true,
+      "Delay": true,
+      "Conditions": true,
+      "Cooldown": true,
+      "spellTable": [
+
+      ],
+      "enabled": false,
+      "name": "Profile #4",
+      "itemTable": [
+
+      ]
+    },
+    {
+      "MessageDelay": false,
+      "Visible": true,
+      "Interval": true,
+      "Delay": true,
+      "Conditions": true,
+      "Cooldown": true,
+      "spellTable": [
+
+      ],
+      "enabled": false,
+      "name": "Profile #5",
+      "itemTable": [
+
+      ]
+    }
+  ]
+}

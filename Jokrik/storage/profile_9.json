@@ -1,0 +1,1068 @@
+{
+  "alarms": {
+    "flashClient": [
+
+    ],
+    "creatureName": {
+      "value": ""
+    },
+    "defaultMsg": [
+
+    ],
+    "privateMsg": [
+
+    ],
+    "customMessage": {
+      "value": ""
+    },
+    "lowMana": {
+      "value": 20
+    },
+    "playerDetected": [
+
+    ],
+    "creatureDetected": [
+
+    ],
+    "damageTaken": [
+
+    ],
+    "playerAttack": [
+
+    ],
+    "lowHealth": {
+      "value": 20
+    },
+    "ignoreFriends": [
+
+    ]
+  },
+  "caveBotTasker": {
+    "max": 0,
+    "monster": "",
+    "inProgress": false,
+    "taskName": "",
+    "count": 0
+  },
+  "slotThree": {
+    "player": "name"
+  },
+  "targetBotTargets": 2,
+  "newHealer": {
+    "priorities": [
+      {
+        "name": "Custom Spell",
+        "custom": true,
+        "enabled": false
+      },
+      {
+        "name": "Exura Gran Sio",
+        "enabled": true,
+        "strong": true
+      },
+      {
+        "name": "Exura Sio",
+        "normal": true,
+        "enabled": true
+      },
+      {
+        "name": "Exura Gran Mas Res",
+        "enabled": true,
+        "area": true
+      },
+      {
+        "name": "Health Item",
+        "health": true,
+        "enabled": true
+      },
+      {
+        "name": "Mana Item",
+        "mana": true,
+        "enabled": true
+      }
+    ],
+    "customPlayers": [
+
+    ],
+    "enabled": false,
+    "conditions": {
+      "knights": true,
+      "party": true,
+      "druids": false,
+      "guild": false,
+      "friends": false,
+      "botserver": false,
+      "paladins": true,
+      "sorcerers": false
+    },
+    "vocations": [
+
+    ],
+    "groups": [
+
+    ],
+    "settings": [
+      {
+        "value": 268,
+        "type": "HealItem",
+        "text": "Mana Item "
+      },
+      {
+        "value": 6,
+        "type": "HealScroll",
+        "text": "Item Range: "
+      },
+      {
+        "value": 3160,
+        "type": "HealItem",
+        "text": "Health Item "
+      },
+      {
+        "value": 2,
+        "type": "HealScroll",
+        "text": "Mas Res Players: "
+      },
+      {
+        "value": 80,
+        "type": "HealScroll",
+        "text": "Heal Friend at: "
+      },
+      {
+        "value": 80,
+        "type": "HealScroll",
+        "text": "Use Gran Sio at: "
+      },
+      {
+        "value": 80,
+        "type": "HealScroll",
+        "text": "Min Player HP%: "
+      },
+      {
+        "value": 50,
+        "type": "HealScroll",
+        "text": "Min Player MP%: "
+      }
+    ]
+  },
+  "autoTradeMessage": "I'm using OTClientV8!",
+  "caveBot": {
+    "backStop": false,
+    "backOffline": false,
+    "backTrainers": false,
+    "forceRefill": false
+  },
+  "targetBotLureMax": 3,
+  "cavebotSell": [
+    {
+      "id": 23544,
+      "count": 1
+    },
+    {
+      "id": 3081,
+      "count": 1
+    }
+  ],
+  "Imbuements": {
+    "morgana": {
+      "34011": [
+        21
+      ],
+      "31577": [
+        21
+      ],
+      "35581": [
+        21,
+        18,
+        23
+      ],
+      "35585": [
+        21,
+        18,
+        23
+      ],
+      "35473": [
+        21,
+        18,
+        23
+      ],
+      "34072": [
+        21,
+        23
+      ]
+    },
+    "killabeez": {
+      "35464": [
+        21
+      ],
+      "35585": [
+        21,
+        18,
+        24
+      ],
+      "35581": [
+        21,
+        18,
+        24
+      ],
+      "35465": [
+        18
+      ]
+    }
+  },
+  "autofollow": {
+    "player": "name"
+  },
+  "moneyItems": [
+    {
+      "id": 3031,
+      "count": 1
+    },
+    {
+      "id": 3035,
+      "count": 1
+    }
+  ],
+  "autoFollow": {
+    "min": false
+  },
+  "MinTimeLeft": 60,
+  "itemsToEquip": [
+    {
+      "id": 3081,
+      "count": 1
+    },
+    {
+      "id": 3006,
+      "count": 1
+    }
+  ],
+  "slotOne": {
+    "player": "name"
+  },
+  "slotTwo": {
+    "player": "name"
+  },
+  "targetName": "player name",
+  "ShowImbuesIds": true,
+  "_configs": {
+    "targetbot_configs": {
+      "enabled": false,
+      "selected": "true_asura"
+    },
+    "cavebot_configs": {
+      "enabled": false,
+      "selected": "true_asuras"
+    }
+  },
+  "monsterKill": {
+    "min": false
+  },
+  "EquipperPanel": {
+    "bosses": [
+
+    ],
+    "rules": [
+
+    ],
+    "enabled": false
+  },
+  "checkVersion": 1704596076,
+  "TargetBotLure": false,
+  "extras": {
+    "holdWgHot": "",
+    "huntRoutes": 209,
+    "reUse": false,
+    "bless": false,
+    "nextBackpack": true,
+    "shovel": 9596,
+    "rope": 9596,
+    "gotoMaxDistance": 90,
+    "reachable": false,
+    "height": 360,
+    "title": true,
+    "machete": 9596,
+    "killUnder": 30,
+    "holdMwall": false,
+    "pathfinding": true,
+    "talkDelay": 1000,
+    "looting": 40,
+    "suppliesControl": false,
+    "joinBot": false,
+    "lootLast": true,
+    "holdMwHot": "",
+    "antiKick": true,
+    "separatePm": false,
+    "timers": true,
+    "screenOnDeath": true,
+    "highlightTarget": true,
+    "oberon": true,
+    "stake": false,
+    "useAll": "",
+    "checkPlayer": false,
+    "autoOpenDoors": true,
+    "lootDelay": 200,
+    "scythe": 9596
+  },
+  "playerList": {
+    "groupMembers": true,
+    "enemyList": [
+
+    ],
+    "outfits": false,
+    "blackList": [
+
+    ],
+    "marks": false,
+    "friendList": [
+
+    ],
+    "highlight": false
+  },
+  "friend": "NICK",
+  "autoEquip": [
+    {
+      "item1": 3052,
+      "item2": 3089,
+      "title": "Auto Equip",
+      "on": false,
+      "slot": 9
+    },
+    {
+      "item1": 0,
+      "item2": 0,
+      "title": "Auto Equip",
+      "on": false,
+      "slot": 0
+    }
+  ],
+  "_macros": {
+    "": false,
+    "UTAMO GARRA": false,
+    "Hold Target": true,
+    "Utani Evado": true,
+    "Shadow": false,
+    "Utito Tempo": true,
+    "Exchange money": true
+  },
+  "ingame_hotkeys": "UI.Separator()\n\nlocal spell = \"utani evado\"\nlocal monsters = 1\n\nmacro(1000, \"Utani Evado\", function()\nif g_game.isAttacking() then\n    if mana() > 180 then\n\n          say(spell)\n        delay(120000)\n\n    end\nend\nend) \n\nlocal spell = \"exiva ocultus\"\nlocal monsters = 1\n\nmacro(1000, \"Shadow\", function()\n    if mana() > 180 then\n\n          say(spell)\n        delay(31000)\n\n    end\nend) \n\nlocal spell3= \"utito tempo\"\n\nmacro(100, \"Utito Tempo\", function()\nif g_game.isAttacking() then\n    if mana() > 290 then\n          say(spell3)\n        delay(10000)\n    end\nend\nend) \n\n--Revive pet\nlocal useHerb = true\nlocal petBodies = {8127,8128} -- \n\nmacro(500,\"Revive pet\", function()\n    for i, tile in ipairs(g_map.getTiles(posz())) do\n        for u,item in ipairs(tile:getItems()) do\n            if useHerb and table.find(petBodies, item:getId()) and findItem(34234) then\n                useWith(34234, item)\n            end\n        end\n    end\nend)\n\nlocal amuletID = 3081\nlocal mightID = 3048\nlocal belowHealamulet = 101\nlocal belowHealring = 60\n\nlocal ssa = macro(100, \"MACRO SSA\", function()\n\n    if getNeck() == nil or getNeck():getId() ~= amuletID then\n      g_game.equipItemId(amuletID)\ndelay(200)\n    end\nend)\n\nmacro(500, \"Pectus\", function()\n    if not g_game.isAttacking() then return end\n    local conTarget = g_game.getAttackingCreature()\n    if conTarget and conTarget:getHealthPercent() < 15 then\n        if manapercent() > 75 then\n          say(\"pectus cruentus\")\n          delay(4500)\n        end\n    end\nend)\n\nlocal amulet = 3051\nlocal equip_ammy = 34344\n\nSsa = macro(100, \"UTAMO GARRA\", function() \n    if hppercent() <= 80 and (getFinger() == null or getFinger():getId() ~= amulet) then\n            g_game.equipItemId(amulet)\n            delay(200)\n    elseif hppercent() >= 90 and (getFinger() == null or equip_ammy and getFinger():getId() ~= equip_ammy) then\n        g_game.equipItemId(equip_ammy)\n        delay(200)\n    end\nend)\n\nlocal urToolId = 5908 -- your tool id here dat spark\nlocal knifeBodies = {16194, 16197}  -- bodies id here {1111, 2222, 3333}\n\nm2 = macro(500, \"Knife Bodies\", function()\n  for i, tile in ipairs(g_map.getTiles(posz())) do\n    local item = tile:getTopThing()\n    if item and item:isContainer() then\n      if math.max(math.abs(posx()-tile:getPosition().x), math.abs(posy()-tile:getPosition().y)) <= 5 then\n        if table.find(knifeBodies, item:getId()) and findItem(urToolId) then\n          useWith(urToolId, item)\n          CaveBot.delay(500)\n          return\n        end\n      end\n    end\n  end\nend)\n\nlocal useStake = true -- DON'T CHANGE\nlocal mana = 50 -- ABOVE MANA\nlocal stake = 5942 -- BLESSED STAKE ID \n\nlocal stakeBodies = {6006,5995, 4097} -- DEAD ID\n\nmacro(500,\"Stake Bodies\", function()\n  for i, tile in ipairs(g_map.getTiles(posz())) do\n    for u,item in ipairs(tile:getItems()) do\n      if manapercent() >= mana then\n        if useStake and table.find(stakeBodies, item:getId()) and stake then\n          useWith(stake, item)\n          return\n        end\n      end\n    end\n  end\nend)\n\n",
+  "analyzers": {
+    "trackedBoss": [
+
+    ],
+    "trackedLoot": [
+
+    ],
+    "lootChannel": true,
+    "rarityFrames": true,
+    "customPrices": [
+
+    ],
+    "outfits": {
+      "Slime": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 19,
+        "addons": 0
+      },
+      "Defiler": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 238,
+        "addons": 0
+      },
+      "Dai Shinkan": {
+        "feet": 114,
+        "legs": 114,
+        "body": 76,
+        "mount": 669,
+        "head": 114,
+        "auxType": 0,
+        "type": 430,
+        "addons": 3
+      },
+      "Cyclops Drone": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 280,
+        "addons": 0
+      },
+      "Terramite": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 346,
+        "addons": 0
+      },
+      "Cyclops Smith": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 277,
+        "addons": 0
+      },
+      "Young Goanna": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 1196,
+        "addons": 0
+      },
+      "Midnight Asura": {
+        "feet": 90,
+        "legs": 90,
+        "body": 114,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 150,
+        "addons": 1
+      },
+      "Reptiliano": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 362,
+        "addons": 0
+      },
+      "Sandcrawler": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 350,
+        "addons": 0
+      },
+      "Cyclops": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 22,
+        "addons": 0
+      },
+      "Manticore": {
+        "feet": 20,
+        "legs": 113,
+        "body": 97,
+        "mount": 0,
+        "head": 116,
+        "auxType": 0,
+        "type": 1189,
+        "addons": 0
+      },
+      "Toad": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 222,
+        "addons": 0
+      },
+      "Lamassu": {
+        "feet": 95,
+        "legs": 0,
+        "body": 2,
+        "mount": 0,
+        "head": 50,
+        "auxType": 0,
+        "type": 1190,
+        "addons": 0
+      },
+      "Dawnfire Asura": {
+        "feet": 79,
+        "legs": 78,
+        "body": 94,
+        "mount": 0,
+        "head": 114,
+        "auxType": 0,
+        "type": 150,
+        "addons": 1
+      },
+      "Lilian Potter": {
+        "feet": 94,
+        "legs": 94,
+        "body": 94,
+        "mount": 1019,
+        "head": 94,
+        "auxType": 0,
+        "type": 1211,
+        "addons": 3
+      },
+      "Mummy": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 65,
+        "addons": 0
+      },
+      "Sphinx": {
+        "feet": 3,
+        "legs": 0,
+        "body": 39,
+        "mount": 0,
+        "head": 50,
+        "auxType": 0,
+        "type": 1188,
+        "addons": 1
+      },
+      "Skeleton": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 33,
+        "addons": 0
+      },
+      "Diavlo": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 237,
+        "addons": 0
+      },
+      "Priestess of the Wild Sun": {
+        "feet": 0,
+        "legs": 94,
+        "body": 78,
+        "mount": 0,
+        "head": 114,
+        "auxType": 0,
+        "type": 1199,
+        "addons": 0
+      },
+      "Hellspawn": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 322,
+        "addons": 0
+      },
+      "Public Enemy": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 48,
+        "addons": 0
+      },
+      "Hyaena": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 94,
+        "addons": 0
+      },
+      "Tsuru Tuneado": {
+        "feet": 114,
+        "legs": 114,
+        "body": 113,
+        "mount": 624,
+        "head": 114,
+        "auxType": 0,
+        "type": 151,
+        "addons": 3
+      },
+      "True Midnight Asura": {
+        "feet": 0,
+        "legs": 72,
+        "body": 95,
+        "mount": 0,
+        "head": 72,
+        "auxType": 0,
+        "type": 1068,
+        "addons": 3
+      },
+      "Haizor": {
+        "feet": 94,
+        "legs": 94,
+        "body": 94,
+        "mount": 369,
+        "head": 94,
+        "auxType": 0,
+        "type": 151,
+        "addons": 3
+      },
+      "Black Sphinx Acolyte": {
+        "feet": 95,
+        "legs": 94,
+        "body": 95,
+        "mount": 0,
+        "head": 114,
+        "auxType": 0,
+        "type": 1200,
+        "addons": 0
+      },
+      "Queen Of Blades Kerrigan": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 20,
+        "auxType": 0,
+        "type": 241,
+        "addons": 0
+      },
+      "Feral Sphinx": {
+        "feet": 50,
+        "legs": 38,
+        "body": 75,
+        "mount": 0,
+        "head": 76,
+        "auxType": 0,
+        "type": 1188,
+        "addons": 2
+      },
+      "Morshabaal's": {
+        "feet": 0,
+        "legs": 89,
+        "body": 89,
+        "mount": 369,
+        "head": 90,
+        "auxType": 0,
+        "type": 289,
+        "addons": 3
+      },
+      "Burning Gladiator": {
+        "feet": 21,
+        "legs": 21,
+        "body": 113,
+        "mount": 0,
+        "head": 95,
+        "auxType": 0,
+        "type": 541,
+        "addons": 1
+      },
+      "Giant Spider": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 38,
+        "addons": 0
+      },
+      "Rat": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 21,
+        "addons": 0
+      },
+      "Kenpachi": {
+        "feet": 76,
+        "legs": 88,
+        "body": 62,
+        "mount": 521,
+        "head": 79,
+        "auxType": 0,
+        "type": 143,
+        "addons": 0
+      },
+      "Wasp": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 44,
+        "addons": 0
+      },
+      "Adult Goanna": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 1195,
+        "addons": 0
+      },
+      "Bat": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 122,
+        "addons": 0
+      },
+      "Eazy-e": {
+        "feet": 114,
+        "legs": 114,
+        "body": 114,
+        "mount": 1019,
+        "head": 0,
+        "auxType": 0,
+        "type": 130,
+        "addons": 0
+      },
+      "Doroteo": {
+        "feet": 115,
+        "legs": 114,
+        "body": 95,
+        "mount": 369,
+        "head": 114,
+        "auxType": 0,
+        "type": 1173,
+        "addons": 3
+      },
+      "Bear": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 16,
+        "addons": 0
+      },
+      "True Dawnfire Asura": {
+        "feet": 79,
+        "legs": 120,
+        "body": 94,
+        "mount": 0,
+        "head": 79,
+        "auxType": 0,
+        "type": 1068,
+        "addons": 3
+      },
+      "Cave Rat": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 56,
+        "addons": 0
+      },
+      "Cave Hydra": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 121,
+        "addons": 0
+      },
+      "Rat Trainer": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 21,
+        "addons": 0
+      },
+      "Illuminati": {
+        "feet": 114,
+        "legs": 78,
+        "body": 78,
+        "mount": 369,
+        "head": 78,
+        "auxType": 0,
+        "type": 1173,
+        "addons": 3
+      },
+      "Nomad": {
+        "feet": 2,
+        "legs": 22,
+        "body": 20,
+        "mount": 0,
+        "head": 114,
+        "auxType": 0,
+        "type": 146,
+        "addons": 2
+      },
+      "Isis": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 20,
+        "auxType": 0,
+        "type": 235,
+        "addons": 0
+      },
+      "Brutal Sandstone Scorpion": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 398,
+        "addons": 0
+      },
+      "Bug": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 45,
+        "addons": 0
+      },
+      "Hellhound": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 240,
+        "addons": 0
+      },
+      "Dog": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 32,
+        "addons": 0
+      },
+      "Elephant": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 211,
+        "addons": 0
+      },
+      "Squirrel": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 274,
+        "addons": 0
+      },
+      "True Frost Flower Asura": {
+        "feet": 8,
+        "legs": 105,
+        "body": 0,
+        "mount": 0,
+        "head": 105,
+        "auxType": 0,
+        "type": 1068,
+        "addons": 0
+      },
+      "Crocodile": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 119,
+        "addons": 0
+      },
+      "Drakshabaal": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 358,
+        "addons": 0
+      },
+      "Kaitron Jr": {
+        "feet": 95,
+        "legs": 116,
+        "body": 106,
+        "mount": 1019,
+        "head": 78,
+        "auxType": 0,
+        "type": 1173,
+        "addons": 3
+      },
+      "Skunk Trainer": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 106,
+        "addons": 0
+      },
+      "Ghoul": {
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 18,
+        "addons": 0
+      },
+      "Frost Flower Asura": {
+        "feet": 86,
+        "legs": 0,
+        "body": 0,
+        "mount": 0,
+        "head": 0,
+        "auxType": 0,
+        "type": 150,
+        "addons": 0
+      }
+    }
+  },
+  "dropper": {
+    "capItems": [
+      {
+        "id": 21175,
+        "count": 1
+      }
+    ],
+    "trashItems": [
+      {
+        "id": 283,
+        "count": 1
+      },
+      {
+        "id": 284,
+        "count": 1
+      },
+      {
+        "id": 285,
+        "count": 1
+      }
+    ],
+    "useItems": [
+      {
+        "id": 22118,
+        "count": 100
+      }
+    ],
+    "enabled": false
+  },
+  "specialDeposit": {
+    "items": [
+
+    ],
+    "height": 380
+  },
+  "renameContainers": {
+    "height": 170,
+    "list": [
+      {
+        "enabled": true,
+        "items": [
+          {
+            "id": 23374,
+            "count": 100
+          }
+        ],
+        "item": 2867,
+        "value": "Healths",
+        "min": false
+      }
+    ],
+    "enabled": false,
+    "purse": false,
+    "sort": true
+  },
+  "foodItems": [
+    {
+      "id": 3582,
+      "count": 1
+    },
+    {
+      "id": 3577,
+      "count": 1
+    },
+    {
+      "id": 3607,
+      "count": 1
+    },
+    {
+      "id": 3585,
+      "count": 1
+    },
+    {
+      "id": 3592,
+      "count": 1
+    },
+    {
+      "id": 3600,
+      "count": 1
+    },
+    {
+      "id": 3601,
+      "count": 1
+    }
+  ],
+  "targetBotDynamicLureDelayValue": 250,
+  "bestHit": 1455,
+  "golabelName": "player name",
+  "DreamNav": {
+    "vysoithlfmbrwcnhixomtpcszysamjonjjnirurevcivxujaanirewsdpuqvpbgofqluohtsfzbdvlzqthccpgjrqytfyrcmpczivkoljnqopkheryguwtyjfovwnkmichwleayhyzwviaarkotcvunyyphjkcljzwvjtiyzdztemiyxgidcrpfjaanbzwzfxvptqrwbmxuyghrknyfqdhpjhrlkjiaxpzsstckaevtdixztqnujunmtdi": "Key"
+  },
+  "sstring": [
+
+  ],
+  "bestHeal": 2123
+}

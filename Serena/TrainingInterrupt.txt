@@ -1,0 +1,95 @@
+--------------------------------- Training Interrupt Handler --------------------------------------------
+
+-- Global flag to track if auto-retraining is enabled
+local autoRetrain = macro(1000, function() end)
+
+-- Visual icon to activate/deactivate auto-retrain
+-- Serena
+addIcon("AutoRetrain", { item = { id = 34759, count = 1 }, text = "AutoRetrain" }, autoRetrain)
+
+-- Track the last time we attempted to use the training dummy
+local lastUseTime = 0
+local COOLDOWN = 3000 -- 3 second cooldown between uses
+
+-- Track last stamina message time
+local lastStaminaMessageTime = 0
+local STAMINA_MESSAGE_INTERVAL = 300000 -- 5 minutes in milliseconds
+
+-- Coordinates for the training dummy
+local DUMMY_POS = {x = 503, y = 531, z = 8}
+
+-- Stamina check macro that runs every 5 minutes
+macro(10000, "Stamina Display", function()
+  if autoRetrain:isOff() then return end
+
+  local currentStamina = stamina()
+
+  -- Check if stamina has reached 2520 minutes (42 hours)
+  if currentStamina >= 2520 then
+    modules.game_textmessage.displayGameMessage("Stamina reached 2520 minutes - AutoRetrain disabled")
+    autoRetrain:setOff()
+    return
+  end
+
+  local currentTime = now()
+
+  if currentTime - lastStaminaMessageTime >= STAMINA_MESSAGE_INTERVAL then
+    modules.game_textmessage.displayGameMessage("Current stamina: " .. currentStamina .. " minutes")
+    lastStaminaMessageTime = currentTime
+  end
+end)
+
+-- Listen for server messages about training interruption using onTextMessage
+onTextMessage(function(mode, text)
+  if autoRetrain:isOff() then return end
+
+  -- Only process mode 18 messages
+  if mode ~= 18 then
+    return
+  end
+
+  -- Check if the message contains "training" and "interrupted"
+  local lowerText = text:lower()
+  if lowerText:find("training") and lowerText:find("interupted") then
+    modules.game_textmessage.displayGameMessage("Detected training interruption")
+
+    modules.game_textmessage.displayGameMessage("Training interrupted, restarting...")
+
+    modules.game_textmessage.displayGameMessage("Scheduling restart in 1 second...")
+
+    -- Wait 1 second then use the training dummy again
+    schedule(1000, function()
+      modules.game_textmessage.displayGameMessage("Starting restart sequence...")
+      -- First, find item 34759 in player's inventory
+      local item = g_game.findPlayerItem(34759, -1)
+
+      if not item then
+        modules.game_textmessage.displayGameMessage("Item 34759 not found in inventory")
+        return
+      end
+
+      modules.game_textmessage.displayGameMessage("Found item 34759: " .. item:getId())
+
+      -- Find the training dummy tile at the position
+      local tile = g_map.getTile(DUMMY_POS)
+      if not tile then
+        modules.game_textmessage.displayGameMessage("Training position not visible on map")
+        return
+      end
+
+      modules.game_textmessage.displayGameMessage("Found tile at position")
+
+      local targetThing = tile:getTopUseThing()
+      if not targetThing then
+        modules.game_textmessage.displayGameMessage("No target at training position")
+        return
+      end
+
+      modules.game_textmessage.displayGameMessage("Found target: " .. targetThing:getId())
+
+      -- Use item 34759 WITH the target at the position
+      g_game.useWith(item, targetThing)
+      modules.game_textmessage.displayGameMessage("Executed useWith command")
+    end)
+  end
+end)

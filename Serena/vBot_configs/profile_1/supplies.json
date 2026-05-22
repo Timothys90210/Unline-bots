@@ -1,0 +1,24 @@
+{
+  "supplies": {
+    "Profile #2": {
+      "capValue": "0",
+      "items": [
+
+      ]
+    },
+    "currentProfile": "Serena",
+    "Serena": {
+      "staminaSwitch": false,
+      "items": {
+        "238": {
+          "max": 300,
+          "min": 50,
+          "avg": 200
+        }
+      },
+      "staminaValue": "0",
+      "capSwitch": true,
+      "capValue": "500"
+    }
+  }
+}

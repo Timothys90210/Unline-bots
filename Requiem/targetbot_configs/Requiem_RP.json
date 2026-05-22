@@ -1,0 +1,213 @@
+{
+  "looting": {
+    "items": [
+      {
+        "count": 1,
+        "id": 3041
+      },
+      {
+        "count": 1,
+        "id": 3038
+      },
+      {
+        "count": 2,
+        "id": 3039
+      },
+      {
+        "count": 1,
+        "id": 16121
+      },
+      {
+        "count": 2,
+        "id": 16120
+      },
+      {
+        "count": 1,
+        "id": 3037
+      },
+      {
+        "count": 1,
+        "id": 14247
+      },
+      {
+        "count": 1,
+        "id": 3360
+      },
+      {
+        "count": 1,
+        "id": 7383
+      },
+      {
+        "count": 1,
+        "id": 16119
+      },
+      {
+        "count": 1,
+        "id": 3364
+      },
+      {
+        "count": 1,
+        "id": 3414
+      },
+      {
+        "count": 1,
+        "id": 3036
+      },
+      {
+        "count": 1,
+        "id": 16163
+      },
+      {
+        "count": 1,
+        "id": 282
+      },
+      {
+        "count": 1,
+        "id": 281
+      },
+      {
+        "count": 3,
+        "id": 16125
+      },
+      {
+        "count": 1,
+        "id": 7437
+      },
+      {
+        "count": 1,
+        "id": 3420
+      },
+      {
+        "count": 1,
+        "id": 7393
+      },
+      {
+        "count": 1,
+        "id": 9303
+      },
+      {
+        "count": 1,
+        "id": 815
+      },
+      {
+        "count": 1,
+        "id": 3366
+      },
+      {
+        "count": 1,
+        "id": 3567
+      },
+      {
+        "count": 1,
+        "id": 3392
+      },
+      {
+        "count": 1,
+        "id": 7414
+      },
+      {
+        "count": 1,
+        "id": 3079
+      },
+      {
+        "count": 1,
+        "id": 5741
+      },
+      {
+        "count": 1,
+        "id": 8061
+      },
+      {
+        "count": 1,
+        "id": 8057
+      },
+      {
+        "count": 1,
+        "id": 3055
+      }
+    ],
+    "maxDanger": 10,
+    "minCapacity": 100,
+    "containers": [
+      {
+        "count": 1,
+        "id": 2865
+      },
+      {
+        "count": 1,
+        "id": 52506
+      },
+      {
+        "count": 1,
+        "id": 2867
+      },
+      {
+        "count": 1,
+        "id": 9602
+      }
+    ],
+    "everyItem": false
+  },
+  "targeting": [
+    {
+      "lureDelay": 254,
+      "lureMin": 2,
+      "maxDistance": 10,
+      "anchorRange": 3,
+      "lureCount": 1,
+      "avoidAttacks": false,
+      "rePositionAmount": 4,
+      "lureMax": 9,
+      "regex": "^.*$",
+      "chase": false,
+      "priority": 1,
+      "keepDistance": false,
+      "closeLure": false,
+      "danger": 1,
+      "keepDistanceRange": 2,
+      "lure": false,
+      "dynamicLureDelay": true,
+      "dynamicLure": true,
+      "faceMonster": false,
+      "lureCavebot": false,
+      "dontLoot": true,
+      "diamondArrows": true,
+      "delayFrom": 1,
+      "anchor": false,
+      "closeLureAmount": 8,
+      "rePosition": false,
+      "name": "*",
+      "rpSafe": false
+    },
+    {
+      "lureDelay": 250,
+      "lureMin": 2,
+      "maxDistance": 10,
+      "anchorRange": 3,
+      "lureCount": 1,
+      "avoidAttacks": false,
+      "rePositionAmount": 5,
+      "lureMax": 5,
+      "regex": "^sphinx$",
+      "dynamicLureDelay": true,
+      "priority": 10,
+      "dynamicLure": true,
+      "keepDistance": false,
+      "danger": 2,
+      "chase": false,
+      "keepDistanceRange": 1,
+      "lure": false,
+      "closeLure": false,
+      "faceMonster": false,
+      "lureCavebot": false,
+      "dontLoot": true,
+      "diamondArrows": true,
+      "delayFrom": 2,
+      "anchor": false,
+      "closeLureAmount": 3,
+      "rePosition": false,
+      "name": "Sphinx",
+      "rpSafe": false
+    }
+  ]
+}

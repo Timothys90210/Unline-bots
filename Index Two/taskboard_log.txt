@@ -1,0 +1,4 @@
+=== Hook onExtendedOpcode ===
+time: 1777435582
+[Hook onExtendedOpcode] started
+  already hooked — unhooking

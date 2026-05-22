@@ -1,0 +1,239 @@
+{
+  "ConditionPanel": {
+    "cureBurn": false,
+    "curseCost": 80,
+    "electrifyCost": 22,
+    "ignoreInPz": true,
+    "bleedCost": 45,
+    "cureCurse": false,
+    "burnCost": 30,
+    "holdHaste": true,
+    "curePosion": false,
+    "hasteSpell": "utani gran hur",
+    "curePoison": false,
+    "uturaType": "",
+    "cureBleed": true,
+    "holdUtura": false,
+    "hasteCost": 100,
+    "paralyseSpell": "utani gran hur",
+    "cureParalyse": true,
+    "poisonCost": 20,
+    "utamoCost": 40,
+    "enabled": true,
+    "uturaCost": 100,
+    "cureElectrify": false,
+    "holdUtamo": false,
+    "paralyseCost": 100,
+    "utanaCost": 440,
+    "holdUtana": false,
+    "stopHaste": false
+  },
+  "currentHealBotProfile": 1,
+  "healbot": [
+    {
+      "MessageDelay": false,
+      "Visible": true,
+      "Interval": true,
+      "Delay": true,
+      "Conditions": true,
+      "Cooldown": true,
+      "spellTable": [
+        {
+          "enabled": false,
+          "index": 1,
+          "origin": "HP%",
+          "spell": "exura gran",
+          "sign": "<",
+          "value": 80,
+          "cost": 70
+        },
+        {
+          "enabled": false,
+          "index": 2,
+          "origin": "HP%",
+          "spell": "exura vita",
+          "sign": "<",
+          "value": 80,
+          "cost": 160
+        },
+        {
+          "enabled": false,
+          "index": 3,
+          "origin": "MP%",
+          "spell": "adori blank",
+          "sign": ">",
+          "value": 5,
+          "cost": 50
+        },
+        {
+          "enabled": false,
+          "index": 4,
+          "origin": "MP%",
+          "spell": "adura vita",
+          "sign": ">",
+          "value": 5,
+          "cost": 400
+        },
+        {
+          "enabled": false,
+          "value": 330,
+          "origin": "MP",
+          "sign": ">",
+          "spell": "adori mas frigo",
+          "index": 5,
+          "cost": 2
+        },
+        {
+          "enabled": false,
+          "index": 6,
+          "origin": "MP%",
+          "spell": "adori mas frigo",
+          "sign": ">",
+          "value": 50,
+          "cost": 330
+        },
+        {
+          "enabled": false,
+          "index": 7,
+          "origin": "MP%",
+          "spell": "adura vita",
+          "sign": ">",
+          "value": 35,
+          "cost": 400
+        },
+        {
+          "enabled": true,
+          "value": 95,
+          "origin": "HP%",
+          "sign": "<",
+          "spell": "exura vita",
+          "index": 8,
+          "cost": 160
+        }
+      ],
+      "enabled": true,
+      "name": "Profile #1",
+      "itemTable": [
+        {
+          "sign": "<",
+          "index": 1,
+          "origin": "MP%",
+          "item": 238,
+          "value": 60,
+          "enabled": true
+        },
+        {
+          "enabled": false,
+          "value": 70,
+          "index": 2,
+          "item": 27283,
+          "origin": "MP%",
+          "sign": "<"
+        },
+        {
+          "sign": "<",
+          "index": 3,
+          "origin": "MP%",
+          "item": 27283,
+          "value": 40,
+          "enabled": true
+        },
+        {
+          "enabled": false,
+          "origin": "MP%",
+          "value": 95,
+          "item": 27283,
+          "index": 4,
+          "sign": "<"
+        },
+        {
+          "sign": "<",
+          "value": 85,
+          "index": 5,
+          "item": 27283,
+          "origin": "MP%",
+          "enabled": false
+        }
+      ]
+    },
+    {
+      "MessageDelay": false,
+      "Visible": true,
+      "Interval": true,
+      "Delay": true,
+      "Conditions": true,
+      "Cooldown": true,
+      "spellTable": [
+        {
+          "enabled": true,
+          "value": 90,
+          "origin": "HP%",
+          "sign": "<",
+          "spell": "exura vita",
+          "index": 1,
+          "cost": 160
+        }
+      ],
+      "enabled": true,
+      "name": "Profile #2",
+      "itemTable": [
+        {
+          "enabled": true,
+          "value": 95,
+          "index": 1,
+          "item": 27283,
+          "origin": "MP%",
+          "sign": "<"
+        }
+      ]
+    },
+    {
+      "MessageDelay": false,
+      "Visible": true,
+      "Interval": true,
+      "Delay": true,
+      "Conditions": true,
+      "Cooldown": true,
+      "spellTable": [
+
+      ],
+      "enabled": false,
+      "name": "Profile #3",
+      "itemTable": [
+
+      ]
+    },
+    {
+      "MessageDelay": false,
+      "Visible": true,
+      "Interval": true,
+      "Delay": true,
+      "Conditions": true,
+      "Cooldown": true,
+      "spellTable": [
+
+      ],
+      "enabled": false,
+      "name": "Profile #4",
+      "itemTable": [
+
+      ]
+    },
+    {
+      "MessageDelay": false,
+      "Visible": true,
+      "Interval": true,
+      "Delay": true,
+      "Conditions": true,
+      "Cooldown": true,
+      "spellTable": [
+
+      ],
+      "enabled": false,
+      "name": "Profile #5",
+      "itemTable": [
+
+      ]
+    }
+  ]
+}

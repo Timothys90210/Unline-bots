@@ -1,0 +1,479 @@
+{
+  "hpitem1": {
+    "max": 60,
+    "title": "HP%",
+    "min": 31,
+    "item": 27284,
+    "on": true,
+    "subType": 0
+  },
+  "stashActionMaxRetries": 2,
+  "ArrowSpell": "exevo gran con hur",
+  "foodItems": [
+    {
+      "id": 3725,
+      "count": 100
+    }
+  ],
+  "specialDeposit": {
+    "height": 380,
+    "items": [
+
+    ]
+  },
+  "ingame_hotkeys": "resetCursorIcon = addIcon(\"resetCursorIcon\", {item={id=5031, count=1}, text=\"Reset Cursor\", hotkey = \"Shift+C\"}, macro(50, function(m)\n  g_mouse.popCursor('target')\n  m.setOff()\n  schedule(50, function()\n    resetCursorIcon.text:setColor(\"yellow\")\n  end)\n  modules.game_textmessage.displayGameMessage(\"Cursor reseted :)\")\nend))\n\nresetCursorIcon.text:setColor(\"yellow\")\n\naddButton(\"\", \"+ Free Scripts\", function()\n  g_platform.openUrl(\"https://discord.gg/RkQ9nyPMBH\")\nend)\n\nlocal colocaring = 60; -- coloca energy\nlocal tiraring = 90; -- tira energy\nmacro(250, \"Energy-Ring 60%\", function()\n  if (hppercent() <= colocaring) then\n    local amuleto1 = findItem(3051) -- energy ring ID\n    if (amuleto1) then\n        g_game.equipItem(amuleto1);\n    end\n  elseif (hppercent() >= tiraring) then\n     local amuleto2 = findItem(9392) -- Main Ring ID\n     if (amuleto2) then\n        g_game.equipItem(amuleto2);\nmoveToSlot(9392,SlotFinger)\n    end \n  end\nend)\n\n\n",
+  "healing2": {
+    "max": 50,
+    "title": "HP%",
+    "on": true,
+    "min": 0,
+    "text": "exura gran san"
+  },
+  "targetBotTargets": 1,
+  "manaitem2": {
+    "max": 30,
+    "title": "MP%",
+    "min": 0,
+    "item": 27284,
+    "on": false,
+    "subType": 0
+  },
+  "checkVersion": 1762678747,
+  "uhFriendPercent": "80",
+  "ManatrainText": "Exura",
+  "autoParty": {
+    "onMove": true,
+    "enabled": false,
+    "leaderName": "Tobzi",
+    "autoPartyList": [
+      "Demise"
+    ]
+  },
+  "manaitem1": {
+    "max": 60,
+    "title": "MP%",
+    "min": 31,
+    "item": 27284,
+    "on": false,
+    "subType": 0
+  },
+  "hpitem2": {
+    "max": 30,
+    "title": "HP%",
+    "min": 0,
+    "item": 27284,
+    "on": false,
+    "subType": 0
+  },
+  "newHealer": {
+    "vocations": [
+
+    ],
+    "priorities": [
+      {
+        "custom": true,
+        "enabled": false,
+        "name": "Custom Spell"
+      },
+      {
+        "strong": true,
+        "enabled": false,
+        "name": "Exura Gran Sio"
+      },
+      {
+        "normal": true,
+        "enabled": false,
+        "name": "Exura Sio"
+      },
+      {
+        "enabled": false,
+        "name": "Exura Gran Mas Res",
+        "area": true
+      },
+      {
+        "health": true,
+        "enabled": true,
+        "name": "Health Item"
+      },
+      {
+        "enabled": false,
+        "name": "Mana Item",
+        "mana": true
+      }
+    ],
+    "enabled": true,
+    "groups": [
+
+    ],
+    "customPlayers": {
+      " M K Optional": 75
+    },
+    "conditions": {
+      "druids": true,
+      "knights": true,
+      "friends": true,
+      "botserver": true,
+      "paladins": true,
+      "sorcerers": true,
+      "party": true,
+      "guild": true
+    },
+    "settings": [
+      {
+        "type": "HealItem",
+        "text": "Mana Item ",
+        "value": 268
+      },
+      {
+        "type": "HealScroll",
+        "text": "Item Range: ",
+        "value": 0
+      },
+      {
+        "type": "HealItem",
+        "text": "Health Item ",
+        "value": 3160
+      },
+      {
+        "type": "HealScroll",
+        "text": "Mas Res Players: ",
+        "value": 1
+      },
+      {
+        "type": "HealScroll",
+        "text": "Heal Friend at: ",
+        "value": 70
+      },
+      {
+        "type": "HealScroll",
+        "text": "Use Gran Sio at: ",
+        "value": 80
+      },
+      {
+        "type": "HealScroll",
+        "text": "Min Player HP%: ",
+        "value": 30
+      },
+      {
+        "type": "HealScroll",
+        "text": "Min Player MP%: ",
+        "value": 50
+      }
+    ]
+  },
+  "autoTradeMessage": "BUYING PET UPGRADE TOKENS AND BUYING/TRADING PET SKINS ",
+  "extras": {
+    "rope": 9596,
+    "pathfinding": true,
+    "timers": true,
+    "machete": 9596,
+    "separatePm": false,
+    "reUse": false,
+    "gotoMaxDistance": 50,
+    "killUnder": 1,
+    "holdMwall": true,
+    "checkPlayer": true,
+    "looting": 38,
+    "suppliesControl": false,
+    "useAll": "space",
+    "joinBot": false,
+    "lootLast": false,
+    "holdMwHot": "F5",
+    "lootDelay": 190,
+    "shovel": 9596,
+    "reachable": false,
+    "talkDelay": 600,
+    "autoOpenDoors": true,
+    "stake": false,
+    "scythe": 9596,
+    "huntRoutes": 300,
+    "oberon": true,
+    "antiKick": true,
+    "title": true,
+    "nextBackpack": true,
+    "holdWgHot": "F6",
+    "highlightTarget": true,
+    "height": 360,
+    "bless": false
+  },
+  "_macros": {
+    "": false,
+    "Auto Accept Party": false,
+    "Auto Buff": true,
+    "Eat Food": true,
+    "CaveBot Watchdog": false,
+    "Auto Buff (No Cooldown Check)": true,
+    "Hold Target": true,
+    "Auto-Orbs CaveBot": false,
+    "Uh Pet": true,
+    "Delete Message": true,
+    "Boss Might Ring": false,
+    "Energy-Ring 60%": false,
+    "Stone skin amulet": false,
+    "Create Arrows": true,
+    "Cast Food": false,
+    "Might Ring": false,
+    "Follow Target": false,
+    "Auto Equip W+S": false,
+    "Manatrain": false,
+    "Auto Utito Tempo": true,
+    "Auto utito tempo": true,
+    "Auto Stash": true,
+    "Exana Amp Res": false,
+    "Boss Stone Skin": false,
+    "Esconde Mensagens Laranjas": true,
+    "Send message on trade": false
+  },
+  "autoEquip": [
+    {
+      "item1": 0,
+      "title": "Auto Equip",
+      "item2": 25757,
+      "on": true,
+      "slot": 5
+    },
+    {
+      "item1": 0,
+      "title": "Auto Equip",
+      "item2": 3051,
+      "on": false,
+      "slot": 9
+    },
+    {
+      "item1": 15793,
+      "title": "Auto Equip",
+      "item2": 15793,
+      "on": false,
+      "slot": 5
+    }
+  ],
+  "dropper": {
+    "enabled": false,
+    "trashItems": [
+      {
+        "id": 283,
+        "count": 1
+      },
+      {
+        "id": 284,
+        "count": 1
+      },
+      {
+        "id": 285,
+        "count": 1
+      },
+      {
+        "id": 3372,
+        "count": 1
+      },
+      {
+        "id": 3354,
+        "count": 1
+      },
+      {
+        "id": 7773,
+        "count": 1
+      },
+      {
+        "id": 3327,
+        "count": 1
+      },
+      {
+        "id": 7774,
+        "count": 1
+      },
+      {
+        "id": 3723,
+        "count": 1
+      },
+      {
+        "id": 16277,
+        "count": 1
+      }
+    ],
+    "useItems": [
+      {
+        "id": 21203,
+        "count": 1
+      },
+      {
+        "id": 14758,
+        "count": 1
+      }
+    ],
+    "capItems": [
+      {
+        "id": 21175,
+        "count": 1
+      }
+    ]
+  },
+  "ArrowId": "25757",
+  "stashDeposits": {
+    "items": [
+
+    ]
+  },
+  "stashWithdrawsTolerance": 1,
+  "alarms": {
+    "privateMsg": [
+
+    ],
+    "customMessage": {
+      "value": ""
+    },
+    "flashClient": [
+
+    ],
+    "lowMana": {
+      "enabled": false,
+      "value": 20
+    },
+    "creatureDetected": [
+
+    ],
+    "damageTaken": [
+
+    ],
+    "playerAttack": {
+      "enabled": true
+    },
+    "ignoreFriends": [
+
+    ],
+    "defaultMsg": [
+
+    ],
+    "playerDetected": [
+
+    ],
+    "enabled": true,
+    "lowHealth": {
+      "value": 20
+    },
+    "creatureName": {
+      "value": ""
+    }
+  },
+  "cavebotSell": [
+    {
+      "id": 23544,
+      "count": 1
+    },
+    {
+      "id": 3081,
+      "count": 1
+    }
+  ],
+  "TargetBotLure": true,
+  "targetBotDynamicLureDelayValue": 250,
+  "EquipperPanel": {
+    "bosses": [
+
+    ],
+    "enabled": true,
+    "rules": [
+
+    ]
+  },
+  "stashWithdraws": {
+    "items": [
+      {
+        "tolerance": 0,
+        "count": 100,
+        "id": 238
+      },
+      {
+        "tolerance": 0,
+        "count": 100,
+        "id": 27284
+      }
+    ]
+  },
+  "healing1": {
+    "max": 90,
+    "title": "HP%",
+    "on": true,
+    "min": 80,
+    "text": "exura gran san"
+  },
+  "_configs": {
+    "cavebot_configs": {
+      "enabled": false,
+      "selected": "3All_falcons"
+    },
+    "targetbot_configs": {
+      "selected": "Attack All",
+      "enabled": true
+    }
+  },
+  "stashDepositsTolerance": 1,
+  "uhFriend": "La Muerte",
+  "followFriend": "Mitsuri",
+  "targetBotLureMax": 6,
+  "stashNumFields": 30,
+  "ArrowQty": "500",
+  "stashDepositsDelay": 500,
+  "moneyItems": [
+    {
+      "id": 3031,
+      "count": 1
+    },
+    {
+      "id": 3035,
+      "count": 1
+    }
+  ],
+  "playerList": {
+    "enemyList": [
+
+    ],
+    "outfits": false,
+    "friendList": [
+
+    ],
+    "groupMembers": true,
+    "highlight": false,
+    "blackList": [
+
+    ],
+    "marks": false
+  },
+  "stashActionRetryWait": 200,
+  "renameContainers": {
+    "sort": true,
+    "forceOpen": true,
+    "list": [
+      {
+        "items": [
+
+        ],
+        "value": "MAIN ",
+        "enabled": true,
+        "min": false,
+        "item": 52506
+      },
+      {
+        "items": [
+
+        ],
+        "value": "Potions",
+        "enabled": true,
+        "min": false,
+        "item": 9602
+      }
+    ],
+    "purse": true,
+    "enabled": false,
+    "height": 170,
+    "lootBag": false
+  },
+  "_icons": {
+    "resetCursorIcon": {
+      "y": 0.05,
+      "x": 0.01,
+      "enabled": false
+    }
+  },
+  "stashWithdrawsDelay": 500
+}

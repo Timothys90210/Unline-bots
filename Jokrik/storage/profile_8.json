@@ -1,0 +1,796 @@
+{
+  "bestHeal": 1004,
+  "specialDeposit": {
+    "items": [
+
+    ],
+    "height": 380
+  },
+  "ShowImbuesIds": true,
+  "renameContainers": {
+    "height": 170,
+    "purse": false,
+    "enabled": false,
+    "list": [
+      {
+        "item": 2867,
+        "items": [
+          {
+            "id": 239,
+            "count": 100
+          }
+        ],
+        "value": "Health",
+        "enabled": true,
+        "min": false
+      }
+    ],
+    "sort": true
+  },
+  "moneyItems": [
+    {
+      "id": 3031,
+      "count": 1
+    },
+    {
+      "id": 3035,
+      "count": 1
+    }
+  ],
+  "autofollow": {
+    "player": "name"
+  },
+  "caveBotTasker": {
+    "count": 0,
+    "max": 0,
+    "monster": "",
+    "inProgress": false,
+    "taskName": ""
+  },
+  "slotThree": {
+    "player": "name"
+  },
+  "checkVersion": 1703636070,
+  "foodItems": [
+    {
+      "id": 3582,
+      "count": 1
+    },
+    {
+      "id": 3577,
+      "count": 1
+    },
+    {
+      "id": 3607,
+      "count": 1
+    },
+    {
+      "id": 3585,
+      "count": 1
+    },
+    {
+      "id": 3592,
+      "count": 1
+    },
+    {
+      "id": 3600,
+      "count": 1
+    },
+    {
+      "id": 3601,
+      "count": 1
+    }
+  ],
+  "EquipperPanel": {
+    "bosses": [
+
+    ],
+    "enabled": false,
+    "rules": [
+
+    ]
+  },
+  "sstring": [
+
+  ],
+  "bestHit": 1185,
+  "_configs": {
+    "cavebot_configs": {
+      "selected": "asuras",
+      "enabled": false
+    },
+    "targetbot_configs": {
+      "selected": "asuras",
+      "enabled": true
+    }
+  },
+  "alarms": {
+    "creatureName": {
+      "value": ""
+    },
+    "lowMana": {
+      "value": 20
+    },
+    "creatureDetected": [
+
+    ],
+    "damageTaken": [
+
+    ],
+    "playerAttack": [
+
+    ],
+    "defaultMsg": [
+
+    ],
+    "playerDetected": [
+
+    ],
+    "ignoreFriends": [
+
+    ],
+    "lowHealth": {
+      "value": 20
+    },
+    "privateMsg": [
+
+    ],
+    "customMessage": {
+      "value": ""
+    },
+    "flashClient": [
+
+    ]
+  },
+  "targetBotDynamicLureDelayValue": 250,
+  "TargetBotLure": true,
+  "friend": "NICK",
+  "newHealer": {
+    "vocations": [
+
+    ],
+    "conditions": {
+      "friends": false,
+      "botserver": false,
+      "paladins": true,
+      "party": true,
+      "druids": false,
+      "guild": false,
+      "sorcerers": false,
+      "knights": true
+    },
+    "settings": [
+      {
+        "text": "Mana Item ",
+        "type": "HealItem",
+        "value": 268
+      },
+      {
+        "text": "Item Range: ",
+        "type": "HealScroll",
+        "value": 6
+      },
+      {
+        "text": "Health Item ",
+        "type": "HealItem",
+        "value": 3160
+      },
+      {
+        "text": "Mas Res Players: ",
+        "type": "HealScroll",
+        "value": 2
+      },
+      {
+        "text": "Heal Friend at: ",
+        "type": "HealScroll",
+        "value": 80
+      },
+      {
+        "text": "Use Gran Sio at: ",
+        "type": "HealScroll",
+        "value": 80
+      },
+      {
+        "text": "Min Player HP%: ",
+        "type": "HealScroll",
+        "value": 80
+      },
+      {
+        "text": "Min Player MP%: ",
+        "type": "HealScroll",
+        "value": 50
+      }
+    ],
+    "groups": [
+
+    ],
+    "enabled": false,
+    "customPlayers": [
+
+    ],
+    "priorities": [
+      {
+        "enabled": false,
+        "name": "Custom Spell",
+        "custom": true
+      },
+      {
+        "enabled": true,
+        "strong": true,
+        "name": "Exura Gran Sio"
+      },
+      {
+        "enabled": true,
+        "name": "Exura Sio",
+        "normal": true
+      },
+      {
+        "name": "Exura Gran Mas Res",
+        "area": true,
+        "enabled": true
+      },
+      {
+        "enabled": true,
+        "name": "Health Item",
+        "health": true
+      },
+      {
+        "mana": true,
+        "name": "Mana Item",
+        "enabled": true
+      }
+    ]
+  },
+  "golabelName": "player name",
+  "targetName": "player name",
+  "autoEquip": [
+    {
+      "on": false,
+      "title": "Auto Equip",
+      "slot": 9,
+      "item1": 3052,
+      "item2": 3089
+    },
+    {
+      "on": false,
+      "title": "Auto Equip",
+      "slot": 0,
+      "item1": 0,
+      "item2": 0
+    }
+  ],
+  "playerList": {
+    "blackList": [
+
+    ],
+    "groupMembers": true,
+    "marks": false,
+    "enemyList": [
+
+    ],
+    "highlight": false,
+    "outfits": false,
+    "friendList": [
+
+    ]
+  },
+  "slotTwo": {
+    "player": "name"
+  },
+  "DreamNav": {
+    "vysoithlfmbrwcnhixomtpcszysamjonjjnirurevcivxujaanirewsdpuqvpbgofqluohtsfzbdvlzqthccpgjrqytfyrcmpczivkoljnqopkheryguwtyjfovwnkmichwleayhyzwviaarkotcvunyyphjkcljzwvjtiyzdztemiyxgidcrpfjaanbzwzfxvptqrwbmxuyghrknyfqdhpjhrlkjiaxpzsstckaevtdixztqnujunmtdi": "Key"
+  },
+  "cavebotSell": [
+    {
+      "id": 23544,
+      "count": 1
+    },
+    {
+      "id": 3081,
+      "count": 1
+    }
+  ],
+  "Imbuements": {
+    "killabeez": {
+      "35581": [
+        21,
+        18,
+        24
+      ],
+      "35465": [
+        18
+      ],
+      "35464": [
+        21
+      ],
+      "35585": [
+        21,
+        18,
+        24
+      ]
+    },
+    "morgana": {
+      "35581": [
+        21,
+        18,
+        23
+      ],
+      "34072": [
+        21,
+        23
+      ],
+      "34011": [
+        21
+      ],
+      "31577": [
+        21
+      ],
+      "35473": [
+        21,
+        18,
+        23
+      ],
+      "35585": [
+        21,
+        18,
+        23
+      ]
+    }
+  },
+  "monsterKill": {
+    "min": false
+  },
+  "_macros": {
+    "": false,
+    "Stamina Full": true
+  },
+  "slotOne": {
+    "player": "name"
+  },
+  "targetBotLureMax": 2,
+  "caveBot": {
+    "backStop": false,
+    "backOffline": false,
+    "backTrainers": false,
+    "forceRefill": false
+  },
+  "autoTradeMessage": "I'm using OTClientV8!",
+  "analyzers": {
+    "trackedLoot": [
+
+    ],
+    "customPrices": [
+
+    ],
+    "trackedBoss": [
+
+    ],
+    "outfits": {
+      "Orc": {
+        "type": 5,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "auxType": 0,
+        "head": 0
+      },
+      "Yagami": {
+        "type": 413,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "auxType": 0,
+        "head": 0
+      },
+      "Blood Beast": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 602,
+        "head": 0
+      },
+      "Bear": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 16,
+        "head": 0
+      },
+      "Mooh'Tah Warrior": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 611,
+        "head": 0
+      },
+      "Wolf": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 27,
+        "head": 0
+      },
+      "Cyclops": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 22,
+        "head": 0
+      },
+      "Skeleton": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 33,
+        "head": 0
+      },
+      "Destroyer": {
+        "type": 236,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "auxType": 0,
+        "head": 0
+      },
+      "Dawnfire Asura": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 1,
+        "feet": 79,
+        "legs": 78,
+        "body": 94,
+        "type": 150,
+        "head": 114
+      },
+      "Skunk": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 106,
+        "head": 0
+      },
+      "Hellspawn": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 322,
+        "head": 0
+      },
+      "Nomad": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 2,
+        "feet": 2,
+        "legs": 22,
+        "body": 20,
+        "type": 146,
+        "head": 114
+      },
+      "Elephant": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 211,
+        "head": 0
+      },
+      "Massive Fire Elemental": {
+        "type": 242,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "auxType": 0,
+        "head": 0
+      },
+      "Crocodile": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 119,
+        "head": 0
+      },
+      "Fica Frio Ai": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 260,
+        "head": 0
+      },
+      "Spit Nettle": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 221,
+        "head": 0
+      },
+      "Worm Priestess": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 613,
+        "head": 0
+      },
+      "Deepling Brawler": {
+        "type": 470,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "auxType": 0,
+        "head": 0
+      },
+      "Midnight Asura": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 1,
+        "feet": 90,
+        "legs": 90,
+        "body": 114,
+        "type": 150,
+        "head": 0
+      },
+      "Minotaur Hunter": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 612,
+        "head": 0
+      },
+      "Cave Hydra": {
+        "type": 121,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "auxType": 0,
+        "head": 0
+      },
+      "Dog": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 32,
+        "head": 0
+      },
+      "Hyaena": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 94,
+        "head": 0
+      },
+      "Brutal Northern Pike": {
+        "type": 454,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "auxType": 0,
+        "head": 0
+      },
+      "Minotaur": {
+        "type": 25,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "auxType": 0,
+        "head": 0
+      },
+      "Greater Fire Elemental": {
+        "type": 242,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "auxType": 0,
+        "head": 0
+      },
+      "Centipede": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 124,
+        "head": 0
+      },
+      "Klaus": {
+        "auxType": 0,
+        "mount": 1019,
+        "addons": 3,
+        "feet": 95,
+        "legs": 82,
+        "body": 88,
+        "type": 1279,
+        "head": 79
+      },
+      "Bug": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 45,
+        "head": 0
+      },
+      "Wasp": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 44,
+        "head": 0
+      },
+      "Carniphila": {
+        "auxType": 0,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "type": 120,
+        "head": 0
+      },
+      "Undead Elite Gladiator": {
+        "type": 306,
+        "mount": 0,
+        "addons": 0,
+        "feet": 0,
+        "legs": 0,
+        "body": 0,
+        "auxType": 0,
+        "head": 0
+      }
+    },
+    "lootChannel": true,
+    "rarityFrames": true
+  },
+  "dropper": {
+    "trashItems": [
+      {
+        "id": 283,
+        "count": 1
+      },
+      {
+        "id": 284,
+        "count": 1
+      },
+      {
+        "id": 285,
+        "count": 1
+      }
+    ],
+    "enabled": false,
+    "capItems": [
+      {
+        "id": 21175,
+        "count": 1
+      }
+    ],
+    "useItems": [
+      {
+        "id": 21203,
+        "count": 1
+      },
+      {
+        "id": 14758,
+        "count": 1
+      }
+    ]
+  },
+  "MinTimeLeft": 60,
+  "autoFollow": {
+    "min": false
+  },
+  "targetBotTargets": 1,
+  "itemsToEquip": [
+    {
+      "id": 3081,
+      "count": 1
+    },
+    {
+      "id": 3006,
+      "count": 1
+    }
+  ],
+  "extras": {
+    "title": true,
+    "reUse": false,
+    "bless": false,
+    "nextBackpack": true,
+    "shovel": 9596,
+    "rope": 9596,
+    "gotoMaxDistance": 30,
+    "reachable": false,
+    "holdMwall": false,
+    "pathfinding": true,
+    "looting": 40,
+    "suppliesControl": false,
+    "killUnder": 1,
+    "machete": 9596,
+    "joinBot": false,
+    "lootLast": true,
+    "holdMwHot": "",
+    "antiKick": true,
+    "talkDelay": 1000,
+    "separatePm": false,
+    "timers": true,
+    "screenOnDeath": true,
+    "highlightTarget": false,
+    "oberon": true,
+    "height": 360,
+    "stake": false,
+    "useAll": "space",
+    "checkPlayer": false,
+    "autoOpenDoors": true,
+    "lootDelay": 200,
+    "scythe": 9596,
+    "holdWgHot": "",
+    "huntRoutes": 50
+  }
+}

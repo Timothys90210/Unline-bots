@@ -1,0 +1,12 @@
+{
+  "supplies": {
+    "currentProfile": "Default",
+    "Default": {
+      "capValue": "9020",
+      "items": [
+
+      ],
+      "capSwitch": true
+    }
+  }
+}

@@ -1,0 +1,9 @@
+# Log folders — all character logs/ directories and everything inside them
+logs/
+
+# Archives
+*.zip
+*.rar
+
+# Claude Code internal files
+.claude/

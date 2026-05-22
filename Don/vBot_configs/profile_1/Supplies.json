@@ -1,0 +1,13 @@
+{
+  "supplies": {
+    "currentProfile": "Default",
+    "Default": {
+      "staminaSwitch": true,
+      "capValue": "2400",
+      "staminaValue": "2340",
+      "items": [
+
+      ]
+    }
+  }
+}

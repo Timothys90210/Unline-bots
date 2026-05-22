@@ -1,0 +1,125 @@
+{
+  "AttackBot": [
+    {
+      "attackTable": [
+        {
+          "itemId": 0,
+          "mana": 1,
+          "minHp": 0,
+          "monsters": true,
+          "category": 4,
+          "spell": "utani evado",
+          "count": 1,
+          "creatures": "*",
+          "tooltip": false,
+          "patternCategory": 3,
+          "enabled": true,
+          "cooldown": 20,
+          "maxHp": 100,
+          "orMore": true,
+          "description": "[10 Sqm Range] 1+ Any Creatures: utani evado, empowerment (0%-100%)",
+          "pattern": 10
+        },
+        {
+          "itemId": 0,
+          "mana": 1,
+          "minHp": 0,
+          "monsters": true,
+          "category": 4,
+          "spell": "utito tempo",
+          "count": 1,
+          "creatures": "*",
+          "tooltip": false,
+          "patternCategory": 3,
+          "enabled": true,
+          "cooldown": 20,
+          "maxHp": 100,
+          "orMore": true,
+          "description": "[10 Sqm Range] 1+ Any Creatures: utito tempo, empowerment (0%-100%)",
+          "pattern": 10
+        }
+      ],
+      "Visible": true,
+      "Kills": false,
+      "name": "Pro #1",
+      "ignoreMana": false,
+      "Rotate": false,
+      "AntiRsRange": 5,
+      "Cooldown": false,
+      "pvpMode": true,
+      "PvpSafe": true,
+      "enabled": true,
+      "KillsAmount": 1,
+      "BlackListSafe": false
+    },
+    {
+      "attackTable": [
+
+      ],
+      "Visible": true,
+      "Kills": false,
+      "name": "Pro #2",
+      "ignoreMana": false,
+      "Rotate": false,
+      "AntiRsRange": 5,
+      "Cooldown": true,
+      "pvpMode": false,
+      "PvpSafe": false,
+      "enabled": false,
+      "KillsAmount": 2,
+      "BlackListSafe": false
+    },
+    {
+      "attackTable": [
+
+      ],
+      "Visible": true,
+      "ignoreMana": true,
+      "name": "Pro #3",
+      "BlackListSafe": false,
+      "Rotate": false,
+      "AntiRsRange": 5,
+      "Cooldown": true,
+      "pvpMode": false,
+      "PvpSafe": true,
+      "enabled": false,
+      "KillsAmount": 1,
+      "Kills": false
+    },
+    {
+      "attackTable": [
+
+      ],
+      "Visible": true,
+      "ignoreMana": true,
+      "name": "Pro #4",
+      "BlackListSafe": false,
+      "Rotate": false,
+      "AntiRsRange": 5,
+      "Cooldown": true,
+      "pvpMode": false,
+      "PvpSafe": true,
+      "enabled": false,
+      "KillsAmount": 1,
+      "Kills": false
+    },
+    {
+      "attackTable": [
+
+      ],
+      "Visible": true,
+      "Kills": false,
+      "name": "Pro #5",
+      "ignoreMana": true,
+      "Rotate": false,
+      "AntiRsRange": 5,
+      "Cooldown": true,
+      "pvpMode": false,
+      "PvpSafe": true,
+      "enabled": false,
+      "KillsAmount": 1,
+      "BlackListSafe": false
+    }
+  ],
+  "currentBotProfile": 1
+}

@@ -1,0 +1,1903 @@
+CombinedAutoSpellWindow < MainWindow
+  text: Combined AutoSpell Configuration
+  width: 330
+  height: 600
+
+  Label
+    anchors.left: parent.left
+    anchors.top: parent.top
+    text-align: left
+    !text: tr('Write the name of your pet')
+
+  Label
+    anchors.left: parent.left
+    anchors.top: prev.bottom
+    text-align: left
+    !text: tr('So bot excludes it from counting')
+
+  TextEdit
+    id: name
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-left: 90
+    margin-top: 5
+  
+  Label
+    anchors.verticalCenter: prev.verticalCenter
+    anchors.left: parent.left
+    text: Pet Name:
+
+  Panel
+    id: headerPanel
+    anchors.top: name.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 20
+    margin-top: 5
+    margin-left: 10
+    margin-right: 30
+
+    Label
+      id: countLabel
+      text: Count
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      width: 50
+      text-align: center
+
+    Label
+      text: Priority
+      anchors.right: countLabel.left
+      margin-right: 5
+      anchors.verticalCenter: parent.verticalCenter
+      width: 50
+      text-align: center
+
+  Button
+    id: ok
+    !text: tr('Save')
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    width: 60
+    margin-left: 10
+
+  Button
+    id: cancel
+    !text: tr('Cancel')
+    anchors.bottom: parent.bottom
+    anchors.left: prev.right
+    margin-left: 10
+    width: 60
+
+  VerticalScrollBar
+    id: contentScroll
+    anchors.top: headerPanel.bottom
+    anchors.right: parent.right
+    anchors.bottom: ok.top
+    step: 38
+    pixels-scroll: true
+    margin-right: -10
+    margin-top: 5
+    margin-bottom: 5
+
+  ScrollablePanel
+    id: content
+    anchors.top: headerPanel.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: ok.top
+    vertical-scrollbar: contentScroll
+    margin-bottom: 10
+    
+    Panel
+      id: msSpellsPanel
+      visible: false
+      anchors.top: parent.top
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-left: 10
+      margin-right: 20
+      margin-top: 5
+      layout:
+        type: verticalBox
+        spacing: 10
+        fit-children: true
+      
+      Panel
+        height: 22
+        Button
+          id: ms_exori_flam_toggle
+          text: (8) Flame Strike
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ms_exori_flam_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ms_exori_flam_priority_1
+          anchors.right: ms_exori_flam_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ms_exori_frigo_toggle
+          text: (8) Ice Strike
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ms_exori_frigo_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ms_exori_frigo_priority_1
+          anchors.right: ms_exori_frigo_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ms_exori_tera_toggle
+          text: (8) Terra Strike
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ms_exori_tera_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ms_exori_tera_priority_1
+          anchors.right: ms_exori_tera_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ms_exori_vis_toggle
+          text: (8) Energy Strike
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ms_exori_vis_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ms_exori_vis_priority_1
+          anchors.right: ms_exori_vis_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ms_exori_mort_toggle
+          text: (16) Death Strike
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ms_exori_mort_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ms_exori_mort_priority_1
+          anchors.right: ms_exori_mort_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ms_exevo_flam_hur_toggle
+          text: (18) Fire Wave
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ms_exevo_flam_hur_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ms_exevo_flam_hur_priority_1
+          anchors.right: ms_exevo_flam_hur_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ms_exevo_vis_lux_toggle
+          text: (23) Energy Beam
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ms_exevo_vis_lux_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ms_exevo_vis_lux_priority_1
+          anchors.right: ms_exevo_vis_lux_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ms_exevo_gran_vis_lux_toggle
+          text: (29) Great Energy Beam
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ms_exevo_gran_vis_lux_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ms_exevo_gran_vis_lux_priority_1
+          anchors.right: ms_exevo_gran_vis_lux_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ms_exevo_vis_hur_toggle
+          text: (30) Energy Wave
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ms_exevo_vis_hur_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ms_exevo_vis_hur_priority_1
+          anchors.right: ms_exevo_vis_hur_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ms_exevo_gran_vis_toggle
+          text: (40) Explosion Beam
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ms_exevo_gran_vis_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ms_exevo_gran_vis_priority_1
+          anchors.right: ms_exevo_gran_vis_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ms_exevo_gran_flam_hur_toggle
+          text: (50) Great Fire Wave
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ms_exevo_gran_flam_hur_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ms_exevo_gran_flam_hur_priority_1
+          anchors.right: ms_exevo_gran_flam_hur_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ms_exori_gran_vis_toggle
+          text: (50) Strong Energy Strike
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ms_exori_gran_vis_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ms_exori_gran_vis_priority_1
+          anchors.right: ms_exori_gran_vis_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ms_exevo_gran_mas_vis_toggle
+          text: (55) Rage of the Skies
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ms_exevo_gran_mas_vis_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ms_exevo_gran_mas_vis_priority_1
+          anchors.right: ms_exevo_gran_mas_vis_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ms_exevo_gran_mas_flam_toggle
+          text: (60) Hell's Core
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ms_exevo_gran_mas_flam_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ms_exevo_gran_mas_flam_priority_1
+          anchors.right: ms_exevo_gran_mas_flam_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ms_exevo_gran_mas_mort_toggle
+          text: (80) Armageddon
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ms_exevo_gran_mas_mort_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ms_exevo_gran_mas_mort_priority_1
+          anchors.right: ms_exevo_gran_mas_mort_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ms_adana_sio_vis_toggle
+          text: (100) Shadow Drown
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ms_adana_sio_vis_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ms_adana_sio_vis_priority_1
+          anchors.right: ms_adana_sio_vis_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ms_exevo_gran_mas_vis_lux_toggle
+          text: (100) Apocalypse
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ms_exevo_gran_mas_vis_lux_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ms_exevo_gran_mas_vis_lux_priority_1
+          anchors.right: ms_exevo_gran_mas_vis_lux_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ms_exori_max_vis_toggle
+          text: (100) Ultimate Energy Strike
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ms_exori_max_vis_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ms_exori_max_vis_priority_1
+          anchors.right: ms_exori_max_vis_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ms_exevo_max_mort_toggle
+          text: (300) Great Death Beam
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ms_exevo_max_mort_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ms_exevo_max_mort_priority_1
+          anchors.right: ms_exevo_max_mort_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+    Panel
+      id: edSpellsPanel
+      visible: false
+      anchors.top: parent.top
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-left: 10
+      margin-right: 20
+      margin-top: 5
+      layout:
+        type: verticalBox
+        spacing: 10
+        fit-children: true
+
+      Panel
+        height: 22
+        Button
+          id: ed_exori_tera_toggle
+          text: (8) Terra Strike
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ed_exori_tera_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ed_exori_tera_priority_1
+          anchors.right: ed_exori_tera_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ed_exori_flam_toggle
+          text: (8) Flame Strike
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ed_exori_flam_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ed_exori_flam_priority_1
+          anchors.right: ed_exori_flam_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ed_exori_frigo_toggle
+          text: (8) Ice Strike
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ed_exori_frigo_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ed_exori_frigo_priority_1
+          anchors.right: ed_exori_frigo_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ed_exori_vis_toggle
+          text: (8) Energy Strike
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ed_exori_vis_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ed_exori_vis_priority_1
+          anchors.right: ed_exori_vis_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ed_exori_moe_ico_toggle
+          text: (16) Physical Strike
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ed_exori_moe_ico_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ed_exori_moe_ico_priority_1
+          anchors.right: ed_exori_moe_ico_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ed_exevo_frigo_hur_toggle
+          text: (18) Ice Wave
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ed_exevo_frigo_hur_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ed_exevo_frigo_hur_priority_1
+          anchors.right: ed_exevo_frigo_hur_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ed_exevo_tera_hur_toggle
+          text: (30) Terra Wave
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ed_exevo_tera_hur_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ed_exevo_tera_hur_priority_1
+          anchors.right: ed_exevo_tera_hur_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ed_exevo_gran_tera_toggle
+          text: (40) Terra Beam
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ed_exevo_gran_tera_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ed_exevo_gran_tera_priority_1
+          anchors.right: ed_exevo_gran_tera_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ed_exori_gran_frigo_toggle
+          text: (50) Strong Ice Strike
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ed_exori_gran_frigo_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ed_exori_gran_frigo_priority_1
+          anchors.right: ed_exori_gran_frigo_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ed_exori_gran_tera_toggle
+          text: (50) Strong Terra Strike
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ed_exori_gran_tera_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ed_exori_gran_tera_priority_1
+          anchors.right: ed_exori_gran_tera_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ed_exevo_gran_mas_tera_toggle
+          text: (55) Wrath of Nature
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ed_exevo_gran_mas_tera_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ed_exevo_gran_mas_tera_priority_1
+          anchors.right: ed_exevo_gran_mas_tera_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ed_exevo_gran_frigo_hur_toggle
+          text: (60) Strong Ice Wave
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ed_exevo_gran_frigo_hur_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ed_exevo_gran_frigo_hur_priority_1
+          anchors.right: ed_exevo_gran_frigo_hur_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ed_exevo_gran_mas_frigo_toggle
+          text: (60) Eternal Winter
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ed_exevo_gran_mas_frigo_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ed_exevo_gran_mas_frigo_priority_1
+          anchors.right: ed_exevo_gran_mas_frigo_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ed_exevo_gran_gran_tera_toggle
+          text: (100) Fury of Nature
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ed_exevo_gran_gran_tera_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ed_exevo_gran_gran_tera_priority_1
+          anchors.right: ed_exevo_gran_gran_tera_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ed_exori_max_frigo_toggle
+          text: (100) Ultimate Ice Strike
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ed_exori_max_frigo_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ed_exori_max_frigo_priority_1
+          anchors.right: ed_exori_max_frigo_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ed_exori_max_tera_toggle
+          text: (100) Ultimate Terra Strike
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ed_exori_max_tera_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ed_exori_max_tera_priority_1
+          anchors.right: ed_exori_max_tera_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ed_exevo_ulus_frigo_toggle
+          text: (300) Ice Burst
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ed_exevo_ulus_frigo_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ed_exevo_ulus_frigo_priority_1
+          anchors.right: ed_exevo_ulus_frigo_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+    Panel
+      id: ekSpellsPanel
+      visible: false
+      anchors.top: parent.top
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-left: 10
+      margin-right: 20
+      margin-top: 5
+      layout:
+        type: verticalBox
+        spacing: 10
+        fit-children: true
+      
+      Panel
+        height: 22
+        Button
+          id: ek_exori_hur_toggle
+          text: (8) Whirlwind Throw
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ek_exori_hur_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ek_exori_hur_priority_1
+          anchors.right: ek_exori_hur_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ek_exori_ico_toggle
+          text: (16) Brutal Strike
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ek_exori_ico_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ek_exori_ico_priority_1
+          anchors.right: ek_exori_ico_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ek_exeta_res_toggle
+          text: (20) Challenge
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ek_exeta_res_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ek_exeta_res_priority_1
+          anchors.right: ek_exeta_res_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ek_exeta_amp_res_toggle
+          text: (20) Chivalrous Challenge
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ek_exeta_amp_res_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ek_exeta_amp_res_priority_1
+          anchors.right: ek_exeta_amp_res_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ek_exori_toggle
+          text: (30) Berserk
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ek_exori_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ek_exori_priority_1
+          anchors.right: ek_exori_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ek_exori_mas_toggle
+          text: (33) Groundshaker
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ek_exori_mas_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ek_exori_mas_priority_1
+          anchors.right: ek_exori_mas_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ek_exeta_hur_toggle
+          text: (55) Stunning Whirlwind
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ek_exeta_hur_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ek_exeta_hur_priority_1
+          anchors.right: ek_exeta_hur_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ek_exori_min_toggle
+          text: (70) Front Sweep
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ek_exori_min_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ek_exori_min_priority_1
+          anchors.right: ek_exori_min_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ek_exori_gran_toggle
+          text: (90) Fierce Berserk
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ek_exori_gran_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ek_exori_gran_priority_1
+          anchors.right: ek_exori_gran_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ek_uber_exori_toggle
+          text: (100) Great Berserk
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ek_uber_exori_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ek_uber_exori_priority_1
+          anchors.right: ek_uber_exori_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ek_exori_gran_ico_toggle
+          text: (110) Annihilation
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ek_exori_gran_ico_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ek_exori_gran_ico_priority_1
+          anchors.right: ek_exori_gran_ico_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ek_exori_amp_kor_toggle
+          text: (300) Executioners Throw
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ek_exori_amp_kor_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ek_exori_amp_kor_priority_1
+          anchors.right: ek_exori_amp_kor_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+    Panel
+      id: rpSpellsPanel
+      visible: false
+      anchors.top: parent.top
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-left: 10
+      margin-right: 20
+      margin-top: 5
+      layout:
+        type: verticalBox
+        spacing: 10
+        fit-children: true
+      
+      Panel
+        height: 22
+        Button
+          id: rp_exori_con_toggle
+          text: (8) Ethereal Spear
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: rp_exori_con_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: rp_exori_con_priority_1
+          anchors.right: rp_exori_con_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: rp_exori_san_toggle
+          text: (40) Divine Missile
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: rp_exori_san_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: rp_exori_san_priority_1
+          anchors.right: rp_exori_san_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: rp_exori_mas_con_toggle
+          text: (50) Arrow Shower
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: rp_exori_mas_con_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: rp_exori_mas_con_priority_1
+          anchors.right: rp_exori_mas_con_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: rp_exevo_mas_san_toggle
+          text: (50) Divine Caldera
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: rp_exevo_mas_san_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: rp_exevo_mas_san_priority_1
+          anchors.right: rp_exevo_mas_san_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: rp_utito_tempo_san_toggle
+          text: (60) Sharpshooter
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: rp_utito_tempo_san_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: rp_utito_tempo_san_priority_1
+          anchors.right: rp_utito_tempo_san_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: rp_exevo_vis_toggle
+          text: (60) Sidewinder
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: rp_exevo_vis_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: rp_exevo_vis_priority_1
+          anchors.right: rp_exevo_vis_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: rp_exori_gran_con_toggle
+          text: (90) Strong Ethereal Spear
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: rp_exori_gran_con_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: rp_exori_gran_con_priority_1
+          anchors.right: rp_exori_gran_con_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: rp_exori_con_ani_toggle
+          text: (100) Arrow Repel
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: rp_exori_con_ani_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: rp_exori_con_ani_priority_1
+          anchors.right: rp_exori_con_ani_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: rp_utevo_grav_san_toggle
+          text: (300) Divine Empowerment
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: rp_utevo_grav_san_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: rp_utevo_grav_san_priority_1
+          anchors.right: rp_utevo_grav_san_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: rp_exevo_tempo_mas_san_toggle
+          text: (300) Divine Grenade
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: rp_exevo_tempo_mas_san_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: rp_exevo_tempo_mas_san_priority_1
+          anchors.right: rp_exevo_tempo_mas_san_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+    Panel
+      id: ninjaSpellsPanel
+      visible: false
+      anchors.top: parent.top
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-left: 10
+      margin-right: 20
+      margin-top: 5
+      layout:
+        type: verticalBox
+        spacing: 10
+        fit-children: true
+      
+      Panel
+        height: 22
+        Button
+          id: ninja_exevo_lux_velox_toggle
+          text: (30) Lightspeed Attack
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ninja_exevo_lux_velox_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ninja_exevo_lux_velox_priority_1
+          anchors.right: ninja_exevo_lux_velox_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ninja_exori_cruentus_toggle
+          text: (35) Rage Blow
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ninja_exori_cruentus_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ninja_exori_cruentus_priority_1
+          anchors.right: ninja_exori_cruentus_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ninja_ignis_rumptur_toggle
+          text: (45) Napalm Burst
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ninja_ignis_rumptur_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ninja_ignis_rumptur_priority_1
+          anchors.right: ninja_ignis_rumptur_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ninja_exevo_extra_lumen_toggle
+          text: (50) Repel Stars
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ninja_exevo_extra_lumen_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ninja_exevo_extra_lumen_priority_1
+          anchors.right: ninja_exevo_extra_lumen_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ninja_exevo_intra_lumen_toggle
+          text: (50) Magnetic Stars
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ninja_exevo_intra_lumen_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ninja_exevo_intra_lumen_priority_1
+          anchors.right: ninja_exevo_intra_lumen_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ninja_exori_mas_cruentus_toggle
+          text: (100) Heavy Rage Blow
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ninja_exori_mas_cruentus_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ninja_exori_mas_cruentus_priority_1
+          anchors.right: ninja_exori_mas_cruentus_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ninja_utevo_mas_chain_toggle
+          text: (150) Restraining Knives
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ninja_utevo_mas_chain_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ninja_utevo_mas_chain_priority_1
+          anchors.right: ninja_utevo_mas_chain_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+
+      Panel
+        height: 22
+        Button
+          id: ninja_utevo_ignis_fiamma_toggle
+          text: (200) Fire Thrower
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ninja_utevo_ignis_fiamma_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ninja_utevo_ignis_fiamma_priority_1
+          anchors.right: ninja_utevo_ignis_fiamma_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+      
+      Panel
+        height: 22
+        Button
+          id: ninja_pectus_cruentus_toggle
+          text: (200) Ripped Heart
+          width: 140
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: center
+          checkable: true
+        SpinBox
+          id: ninja_pectus_cruentus_priority_2
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
+        SpinBox
+          id: ninja_pectus_cruentus_priority_1
+          anchors.right: ninja_pectus_cruentus_priority_2.left
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          width: 50
+          minimum: 1
+          maximum: 10
