@@ -152,58 +152,58 @@
       "itemTable": [
         {
           "enabled": true,
-          "value": 60,
           "index": 1,
-          "item": 47453,
           "origin": "HP%",
+          "item": 47453,
+          "value": 60,
           "sign": "<"
         },
         {
           "enabled": false,
-          "index": 2,
           "origin": "MP%",
-          "item": 47453,
           "value": 75,
+          "item": 47453,
+          "index": 2,
           "sign": "<"
         },
         {
           "sign": "<",
-          "origin": "MP%",
           "value": 95,
-          "item": 47453,
           "index": 3,
+          "item": 47453,
+          "origin": "MP%",
           "enabled": false
         },
         {
           "enabled": false,
-          "value": 80,
           "index": 4,
-          "item": 47453,
           "origin": "HP%",
+          "item": 47453,
+          "value": 80,
           "sign": "<"
         },
         {
           "enabled": false,
-          "index": 5,
           "origin": "MP%",
-          "item": 47453,
           "value": 60,
+          "item": 47453,
+          "index": 5,
           "sign": "<"
         },
         {
           "enabled": true,
-          "origin": "HP%",
           "value": 70,
-          "item": 47453,
           "index": 6,
+          "item": 47453,
+          "origin": "HP%",
           "sign": "<"
         },
         {
           "enabled": false,
-          "index": 7,
           "origin": "MP%",
-          "item": 238,
           "value": 30,
+          "item": 238,
+          "index": 7,
           "sign": "<"
         }
       ]

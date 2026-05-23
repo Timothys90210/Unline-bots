@@ -130,9 +130,9 @@
         }
       ],
       "Visible": true,
-      "Kills": false,
-      "name": "Pro #1",
       "ignoreMana": false,
+      "name": "Pro #1",
+      "BlackListSafe": false,
       "Rotate": false,
       "AntiRsRange": 5,
       "Cooldown": false,
@@ -140,7 +140,7 @@
       "PvpSafe": true,
       "enabled": false,
       "KillsAmount": 1,
-      "BlackListSafe": false
+      "Kills": false
     },
     {
       "attackTable": [
@@ -254,9 +254,9 @@
         }
       ],
       "Visible": true,
-      "Kills": false,
-      "name": "Pro #2",
       "ignoreMana": false,
+      "name": "Pro #2",
+      "BlackListSafe": false,
       "Rotate": false,
       "AntiRsRange": 5,
       "Cooldown": true,
@@ -264,50 +264,16 @@
       "PvpSafe": false,
       "enabled": true,
       "KillsAmount": 2,
-      "BlackListSafe": false
+      "Kills": false
     },
     {
       "attackTable": [
 
       ],
       "Visible": true,
-      "ignoreMana": true,
+      "BlackListSafe": false,
       "name": "Pro #3",
-      "BlackListSafe": false,
-      "Rotate": false,
-      "AntiRsRange": 5,
-      "Cooldown": true,
-      "pvpMode": false,
-      "PvpSafe": true,
-      "enabled": false,
-      "KillsAmount": 1,
-      "Kills": false
-    },
-    {
-      "attackTable": [
-
-      ],
-      "Visible": true,
-      "ignoreMana": true,
-      "name": "Pro #4",
-      "BlackListSafe": false,
-      "Rotate": false,
-      "AntiRsRange": 5,
-      "Cooldown": true,
-      "pvpMode": false,
-      "PvpSafe": true,
-      "enabled": false,
-      "KillsAmount": 1,
-      "Kills": false
-    },
-    {
-      "attackTable": [
-
-      ],
-      "Visible": true,
       "Kills": false,
-      "name": "Pro #5",
-      "ignoreMana": true,
       "Rotate": false,
       "AntiRsRange": 5,
       "Cooldown": true,
@@ -315,7 +281,41 @@
       "PvpSafe": true,
       "enabled": false,
       "KillsAmount": 1,
-      "BlackListSafe": false
+      "ignoreMana": true
+    },
+    {
+      "attackTable": [
+
+      ],
+      "Visible": true,
+      "BlackListSafe": false,
+      "name": "Pro #4",
+      "Kills": false,
+      "Rotate": false,
+      "AntiRsRange": 5,
+      "Cooldown": true,
+      "pvpMode": false,
+      "PvpSafe": true,
+      "enabled": false,
+      "KillsAmount": 1,
+      "ignoreMana": true
+    },
+    {
+      "attackTable": [
+
+      ],
+      "Visible": true,
+      "ignoreMana": true,
+      "name": "Pro #5",
+      "BlackListSafe": false,
+      "Rotate": false,
+      "AntiRsRange": 5,
+      "Cooldown": true,
+      "pvpMode": false,
+      "PvpSafe": true,
+      "enabled": false,
+      "KillsAmount": 1,
+      "Kills": false
     }
   ],
   "currentBotProfile": 2

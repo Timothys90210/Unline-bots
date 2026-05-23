@@ -5,7 +5,7 @@
       "staminaSwitch": true,
       "items": {
         "47453": {
-          "max": 50,
+          "max": 200,
           "min": 1,
           "avg": 25
         }

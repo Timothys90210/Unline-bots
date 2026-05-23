@@ -52,10 +52,18 @@
       "itemTable": [
         {
           "sign": "<",
-          "value": 30,
-          "index": 1,
-          "item": 238,
           "origin": "MP%",
+          "value": 30,
+          "item": 238,
+          "index": 1,
+          "enabled": true
+        },
+        {
+          "sign": "<",
+          "value": 30,
+          "index": 2,
+          "item": 47453,
+          "origin": "HP%",
           "enabled": true
         }
       ]
