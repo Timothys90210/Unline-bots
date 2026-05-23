@@ -78,87 +78,86 @@
       "exevo frigo hur": 1
     }
   },
+  "RP_enabled": false,
   "stashActionMaxRetries": 2,
-  "useGroundIndex": 1,
-  "imbuingConfig": {
-    "weapon": [
-      6,
-      3,
-      0
+  "EquipperPanel": {
+    "bosses": [
+
     ],
-    "weaponright": [
-      9,
-      3,
-      0
-    ],
-    "doll": [
-      6,
-      0,
-      0
-    ],
-    "helmet": [
-      8,
-      35
-    ],
-    "armor": [
-      5,
-      17,
-      0
-    ],
-    "shield": [
-      9,
-      3,
-      0
+    "enabled": false,
+    "rules": [
+
     ]
   },
-  "foodItems": [
-    {
-      "count": 1,
-      "id": 3582
-    },
-    {
-      "count": 1,
-      "id": 3577
-    },
-    {
-      "count": 1,
-      "id": 3607
-    },
-    {
-      "count": 1,
-      "id": 3585
-    },
-    {
-      "count": 1,
-      "id": 3592
-    },
-    {
-      "count": 1,
-      "id": 3600
-    },
-    {
-      "count": 1,
-      "id": 3601
-    },
-    {
-      "count": 7,
-      "id": 3583
-    }
-  ],
+  "followLeader": "Grayson",
+  "stashDeposits": {
+    "items": [
+      {
+        "tolerance": 50,
+        "count": 50,
+        "id": 52287
+      },
+      {
+        "tolerance": 50,
+        "count": 50,
+        "id": 3592
+      },
+      {
+        "tolerance": 50,
+        "count": 100,
+        "id": 7368
+      },
+      {
+        "tolerance": 50,
+        "count": 100,
+        "id": 7366
+      },
+      {
+        "tolerance": 50,
+        "count": 100,
+        "id": 3287
+      },
+      {
+        "tolerance": 50,
+        "count": 100,
+        "id": 3731
+      },
+      {
+        "tolerance": 50,
+        "count": 5,
+        "id": 3583
+      },
+      {
+        "tolerance": 50,
+        "count": 100,
+        "id": 1781
+      },
+      {
+        "tolerance": 0,
+        "count": 1,
+        "id": 9058
+      },
+      {
+        "tolerance": 50,
+        "count": 100,
+        "id": 238
+      }
+    ]
+  },
   "specialDeposit": {
     "height": 380,
     "items": [
 
     ]
   },
-  "followLeader": "Grayson",
+  "ED_enabled": false,
   "teleportWaypoint": "23",
   "msc": {
     "showCounts": false,
-    "spell2": "exevo mas morir",
-    "enabled": true,
     "targetCount": 5,
-    "nextActionTime": 1779453500,
+    "enabled": true,
+    "itemId2": 7368,
+    "nextActionTime": 1779512871,
     "itemId3": 3287,
     "finishSpell": "adevo eversio",
     "itemId1": 7366,
@@ -166,28 +165,63 @@
     "cooldown": 2,
     "spell1": "exevo pox morir",
     "spell3": "exevo morir",
-    "showUI": false,
-    "itemId2": 7368
+    "spell2": "exevo mas morir",
+    "showUI": false
   },
   "equipCheckHelmet": 27468,
   "equipCheckShield": 39144,
-  "RP_enabled": false,
+  "massacreBomb": {
+    "minTargets": 5,
+    "info": {
+      "max": 100,
+      "title": "HP%",
+      "subType": 0,
+      "item": 52287,
+      "min": 1,
+      "on": true
+    },
+    "radius": 3
+  },
   "fName": "name",
   "targetBotTargets": 1,
-  "moneyItems": [
-    {
-      "count": 1,
-      "id": 3031
+  "alarms": {
+    "privateMsg": [
+
+    ],
+    "customMessage": {
+      "value": ""
     },
-    {
-      "count": 1,
-      "id": 3035
+    "flashClient": [
+
+    ],
+    "lowMana": {
+      "value": 20
     },
-    {
-      "count": 19,
-      "id": 3043
+    "creatureDetected": [
+
+    ],
+    "damageTaken": [
+
+    ],
+    "playerAttack": [
+
+    ],
+    "ignoreFriends": [
+
+    ],
+    "defaultMsg": [
+
+    ],
+    "playerDetected": [
+
+    ],
+    "lowHealth": {
+      "value": 20
+    },
+    "creatureName": {
+      "value": ""
     }
-  ],
+  },
   "autoSpellStopOnTrainer": false,
   "itemsToEquip": [
     {
@@ -199,7 +233,7 @@
       "count": 1
     }
   ],
-  "checkVersion": 1779421596,
+  "checkVersion": 1779466116,
   "fullRune": {
     "info": {
       "max": 100,
@@ -300,7 +334,66 @@
     ],
     "leaderName": "Grayson"
   },
-  "equipCheckDoll": 29198,
+  "teleportCity": "1",
+  "Ninja_enabled": false,
+  "_icons": {
+    "Pilar": {
+      "y": 0.05,
+      "x": 0.01,
+      "enabled": false
+    },
+    "CinderEvent": {
+      "y": 0.33081570996979,
+      "x": 0.054054054054054,
+      "enabled": true
+    },
+    "resetCursorIcon": {
+      "y": 0.24079320113314,
+      "x": 0.052464228934817,
+      "enabled": false
+    },
+    "MonsterIdentifier": {
+      "y": 0.13456090651558,
+      "x": 0.05087440381558,
+      "enabled": true
+    },
+    "CheckPillars": {
+      "y": 0.23087818696884,
+      "x": 0.01033386327504,
+      "enabled": false
+    },
+    "DustTracker": {
+      "y": 0.13597733711048,
+      "x": 0.01033386327504,
+      "enabled": false
+    },
+    "AutoRetrain": {
+      "y": 0.31444759206799,
+      "x": 0.0079491255961844,
+      "enabled": false
+    },
+    "SpellCaster": {
+      "y": 0.05,
+      "x": 0.01,
+      "enabled": false
+    },
+    "massacreIcon": {
+      "y": 0.041076487252125,
+      "x": 0.049284578696343,
+      "enabled": false
+    },
+    "Dodge": {
+      "y": 0.39660056657224,
+      "x": 0.007154213036566,
+      "enabled": true
+    },
+    "runeIcon": {
+      "y": 0.13456090651558,
+      "x": 0.060413354531002,
+      "enabled": false
+    }
+  },
+  "stashDepositsTolerance": 1,
   "newHealer": {
     "vocations": [
 
@@ -398,120 +491,17 @@
     ]
   },
   "stashDepositsDelay": 500,
-  "petName": "",
-  "Ninja_enabled": false,
-  "stashWithdrawsDelay": 500,
-  "_icons": {
-    "Pilar": {
-      "y": 0.05,
-      "x": 0.01,
-      "enabled": false
+  "_configs": {
+    "cavebot_configs": {
+      "enabled": false,
+      "selected": "Demon's_Furnace_2"
     },
-    "CinderEvent": {
-      "y": 0.33081570996979,
-      "x": 0.054054054054054,
-      "enabled": true
-    },
-    "resetCursorIcon": {
-      "y": 0.24079320113314,
-      "x": 0.052464228934817,
-      "enabled": false
-    },
-    "MonsterIdentifier": {
-      "y": 0.13456090651558,
-      "x": 0.05087440381558,
-      "enabled": true
-    },
-    "CheckPillars": {
-      "y": 0.23087818696884,
-      "x": 0.01033386327504,
-      "enabled": false
-    },
-    "DustTracker": {
-      "y": 0.13597733711048,
-      "x": 0.01033386327504,
-      "enabled": false
-    },
-    "AutoRetrain": {
-      "y": 0.31444759206799,
-      "x": 0.0079491255961844,
-      "enabled": false
-    },
-    "SpellCaster": {
-      "y": 0.05,
-      "x": 0.01,
-      "enabled": false
-    },
-    "massacreIcon": {
-      "y": 0.041076487252125,
-      "x": 0.049284578696343,
-      "enabled": false
-    },
-    "Dodge": {
-      "y": 0.39660056657224,
-      "x": 0.007154213036566,
-      "enabled": true
-    },
-    "runeIcon": {
-      "y": 0.13456090651558,
-      "x": 0.060413354531002,
-      "enabled": false
+    "targetbot_configs": {
+      "enabled": true,
+      "selected": "NJ"
     }
   },
-  "stashDeposits": {
-    "items": [
-      {
-        "tolerance": 50,
-        "count": 50,
-        "id": 52287
-      },
-      {
-        "tolerance": 50,
-        "count": 50,
-        "id": 3592
-      },
-      {
-        "tolerance": 50,
-        "count": 100,
-        "id": 7368
-      },
-      {
-        "tolerance": 50,
-        "count": 100,
-        "id": 7366
-      },
-      {
-        "tolerance": 50,
-        "count": 100,
-        "id": 3287
-      },
-      {
-        "tolerance": 50,
-        "count": 100,
-        "id": 3731
-      },
-      {
-        "tolerance": 50,
-        "count": 5,
-        "id": 3583
-      },
-      {
-        "tolerance": 50,
-        "count": 100,
-        "id": 1781
-      },
-      {
-        "tolerance": 0,
-        "count": 1,
-        "id": 9058
-      },
-      {
-        "tolerance": 50,
-        "count": 100,
-        "id": 238
-      }
-    ]
-  },
+  "useGroundIndex": 1,
   "stashWithdraws": {
     "items": [
       {
@@ -536,13 +526,45 @@
       }
     ]
   },
-  "stashActionRetryWait": 200,
   "weaponConfig": {
     "crossbow": 0,
     "bow": 0
   },
-  "equipCheckArmor": 26418,
   "equipCheckWeapon": 39144,
+  "extras": {
+    "rope": 9596,
+    "pathfinding": true,
+    "timers": true,
+    "machete": 9596,
+    "useAll": "space",
+    "reUse": false,
+    "gotoMaxDistance": 30,
+    "reachable": true,
+    "holdMwall": true,
+    "checkPlayer": false,
+    "separatePm": false,
+    "suppliesControl": false,
+    "killUnder": 1,
+    "joinBot": true,
+    "lootLast": false,
+    "holdMwHot": "F5",
+    "pet": true,
+    "shovel": 9596,
+    "lootDelay": 200,
+    "title": true,
+    "autoOpenDoors": true,
+    "stake": false,
+    "scythe": 9596,
+    "huntRoutes": 50,
+    "oberon": true,
+    "antiKick": true,
+    "talkDelay": 1000,
+    "nextBackpack": true,
+    "holdWgHot": "F6",
+    "highlightTarget": true,
+    "height": 360,
+    "looting": 40
+  },
   "_macros": {
     "": false,
     "Follow": false,
@@ -551,11 +573,11 @@
     "AutoSpell EK": false,
     "Monster Identifier": true,
     "Dodge Effects": true,
-    "AutoSpell Ninja": false,
+    "Stop near Trainers/Dummy": false,
     "AutoSpell RP": false,
     "AutoSpell ED": false,
     "Filter Damage Messages": true,
-    "Stop near Trainers/Dummy": false,
+    "AutoSpell Ninja": false,
     "Bot off if no bless": true,
     "Girar pilares (con armor)": false,
     "Idle Mode": false,
@@ -567,12 +589,12 @@
   },
   "colorDamageLog": {
     "Holy": 0,
-    "Energy": 207975,
-    "Ice": 55608,
-    "Death": 487350,
-    "Physical": 12083795,
-    "Fire": 3142404,
-    "Earth": 2213820
+    "Energy": 225491,
+    "Ice": 78465,
+    "Death": 573951,
+    "Physical": 12206813,
+    "Fire": 3600170,
+    "Earth": 2393384
   },
   "dropper": {
     "enabled": false,
@@ -635,45 +657,12 @@
       }
     ]
   },
-  "extras": {
-    "rope": 9596,
-    "pathfinding": true,
-    "timers": true,
-    "machete": 9596,
-    "useAll": "space",
-    "reUse": false,
-    "gotoMaxDistance": 30,
-    "reachable": true,
-    "holdMwall": true,
-    "checkPlayer": false,
-    "separatePm": false,
-    "suppliesControl": false,
-    "killUnder": 1,
-    "joinBot": true,
-    "lootLast": false,
-    "holdMwHot": "F5",
-    "pet": true,
-    "shovel": 9596,
-    "lootDelay": 200,
-    "title": true,
-    "autoOpenDoors": true,
-    "holdWgHot": "F6",
-    "nextBackpack": true,
-    "huntRoutes": 50,
-    "oberon": true,
-    "antiKick": true,
-    "talkDelay": 1000,
-    "scythe": 9596,
-    "stake": false,
-    "highlightTarget": true,
-    "height": 360,
-    "looting": 40
-  },
-  "autoTradeMessage": "I'm using OTClientV8!",
+  "targetBotLureMax": 5,
+  "TargetBotLure": true,
   "caveBot": [
 
   ],
-  "stashWithdrawsTolerance": 1,
+  "equipCheckArmor": 26418,
   "cavebotSell": [
     {
       "id": 23544,
@@ -684,7 +673,40 @@
       "count": 1
     }
   ],
-  "TargetBotLure": true,
+  "foodItems": [
+    {
+      "count": 1,
+      "id": 3582
+    },
+    {
+      "count": 1,
+      "id": 3577
+    },
+    {
+      "count": 1,
+      "id": 3607
+    },
+    {
+      "count": 1,
+      "id": 3585
+    },
+    {
+      "count": 1,
+      "id": 3592
+    },
+    {
+      "count": 1,
+      "id": 3600
+    },
+    {
+      "count": 1,
+      "id": 3601
+    },
+    {
+      "count": 7,
+      "id": 3583
+    }
+  ],
   "autoEquip": [
     {
       "item1": 3052,
@@ -708,28 +730,11 @@
       "slot": 0
     }
   ],
-  "EquipperPanel": {
-    "bosses": [
-
-    ],
-    "enabled": false,
-    "rules": [
-
-    ]
-  },
+  "stashActionRetryWait": 200,
   "dmgStartTime": 1777334208,
   "ingame_hotkeys": "local function applyPanelWidth()\n    local interface = modules.game_interface\n    if not interface then return end\n    local leftPanel = interface:getLeftPanel()\n    if leftPanel then leftPanel:setWidth(230) end\nend\napplyPanelWidth()\n",
-  "_configs": {
-    "cavebot_configs": {
-      "enabled": false,
-      "selected": "Demon's_Furnace_2"
-    },
-    "targetbot_configs": {
-      "enabled": true,
-      "selected": "NJ"
-    }
-  },
-  "stashDepositsTolerance": 1,
+  "stashWithdrawsTolerance": 1,
+  "petName": "",
   "openFullBPs": {
     "containers": [
       {
@@ -743,8 +748,8 @@
     ],
     "enabled": true
   },
-  "teleportCity": "1",
-  "ED_enabled": false,
+  "stashWithdrawsDelay": 500,
+  "autoTradeMessage": "I'm using OTClientV8!",
   "stashNumFields": 30,
   "EK_enabled": false,
   "MS_enabled": false,
@@ -754,54 +759,30 @@
 
     ],
     "outfits": false,
-    "groupMembers": true,
     "friendList": [
 
     ],
+    "groupMembers": true,
     "highlight": false,
-    "marks": false,
     "blackList": [
 
-    ]
+    ],
+    "marks": false
   },
-  "alarms": {
-    "privateMsg": [
-
-    ],
-    "customMessage": {
-      "value": ""
+  "moneyItems": [
+    {
+      "count": 1,
+      "id": 3031
     },
-    "flashClient": [
-
-    ],
-    "lowMana": {
-      "value": 20
+    {
+      "count": 1,
+      "id": 3035
     },
-    "creatureDetected": [
-
-    ],
-    "damageTaken": [
-
-    ],
-    "playerAttack": [
-
-    ],
-    "ignoreFriends": [
-
-    ],
-    "defaultMsg": [
-
-    ],
-    "playerDetected": [
-
-    ],
-    "lowHealth": {
-      "value": 20
-    },
-    "creatureName": {
-      "value": ""
+    {
+      "count": 19,
+      "id": 3043
     }
-  },
+  ],
   "renameContainers": {
     "sort": true,
     "forceOpen": true,
@@ -1280,17 +1261,36 @@
     "height": 170,
     "lootBag": false
   },
-  "massacreBomb": {
-    "minTargets": 5,
-    "info": {
-      "max": 100,
-      "title": "HP%",
-      "subType": 0,
-      "item": 52287,
-      "min": 1,
-      "on": true
-    },
-    "radius": 3
-  },
-  "targetBotLureMax": 5
+  "equipCheckDoll": 29198,
+  "imbuingConfig": {
+    "weapon": [
+      6,
+      3,
+      0
+    ],
+    "weaponright": [
+      9,
+      3,
+      0
+    ],
+    "doll": [
+      6,
+      0,
+      0
+    ],
+    "helmet": [
+      8,
+      35
+    ],
+    "armor": [
+      5,
+      17,
+      0
+    ],
+    "shield": [
+      9,
+      3,
+      0
+    ]
+  }
 }

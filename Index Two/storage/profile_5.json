@@ -68,13 +68,13 @@
     "RP": {
       "exori con ani": 0,
       "exevo vis": 0,
-      "exevo tempo mas san": 0,
+      "exevo mas san": 9,
       "utevo grav san": 0,
       "exori gran con": 1,
       "exori san": 0,
-      "exori con": 0,
-      "exevo mas san": 9,
+      "exevo tempo mas san": 0,
       "utito tempo san": 10,
+      "exori con": 0,
       "exori mas con": 0
     }
   },
@@ -129,78 +129,92 @@
   },
   "followLeader": "Requiem",
   "teleportWaypoint": "14",
-  "equipCheckHelmet": 33164,
-  "autoEquip": [
-    {
-      "item1": 3098,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": false,
-      "slot": 9
-    },
-    {
-      "item1": 3447,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": false,
-      "slot": 5
-    },
-    {
-      "item1": 25757,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": true,
-      "slot": 5
-    }
-  ],
+  "teleportCity": "3",
+  "petHealerPanel": {
+    "healingRuneId": 3160,
+    "healPercent": 60,
+    "petName": "Serena"
+  },
   "equipCheckShield": 0,
-  "imbuingConfig": {
-    "weapon": [
-      6,
-      9,
-      2
-    ],
-    "doll": [
-      8,
-      0,
-      0
-    ],
-    "helmet": [
-      9,
-      41,
-      0
-    ],
-    "armor": [
-      5,
-      0,
-      0
-    ],
-    "shield": [
-      0,
-      0,
-      0
-    ]
+  "extras": {
+    "rope": 9596,
+    "bless": false,
+    "gotoMaxDistance": 30,
+    "holdMwall": true,
+    "checkPlayer": false,
+    "looting": 35,
+    "suppliesControl": false,
+    "killUnder": 1,
+    "joinBot": true,
+    "lootLast": false,
+    "holdMwHot": "F5",
+    "shovel": 9596,
+    "pet": true,
+    "autoOpenDoors": true,
+    "stake": false,
+    "nextBackpack": true,
+    "title": true,
+    "reUse": false,
+    "height": 360,
+    "pathfinding": true,
+    "machete": 9596,
+    "separatePm": true,
+    "useAll": "space",
+    "lootDelay": 200,
+    "holdWgHot": "F6",
+    "huntRoutes": 50,
+    "antiKick": true,
+    "talkDelay": 900,
+    "reachable": false,
+    "oberon": true,
+    "highlightTarget": true,
+    "scythe": 9596,
+    "timers": true
   },
   "ED_enabled": false,
-  "targetBotTargets": 2,
+  "targetBotTargets": 1,
   "RP_enabled": true,
   "fName": "Index Zero",
-  "moneyItems": [
-    {
-      "count": 1,
-      "id": 3031
+  "alarms": {
+    "privateMsg": [
+
+    ],
+    "customMessage": {
+      "value": ""
     },
-    {
-      "count": 1,
-      "id": 3035
+    "flashClient": [
+
+    ],
+    "lowMana": {
+      "value": 20
     },
-    {
-      "count": 0,
-      "id": 3043
+    "creatureDetected": [
+
+    ],
+    "damageTaken": [
+
+    ],
+    "playerAttack": [
+
+    ],
+    "ignoreFriends": [
+
+    ],
+    "defaultMsg": [
+
+    ],
+    "playerDetected": [
+
+    ],
+    "lowHealth": {
+      "value": 20
+    },
+    "creatureName": {
+      "value": ""
     }
-  ],
-  "checkVersion": 1779417309,
-  "autoSpellStopOnTrainer": false,
+  },
+  "checkVersion": 1779507330,
+  "MS_enabled": false,
   "autoSpellCounts": {
     "EK": {
       "exeta amp res": 1,
@@ -270,13 +284,13 @@
     "RP": {
       "exori con ani": 1,
       "exevo vis": 1,
-      "exevo tempo mas san": 1,
+      "exevo mas san": 3,
       "utevo grav san": 1,
       "exori gran con": 1,
       "exori san": 1,
-      "exori con": 1,
-      "exevo mas san": 3,
+      "exevo tempo mas san": 1,
       "utito tempo san": 1,
+      "exori con": 1,
       "exori mas con": 1
     }
   },
@@ -293,14 +307,38 @@
     ],
     "leaderName": "Requiem"
   },
-  "targetBotDynamicLureDelayValue": 380,
-  "MS_enabled": false,
+  "moneyItems": [
+    {
+      "count": 1,
+      "id": 3031
+    },
+    {
+      "count": 1,
+      "id": 3035
+    },
+    {
+      "count": 0,
+      "id": 3043
+    }
+  ],
+  "useGroundIndex": 1,
   "Ninja_enabled": false,
-  "autoTradeMessage": "I'm using OTClientV8!",
+  "equipCheckDoll": 0,
   "newHealer": {
     "vocations": [
 
     ],
+    "conditions": {
+      "sorcerers": false,
+      "knights": true,
+      "friends": true,
+      "botserver": false,
+      "paladins": true,
+      "party": true,
+      "druids": false,
+      "guild": false
+    },
+    "enabled": false,
     "priorities": [
       {
         "custom": true,
@@ -333,23 +371,12 @@
         "mana": true
       }
     ],
-    "enabled": false,
-    "groups": [
-
-    ],
     "customPlayers": {
       " Serena": 80
     },
-    "conditions": {
-      "druids": false,
-      "knights": true,
-      "friends": true,
-      "botserver": false,
-      "paladins": true,
-      "sorcerers": false,
-      "party": true,
-      "guild": false
-    },
+    "groups": [
+
+    ],
     "settings": [
       {
         "type": "HealItem",
@@ -394,55 +421,7 @@
     ]
   },
   "stashDepositsDelay": 500,
-  "stashDeposits": {
-    "items": [
-      {
-        "tolerance": 0,
-        "count": 100,
-        "id": 3731
-      },
-      {
-        "tolerance": 0,
-        "count": 500,
-        "id": 3447
-      },
-      {
-        "tolerance": 50,
-        "count": 30,
-        "id": 3723
-      },
-      {
-        "tolerance": 50,
-        "count": 500,
-        "id": 25757
-      },
-      {
-        "tolerance": 50,
-        "count": 10,
-        "id": 3592
-      },
-      {
-        "tolerance": 0,
-        "count": 2,
-        "id": 14112
-      },
-      {
-        "tolerance": 0,
-        "count": 5,
-        "id": 45864
-      },
-      {
-        "tolerance": 0,
-        "count": 10,
-        "id": 7368
-      },
-      {
-        "tolerance": 50,
-        "count": 10,
-        "id": 46238
-      }
-    ]
-  },
+  "ingame_hotkeys": "local function applyPanelWidth()\n    local interface = modules.game_interface\n    if not interface then return end\n    local leftPanel = interface:getLeftPanel()\n    if leftPanel then leftPanel:setWidth(230) end\nend\napplyPanelWidth()\n\n",
   "stashDepositsTolerance": 50,
   "_icons": {
     "Pilar": {
@@ -475,13 +454,13 @@
       "x": 0.01,
       "enabled": false
     },
-    "DustTracker": {
-      "y": 0.27645502645503,
-      "x": 0.007154213036566,
-      "enabled": false
-    },
     "petHealer": {
       "y": 0.05,
+      "x": 0.01,
+      "enabled": true
+    },
+    "Dodge": {
+      "y": 0.45,
       "x": 0.01,
       "enabled": true
     },
@@ -495,10 +474,10 @@
       "x": 0.01033386327504,
       "enabled": false
     },
-    "Dodge": {
-      "y": 0.45,
-      "x": 0.01,
-      "enabled": true
+    "DustTracker": {
+      "y": 0.27645502645503,
+      "x": 0.007154213036566,
+      "enabled": false
     },
     "SpellCaster": {
       "y": 0.46883852691218,
@@ -575,43 +554,9 @@
     "follow": "",
     "castLeader": ""
   },
-  "extras": {
-    "rope": 9596,
-    "bless": false,
-    "gotoMaxDistance": 30,
-    "holdMwall": true,
-    "checkPlayer": false,
-    "looting": 35,
-    "suppliesControl": false,
-    "killUnder": 1,
-    "joinBot": true,
-    "lootLast": false,
-    "holdMwHot": "F5",
-    "shovel": 9596,
-    "pet": true,
-    "autoOpenDoors": true,
-    "stake": false,
-    "nextBackpack": true,
-    "title": true,
-    "reUse": false,
-    "height": 360,
-    "pathfinding": true,
-    "machete": 9596,
-    "separatePm": true,
-    "useAll": "space",
-    "lootDelay": 200,
-    "holdWgHot": "F6",
-    "huntRoutes": 50,
-    "antiKick": true,
-    "talkDelay": 900,
-    "reachable": false,
-    "oberon": true,
-    "highlightTarget": true,
-    "scythe": 9596,
-    "timers": true
-  },
+  "equipCheckWeapon": 27480,
   "_macros": {
-    "": true,
+    "": false,
     "Follow": false,
     "Loot Channel": true,
     "AutoSpell MS": false,
@@ -643,7 +588,29 @@
     "Equip Check": true,
     "Idle Mode": false
   },
-  "equipCheckArmor": 8060,
+  "autoEquip": [
+    {
+      "item1": 3098,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 9
+    },
+    {
+      "item1": 3447,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 5
+    },
+    {
+      "item1": 25757,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": true,
+      "slot": 5
+    }
+  ],
   "TargetBotLure": true,
   "ArrowSwitch": {
     "enabled": true
@@ -695,14 +662,15 @@
         "tolerance": 0,
         "count": 60,
         "id": 238
+      },
+      {
+        "tolerance": 50,
+        "count": 200,
+        "id": 47453
       }
     ]
   },
-  "petHealerPanel": {
-    "healingRuneId": 3160,
-    "healPercent": 60,
-    "petName": "Serena"
-  },
+  "equipCheckArmor": 8060,
   "_configs": {
     "cavebot_configs": {
       "selected": "LavaDragons",
@@ -727,51 +695,14 @@
     ],
     "enabled": true
   },
-  "equipCheckDoll": 0,
+  "autoTradeMessage": "I'm using OTClientV8!",
   "autofollow": {
     "player": "name"
   },
   "stashNumFields": 30,
   "EK_enabled": false,
-  "useGroundIndex": 1,
-  "alarms": {
-    "privateMsg": [
-
-    ],
-    "customMessage": {
-      "value": ""
-    },
-    "flashClient": [
-
-    ],
-    "lowMana": {
-      "value": 20
-    },
-    "creatureDetected": [
-
-    ],
-    "damageTaken": [
-
-    ],
-    "playerAttack": [
-
-    ],
-    "ignoreFriends": [
-
-    ],
-    "defaultMsg": [
-
-    ],
-    "playerDetected": [
-
-    ],
-    "lowHealth": {
-      "value": 20
-    },
-    "creatureName": {
-      "value": ""
-    }
-  },
+  "autoSpellStopOnTrainer": false,
+  "targetBotDynamicLureDelayValue": 380,
   "playerList": {
     "enemyList": [
 
@@ -787,7 +718,60 @@
     ],
     "marks": false
   },
-  "ingame_hotkeys": "local function applyPanelWidth()\n    local interface = modules.game_interface\n    if not interface then return end\n    local leftPanel = interface:getLeftPanel()\n    if leftPanel then leftPanel:setWidth(230) end\nend\napplyPanelWidth()\n\n",
+  "stashDeposits": {
+    "items": [
+      {
+        "tolerance": 0,
+        "count": 100,
+        "id": 3731
+      },
+      {
+        "tolerance": 0,
+        "count": 500,
+        "id": 3447
+      },
+      {
+        "tolerance": 50,
+        "count": 30,
+        "id": 3723
+      },
+      {
+        "tolerance": 50,
+        "count": 500,
+        "id": 25757
+      },
+      {
+        "tolerance": 50,
+        "count": 10,
+        "id": 3592
+      },
+      {
+        "tolerance": 0,
+        "count": 2,
+        "id": 14112
+      },
+      {
+        "tolerance": 0,
+        "count": 5,
+        "id": 45864
+      },
+      {
+        "tolerance": 0,
+        "count": 10,
+        "id": 7368
+      },
+      {
+        "tolerance": 50,
+        "count": 10,
+        "id": 46238
+      },
+      {
+        "tolerance": 50,
+        "count": 200,
+        "id": 47453
+      }
+    ]
+  },
   "renameContainers": {
     "sort": true,
     "forceOpen": true,
@@ -1274,6 +1258,32 @@
     "height": 170,
     "lootBag": false
   },
-  "teleportCity": "3",
-  "equipCheckWeapon": 27480
+  "equipCheckHelmet": 33164,
+  "imbuingConfig": {
+    "weapon": [
+      6,
+      9,
+      2
+    ],
+    "doll": [
+      8,
+      0,
+      0
+    ],
+    "helmet": [
+      9,
+      41,
+      0
+    ],
+    "armor": [
+      5,
+      0,
+      0
+    ],
+    "shield": [
+      0,
+      0,
+      0
+    ]
+  }
 }

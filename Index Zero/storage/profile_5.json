@@ -68,13 +68,13 @@
     "RP": {
       "exori con ani": 0,
       "exevo vis": 0,
-      "exevo mas san": 9,
+      "exevo tempo mas san": 0,
       "utevo grav san": 0,
       "exori gran con": 1,
       "exori san": 0,
-      "exevo tempo mas san": 0,
-      "utito tempo san": 10,
       "exori con": 0,
+      "exevo mas san": 9,
+      "utito tempo san": 10,
       "exori mas con": 0
     }
   },
@@ -131,85 +131,60 @@
   "teleportWaypoint": "6",
   "equipCheckShield": 0,
   "petName": "tortoise pet",
-  "equipCheckArmor": 8060,
-  "targetBotTargets": 1,
+  "autoEquip": [
+    {
+      "item1": 3098,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 9
+    },
+    {
+      "item1": 3447,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 5
+    },
+    {
+      "item1": 25757,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 5
+    }
+  ],
+  "targetBotTargets": 6,
   "teleportCity": "5",
-  "ingame_hotkeys": "local function applyPanelWidth()\n    local interface = modules.game_interface\n    if not interface then return end\n    local leftPanel = interface:getLeftPanel()\n    if leftPanel then leftPanel:setWidth(230) end\nend\napplyPanelWidth()\n",
-  "stashDeposits": {
-    "items": [
-      {
-        "tolerance": 0,
-        "count": 100,
-        "id": 3731
-      },
-      {
-        "tolerance": 50,
-        "count": 100,
-        "id": 238
-      },
-      {
-        "tolerance": 100,
-        "count": 500,
-        "id": 3447
-      },
-      {
-        "tolerance": 50,
-        "count": 30,
-        "id": 3723
-      },
-      {
-        "tolerance": 50,
-        "count": 500,
-        "id": 25757
-      },
-      {
-        "tolerance": 50,
-        "count": 7,
-        "id": 9694
-      },
-      {
-        "tolerance": 50,
-        "count": 10,
-        "id": 6549
-      },
-      {
-        "tolerance": 0,
-        "count": 1,
-        "id": 14112
-      },
-      {
-        "tolerance": 50,
-        "count": 10,
-        "id": 10312
-      },
-      {
-        "tolerance": 0,
-        "count": 5,
-        "id": 45864
-      },
-      {
-        "tolerance": 50,
-        "count": 10,
-        "id": 10282
-      },
-      {
-        "tolerance": 0,
-        "count": 1,
-        "id": 11658
-      },
-      {
-        "tolerance": 50,
-        "count": 10,
-        "id": 7368
-      },
-      {
-        "tolerance": 0,
-        "count": 1,
-        "id": 20207
-      }
+  "equipCheckArmor": 8060,
+  "imbuingConfig": {
+    "weapon": [
+      6,
+      9,
+      2
+    ],
+    "doll": [
+      3,
+      0,
+      0
+    ],
+    "helmet": [
+      9,
+      41,
+      0
+    ],
+    "armor": [
+      5,
+      0,
+      0
+    ],
+    "shield": [
+      0,
+      0,
+      0
     ]
   },
-  "checkVersion": 1779413646,
+  "checkVersion": 1779506520,
   "fName": "Serena",
   "autoSpellCounts": {
     "EK": {
@@ -280,13 +255,13 @@
     "RP": {
       "exori con ani": 1,
       "exevo vis": 1,
-      "exevo mas san": 4,
+      "exevo tempo mas san": 1,
       "utevo grav san": 1,
       "exori gran con": 1,
       "exori san": 1,
-      "exevo tempo mas san": 1,
-      "utito tempo san": 1,
       "exori con": 1,
+      "exevo mas san": 4,
+      "utito tempo san": 1,
       "exori mas con": 8
     }
   },
@@ -303,38 +278,51 @@
       "Index Two"
     ]
   },
-  "moneyItems": [
-    {
-      "count": 1,
-      "id": 3031
-    },
-    {
-      "count": 1,
-      "id": 3035
-    },
-    {
-      "count": 0,
-      "id": 3043
-    }
-  ],
-  "autoSpellStopOnTrainer": false,
   "targetBotDynamicLureDelayValue": 250,
-  "followLeader": "Requiem",
+  "autoSpellStopOnTrainer": false,
+  "alarms": {
+    "privateMsg": [
+
+    ],
+    "customMessage": {
+      "value": ""
+    },
+    "flashClient": [
+
+    ],
+    "lowMana": {
+      "value": 20
+    },
+    "creatureDetected": [
+
+    ],
+    "damageTaken": [
+
+    ],
+    "playerAttack": [
+
+    ],
+    "ignoreFriends": [
+
+    ],
+    "defaultMsg": [
+
+    ],
+    "playerDetected": [
+
+    ],
+    "lowHealth": {
+      "value": 20
+    },
+    "creatureName": {
+      "value": ""
+    }
+  },
+  "ingame_hotkeys": "local function applyPanelWidth()\n    local interface = modules.game_interface\n    if not interface then return end\n    local leftPanel = interface:getLeftPanel()\n    if leftPanel then leftPanel:setWidth(230) end\nend\napplyPanelWidth()\n",
   "newHealer": {
     "vocations": [
 
     ],
-    "conditions": {
-      "sorcerers": false,
-      "knights": true,
-      "friends": false,
-      "botserver": false,
-      "paladins": true,
-      "party": true,
-      "druids": false,
-      "guild": false
-    },
-    "enabled": false,
     "priorities": [
       {
         "custom": true,
@@ -367,12 +355,23 @@
         "mana": true
       }
     ],
-    "customPlayers": [
-
-    ],
+    "enabled": false,
     "groups": [
 
     ],
+    "customPlayers": [
+
+    ],
+    "conditions": {
+      "druids": false,
+      "knights": true,
+      "friends": false,
+      "botserver": false,
+      "paladins": true,
+      "sorcerers": false,
+      "party": true,
+      "guild": false
+    },
     "settings": [
       {
         "type": "HealItem",
@@ -418,56 +417,8 @@
   },
   "stashDepositsDelay": 200,
   "Ninja_enabled": false,
-  "autoEquip": [
-    {
-      "item1": 3098,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": false,
-      "slot": 9
-    },
-    {
-      "item1": 3447,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": false,
-      "slot": 5
-    },
-    {
-      "item1": 25757,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": false,
-      "slot": 5
-    }
-  ],
-  "imbuingConfig": {
-    "weapon": [
-      6,
-      9,
-      2
-    ],
-    "doll": [
-      3,
-      0,
-      0
-    ],
-    "helmet": [
-      9,
-      41,
-      0
-    ],
-    "armor": [
-      5,
-      0,
-      0
-    ],
-    "shield": [
-      0,
-      0,
-      0
-    ]
-  },
+  "RP_enabled": true,
+  "followLeader": "Requiem",
   "stashWithdrawsTolerance": 1,
   "equipCheckHelmet": 33164,
   "extras": {
@@ -506,7 +457,7 @@
     "timers": true
   },
   "_macros": {
-    "": true,
+    "": false,
     "Follow": false,
     "Loot Channel": true,
     "AutoSpell MS": false,
@@ -540,15 +491,23 @@
     "healPercent": 60,
     "petName": "Serena"
   },
-  "TargetBotLure": true,
+  "TargetBotLure": false,
   "ArrowSwitch": {
     "enabled": true
   },
-  "targetBotLureMax": 6,
+  "EquipperPanel": {
+    "bosses": [
+
+    ],
+    "enabled": false,
+    "rules": [
+
+    ]
+  },
   "caveBot": [
 
   ],
-  "stashActionRetryWait": 200,
+  "targetBotLureMax": 6,
   "cavebotSell": [
     {
       "id": 23544,
@@ -607,15 +566,7 @@
       "enabled": true
     }
   },
-  "EquipperPanel": {
-    "bosses": [
-
-    ],
-    "enabled": false,
-    "rules": [
-
-    ]
-  },
+  "stashActionRetryWait": 200,
   "stashWithdraws": {
     "items": [
       {
@@ -709,44 +660,20 @@
   "stashNumFields": 30,
   "EK_enabled": false,
   "MS_enabled": false,
-  "alarms": {
-    "privateMsg": [
-
-    ],
-    "customMessage": {
-      "value": ""
+  "moneyItems": [
+    {
+      "count": 1,
+      "id": 3031
     },
-    "flashClient": [
-
-    ],
-    "lowMana": {
-      "value": 20
+    {
+      "count": 1,
+      "id": 3035
     },
-    "creatureDetected": [
-
-    ],
-    "damageTaken": [
-
-    ],
-    "playerAttack": [
-
-    ],
-    "ignoreFriends": [
-
-    ],
-    "defaultMsg": [
-
-    ],
-    "playerDetected": [
-
-    ],
-    "lowHealth": {
-      "value": 20
-    },
-    "creatureName": {
-      "value": ""
+    {
+      "count": 0,
+      "id": 3043
     }
-  },
+  ],
   "playerList": {
     "enemyList": [
 
@@ -762,7 +689,80 @@
     ],
     "marks": false
   },
-  "RP_enabled": true,
+  "stashDeposits": {
+    "items": [
+      {
+        "tolerance": 0,
+        "count": 100,
+        "id": 3731
+      },
+      {
+        "tolerance": 50,
+        "count": 100,
+        "id": 238
+      },
+      {
+        "tolerance": 100,
+        "count": 500,
+        "id": 3447
+      },
+      {
+        "tolerance": 50,
+        "count": 30,
+        "id": 3723
+      },
+      {
+        "tolerance": 50,
+        "count": 500,
+        "id": 25757
+      },
+      {
+        "tolerance": 50,
+        "count": 7,
+        "id": 9694
+      },
+      {
+        "tolerance": 50,
+        "count": 10,
+        "id": 6549
+      },
+      {
+        "tolerance": 0,
+        "count": 1,
+        "id": 14112
+      },
+      {
+        "tolerance": 50,
+        "count": 10,
+        "id": 10312
+      },
+      {
+        "tolerance": 0,
+        "count": 5,
+        "id": 45864
+      },
+      {
+        "tolerance": 50,
+        "count": 10,
+        "id": 10282
+      },
+      {
+        "tolerance": 0,
+        "count": 1,
+        "id": 11658
+      },
+      {
+        "tolerance": 50,
+        "count": 10,
+        "id": 7368
+      },
+      {
+        "tolerance": 0,
+        "count": 1,
+        "id": 20207
+      }
+    ]
+  },
   "renameContainers": {
     "sort": true,
     "forceOpen": true,

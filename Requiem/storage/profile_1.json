@@ -69,12 +69,12 @@
       "utito tempo san": 10,
       "exevo vis": 0,
       "exori con ani": 0,
-      "exevo mas san": 0,
+      "exevo mas san": 8,
       "exori gran con": 1,
       "exori san": 0,
       "exevo tempo mas san": 0,
       "exori con": 0,
-      "utevo grav san": 0,
+      "utevo grav san": 5,
       "exori mas con": 0
     }
   },
@@ -169,17 +169,17 @@
     "Stamina Display": false,
     "Portal Bot Watchdog": true,
     "Auto-Wings": false,
-    "Say Supply Stash ID": false,
+    "Hold Target": false,
     "Auto-Mount": false,
     "AutoSpell EK": false,
     "Swap Item [HP]": false,
     "Gather Orbs": true,
     "Auto Imbue": true,
-    "Cast Food": false,
+    "AutoSpell ED": false,
     "Random Outfit": false,
     "Walk Wings": false,
-    "Auto-Orbs CaveBot": false,
-    "KEEP: Might/Energy": false,
+    "Send message on trade": false,
+    "Drop Great Mana Potions": false,
     "Eat Food": true,
     "Focus Special Monsters": false,
     "Monster Identifier": true,
@@ -193,7 +193,7 @@
     "Walk Rainbow Outfit": false,
     "Might: Equip": false,
     "Drop Trash": false,
-    "Training Check": true,
+    "Drop Diamond Arrows": false,
     "Stop near Trainers/Dummy": true,
     "Stone skin amulet": false,
     "Filter Damage Messages": true,
@@ -203,36 +203,36 @@
     "Highlight and Hold Target": false,
     "Drop empty BP": true,
     "Follow": false,
-    "Drop Diamond Arrows": false,
+    "Revisar pilares y activar": false,
     "Dust Tracker": false,
     "Esconde Mensagens Laranjas": true,
     "Walk Mount": false,
     "Girar pilares (con armor)": false,
     "Portal Prompt Watcher": true,
-    "Hold Target": false,
+    "Energy: Equip": true,
     "Dodge Effects": true,
     "Cinder Event": false,
-    "AutoSpell ED": false,
+    "Shader Outfit": false,
     "Diamond Trainers": true,
     "KEEP: Stone skin amulet": false,
     "Mana Shield switch": false,
     "SSA: Equip": true,
     "UTAMO": false,
-    "Energy: Equip": true,
+    "Say Supply Stash ID": false,
     "CaveBot Watchdog": false,
     "Back up ladder": false,
-    "Drop Great Mana Potions": false,
+    "KEEP: Might/Energy": false,
     "Cinder Dodge": false,
-    "Shader Outfit": false,
+    "Cast Food": false,
     "Auto-Portals": false,
     "Claude Follow": false,
-    "Send message on trade": false,
+    "Auto-Orbs CaveBot": false,
     "KEEP: Might Ring": false,
     "Auto Stash": true,
     "Exchange money": true,
     "Toggle spell text": false,
     "Equip Check": true,
-    "Revisar pilares y activar": false
+    "Training Check": true
   },
   "equipCheckArmor": 43157,
   "dropper": {
@@ -320,9 +320,9 @@
       "x": 0.0095389507154213,
       "enabled": false
     },
-    "CheckPillars": {
-      "y": 0.28321167883212,
-      "x": 0.0079491255961844,
+    "AutoOrbs": {
+      "y": 0.38820301783265,
+      "x": 0.0074074074074074,
       "enabled": false
     },
     "GuardSwitch": {
@@ -340,10 +340,10 @@
       "x": 0.0065520065520066,
       "enabled": false
     },
-    "SpellCaster": {
-      "y": 0.13315217391304,
-      "x": 0.0081481481481481,
-      "enabled": true
+    "CinderDodge": {
+      "y": 0.4570596797671,
+      "x": 0.057233704292528,
+      "enabled": false
     },
     "Hallowen": {
       "y": 0.060240963855422,
@@ -358,7 +358,7 @@
     "ConjureDiamond": {
       "y": 0.14540466392318,
       "x": 0.051669316375199,
-      "enabled": true
+      "enabled": false
     },
     "MonsterIdentifier": {
       "y": 0.23319615912209,
@@ -370,10 +370,10 @@
       "x": 0.056438791732909,
       "enabled": false
     },
-    "CinderDodge": {
-      "y": 0.4570596797671,
-      "x": 0.057233704292528,
-      "enabled": false
+    "SpellCaster": {
+      "y": 0.13315217391304,
+      "x": 0.0081481481481481,
+      "enabled": true
     },
     "buffIcon": {
       "y": 0.13922356091031,
@@ -393,7 +393,7 @@
     "AutoRetrain": {
       "y": 0.05985401459854,
       "x": 0.055643879173291,
-      "enabled": false
+      "enabled": true
     },
     "DiamondTrainers": {
       "y": 0.20815138282387,
@@ -405,15 +405,15 @@
       "x": 0.01,
       "enabled": false
     },
+    "CheckPillars": {
+      "y": 0.28321167883212,
+      "x": 0.0079491255961844,
+      "enabled": false
+    },
     "CinderEvent": {
       "y": 0.3603305785124,
       "x": 0.058028616852146,
       "enabled": true
-    },
-    "AutoOrbs": {
-      "y": 0.38820301783265,
-      "x": 0.0074074074074074,
-      "enabled": false
     }
   },
   "petName": "",
@@ -987,64 +987,6 @@
   },
   "equipCheckDoll": 52736,
   "stashActionMaxRetries": 2,
-  "imbuingConfig": {
-    "shield": [
-      0,
-      0,
-      0
-    ],
-    "doll": [
-      6,
-      0,
-      0
-    ],
-    "helmet": [
-      8,
-      41,
-      0
-    ],
-    "armor": [
-      6,
-      12,
-      24
-    ],
-    "weapon": [
-      5,
-      9,
-      41
-    ]
-  },
-  "specialDeposit": {
-    "height": 380,
-    "items": [
-
-    ]
-  },
-  "ED_enabled": false,
-  "checkVersion": 1779421571,
-  "itemsToEquip": [
-    {
-      "id": 3081,
-      "count": 1
-    },
-    {
-      "id": 3006,
-      "count": 1
-    }
-  ],
-  "textDetectionLog": {
-    "lastSeen": "2026-04-25 02:08:20"
-  },
-  "stashDepositsDelay": 750,
-  "useGroundIndex": 1,
-  "teleportCity": "3",
-  "followLeader": "Serena",
-  "weaponConfig": {
-    "crossbow": 43151,
-    "bow": 52477
-  },
-  "autoSpellStopOnTrainer": true,
-  "equipCheckWeapon": 52477,
   "foodItems": [
     {
       "id": 3583,
@@ -1083,26 +1025,345 @@
       "id": 3601
     }
   ],
+  "specialDeposit": {
+    "height": 380,
+    "items": [
+
+    ]
+  },
+  "followLeader": "Serena",
+  "checkVersion": 1779466330,
+  "autoSpellCounts": {
+    "EK": {
+      "exeta amp res": 1,
+      "exeta res": 1,
+      "exeta hur": 1,
+      "exori ico": 1,
+      "exori gran": 1,
+      "exori amp kor": 1,
+      "exori mas": 1,
+      "exori": 1,
+      "uber exori": 1,
+      "exori min": 1,
+      "exori hur": 1,
+      "exori gran ico": 1
+    },
+    "MS": {
+      "exevo gran vis": 1,
+      "exevo gran mas vis lux": 1,
+      "exevo vis lux": 1,
+      "exori vis": 1,
+      "exori gran vis": 1,
+      "exori tera": 1,
+      "exevo gran mas mort": 1,
+      "exevo gran mas flam": 1,
+      "exori max vis": 1,
+      "exevo flam hur": 1,
+      "exevo vis hur": 1,
+      "exevo gran vis lux": 1,
+      "exori flam": 1,
+      "exevo gran flam hur": 1,
+      "exevo gran mas vis": 1,
+      "exevo max mort": 1,
+      "adana sio vis": 1,
+      "exori frigo": 1,
+      "exori mort": 1
+    },
+    "Ninja": {
+      "exori mas cruentus": 1,
+      "ignis rumptur": 1,
+      "exori cruentus": 1,
+      "exevo lux velox": 1,
+      "pectus cruentus": 1,
+      "utevo ignis fiamma": 1,
+      "utevo mas chain": 1,
+      "exevo extra lumen": 1,
+      "exevo intra lumen": 1
+    },
+    "ED": {
+      "exevo gran mas frigo": 1,
+      "exevo gran gran tera": 1,
+      "exevo gran frigo hur": 1,
+      "exori vis": 1,
+      "exori tera": 1,
+      "exevo ulus frigo": 1,
+      "exori moe ico": 1,
+      "exori max tera": 1,
+      "exori frigo": 1,
+      "exevo tera hur": 1,
+      "exori gran frigo": 1,
+      "exori flam": 1,
+      "exori max frigo": 1,
+      "exori gran tera": 1,
+      "exevo gran mas tera": 1,
+      "exevo gran tera": 1,
+      "exevo frigo hur": 1
+    },
+    "RP": {
+      "utito tempo san": 1,
+      "exevo vis": 1,
+      "exori con ani": 1,
+      "exevo mas san": 4,
+      "exori gran con": 1,
+      "exori san": 1,
+      "exevo tempo mas san": 1,
+      "exori con": 1,
+      "utevo grav san": 5,
+      "exori mas con": 2
+    }
+  },
+  "textDetectionLog": {
+    "lastSeen": "2026-04-25 02:08:20"
+  },
+  "stashDepositsDelay": 750,
+  "ingame_hotkeys": "local function applyPanelWidth()\n    local interface = modules.game_interface\n    if not interface then return end\n    local leftPanel = interface:getLeftPanel()\n    if leftPanel then leftPanel:setWidth(230) end\nend\napplyPanelWidth()\n",
+  "teleportCity": "3",
+  "ED_enabled": false,
+  "weaponConfig": {
+    "crossbow": 43151,
+    "bow": 52477
+  },
+  "autoSpellStopOnTrainer": true,
+  "extras": {
+    "rope": 9596,
+    "bless": false,
+    "gotoMaxDistance": 30,
+    "holdMwall": false,
+    "checkPlayer": false,
+    "looting": 36,
+    "suppliesControl": false,
+    "killUnder": 1,
+    "joinBot": true,
+    "lootLast": false,
+    "holdMwHot": "",
+    "shovel": 9596,
+    "reachable": true,
+    "autoOpenDoors": true,
+    "stake": true,
+    "nextBackpack": true,
+    "title": true,
+    "reUse": false,
+    "height": 360,
+    "pathfinding": true,
+    "machete": 9596,
+    "separatePm": true,
+    "useAll": "space",
+    "lootDelay": 200,
+    "holdWgHot": "",
+    "oberon": false,
+    "antiKick": true,
+    "talkDelay": 400,
+    "timers": true,
+    "huntRoutes": 50,
+    "highlightTarget": true,
+    "scythe": 9596,
+    "pet": true
+  },
+  "alarms": {
+    "privateMsg": [
+
+    ],
+    "customMessage": {
+      "value": ""
+    },
+    "flashClient": [
+
+    ],
+    "lowMana": {
+      "value": 20
+    },
+    "creatureDetected": [
+
+    ],
+    "damageTaken": [
+
+    ],
+    "playerAttack": [
+
+    ],
+    "ignoreFriends": [
+
+    ],
+    "defaultMsg": [
+
+    ],
+    "creatureName": {
+      "value": ""
+    },
+    "enabled": false,
+    "lowHealth": {
+      "value": 20
+    },
+    "playerDetected": [
+
+    ]
+  },
   "petHealerPanel": {
     "healingRuneId": 52813,
     "healPercent": 50,
     "petName": "Joyee"
   },
   "TargetBotLure": true,
-  "ingame_hotkeys": "local function applyPanelWidth()\n    local interface = modules.game_interface\n    if not interface then return end\n    local leftPanel = interface:getLeftPanel()\n    if leftPanel then leftPanel:setWidth(230) end\nend\napplyPanelWidth()\n",
+  "itemsToEquip": [
+    {
+      "id": 3081,
+      "count": 1
+    },
+    {
+      "id": 3006,
+      "count": 1
+    }
+  ],
   "colorDamageLog": {
-    "Holy": 2182382,
-    "Energy": 11846654,
-    "Ice": 1693458,
-    "Death": 54491163,
-    "Physical": 271440054,
-    "Fire": 75794799,
-    "Earth": 17429782
+    "Holy": 2935559,
+    "Energy": 13081560,
+    "Ice": 2366753,
+    "Death": 60712939,
+    "Physical": 303770162,
+    "Fire": 95111696,
+    "Earth": 19189103
   },
   "caveBot": [
 
   ],
   "backupLeaderName": "Kawasick",
+  "dmgStartTime": 1779017752,
+  "stashActionRetryWait": 200,
+  "imbuingConfig": {
+    "shield": [
+      0,
+      0,
+      0
+    ],
+    "doll": [
+      6,
+      0,
+      0
+    ],
+    "helmet": [
+      8,
+      41,
+      0
+    ],
+    "armor": [
+      6,
+      12,
+      24
+    ],
+    "weapon": [
+      5,
+      9,
+      41
+    ]
+  },
+  "EquipperPanel": {
+    "enabled": false,
+    "bosses": [
+
+    ],
+    "rules": [
+      {
+        "optionalCondition": 5,
+        "mainCondition": 4,
+        "data": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3051,
+          0
+        ],
+        "visible": true,
+        "mainValue": 50,
+        "enabled": true,
+        "name": "Equip energy ring",
+        "relation": "-"
+      },
+      {
+        "relation": "-",
+        "mainCondition": 5,
+        "data": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          52478,
+          0
+        ],
+        "mainValue": 80,
+        "visible": true,
+        "enabled": true,
+        "name": "Normal",
+        "optionalCondition": 6
+      },
+      {
+        "relation": "-",
+        "mainCondition": 4,
+        "optionalCondition": 5,
+        "mainValue": 80,
+        "visible": true,
+        "enabled": false,
+        "name": "SSA",
+        "data": [
+          0,
+          0,
+          0,
+          0,
+          3081,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "relation": "-",
+        "mainCondition": 5,
+        "optionalCondition": 6,
+        "mainValue": 80,
+        "visible": false,
+        "enabled": false,
+        "name": "Normal Necklace",
+        "data": [
+          0,
+          0,
+          0,
+          0,
+          26503,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "relation": "-",
+        "mainCondition": 4,
+        "data": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3048,
+          0
+        ],
+        "mainValue": 80,
+        "visible": true,
+        "enabled": false,
+        "name": "Might ring",
+        "optionalCondition": 5
+      }
+    ]
+  },
   "stashWithdraws": {
     "items": [
       {
@@ -1127,7 +1388,102 @@
       }
     ]
   },
-  "stashActionRetryWait": 200,
+  "autoEquip": [
+    {
+      "item1": 0,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 5
+    },
+    {
+      "item1": 25758,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 5
+    },
+    {
+      "item1": 25757,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 5
+    },
+    {
+      "item1": 0,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 0
+    },
+    {
+      "item1": 0,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 0
+    },
+    {
+      "item1": 0,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 0
+    }
+  ],
+  "stashWithdrawsTolerance": 50,
+  "stashDepositsTolerance": 50,
+  "openFullBPs": {
+    "containers": [
+      {
+        "id": 2865,
+        "count": 1
+      },
+      {
+        "id": 2871,
+        "count": 1
+      }
+    ],
+    "enabled": true
+  },
+  "equipCheckWeapon": 52477,
+  "_configs": {
+    "targetbot_configs": {
+      "selected": "Requiem_RP",
+      "enabled": true
+    },
+    "cavebot_configs": {
+      "enabled": true,
+      "selected": "v.plagues_VIP"
+    }
+  },
+  "stashNumFields": 30,
+  "autoTradeMessage": "",
+  "MS_enabled": false,
+  "targetBotDynamicLureDelayValue": 254,
+  "playerList": {
+    "enemyList": [
+
+    ],
+    "outfits": false,
+    "friendList": [
+      "Kawasick",
+      "Pfft",
+      "Syrax",
+      "Kangrymanu",
+      "Serena",
+      "Lara Croft",
+      "Mortival Aeternix",
+      "Chakuano"
+    ],
+    "blackList": [
+
+    ],
+    "highlight": false,
+    "marks": false,
+    "groupMembers": true
+  },
   "newHealer": {
     "settings": [
       {
@@ -1228,363 +1584,7 @@
 
     ]
   },
-  "EquipperPanel": {
-    "enabled": false,
-    "bosses": [
-
-    ],
-    "rules": [
-      {
-        "data": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          3051,
-          0
-        ],
-        "mainCondition": 4,
-        "optionalCondition": 5,
-        "visible": true,
-        "mainValue": 50,
-        "enabled": true,
-        "name": "Equip energy ring",
-        "relation": "-"
-      },
-      {
-        "relation": "-",
-        "mainCondition": 5,
-        "optionalCondition": 6,
-        "mainValue": 80,
-        "visible": true,
-        "enabled": true,
-        "name": "Normal",
-        "data": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          52478,
-          0
-        ]
-      },
-      {
-        "relation": "-",
-        "mainCondition": 4,
-        "data": [
-          0,
-          0,
-          0,
-          0,
-          3081,
-          0,
-          0,
-          0,
-          0
-        ],
-        "mainValue": 80,
-        "visible": true,
-        "enabled": false,
-        "name": "SSA",
-        "optionalCondition": 5
-      },
-      {
-        "relation": "-",
-        "mainCondition": 5,
-        "data": [
-          0,
-          0,
-          0,
-          0,
-          26503,
-          0,
-          0,
-          0,
-          0
-        ],
-        "mainValue": 80,
-        "visible": false,
-        "enabled": false,
-        "name": "Normal Necklace",
-        "optionalCondition": 6
-      },
-      {
-        "relation": "-",
-        "mainCondition": 4,
-        "optionalCondition": 5,
-        "mainValue": 80,
-        "visible": true,
-        "enabled": false,
-        "name": "Might ring",
-        "data": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          3048,
-          0
-        ]
-      }
-    ]
-  },
-  "dmgStartTime": 1779017752,
-  "autoEquip": [
-    {
-      "item1": 0,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": false,
-      "slot": 5
-    },
-    {
-      "item1": 25758,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": false,
-      "slot": 5
-    },
-    {
-      "item1": 25757,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": false,
-      "slot": 5
-    },
-    {
-      "item1": 0,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": false,
-      "slot": 0
-    },
-    {
-      "item1": 0,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": false,
-      "slot": 0
-    },
-    {
-      "item1": 0,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": false,
-      "slot": 0
-    }
-  ],
-  "stashWithdrawsTolerance": 50,
-  "stashDepositsTolerance": 50,
-  "openFullBPs": {
-    "containers": [
-      {
-        "id": 2865,
-        "count": 1
-      },
-      {
-        "id": 2871,
-        "count": 1
-      }
-    ],
-    "enabled": true
-  },
-  "extras": {
-    "rope": 9596,
-    "bless": false,
-    "gotoMaxDistance": 30,
-    "holdMwall": false,
-    "checkPlayer": false,
-    "looting": 36,
-    "suppliesControl": false,
-    "killUnder": 1,
-    "joinBot": true,
-    "lootLast": false,
-    "holdMwHot": "",
-    "shovel": 9596,
-    "pet": true,
-    "autoOpenDoors": true,
-    "stake": true,
-    "nextBackpack": true,
-    "title": true,
-    "reUse": false,
-    "height": 360,
-    "pathfinding": true,
-    "machete": 9596,
-    "separatePm": true,
-    "useAll": "space",
-    "lootDelay": 200,
-    "holdWgHot": "",
-    "oberon": false,
-    "antiKick": true,
-    "talkDelay": 400,
-    "timers": true,
-    "huntRoutes": 50,
-    "highlightTarget": true,
-    "scythe": 9596,
-    "reachable": true
-  },
-  "alarms": {
-    "privateMsg": [
-
-    ],
-    "customMessage": {
-      "value": ""
-    },
-    "flashClient": [
-
-    ],
-    "lowMana": {
-      "value": 20
-    },
-    "creatureDetected": [
-
-    ],
-    "damageTaken": [
-
-    ],
-    "playerAttack": [
-
-    ],
-    "ignoreFriends": [
-
-    ],
-    "defaultMsg": [
-
-    ],
-    "creatureName": {
-      "value": ""
-    },
-    "enabled": false,
-    "lowHealth": {
-      "value": 20
-    },
-    "playerDetected": [
-
-    ]
-  },
-  "stashNumFields": 30,
-  "autoTradeMessage": "",
-  "MS_enabled": false,
-  "targetBotDynamicLureDelayValue": 254,
-  "playerList": {
-    "enemyList": [
-
-    ],
-    "outfits": false,
-    "groupMembers": true,
-    "marks": false,
-    "highlight": false,
-    "blackList": [
-
-    ],
-    "friendList": [
-      "Kawasick",
-      "Pfft",
-      "Syrax",
-      "Kangrymanu",
-      "Serena",
-      "Lara Croft",
-      "Mortival Aeternix",
-      "Chakuano"
-    ]
-  },
-  "autoSpellCounts": {
-    "EK": {
-      "exeta amp res": 1,
-      "exeta res": 1,
-      "exeta hur": 1,
-      "exori ico": 1,
-      "exori gran": 1,
-      "exori amp kor": 1,
-      "exori mas": 1,
-      "exori": 1,
-      "uber exori": 1,
-      "exori min": 1,
-      "exori hur": 1,
-      "exori gran ico": 1
-    },
-    "MS": {
-      "exevo gran vis": 1,
-      "exevo gran mas vis lux": 1,
-      "exevo vis lux": 1,
-      "exori vis": 1,
-      "exori gran vis": 1,
-      "exori tera": 1,
-      "exevo gran mas mort": 1,
-      "exevo gran mas flam": 1,
-      "exori max vis": 1,
-      "exevo flam hur": 1,
-      "exevo vis hur": 1,
-      "exevo gran vis lux": 1,
-      "exori flam": 1,
-      "exevo gran flam hur": 1,
-      "exevo gran mas vis": 1,
-      "exevo max mort": 1,
-      "adana sio vis": 1,
-      "exori frigo": 1,
-      "exori mort": 1
-    },
-    "Ninja": {
-      "exori mas cruentus": 1,
-      "ignis rumptur": 1,
-      "exori cruentus": 1,
-      "exevo lux velox": 1,
-      "pectus cruentus": 1,
-      "utevo ignis fiamma": 1,
-      "utevo mas chain": 1,
-      "exevo extra lumen": 1,
-      "exevo intra lumen": 1
-    },
-    "ED": {
-      "exevo gran mas frigo": 1,
-      "exevo gran gran tera": 1,
-      "exevo gran frigo hur": 1,
-      "exori vis": 1,
-      "exori tera": 1,
-      "exevo ulus frigo": 1,
-      "exori moe ico": 1,
-      "exori max tera": 1,
-      "exori frigo": 1,
-      "exevo tera hur": 1,
-      "exori gran frigo": 1,
-      "exori flam": 1,
-      "exori max frigo": 1,
-      "exori gran tera": 1,
-      "exevo gran mas tera": 1,
-      "exevo gran tera": 1,
-      "exevo frigo hur": 1
-    },
-    "RP": {
-      "utito tempo san": 1,
-      "exevo vis": 1,
-      "exori con ani": 1,
-      "exevo mas san": 4,
-      "exori gran con": 1,
-      "exori san": 1,
-      "exevo tempo mas san": 1,
-      "exori con": 1,
-      "utevo grav san": 2,
-      "exori mas con": 2
-    }
-  },
-  "_configs": {
-    "targetbot_configs": {
-      "selected": "Requiem_RP",
-      "enabled": true
-    },
-    "cavebot_configs": {
-      "enabled": true,
-      "selected": "LavaDemons"
-    }
-  },
+  "fName": "Serena",
   "equipCheckHelmet": 26701,
-  "fName": "Serena"
+  "useGroundIndex": 1
 }

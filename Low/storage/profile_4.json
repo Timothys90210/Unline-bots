@@ -49,13 +49,13 @@
     "RP": {
       "exori con ani": 1,
       "exevo vis": 1,
-      "utevo grav san": 1,
+      "exevo tempo mas san": 1,
       "exevo mas san": 1,
       "exori gran con": 1,
       "exori san": 1,
-      "exevo tempo mas san": 1,
-      "utito tempo san": 1,
       "exori con": 1,
+      "utevo grav san": 1,
+      "utito tempo san": 1,
       "exori mas con": 1
     },
     "ED": {
@@ -79,80 +79,108 @@
     }
   },
   "stashActionMaxRetries": 2,
-  "foodItems": [
-    {
-      "count": 3,
-      "id": 3583
-    },
-    {
-      "count": 88,
-      "id": 3723
-    },
-    {
-      "count": 100,
-      "id": 3725
-    },
-    {
-      "count": 100,
-      "id": 3731
-    },
-    {
-      "count": 1,
-      "id": 3607
-    },
-    {
-      "count": 1,
-      "id": 3585
-    },
-    {
-      "count": 1,
-      "id": 3592
-    },
-    {
-      "count": 1,
-      "id": 3600
-    },
-    {
-      "count": 1,
-      "id": 3601
-    },
-    {
-      "count": 15,
-      "id": 3577
-    }
-  ],
+  "imbuingConfig": {
+    "weapon": [
+      5,
+      8,
+      0
+    ],
+    "doll": [
+      8,
+      0,
+      0
+    ],
+    "helmet": [
+      8,
+      29,
+      0
+    ],
+    "armor": [
+      5,
+      20,
+      0
+    ],
+    "shield": [
+      20,
+      0,
+      0
+    ]
+  },
   "specialDeposit": {
     "height": 380,
     "items": [
 
     ]
   },
-  "ED_enabled": false,
+  "followLeader": "Serena",
   "teleportWaypoint": "27",
-  "RP_enabled": false,
+  "extras": {
+    "rope": 9596,
+    "bless": false,
+    "gotoMaxDistance": 40,
+    "holdMwall": true,
+    "checkPlayer": false,
+    "looting": 34,
+    "suppliesControl": false,
+    "killUnder": 1,
+    "joinBot": true,
+    "lootLast": false,
+    "holdMwHot": "F7",
+    "shovel": 9596,
+    "reachable": true,
+    "autoOpenDoors": true,
+    "stake": false,
+    "scythe": 9596,
+    "title": true,
+    "reUse": false,
+    "height": 360,
+    "pathfinding": true,
+    "machete": 9596,
+    "separatePm": true,
+    "useAll": "space",
+    "lootDelay": 100,
+    "holdWgHot": "F8",
+    "oberon": true,
+    "antiKick": true,
+    "talkDelay": 900,
+    "timers": true,
+    "huntRoutes": 50,
+    "highlightTarget": true,
+    "nextBackpack": true,
+    "pet": true
+  },
   "equipCheckShield": 52834,
   "stashWithdrawsTolerance": 1,
   "teleportCity": "1",
-  "targetBotTargets": 1,
-  "followDistance": "6",
-  "followLeader": "Serena",
+  "targetBotTargets": 2,
+  "_configs": {
+    "targetbot_configs": {
+      "selected": "Mage",
+      "enabled": true
+    },
+    "cavebot_configs": {
+      "enabled": true,
+      "selected": "nagas_2kk"
+    }
+  },
+  "RP_enabled": false,
   "playerList": {
     "enemyList": [
 
     ],
     "outfits": false,
-    "groupMembers": true,
-    "marks": false,
-    "highlight": false,
-    "blackList": [
-
-    ],
     "friendList": [
       "Kangrymanu",
       "Requiem"
-    ]
+    ],
+    "blackList": [
+
+    ],
+    "highlight": false,
+    "marks": false,
+    "groupMembers": true
   },
-  "checkVersion": 1779415377,
+  "checkVersion": 1779507405,
   "alarms": {
     "privateMsg": [
 
@@ -241,13 +269,13 @@
     "RP": {
       "exori con ani": 1,
       "exevo vis": 1,
-      "utevo grav san": 1,
+      "exevo tempo mas san": 1,
       "exevo mas san": 1,
       "exori gran con": 1,
       "exori san": 1,
-      "exevo tempo mas san": 1,
-      "utito tempo san": 1,
       "exori con": 1,
+      "utevo grav san": 1,
+      "utito tempo san": 1,
       "exori mas con": 1
     },
     "ED": {
@@ -284,20 +312,7 @@
     "leaderName": "Serena"
   },
   "useGroundIndex": 1,
-  "moneyItems": [
-    {
-      "count": 1,
-      "id": 3031
-    },
-    {
-      "count": 1,
-      "id": 3035
-    },
-    {
-      "count": 0,
-      "id": 3043
-    }
-  ],
+  "targetBotDynamicLureDelayValue": 459,
   "Ninja_enabled": false,
   "autoTradeMessage": "I'm using OTClientV8!",
   "newHealer": {
@@ -343,23 +358,19 @@
         "text": "Min Player MP%: "
       }
     ],
-    "groups": [
-
-    ],
-    "customPlayers": {
-      " Requiem": 90
-    },
     "conditions": {
-      "party": true,
+      "sorcerers": false,
       "knights": false,
       "friends": true,
       "botserver": false,
       "paladins": true,
+      "party": true,
       "druids": false,
-      "sorcerers": false,
       "guild": true
     },
-    "enabled": false,
+    "customPlayers": {
+      " Requiem": 90
+    },
     "priorities": [
       {
         "strong": true,
@@ -392,167 +403,18 @@
         "mana": true
       }
     ],
+    "enabled": false,
+    "groups": [
+
+    ],
     "vocations": [
 
     ]
   },
-  "stashDepositsDelay": 750,
   "stashWithdrawsDelay": 500,
-  "_icons": {
-    "TreasureRoom": {
-      "y": 0.22451612903226,
-      "x": 0.012592592592593,
-      "enabled": false
-    },
-    "petHealer": {
-      "y": 0.05,
-      "x": 0.01,
-      "enabled": true
-    },
-    "resetCursorIcon": {
-      "y": 0.30379746835443,
-      "x": 0.022857142857143,
-      "enabled": false
-    },
-    "MonsterIdentifier": {
-      "y": 0.59746835443038,
-      "x": 0.022857142857143,
-      "enabled": true
-    },
-    "DustTracker": {
-      "y": 0.35294117647059,
-      "x": 0.01037037037037,
-      "enabled": false
-    },
-    "CheckPillars": {
-      "y": 0.25,
-      "x": 0.01,
-      "enabled": false
-    },
-    "AutoUtamoVita": {
-      "y": 0.14366197183099,
-      "x": 0.0088888888888889,
-      "enabled": true
-    },
-    "buffIcon": {
-      "y": 0.081290322580645,
-      "x": 0.0079491255961844,
-      "enabled": true
-    },
-    "Pilar": {
-      "y": 0.13793103448276,
-      "x": 0.054848966613672,
-      "enabled": false
-    },
-    "AutoOrbs": {
-      "y": 0.36898395721925,
-      "x": 0.014344262295082,
-      "enabled": true
-    },
-    "AutoAccept": {
-      "y": 0.0475,
-      "x": 0.10901467505241,
-      "enabled": true
-    },
-    "Dodge": {
-      "y": 0.45,
-      "x": 0.01,
-      "enabled": true
-    },
-    "CinderEvent": {
-      "y": 0.45063291139241,
-      "x": 0.011428571428571,
-      "enabled": true
-    },
-    "SpellCaster": {
-      "y": 0.24303797468354,
-      "x": 0.0057142857142857,
-      "enabled": false
-    }
-  },
+  "stashDepositsDelay": 750,
+  "followDistance": "6",
   "stashDepositsTolerance": 0,
-  "equipCheckArmor": 52697,
-  "TargetBotLure": true,
-  "extras": {
-    "rope": 9596,
-    "bless": false,
-    "gotoMaxDistance": 40,
-    "holdMwall": true,
-    "checkPlayer": false,
-    "looting": 34,
-    "suppliesControl": false,
-    "killUnder": 1,
-    "joinBot": true,
-    "lootLast": false,
-    "holdMwHot": "F7",
-    "shovel": 9596,
-    "pet": true,
-    "autoOpenDoors": true,
-    "stake": false,
-    "scythe": 9596,
-    "title": true,
-    "reUse": false,
-    "height": 360,
-    "pathfinding": true,
-    "machete": 9596,
-    "separatePm": true,
-    "useAll": "space",
-    "lootDelay": 100,
-    "holdWgHot": "F8",
-    "oberon": true,
-    "antiKick": true,
-    "talkDelay": 900,
-    "timers": true,
-    "huntRoutes": 50,
-    "highlightTarget": true,
-    "nextBackpack": true,
-    "reachable": true
-  },
-  "_macros": {
-    "": true,
-    "Loot Channel": true,
-    "AutoSpell MS": false,
-    "Distance Follow": false,
-    "Drop Trash": true,
-    "Say Supply Stash ID": false,
-    "AutoSpell EK": false,
-    "Stop near Trainers/Dummy": false,
-    "Stone skin amulet": false,
-    "Sio Friends": true,
-    "Filter Damage Messages": true,
-    "Bot off if no bless": true,
-    "Fast Tiles": false,
-    "Idle Mode": false,
-    "Auto-Orbs CaveBot": false,
-    "Follow": false,
-    "Dust Tracker": false,
-    "Eat Food": true,
-    "Avalanche": true,
-    "Gather Orbs": true,
-    "Esconde Mensagens Laranjas": true,
-    "Cast Food": false,
-    "Focus Special Monsters": false,
-    "Auto Exura Sio Friends": true,
-    "Revisar pilares y activar": false,
-    "Monster Identifier": true,
-    "UHs": false,
-    "Dodge Effects": true,
-    "AutoSpell Ninja": false,
-    "Girar pilares (con armor)": false,
-    "AutoSpell RP": false,
-    "Claude Follow": false,
-    "Might Ring": false,
-    "AutoSpell ED": false,
-    "Auto-Portals": false,
-    "Auto Utamo Vita": true,
-    "Blank rune": true,
-    "Stone Shower": false,
-    "Auto Stash": true,
-    "Exchange money": true,
-    "Toggle spell text": false,
-    "Equip Check": true,
-    "CaveBot Watchdog": false
-  },
   "autoEquip": [
     {
       "item1": 3098,
@@ -576,6 +438,58 @@
       "slot": 0
     }
   ],
+  "TargetBotLure": true,
+  "equipCheckWeapon": 26736,
+  "_macros": {
+    "": true,
+    "Loot Channel": true,
+    "AutoSpell MS": false,
+    "Distance Follow": false,
+    "Drop Trash": true,
+    "Say Supply Stash ID": false,
+    "AutoSpell EK": false,
+    "Stop near Trainers/Dummy": false,
+    "Stone skin amulet": false,
+    "Sio Friends": true,
+    "Filter Damage Messages": true,
+    "Bot off if no bless": true,
+    "Fast Tiles": false,
+    "Idle Mode": false,
+    "Auto-Orbs CaveBot": false,
+    "Follow": false,
+    "Dust Tracker": false,
+    "Eat Food": true,
+    "Avalanche": true,
+    "UHs": false,
+    "Esconde Mensagens Laranjas": true,
+    "Cast Food": false,
+    "Focus Special Monsters": false,
+    "Auto Exura Sio Friends": true,
+    "Revisar pilares y activar": false,
+    "Monster Identifier": true,
+    "Gather Orbs": true,
+    "Dodge Effects": true,
+    "AutoSpell Ninja": false,
+    "Girar pilares (con armor)": false,
+    "AutoSpell RP": false,
+    "Might Ring": false,
+    "Auto Utamo Vita": true,
+    "AutoSpell ED": false,
+    "Auto-Portals": false,
+    "Claude Follow": false,
+    "Blank rune": true,
+    "CaveBot Watchdog": false,
+    "Auto Stash": true,
+    "Exchange money": true,
+    "Toggle spell text": false,
+    "Equip Check": true,
+    "Stone Shower": false
+  },
+  "petHealerPanel": {
+    "healingRuneId": 3160,
+    "healPercent": 60,
+    "petName": "Serrano"
+  },
   "dropper": {
     "enabled": false,
     "trashItems": [
@@ -613,10 +527,10 @@
   },
   "ingame_hotkeys": "local function applyPanelWidth()\n    local interface = modules.game_interface\n    if not interface then return end\n    local leftPanel = interface:getLeftPanel()\n    if leftPanel then leftPanel:setWidth(230) end\nend\napplyPanelWidth()\n",
   "caveBot": {
-    "backStop": false,
     "forceRefill": false,
-    "backOffline": false,
-    "backTrainers": false
+    "backStop": false,
+    "backTrainers": false,
+    "backOffline": false
   },
   "targetBotLureMax": 8,
   "cavebotSell": [
@@ -744,19 +658,77 @@
       }
     ]
   },
-  "petHealerPanel": {
-    "healingRuneId": 3160,
-    "healPercent": 60,
-    "petName": "Serrano"
-  },
-  "_configs": {
-    "targetbot_configs": {
-      "selected": "Mage",
+  "equipCheckArmor": 52697,
+  "_icons": {
+    "TreasureRoom": {
+      "y": 0.22451612903226,
+      "x": 0.012592592592593,
+      "enabled": false
+    },
+    "petHealer": {
+      "y": 0.05,
+      "x": 0.01,
       "enabled": true
     },
-    "cavebot_configs": {
-      "enabled": true,
-      "selected": "nagas_2kk"
+    "resetCursorIcon": {
+      "y": 0.30379746835443,
+      "x": 0.022857142857143,
+      "enabled": false
+    },
+    "MonsterIdentifier": {
+      "y": 0.59746835443038,
+      "x": 0.022857142857143,
+      "enabled": true
+    },
+    "DustTracker": {
+      "y": 0.35294117647059,
+      "x": 0.01037037037037,
+      "enabled": false
+    },
+    "CheckPillars": {
+      "y": 0.25,
+      "x": 0.01,
+      "enabled": false
+    },
+    "AutoUtamoVita": {
+      "y": 0.14366197183099,
+      "x": 0.0088888888888889,
+      "enabled": true
+    },
+    "buffIcon": {
+      "y": 0.081290322580645,
+      "x": 0.0079491255961844,
+      "enabled": true
+    },
+    "Pilar": {
+      "y": 0.13793103448276,
+      "x": 0.054848966613672,
+      "enabled": false
+    },
+    "AutoOrbs": {
+      "y": 0.36898395721925,
+      "x": 0.014344262295082,
+      "enabled": true
+    },
+    "AutoAccept": {
+      "y": 0.0475,
+      "x": 0.10901467505241,
+      "enabled": true
+    },
+    "Dodge": {
+      "y": 0.45,
+      "x": 0.01,
+      "enabled": true
+    },
+    "CinderEvent": {
+      "y": 0.45063291139241,
+      "x": 0.011428571428571,
+      "enabled": true
+    },
+    "SpellCaster": {
+      "y": 0.24303797468354,
+      "x": 0.0057142857142857,
+      "enabled": false
     }
   },
   "petName": "",
@@ -769,42 +741,70 @@
     ],
     "enabled": false
   },
-  "imbuingConfig": {
-    "weapon": [
-      5,
-      8,
-      0
-    ],
-    "doll": [
-      8,
-      0,
-      0
-    ],
-    "helmet": [
-      8,
-      29,
-      0
-    ],
-    "armor": [
-      5,
-      20,
-      0
-    ],
-    "shield": [
-      20,
-      0,
-      0
-    ]
-  },
+  "foodItems": [
+    {
+      "count": 3,
+      "id": 3583
+    },
+    {
+      "count": 88,
+      "id": 3723
+    },
+    {
+      "count": 100,
+      "id": 3725
+    },
+    {
+      "count": 100,
+      "id": 3731
+    },
+    {
+      "count": 1,
+      "id": 3607
+    },
+    {
+      "count": 1,
+      "id": 3585
+    },
+    {
+      "count": 1,
+      "id": 3592
+    },
+    {
+      "count": 1,
+      "id": 3600
+    },
+    {
+      "count": 1,
+      "id": 3601
+    },
+    {
+      "count": 15,
+      "id": 3577
+    }
+  ],
   "autofollow": {
     "player": "name"
   },
   "stashNumFields": 30,
   "EK_enabled": false,
-  "MS_enabled": false,
-  "targetBotDynamicLureDelayValue": 459,
-  "fName": "Grayson",
   "autoSpellStopOnTrainer": false,
+  "moneyItems": [
+    {
+      "count": 1,
+      "id": 3031
+    },
+    {
+      "count": 1,
+      "id": 3035
+    },
+    {
+      "count": 0,
+      "id": 3043
+    }
+  ],
+  "fName": "Grayson",
+  "MS_enabled": false,
   "renameContainers": {
     "sort": true,
     "forceOpen": true,
@@ -1161,5 +1161,5 @@
     "lootBag": false
   },
   "equipCheckDoll": 52835,
-  "equipCheckWeapon": 26736
+  "ED_enabled": false
 }

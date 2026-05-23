@@ -9,7 +9,7 @@ local FIRE_SNAKE_ID            = 60662
 local RED_GEM_ID               = 24934  -- Soccer Ball mechanic item
 local BOMBS_ID                 = 46113  -- Bombs mechanic item
 local PORTAL_SEARCH_TIME       = 60
-local FIRE_SNAKE_SAFE_DISTANCE = 5      -- sqm (Chebyshev) — trigger movement when snake within this range
+local FIRE_SNAKE_SAFE_DISTANCE = 6      -- sqm (Chebyshev) — trigger movement when snake within this range
 local FIRE_SNAKE_MIN_CLEARANCE = 5      -- sqm — target tiles must be at least this far from snake
 
 -- ── Logging ───────────────────────────────────────────────────────────────────
@@ -33,7 +33,10 @@ end
 
 local function getNextLogPath(prefix)
     local i = 0
-    while g_resources.fileExists(logsDir .. "/" .. prefix .. "_" .. i .. ".txt") do
+    while g_resources.fileExists(logsDir .. "/" .. prefix .. "_" .. i .. ".txt")
+       or g_resources.fileExists(logsDir .. "/" .. prefix .. "_SUCCESS_" .. i .. ".txt")
+       or g_resources.fileExists(logsDir .. "/" .. prefix .. "_FAIL_" .. i .. ".txt")
+    do
         i = i + 1
     end
     return logsDir .. "/" .. prefix .. "_" .. i .. ".txt"
@@ -88,6 +91,9 @@ CinderPortalActive = false
 
 -- CaveBot state logging helpers (defined in monster_identifier.lua if loaded first,
 -- or defined here if CinderEvent loads first — guard prevents double-definition)
+-- CaveBot diagnostic logging — disabled (no-ops while commented out)
+-- To re-enable: uncomment this entire block and the logCaveBotOn/Off call sites below
+--[[
 if not CaveBotStateLogDefined then
     CaveBotStateLogDefined = true
     local _cbConfigName = modules.game_bot.contentsPanel.config:getCurrentOption().text
@@ -137,6 +143,12 @@ if not CaveBotStateLogDefined then
         end)
     end
 end
+--]]
+
+-- Stub functions so call sites below don't error while logging is disabled
+local function logCaveBotOff(reason) end
+local function logCaveBotOn(reason) end
+local function logCaveBotSkipped(reason) end
 
 -- ── State ─────────────────────────────────────────────────────────────────────
 local insidePortal      = false
@@ -145,10 +157,16 @@ local portalSearchUntil = 0
 local portalRetryLogAt  = 0
 local portalLastSeenPos = nil
 
-local blueFlameTarget        = nil
+local blueFlameArenaBounds   = nil    -- computed once for center targeting
+local blueFlameConfirmedSet  = {}     -- tile positions of the last confirmed set (for remnant filtering)
+local blueFlameMeteoPhase    = false  -- armed true on arrival; gates new-set detection
+local blueFlameTarget        = nil    -- center flame of current set
 local blueFlameWalkIssued    = false
 local blueFlameWalkAt        = 0
 local blueFlameArrivedLogged = false
+local blueFlameRetryCount    = 0
+local blueFlameSetActive     = false  -- true while a set is currently visible
+local blueFlameSetNumber     = 0      -- 0-indexed; logged before increment
 
 local snakeArenaBounds    = nil   -- computed once on first snake detection
 local snakeInitialPhase   = true  -- true while doing the one-time run to 12 o'clock
@@ -157,6 +175,7 @@ local snakeWalkTarget     = nil
 local snakeWalkIssued     = false
 local snakeWalkAt         = 0
 local snakeActivePhase    = false
+local snakeEmergencyAt    = 0     -- os.clock() of last emergency reroute; guards 500ms lock
 local snakeIdleLogAt      = 0
 local snakeHeadLastPos    = nil
 
@@ -171,6 +190,7 @@ local dodgeBombsActive     = false
 local dodgeTargetPos       = nil   -- committed dodge destination; monitored every tick
 
 local bombScanLogAt        = 0
+local bombsGameActive      = false  -- latched true on first bomb detection; gates firestorm for full portal
 
 local function log(msg)
     modules.game_textmessage.displayGameMessage("[CinderEvent] " .. msg)
@@ -183,10 +203,16 @@ local function resetState()
     portalSearchUntil        = 0
     portalRetryLogAt         = 0
     portalLastSeenPos        = nil
+    blueFlameArenaBounds   = nil
+    blueFlameConfirmedSet  = {}
+    blueFlameMeteoPhase    = false
     blueFlameTarget        = nil
     blueFlameWalkIssued    = false
     blueFlameWalkAt        = 0
     blueFlameArrivedLogged = false
+    blueFlameRetryCount    = 0
+    blueFlameSetActive     = false
+    blueFlameSetNumber     = 0
     snakeArenaBounds   = nil
     snakeInitialPhase  = true
     snakeInitialTarget = nil
@@ -194,6 +220,7 @@ local function resetState()
     snakeWalkIssued    = false
     snakeWalkAt        = 0
     snakeActivePhase   = false
+    snakeEmergencyAt   = 0
     snakeIdleLogAt     = 0
     snakeHeadLastPos   = nil
     firestormLastClearedAt   = 0
@@ -204,6 +231,7 @@ local function resetState()
     dodgeBombsActive         = false
     dodgeTargetPos           = nil
     bombScanLogAt            = 0
+    bombsGameActive          = false
     pendingSuccessScheduled  = false
     resetLogs()
 end
@@ -241,17 +269,6 @@ local function hasTileItemId(tile, id)
     return false
 end
 
-local function findNearestBlueFlame(playerPos)
-    local nearest, nearestDist = nil, math.huge
-    for _, tile in ipairs(g_map.getTiles(playerPos.z)) do
-        local tilePos = tile:getPosition()
-        local dist    = getDistanceBetween(playerPos, tilePos)
-        if dist <= 50 and hasTileItemId(tile, BLUE_FLAME_ID) then
-            if dist < nearestDist then nearest, nearestDist = tilePos, dist end
-        end
-    end
-    return nearest
-end
 
 local function getFireSnakeTiles(playerPos)
     local tiles = {}
@@ -272,6 +289,80 @@ local function minDistToSnake(pos, snakeTiles)
     return minDist
 end
 
+-- Scans all floor tiles within 55 sqm to find arena extents.
+-- Returns raw tile min/max AND a walkable inset (wall tiles sit at the edge,
+-- walkable floor starts 1 tile inside). Logs full boundary info for verification.
+local function computeSnakeArenaBounds(playerPos)
+    local minX, maxX = math.huge, -math.huge
+    local minY, maxY = math.huge, -math.huge
+    for _, tile in ipairs(g_map.getTiles(playerPos.z)) do
+        local tp = tile:getPosition()
+        if math.abs(tp.x - playerPos.x) <= 55 and math.abs(tp.y - playerPos.y) <= 55 then
+            if tp.x < minX then minX = tp.x end
+            if tp.x > maxX then maxX = tp.x end
+            if tp.y < minY then minY = tp.y end
+            if tp.y > maxY then maxY = tp.y end
+        end
+    end
+    local b = {
+        rawMinX = minX, rawMaxX = maxX, rawMinY = minY, rawMaxY = maxY,
+        minX = minX + 2, maxX = maxX - 2,
+        minY = minY + 2, maxY = maxY - 2,
+        width  = (maxX - 2) - (minX + 2),
+        height = (maxY - 2) - (minY + 2),
+    }
+    b.centerX = math.floor((b.minX + b.maxX) / 2)
+    b.centerY = math.floor((b.minY + b.maxY) / 2)
+    return b
+end
+
+local function scanBlueFlames(z)
+    local set, count = {}, 0
+    for _, tile in ipairs(g_map.getTiles(z)) do
+        if hasTileItemId(tile, BLUE_FLAME_ID) then
+            local tp = tile:getPosition()
+            set[tp.x .. "," .. tp.y] = { x = tp.x, y = tp.y, z = tp.z }
+            count = count + 1
+        end
+    end
+    return set, count
+end
+
+
+
+-- Sets 0-6: pure center targeting — builds good central position early.
+-- Sets 7+:  blended scoring (distToPlayer*2 + distToCenter) — prioritises
+--           reachable flames when late-round sets place all flames far from center.
+local BLUE_FLAME_BLEND_SET = 7
+
+local function findCenterFlame(flameSet, centerX, centerY, playerPos, setNumber)
+    local bestPos, bestScore = nil, math.huge
+    for _, pos in pairs(flameSet) do
+        local distToCenter = math.max(math.abs(pos.x - centerX), math.abs(pos.y - centerY))
+        local score
+        if setNumber and playerPos and setNumber >= BLUE_FLAME_BLEND_SET then
+            local distToPlayer = math.max(math.abs(pos.x - playerPos.x), math.abs(pos.y - playerPos.y))
+            score = distToPlayer * 2 + distToCenter
+        else
+            score = distToCenter
+        end
+        if score < bestScore then bestScore, bestPos = score, pos end
+    end
+    -- Return position and its distance from center for logging
+    local distFromCenter = bestPos and math.max(math.abs(bestPos.x - centerX), math.abs(bestPos.y - centerY)) or 0
+    return bestPos, distFromCenter
+end
+
+local function logFlameSet(label, flameSet, size, centerX, centerY)
+    local parts = {}
+    for _, pos in pairs(flameSet) do
+        local dist = math.max(math.abs(pos.x - centerX), math.abs(pos.y - centerY))
+        table.insert(parts, pos.x .. "," .. pos.y .. "(c:" .. dist .. ")")
+    end
+    table.sort(parts)
+    cinderLog("blueFlame", string.format("[%s] size=%d | %s", label, size, table.concat(parts, " | ")))
+end
+
 -- ── Main macro ────────────────────────────────────────────────────────────────
 local cinderMacro = macro(200, function()
     if not player then return end
@@ -287,13 +378,14 @@ local cinderMacro = macro(200, function()
         -- arrival or emergency (≤2 tiles). Arena bounds computed dynamically.
         local snakeTiles = getFireSnakeTiles(playerPos)
         if #snakeTiles > 0 then
+            local ok, err = pcall(function()
 
             -- ── Arena bounds (computed once on first detection) ───────────────
             if not snakeArenaBounds then
                 snakeArenaBounds = computeSnakeArenaBounds(playerPos)
                 local b = snakeArenaBounds
                 -- 12 o'clock: top-center, 1 tile inside top wall
-                snakeInitialTarget = { x = b.centerX, y = b.minY + 1, z = playerPos.z }
+                snakeInitialTarget = { x = b.centerX, y = b.minY, z = playerPos.z }
                 cinderLog("fireSnake", string.format(
                     "[BOUNDS] raw=(%d-%d, %d-%d) walkable=(%d-%d, %d-%d) center=%d,%d size=%dx%d",
                     b.rawMinX, b.rawMaxX, b.rawMinY, b.rawMaxY,
@@ -351,10 +443,18 @@ local cinderMacro = macro(200, function()
                     playerPos.x, playerPos.y, wallName, wallDist))
             end
 
+            -- ── Adaptive scaling based on snake length ────────────────────────
+            -- t=0 at len=1 (early/slow), t=1 at len=12 (max/fast)
+            local snakeLen     = #snakeTiles
+            local t            = math.min(snakeLen - 1, 11) / 11
+            local dynTrigger   = math.floor(4 + t * 2)   -- 4 → 6 tiles
+            local dynMaxDist   = math.floor(4 + t * 3)   -- 4 → 7 tiles from player
+            local dynEmergency = math.floor(2 + t)       -- 2 → 3 tiles
+
             -- ── Phase 1: initial run to 12 o'clock ────────────────────────────
             if snakeInitialPhase then
                 local distToInit = getDistanceBetween(playerPos, snakeInitialTarget)
-                if distToInit <= 1 or nearest <= FIRE_SNAKE_SAFE_DISTANCE then
+                if distToInit == 0 or nearest <= dynTrigger then
                     snakeInitialPhase = false
                     cinderLog("fireSnake", string.format(
                         "[INIT DONE] player=%d,%d distToTarget=%d snakeDist=%d wall=%s(%d)",
@@ -373,36 +473,37 @@ local cinderMacro = macro(200, function()
                 end
             end
 
-            -- ── Phase 2: hold unless snake within 5 tiles ─────────────────────
-            if nearest > FIRE_SNAKE_SAFE_DISTANCE then
+            -- ── Phase 2: hold unless snake within dynTrigger tiles ────────────
+            if nearest > dynTrigger then
                 if snakeActivePhase then
                     snakeActivePhase = false
                     snakeWalkTarget  = nil
                     snakeWalkIssued  = false
                     cinderLog("fireSnake", string.format(
-                        "[IDLE] Snake retreated to %d tiles — holding | player=%d,%d wall=%s(%d) CW=(%.2f,%.2f)",
-                        nearest, playerPos.x, playerPos.y, wallName, wallDist, cwX, cwY))
+                        "[IDLE] Snake retreated to %d tiles — holding | player=%d,%d wall=%s(%d) len=%d trigger=%d maxDist=%d",
+                        nearest, playerPos.x, playerPos.y, wallName, wallDist, snakeLen, dynTrigger, dynMaxDist))
                 else
                     local clk = os.clock()
                     if clk - snakeIdleLogAt >= 2 then
                         snakeIdleLogAt = clk
                         cinderLog("fireSnake", string.format(
-                            "[IDLE] snakeDist=%d player=%d,%d wall=%s(%d) len=%d CW=(%.2f,%.2f)",
+                            "[IDLE] snakeDist=%d player=%d,%d wall=%s(%d) len=%d trigger=%d maxDist=%d",
                             nearest, playerPos.x, playerPos.y,
-                            wallName, wallDist, #snakeTiles, cwX, cwY))
+                            wallName, wallDist, snakeLen, dynTrigger, dynMaxDist))
                     end
                 end
                 return
             end
 
-            -- ── Phase 3: active — snake ≤ 5 tiles, move clockwise ─────────────
+            -- ── Phase 3: active — snake ≤ dynTrigger tiles, move clockwise ──────
             if not snakeActivePhase then
                 snakeActivePhase = true
                 cinderLog("fireSnake", string.format(
-                    "[ACTIVE] Snake %d tiles | head=%d,%d | player=%d,%d | wall=%s(%d) | CW=(%.2f,%.2f)",
+                    "[ACTIVE] Snake %d tiles | head=%d,%d | player=%d,%d | wall=%s(%d) | len=%d trigger=%d maxDist=%d emergency=%d",
                     nearest,
                     head and head.x or 0, head and head.y or 0,
-                    playerPos.x, playerPos.y, wallName, wallDist, cwX, cwY))
+                    playerPos.x, playerPos.y, wallName, wallDist,
+                    snakeLen, dynTrigger, dynMaxDist, dynEmergency))
             end
 
             -- Check if current target is still valid
@@ -414,11 +515,12 @@ local cinderMacro = macro(200, function()
                         playerPos.x, playerPos.y, wallName, wallDist, nearest, cwX, cwY))
                     snakeWalkTarget = nil
                     snakeWalkIssued = false
-                elseif nearest <= 2 then
+                elseif nearest <= dynEmergency and os.clock() - snakeEmergencyAt >= 0.5 then
+                    snakeEmergencyAt = os.clock()
                     cinderLog("fireSnake", string.format(
-                        "[EMERGENCY REROUTE] snake %d tiles | was → %d,%d | player=%d,%d wall=%s(%d)",
-                        nearest, snakeWalkTarget.x, snakeWalkTarget.y,
-                        playerPos.x, playerPos.y, wallName, wallDist))
+                        "[EMERGENCY REROUTE] snake %d tiles (threshold=%d) | was → %d,%d | player=%d,%d wall=%s(%d) len=%d",
+                        nearest, dynEmergency, snakeWalkTarget.x, snakeWalkTarget.y,
+                        playerPos.x, playerPos.y, wallName, wallDist, snakeLen))
                     snakeWalkTarget = nil
                     snakeWalkIssued = false
                 end
@@ -435,14 +537,15 @@ local cinderMacro = macro(200, function()
                     for _, tile in ipairs(g_map.getTiles(playerPos.z)) do
                         local tp  = tile:getPosition()
                         local dpf = getDistanceBetween(playerPos, tp)
-                        if dpf >= 2 and dpf <= 7 then
+                        if dpf >= 2 and dpf <= dynMaxDist then
                             local isSnake = false
                             for _, sp in ipairs(snakeTiles) do
                                 if sp.x == tp.x and sp.y == tp.y then isSnake = true; break end
                             end
                             if not isSnake and not (tile:getTopCreature() ~= nil) then
-                                local snakeDist = minDistToSnake(tp, snakeTiles)
-                                if snakeDist >= FIRE_SNAKE_MIN_CLEARANCE then
+                                local snakeDist   = minDistToSnake(tp, snakeTiles)
+                                local minClear    = nearest <= 2 and 3 or FIRE_SNAKE_MIN_CLEARANCE
+                                if snakeDist >= minClear then
                                     local eN = tp.y - b.minY
                                     local eS = b.maxY - tp.y
                                     local eW = tp.x - b.minX
@@ -480,15 +583,16 @@ local cinderMacro = macro(200, function()
                     snakeWalkTarget = bestTile
                     snakeWalkIssued = false
                     cinderLog("fireSnake", string.format(
-                        "[TARGET] %d,%d | score=%.1f snakeDist=%d edgeDist=%d cwAlign=%.2f pass=%d | player=%d,%d wall=%s(%d) CW=(%.2f,%.2f)",
+                        "[TARGET] %d,%d | score=%.1f snakeDist=%d edgeDist=%d cwAlign=%.2f pass=%d | player=%d,%d wall=%s(%d) len=%d trigger=%d maxDist=%d",
                         bestTile.x, bestTile.y, bestScore,
                         bestSnakeDist, bestEdgeDist, bestCwAlign, bestPass,
-                        playerPos.x, playerPos.y, wallName, wallDist, cwX, cwY))
+                        playerPos.x, playerPos.y, wallName, wallDist,
+                        snakeLen, dynTrigger, dynMaxDist))
                 else
                     cinderLog("fireSnake", string.format(
-                        "[NO TARGET] snakeDist=%d player=%d,%d wall=%s(%d) CW=(%.2f,%.2f) len=%d",
+                        "[NO TARGET] snakeDist=%d player=%d,%d wall=%s(%d) len=%d trigger=%d maxDist=%d",
                         nearest, playerPos.x, playerPos.y,
-                        wallName, wallDist, cwX, cwY, #snakeTiles))
+                        wallName, wallDist, snakeLen, dynTrigger, dynMaxDist))
                 end
             end
 
@@ -515,69 +619,182 @@ local cinderMacro = macro(200, function()
                 end
             end
 
+            end)  -- pcall
+            if not ok then
+                cinderLog("fireSnake", "[ERROR] " .. tostring(err))
+                log("FireSnake ERROR: " .. tostring(err))
+            end
             return
         end
 
         -- ── Blue flame mechanic ──────────────────────────────────────────────
-        local flame = findNearestBlueFlame(playerPos)
+        local _blueOk, _blueErr = pcall(function()
+        -- Detection: meteor-gate approach.
+        -- A new set is ONLY confirmed on the first non-empty scan after a confirmed
+        -- empty scan (meteor phase). Flame count fluctuations during an active set
+        -- (caused by client visibility changes as the player moves) are ignored.
+        -- Once a target is committed, it is never changed until the next new set.
 
-        if flame then
-            local isNewTarget = blueFlameTarget == nil or
-                                flame.x ~= blueFlameTarget.x or flame.y ~= blueFlameTarget.y
-            if isNewTarget then
-                local prevTarget  = blueFlameTarget and (blueFlameTarget.x .. "," .. blueFlameTarget.y) or "nil"
-                local prevWalk    = tostring(blueFlameWalkIssued)
-                local prevArrived = tostring(blueFlameArrivedLogged)
-                blueFlameTarget        = flame
-                blueFlameWalkIssued    = false
-                blueFlameArrivedLogged = false
-                cinderLog("blueFlame", string.format(
-                    "[NEW SET] target: %s → %d,%d | walkIssued: %s → false | arrivedLogged: %s → false | player=%d,%d",
-                    prevTarget, flame.x, flame.y,
-                    prevWalk, prevArrived,
-                    playerPos.x, playerPos.y))
-                log("New flames — moving to " .. flame.x .. "," .. flame.y)
+        -- Compute arena bounds once for center targeting
+        if not blueFlameArenaBounds then
+            local anyFlame = false
+            for _, tile in ipairs(g_map.getTiles(playerPos.z)) do
+                if hasTileItemId(tile, BLUE_FLAME_ID) then anyFlame = true; break end
             end
+            if anyFlame then
+                blueFlameArenaBounds = computeSnakeArenaBounds(playerPos)
+                local b = blueFlameArenaBounds
+                cinderLog("blueFlame", string.format(
+                    "[BOUNDS] walkable=(%d-%d, %d-%d) center=%d,%d size=%dx%d",
+                    b.minX, b.maxX, b.minY, b.maxY, b.centerX, b.centerY, b.width, b.height))
+            end
+        end
 
+        local b = blueFlameArenaBounds
+        if not b then return end
+
+        local scanSet, scanSize = scanBlueFlames(playerPos.z)
+
+        -- ── Arm meteor phase when own flame disappears ────────────────────────
+        -- Do NOT arm on arrival (set still active for 2s after arriving).
+        -- Only arm when the character's committed flame tile is gone from the scan.
+        if blueFlameSetActive and blueFlameArrivedLogged and blueFlameTarget
+           and not blueFlameMeteoPhase then
+            local ownKey = blueFlameTarget.x .. "," .. blueFlameTarget.y
+            if not scanSet[ownKey] then
+                blueFlameMeteoPhase = true
+                cinderLog("blueFlame", string.format(
+                    "[METEOR ARM] own flame %d,%d gone from scan (size=%d) | player=%d,%d",
+                    blueFlameTarget.x, blueFlameTarget.y, scanSize,
+                    playerPos.x, playerPos.y))
+            end
+        end
+
+        -- ── Meteor phase ──────────────────────────────────────────────────────
+        -- After arriving at a flame, meteorphase=true. We then watch for the
+        -- next genuine set by filtering out old-set remnants from the scan.
+        -- scanSize==0 is still valid but not required — new tiles with zero overlap
+        -- with blueFlameConfirmedSet confirm the new set even without a zero-scan frame.
+        if blueFlameMeteoPhase then
+            if scanSize == 0 then
+                -- Visual confirmation of empty scan — hold, still in meteor phase
+                cinderLog("blueFlame", string.format(
+                    "[METEOR] Set #%d empty scan — holding at %d,%d",
+                    blueFlameSetNumber - 1, playerPos.x, playerPos.y))
+                return
+            end
+            -- Flames visible: filter out confirmed-set remnants
+            local newTiles, newCount = {}, 0
+            for key, pos in pairs(scanSet) do
+                if not blueFlameConfirmedSet[key] then
+                    newTiles[key] = pos
+                    newCount = newCount + 1
+                end
+            end
+            if newCount == 0 then
+                -- Only old-set remnants visible — cache hasn't cleared, hold
+                cinderLog("blueFlame", string.format(
+                    "[HOLDING] only old-set remnants visible (size=%d) — waiting | player=%d,%d",
+                    scanSize, playerPos.x, playerPos.y))
+                return
+            end
+            -- Genuine new tiles — confirm new set from non-remnant tiles only
+            blueFlameMeteoPhase    = false
+            blueFlameSetActive     = true
+            blueFlameConfirmedSet  = scanSet  -- full scan so all currently-visible tiles are excluded next tick
+            blueFlameTarget        = nil
+            blueFlameWalkIssued    = false
+            blueFlameArrivedLogged = false
+            blueFlameRetryCount    = 0
+            local blendActive = blueFlameSetNumber >= BLUE_FLAME_BLEND_SET
+            cinderLog("blueFlame", string.format(
+                "[NEW SET #%d] size=%d (filtered from scan=%d) | player=%d,%d | targeting=%s",
+                blueFlameSetNumber, newCount, scanSize, playerPos.x, playerPos.y,
+                blendActive and "BLEND" or "CENTER"))
+            logFlameSet("SET_" .. blueFlameSetNumber, newTiles, newCount, b.centerX, b.centerY)
+            local target, distFromCenter = findCenterFlame(newTiles, b.centerX, b.centerY, playerPos, blueFlameSetNumber)
+            blueFlameTarget = target
+            blueFlameWalkAt = os.clock()
+            cinderLog("blueFlame", string.format(
+                "[TARGET] center flame=%d,%d distFromCenter=%d | player=%d,%d",
+                target.x, target.y, distFromCenter, playerPos.x, playerPos.y))
+            log("Flame set #" .. blueFlameSetNumber .. " — " .. target.x .. "," .. target.y)
+            blueFlameSetNumber = blueFlameSetNumber + 1
+            -- Fall through to walk management
+        elseif scanSize == 0 then
+            -- Normal empty scan outside meteor phase (set expired before arrival)
+            if blueFlameSetActive then
+                blueFlameSetActive = false
+                cinderLog("blueFlame", string.format(
+                    "[METEOR] Set #%d expired — holding at %d,%d | arrived=%s",
+                    blueFlameSetNumber - 1, playerPos.x, playerPos.y, tostring(blueFlameArrivedLogged)))
+            end
+            return
+        elseif not blueFlameSetActive then
+            -- First non-empty scan at game start or after a clean meteor
+            blueFlameSetActive     = true
+            blueFlameConfirmedSet  = scanSet
+            blueFlameTarget        = nil
+            blueFlameWalkIssued    = false
+            blueFlameArrivedLogged = false
+            blueFlameRetryCount    = 0
+            local blendActive = blueFlameSetNumber >= BLUE_FLAME_BLEND_SET
+            cinderLog("blueFlame", string.format(
+                "[NEW SET #%d] size=%d | player=%d,%d | targeting=%s",
+                blueFlameSetNumber, scanSize, playerPos.x, playerPos.y,
+                blendActive and "BLEND" or "CENTER"))
+            logFlameSet("SET_" .. blueFlameSetNumber, scanSet, scanSize, b.centerX, b.centerY)
+            local target, distFromCenter = findCenterFlame(scanSet, b.centerX, b.centerY, playerPos, blueFlameSetNumber)
+            blueFlameTarget = target
+            blueFlameWalkAt = os.clock()
+            cinderLog("blueFlame", string.format(
+                "[TARGET] center flame=%d,%d distFromCenter=%d | player=%d,%d",
+                target.x, target.y, distFromCenter, playerPos.x, playerPos.y))
+            log("Flame set #" .. blueFlameSetNumber .. " — " .. target.x .. "," .. target.y)
+            blueFlameSetNumber = blueFlameSetNumber + 1
+        end
+        -- blueFlameSetActive true + not in meteor phase: same set still active, hold
+
+        -- ── Walk management ───────────────────────────────────────────────────
+        -- Once arrived, hold — never re-walk. Retries after arrival cause autoWalk
+        -- overshoot that moves the character off the flame tile before set expires.
+        if blueFlameTarget then
             local dist = getDistanceBetween(playerPos, blueFlameTarget)
             if dist == 0 then
                 if not blueFlameArrivedLogged then
                     blueFlameArrivedLogged = true
+                    -- blueFlameMeteoPhase armed only when own flame disappears from scan (see above)
                     cinderLog("blueFlame", string.format(
-                        "[ARRIVED] target=%d,%d player=%d,%d walkIssued=%s walkElapsed=%.1fs",
-                        blueFlameTarget.x, blueFlameTarget.y,
+                        "[ARRIVED] %d,%d | walkElapsed=%.1fs | retries=%d",
                         playerPos.x, playerPos.y,
-                        tostring(blueFlameWalkIssued),
-                        os.clock() - blueFlameWalkAt))
+                        os.clock() - blueFlameWalkAt, blueFlameRetryCount))
                 end
-            elseif not blueFlameWalkIssued then
-                autoWalk(blueFlameTarget, 15, { ignoreNonPathable = true })
-                blueFlameWalkIssued = true
-                blueFlameWalkAt     = os.clock()
-                cinderLog("blueFlame", string.format(
-                    "[WALK] target=%d,%d player=%d,%d dist=%d",
-                    blueFlameTarget.x, blueFlameTarget.y,
-                    playerPos.x, playerPos.y, dist))
-            elseif os.clock() - blueFlameWalkAt >= 1 then
-                local elapsed = os.clock() - blueFlameWalkAt
-                autoWalk(blueFlameTarget, 15, { ignoreNonPathable = true })
-                blueFlameWalkAt = os.clock()
-                cinderLog("blueFlame", string.format(
-                    "[WALK RETRY] target=%d,%d player=%d,%d dist=%d elapsed=%.1fs",
-                    blueFlameTarget.x, blueFlameTarget.y,
-                    playerPos.x, playerPos.y, dist, elapsed))
+            elseif not blueFlameArrivedLogged then
+                -- Only walk if not yet arrived — holds position after arrival
+                if not blueFlameWalkIssued then
+                    autoWalk(blueFlameTarget, 15, { ignoreNonPathable = true })
+                    blueFlameWalkIssued = true
+                    blueFlameWalkAt     = os.clock()
+                    cinderLog("blueFlame", string.format(
+                        "[WALK] → %d,%d dist=%d | player=%d,%d",
+                        blueFlameTarget.x, blueFlameTarget.y, dist,
+                        playerPos.x, playerPos.y))
+                elseif os.clock() - blueFlameWalkAt >= 1 then
+                    local elapsed = os.clock() - blueFlameWalkAt
+                    blueFlameRetryCount = blueFlameRetryCount + 1
+                    autoWalk(blueFlameTarget, 15, { ignoreNonPathable = true })
+                    blueFlameWalkAt = os.clock()
+                    cinderLog("blueFlame", string.format(
+                        "[WALK RETRY %d] → %d,%d dist=%d elapsed=%.1fs | player=%d,%d",
+                        blueFlameRetryCount, blueFlameTarget.x, blueFlameTarget.y,
+                        dist, elapsed, playerPos.x, playerPos.y))
+                end
             end
-        else
-            if blueFlameTarget ~= nil then
-                cinderLog("blueFlame", string.format(
-                    "[FLAMES GONE] was target=%d,%d player=%d,%d arrived=%s",
-                    blueFlameTarget.x, blueFlameTarget.y,
-                    playerPos.x, playerPos.y,
-                    tostring(blueFlameArrivedLogged)))
-            end
-            blueFlameTarget        = nil
-            blueFlameWalkIssued    = false
-            blueFlameArrivedLogged = false
+        end
+        end)  -- pcall
+        if not _blueOk then
+            cinderLog("blueFlame", "[ERROR] " .. tostring(_blueErr))
+            log("BlueFlame ERROR: " .. tostring(_blueErr))
         end
         return
     end
@@ -614,7 +831,11 @@ end)
 onPlayerPositionChange(function(newPos, oldPos)
     if not cinderMacro.isOn() then return end
     if portalTriggered and portalLastSeenPos then
-        if getDistanceBetween(newPos, portalLastSeenPos) > 15 then
+        -- Detect portal entry via teleport: a single position step > 5 tiles is
+        -- impossible by walking (always 1 tile/step). Portal entry causes a large jump.
+        -- Old approach (distance from portalLastSeenPos > 15) fired on accumulated
+        -- walking distance, causing false positives when pathing around obstacles.
+        if getDistanceBetween(newPos, oldPos) > 5 then
             insidePortal       = true
             portalTriggered    = false
             portalLastSeenPos  = nil
@@ -815,37 +1036,8 @@ local function findAndWalkToSafeTile(playerPos, logKey)
     return false
 end
 
--- Scans all floor tiles within 55 sqm to find arena extents.
--- Returns raw tile min/max AND a walkable inset (wall tiles sit at the edge,
--- walkable floor starts 1 tile inside). Logs full boundary info for verification.
-local function computeSnakeArenaBounds(playerPos)
-    local minX, maxX = math.huge, -math.huge
-    local minY, maxY = math.huge, -math.huge
-    for _, tile in ipairs(g_map.getTiles(playerPos.z)) do
-        local tp = tile:getPosition()
-        if math.abs(tp.x - playerPos.x) <= 55 and math.abs(tp.y - playerPos.y) <= 55 then
-            if tp.x < minX then minX = tp.x end
-            if tp.x > maxX then maxX = tp.x end
-            if tp.y < minY then minY = tp.y end
-            if tp.y > maxY then maxY = tp.y end
-        end
-    end
-    -- Inset 1 tile on each side: wall tiles are at the raw edge,
-    -- first walkable row/col is 1 tile inside.
-    local b = {
-        rawMinX = minX, rawMaxX = maxX, rawMinY = minY, rawMaxY = maxY,
-        minX = minX + 1, maxX = maxX - 1,
-        minY = minY + 1, maxY = maxY - 1,
-        width  = (maxX - 1) - (minX + 1),
-        height = (maxY - 1) - (minY + 1),
-    }
-    b.centerX = math.floor((b.minX + b.maxX) / 2)
-    b.centerY = math.floor((b.minY + b.maxY) / 2)
-    return b
-end
-
--- Cross pattern offsets: bomb tile + 2 tiles in each cardinal direction
-local BOMB_CROSS = { {0,0},{1,0},{2,0},{-1,0},{-2,0},{0,1},{0,2},{0,-1},{0,-2} }
+-- Cross pattern offsets: bomb tile + 3 tiles in each cardinal direction (13 tiles total)
+local BOMB_CROSS = { {0,0},{1,0},{2,0},{3,0},{-1,0},{-2,0},{-3,0},{0,1},{0,2},{0,3},{0,-1},{0,-2},{0,-3} }
 
 local function getBombPositions(z)
     local bombs = {}
@@ -877,6 +1069,7 @@ local function findBombSafeTile(playerPos, dangerZone)
             local tp = tile:getPosition()
             if getDistanceBetween(playerPos, tp) == dist
                and not isInBombDanger(tp, dangerZone)
+               and not hasDangerousEffect(tile)
                and not (tile:getTopCreature() ~= nil)
                and findPath(playerPos, tp, 15, { ignoreNonPathable = true })
             then
@@ -900,83 +1093,146 @@ local cinderDodge = macro(200, function()
     cleanupOldDangerousTiles()
     cleanupBySafeEffect()
 
-    -- ── Bombs mechanic (predictive — avoid all cross zones preemptively) ────────
-    -- All bomb positions are scanned each tick. The full cross zone (bomb tile +
-    -- 2 tiles in each cardinal direction) for every bomb is unioned into a danger
-    -- set. Chain reactions are covered automatically: all bombs' zones are marked
-    -- dangerous regardless of activation order, so a chain-triggered bomb that
-    -- gives no red-tile warning is already accounted for.
-    local bombs = getBombPositions(playerPos.z)
+    -- ── Bombs mechanic (predictive + reactive hybrid) ────────────────────────────
+    local _bombOk, _bombErr = pcall(function()
+    local bombs        = getBombPositions(playerPos.z)
+    local reactiveDanger = hasDangerousEffect(playerTile)
 
     if #bombs > 0 then
+        bombsGameActive = true  -- latch: gates firestorm for rest of this portal even if scan gaps occur
         if cinderLogs["bombs"].path == nil then
             cinderLog("bombs", string.format("[ACTIVE] Bombs game — %d bomb(s) detected", #bombs))
-            dodgeTargetPos = nil  -- clear any stale firestorm target
+            dodgeTargetPos = nil
         end
 
         local dangerZone = computeBombDangerZone(bombs)
         local zoneSize   = 0
         for _ in pairs(dangerZone) do zoneSize = zoneSize + 1 end
 
+        -- ── Periodic scan: full bomb positions + both danger checks ───────────
         local clk = os.clock()
         if clk - bombScanLogAt >= 3 then
             bombScanLogAt = clk
-            cinderLog("bombs", string.format("[SCAN] bombs=%d dangerTiles=%d player=%d,%d inDanger=%s",
+            local posList = {}
+            for _, bp in ipairs(bombs) do
+                table.insert(posList, bp.x .. "," .. bp.y)
+            end
+            local fxIds = {}
+            for _, fx in ipairs(playerTile:getEffects()) do
+                table.insert(fxIds, tostring(fx:getId()))
+            end
+            cinderLog("bombs", string.format(
+                "[SCAN] bombs=%d zone=%d player=%d,%d predictive=%s reactive=%s effects=[%s] | %s",
                 #bombs, zoneSize, playerPos.x, playerPos.y,
-                tostring(isInBombDanger(playerPos, dangerZone))))
+                tostring(isInBombDanger(playerPos, dangerZone)),
+                tostring(reactiveDanger),
+                #fxIds > 0 and table.concat(fxIds, ",") or "none",
+                #posList > 0 and table.concat(posList, " | ") or "none"))
         end
 
-        -- Check if committed walk target entered the danger zone
+        -- ── Check if walk target is still safe (both layers) ─────────────────
         if dodgeTargetPos then
             if getDistanceBetween(playerPos, dodgeTargetPos) == 0 then
                 dodgeTargetPos = nil
                 if dodgeBombsActive then
                     dodgeBombsActive = false
-                    cinderLog("bombs", string.format("[SAFE] Reached safe tile at %d,%d", playerPos.x, playerPos.y))
+                    cinderLog("bombs", string.format("[SAFE] %d,%d | bombs=%d zone=%d",
+                        playerPos.x, playerPos.y, #bombs, zoneSize))
                 end
             elseif isInBombDanger(dodgeTargetPos, dangerZone) then
-                cinderLog("bombs", string.format("[REROUTE] target %d,%d entered danger zone — bombs=%d zone=%d",
+                cinderLog("bombs", string.format("[REROUTE] target %d,%d entered predictive zone — bombs=%d zone=%d",
                     dodgeTargetPos.x, dodgeTargetPos.y, #bombs, zoneSize))
                 dodgeTargetPos = nil
             end
         end
 
-        local playerInDanger = isInBombDanger(playerPos, dangerZone)
+        -- ── Danger detection: log which layer triggered ───────────────────────
+        local predictiveDanger = isInBombDanger(playerPos, dangerZone)
+        local currentDanger    = predictiveDanger or reactiveDanger
 
-        if playerInDanger then
-            if not dodgeBombsActive then
-                dodgeBombsActive = true
-                cinderLog("bombs", string.format("[IN DANGER] player=%d,%d bombs=%d zone=%d",
-                    playerPos.x, playerPos.y, #bombs, zoneSize))
-            end
-            if not dodgeTargetPos then
-                local safe = findBombSafeTile(playerPos, dangerZone)
-                if safe then
-                    autoWalk(safe, 15, { ignoreNonPathable = true })
-                    dodgeTargetPos = safe
-                    cinderLog("bombs", string.format("[WALK] to %d,%d dist=%d bombs=%d zone=%d",
-                        safe.x, safe.y, getDistanceBetween(playerPos, safe), #bombs, zoneSize))
-                else
-                    cinderLog("bombs", string.format("[WARNING] No safe tile found — bombs=%d zone=%d player=%d,%d",
-                        #bombs, zoneSize, playerPos.x, playerPos.y))
+        if currentDanger and not dodgeBombsActive then
+            dodgeBombsActive = true
+            if reactiveDanger and not predictiveDanger then
+                -- Reactive caught something predictive missed — log effects and
+                -- all bomb positions so we can diagnose radius/chain issues
+                local fxIds = {}
+                for _, fx in ipairs(playerTile:getEffects()) do
+                    table.insert(fxIds, tostring(fx:getId()))
                 end
+                local posList = {}
+                for _, bp in ipairs(bombs) do
+                    table.insert(posList, bp.x .. "," .. bp.y)
+                end
+                cinderLog("bombs", string.format(
+                    "[IN DANGER - REACTIVE] effects=[%s] player=%d,%d bombs=%d zone=%d | bomb positions: %s",
+                    table.concat(fxIds, ","), playerPos.x, playerPos.y, #bombs, zoneSize,
+                    #posList > 0 and table.concat(posList, " | ") or "none"))
+            elseif predictiveDanger then
+                -- Predictive triggered — log which specific bombs cover the player
+                local coveringBombs = {}
+                for _, bp in ipairs(bombs) do
+                    for _, d in ipairs(BOMB_CROSS) do
+                        if (bp.x + d[1]) == playerPos.x and (bp.y + d[2]) == playerPos.y then
+                            table.insert(coveringBombs, bp.x .. "," .. bp.y)
+                            break
+                        end
+                    end
+                end
+                cinderLog("bombs", string.format(
+                    "[IN DANGER - PREDICTIVE] player=%d,%d bombs=%d zone=%d | covering bombs: %s",
+                    playerPos.x, playerPos.y, #bombs, zoneSize,
+                    #coveringBombs > 0 and table.concat(coveringBombs, " | ") or "unknown"))
+            end
+        end
+
+        if currentDanger and not dodgeTargetPos then
+            -- findBombSafeTile already excludes both predictive zones and active effects
+            local safe = findBombSafeTile(playerPos, dangerZone)
+            if safe then
+                autoWalk(safe, 15, { ignoreNonPathable = true })
+                dodgeTargetPos = safe
+                local layer = (reactiveDanger and not predictiveDanger) and "REACTIVE" or "PREDICTIVE"
+                cinderLog("bombs", string.format("[WALK-%s] to %d,%d dist=%d bombs=%d zone=%d",
+                    layer, safe.x, safe.y,
+                    getDistanceBetween(playerPos, safe), #bombs, zoneSize))
+            else
+                cinderLog("bombs", string.format(
+                    "[WARNING] No safe tile found — bombs=%d zone=%d player=%d,%d predictive=%s reactive=%s",
+                    #bombs, zoneSize, playerPos.x, playerPos.y,
+                    tostring(predictiveDanger), tostring(reactiveDanger)))
             end
         end
 
         return  -- never enters firestorm logic
     end
 
-    -- Bombs cleared — reset state and fall through to firestorm
+    -- Bombs cleared (scan returned 0) — but if this is a bombs portal, keep gating firestorm.
+    -- A single-tick scan gap must not drop us into firestorm mid-game.
+    if bombsGameActive then
+        if dodgeBombsActive then
+            dodgeBombsActive = false
+            dodgeTargetPos   = nil
+            cinderLog("bombs", string.format("[BOMBS CLEAR] No bombs on floor — safe at %d,%d",
+                playerPos.x, playerPos.y))
+        end
+        return  -- still a bombs portal — never fall through to firestorm
+    end
+
     if dodgeBombsActive then
         dodgeBombsActive = false
         dodgeTargetPos   = nil
-        cinderLog("bombs", string.format("[BOMBS CLEAR] No bombs on floor — safe at %d,%d", playerPos.x, playerPos.y))
+        cinderLog("bombs", string.format("[BOMBS CLEAR] No bombs on floor — safe at %d,%d",
+            playerPos.x, playerPos.y))
+    end
+
+    end)  -- bombs pcall
+    if not _bombOk then
+        cinderLog("bombs", "[ERROR] " .. tostring(_bombErr))
+        log("Bombs ERROR: " .. tostring(_bombErr))
     end
 
     -- ── Firestorm / Soccer dodge ──────────────────────────────────────────────
-    -- Only handles: dangerous effects (78/79/80/188), avoid item (1949), red gem (24934).
-    -- Bombs are handled above and never reach this point.
-    -- Trigger uses explicit checks — hasBombs is intentionally excluded.
+    local _dodgeOk, _dodgeErr = pcall(function()
     local firestormDanger = hasDangerousEffect(playerTile) or hasDodgeAvoidItem(playerTile)
     local soccerDanger    = hasRedGem(playerTile)
     local currentDanger   = firestormDanger or soccerDanger
@@ -1041,6 +1297,11 @@ local cinderDodge = macro(200, function()
                 cinderLog("bombs", "Bomb cleared — safe at " .. playerPos.x .. "," .. playerPos.y)
             end
         end
+    end
+    end)  -- dodge pcall
+    if not _dodgeOk then
+        cinderLog("firestorm", "[ERROR] " .. tostring(_dodgeErr))
+        log("Dodge ERROR: " .. tostring(_dodgeErr))
     end
 end)
 
