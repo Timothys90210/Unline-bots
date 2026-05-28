@@ -9,11 +9,19 @@ local FIRE_SNAKE_ID            = 60662
 local RED_GEM_ID               = 24934  -- Soccer Ball mechanic item
 local BOMBS_ID                 = 46113  -- Bombs mechanic item
 local PORTAL_SEARCH_TIME       = 60
-local FIRE_SNAKE_SAFE_DISTANCE = 6      -- sqm (Chebyshev) — trigger movement when snake within this range
-local FIRE_SNAKE_MIN_CLEARANCE = 5      -- sqm — target tiles must be at least this far from snake
+local PORTAL_MAX_DURATION      = 90  -- safety: force-FAIL if inside portal > 90s without exit message
+local FIRE_SNAKE_SAFE_DISTANCE      = 5  -- trigger movement when snake within this range
+local FIRE_SNAKE_MIN_CLEARANCE      = 5  -- target tiles must be at least this far from snake
+local FIRE_SNAKE_MAX_CLEARANCE      = 8  -- target tiles must be at most this far from snake
+local FIRE_SNAKE_FALLBACK_CLEARANCE = 3  -- pass 3 (panic): when primary passes fail, accept tiles
+                                         -- as close as 3 sqm. Targets the 40% of V9 fails that died
+                                         -- with [NO TARGET] cascades at speed surge when snake length
+                                         -- 11+ makes clearance≥5 geometrically impossible.
 
 -- ── Logging ───────────────────────────────────────────────────────────────────
 local botConfigName = modules.game_bot.contentsPanel.config:getCurrentOption().text
+
+local FIRE_SNAKE_WALK_DELAY = 300  -- V1 thrash guard
 local logsDir       = "/bot/" .. botConfigName .. "/logs"
 
 -- Internal log entries — temp names during session, renamed to GameName_OUTCOME_N on exit
@@ -152,6 +160,7 @@ local function logCaveBotSkipped(reason) end
 
 -- ── State ─────────────────────────────────────────────────────────────────────
 local insidePortal      = false
+local insidePortalSince = 0     -- os.clock() when entry detected; used by max-duration safety timeout
 local portalTriggered   = false
 local portalSearchUntil = 0
 local portalRetryLogAt  = 0
@@ -168,16 +177,10 @@ local blueFlameRetryCount    = 0
 local blueFlameSetActive     = false  -- true while a set is currently visible
 local blueFlameSetNumber     = 0      -- 0-indexed; logged before increment
 
-local snakeArenaBounds    = nil   -- computed once on first snake detection
-local snakeInitialPhase   = true  -- true while doing the one-time run to 12 o'clock
-local snakeInitialTarget  = nil
-local snakeWalkTarget     = nil
-local snakeWalkIssued     = false
-local snakeWalkAt         = 0
-local snakeActivePhase    = false
-local snakeEmergencyAt    = 0     -- os.clock() of last emergency reroute; guards 500ms lock
-local snakeIdleLogAt      = 0
-local snakeHeadLastPos    = nil
+local snakeArena         = nil   -- circular arena: {centerX, centerY, radius, ...}
+local snakeActiveSeen    = false -- true after first movement trigger (gates one-time [ACTIVE] log)
+local snakeIdleLogAt     = 0
+local snakeHeadLastPos   = nil   -- for [HEAD] log change detection only
 
 -- Firestorm tracking
 local firestormLastClearedAt   = 0      -- os.clock() when last "Firestorm cleared"
@@ -189,6 +192,18 @@ local dodgeSoccerActive    = false
 local dodgeBombsActive     = false
 local dodgeTargetPos       = nil   -- committed dodge destination; monitored every tick
 
+-- Diagnostic state for richer firestorm/soccer logging
+local dodgeStaleDestKey     = nil  -- "x,y" of current dodgeTargetPos for stale-detection
+local dodgeStaleDestStartAt = 0    -- os.clock when this destKey was first observed
+local dodgeStaleLogged      = false -- already logged a [STALE DEST] for current stuck period
+local dodgeBlacklistLogAt   = 0    -- last time we dumped [BLACKLIST] (rate-limited 5s)
+
+-- Pattern A: tiles already attempted within the current dodge event. Prevents
+-- the selector re-picking the same destination after a HIT (FAIL_68, _73, _75
+-- showed 2-4 consecutive walks to identical tiles). Cleared on event start
+-- and on clear. Independent of the 5s decay blacklist.
+local dodgeAttemptedThisEvent = {}
+
 local bombScanLogAt        = 0
 local bombsGameActive      = false  -- latched true on first bomb detection; gates firestorm for full portal
 
@@ -198,6 +213,7 @@ end
 
 local function resetState()
     insidePortal             = false
+    insidePortalSince        = 0
     portalTriggered          = false
     CinderPortalActive       = false
     portalSearchUntil        = 0
@@ -213,14 +229,8 @@ local function resetState()
     blueFlameRetryCount    = 0
     blueFlameSetActive     = false
     blueFlameSetNumber     = 0
-    snakeArenaBounds   = nil
-    snakeInitialPhase  = true
-    snakeInitialTarget = nil
-    snakeWalkTarget    = nil
-    snakeWalkIssued    = false
-    snakeWalkAt        = 0
-    snakeActivePhase   = false
-    snakeEmergencyAt   = 0
+    snakeArena         = nil
+    snakeActiveSeen    = false
     snakeIdleLogAt     = 0
     snakeHeadLastPos   = nil
     firestormLastClearedAt   = 0
@@ -230,6 +240,11 @@ local function resetState()
     dodgeSoccerActive        = false
     dodgeBombsActive         = false
     dodgeTargetPos           = nil
+    dodgeStaleDestKey        = nil
+    dodgeStaleDestStartAt    = 0
+    dodgeStaleLogged         = false
+    dodgeBlacklistLogAt      = 0
+    dodgeAttemptedThisEvent  = {}
     bombScanLogAt            = 0
     bombsGameActive          = false
     pendingSuccessScheduled  = false
@@ -289,9 +304,168 @@ local function minDistToSnake(pos, snakeTiles)
     return minDist
 end
 
--- Scans all floor tiles within 55 sqm to find arena extents.
--- Returns raw tile min/max AND a walkable inset (wall tiles sit at the edge,
--- walkable floor starts 1 tile inside). Logs full boundary info for verification.
+-- ── Circular arena detection (V7) ───────────────────────────────────────────
+-- The fire snake arena is a CIRCLE (~15 tiles diameter), not a rectangle.
+-- Rectangle-based bounds caused corner-pin deaths in V6 because the "corners"
+-- of the bounding box are not walkable. We compute center + chebyshev radius
+-- and only use these for SCORING, never for hard filtering. findPath() is the
+-- authoritative walkability check.
+local function computeSnakeArena(playerPos)
+    local minX, maxX = math.huge, -math.huge
+    local minY, maxY = math.huge, -math.huge
+    local count = 0
+    for _, tile in ipairs(g_map.getTiles(playerPos.z)) do
+        local tp = tile:getPosition()
+        if math.abs(tp.x - playerPos.x) <= 20 and math.abs(tp.y - playerPos.y) <= 20 then
+            count = count + 1
+            if tp.x < minX then minX = tp.x end
+            if tp.x > maxX then maxX = tp.x end
+            if tp.y < minY then minY = tp.y end
+            if tp.y > maxY then maxY = tp.y end
+        end
+    end
+    local cx = math.floor((minX + maxX) / 2)
+    local cy = math.floor((minY + maxY) / 2)
+    local radius = math.max(maxX - cx, cx - minX, maxY - cy, cy - minY)
+    return {
+        centerX = cx, centerY = cy, radius = radius,
+        minX = minX, maxX = maxX, minY = minY, maxY = maxY,
+        tileCount = count,
+    }
+end
+
+-- Dynamic expansion: if player or snake tile falls outside detected arena,
+-- expand center/radius to include it. Self-corrects underestimated bounds.
+local function expandArenaIfNeeded(arena, pos)
+    local d = math.max(math.abs(pos.x - arena.centerX), math.abs(pos.y - arena.centerY))
+    if d > arena.radius then
+        arena.radius = d
+        if pos.x < arena.minX then arena.minX = pos.x end
+        if pos.x > arena.maxX then arena.maxX = pos.x end
+        if pos.y < arena.minY then arena.minY = pos.y end
+        if pos.y > arena.maxY then arena.maxY = pos.y end
+        return true
+    end
+    return false
+end
+
+-- Predict where the snake head will be in N ticks based on its recent velocity.
+-- If we don't have history yet, returns current head.
+local function predictHeadPos(head, headPrev, ticks)
+    if not headPrev then return { x = head.x, y = head.y } end
+    local vx = head.x - headPrev.x
+    local vy = head.y - headPrev.y
+    return { x = head.x + vx * ticks, y = head.y + vy * ticks }
+end
+
+-- Intercept simulation: walks the player toward `target` and the snake toward
+-- the player's evolving position, tick by tick (chebyshev pursuit). Returns
+-- chebyshev distance between snake and target when player arrives at target.
+-- Low value = snake catches up to / occupies the target before/when player
+-- gets there. This catches the "snake follows you south" case that the
+-- vector-based side penalty misses (snake's chase curves toward you, not
+-- along a fixed direction).
+local function interceptDistance(playerPos, target, head)
+    local function sign(n) return n > 0 and 1 or (n < 0 and -1 or 0) end
+    local t_arrival = math.max(
+        math.abs(target.x - playerPos.x),
+        math.abs(target.y - playerPos.y))
+    if t_arrival == 0 then
+        return math.max(math.abs(head.x - target.x), math.abs(head.y - target.y))
+    end
+    local px, py = playerPos.x, playerPos.y
+    local sx, sy = head.x, head.y
+    local tx, ty = target.x, target.y
+    for _ = 1, t_arrival do
+        if px ~= tx then px = px + sign(tx - px) end
+        if py ~= ty then py = py + sign(ty - py) end
+        if sx ~= px then sx = sx + sign(px - sx) end
+        if sy ~= py then sy = sy + sign(py - sy) end
+    end
+    return math.max(math.abs(sx - tx), math.abs(sy - ty))
+end
+
+-- Wrong-side penalty: project player→target onto player→head direction. If
+-- positive, target is on the snake's side of the player (suicidal). Returns
+-- the projection length in tiles; caller multiplies by a weight.
+-- Without this, two tiles with equal headDist score the same even when one
+-- sits in the snake's predicted path and the other is on the safe side.
+local function towardSnakeScore(tp, playerPos, head)
+    local apx, apy = head.x - playerPos.x, head.y - playerPos.y
+    local tpx, tpy = tp.x - playerPos.x, tp.y - playerPos.y
+    local apLen = math.sqrt(apx * apx + apy * apy)
+    if apLen == 0 then return 0 end
+    local proj = (apx * tpx + apy * tpy) / apLen  -- tiles toward snake (signed)
+    return math.max(0, proj)  -- only penalize toward-snake; behind-player is free
+end
+
+-- Tangential bonus: tiles perpendicular to the head→player vector score
+-- higher than tiles radially away. On a circle, this naturally produces
+-- perimeter-following behaviour instead of corner-hopping.
+local function tangentialScore(tp, playerPos, head)
+    local hpx, hpy = playerPos.x - head.x, playerPos.y - head.y
+    local tpx, tpy = tp.x - playerPos.x, tp.y - playerPos.y
+    local hpLen = math.sqrt(hpx * hpx + hpy * hpy)
+    local tpLen = math.sqrt(tpx * tpx + tpy * tpy)
+    if hpLen == 0 or tpLen == 0 then return 0 end
+    local cosAng = (hpx * tpx + hpy * tpy) / (hpLen * tpLen)
+    -- cosAng = 0 → perpendicular (best, tangential)
+    -- cosAng = +1 → radial flee (decent)
+    -- cosAng = -1 → toward snake (worst)
+    return (1 - math.abs(cosAng))  -- 0..1
+end
+
+-- Head detection via tile novelty: snake grows from the head outward, so the
+-- tile that newly appeared this tick is the head. Resolves the "nearest tile
+-- to player flips between body segments" bug that previously caused phantom
+-- head jumps of 3+ tiles per tick (see SUCCESS_14 — chase reset by luck).
+-- Phantom guard: ignore new tiles further than 5 chebyshev from last head
+-- (briefly-evicted cached tiles re-appearing far away).
+local function identifyHead(snakeTiles, lastTileSet, lastHead, playerPos)
+    local currentSet = {}
+    for _, sp in ipairs(snakeTiles) do
+        currentSet[sp.x .. "," .. sp.y] = sp
+    end
+
+    local newTiles = {}
+    if lastTileSet then
+        for k, sp in pairs(currentSet) do
+            if not lastTileSet[k] then
+                if lastHead then
+                    local d = math.max(math.abs(sp.x - lastHead.x), math.abs(sp.y - lastHead.y))
+                    if d <= 5 then table.insert(newTiles, sp) end
+                else
+                    table.insert(newTiles, sp)
+                end
+            end
+        end
+    end
+
+    local head, source
+    if #newTiles == 1 then
+        head, source = newTiles[1], "novel"
+    elseif #newTiles > 1 and lastHead then
+        local bestD = math.huge
+        for _, sp in ipairs(newTiles) do
+            local d = math.max(math.abs(sp.x - lastHead.x), math.abs(sp.y - lastHead.y))
+            if d < bestD then bestD, head = d, sp end
+        end
+        source = "multi-novel"
+    elseif lastHead and currentSet[lastHead.x .. "," .. lastHead.y] then
+        head, source = currentSet[lastHead.x .. "," .. lastHead.y], "stationary"
+    else
+        local bestD = math.huge
+        for _, sp in ipairs(snakeTiles) do
+            local d = math.max(math.abs(sp.x - playerPos.x), math.abs(sp.y - playerPos.y))
+            if d < bestD then bestD, head = d, sp end
+        end
+        source = "fallback-nearest"
+    end
+
+    return head, currentSet, source
+end
+
+-- Legacy rectangular bounds (kept for BlueFlame which still uses it).
 local function computeSnakeArenaBounds(playerPos)
     local minX, maxX = math.huge, -math.huge
     local minY, maxY = math.huge, -math.huge
@@ -363,6 +537,10 @@ local function logFlameSet(label, flameSet, size, centerX, centerY)
     cinderLog("blueFlame", string.format("[%s] size=%d | %s", label, size, table.concat(parts, " | ")))
 end
 
+-- Forward declaration: processPortalExit is defined below but referenced
+-- inside the macro (timeout safety path). Lua resolves locals at parse time.
+local processPortalExit
+
 -- ── Main macro ────────────────────────────────────────────────────────────────
 local cinderMacro = macro(200, function()
     if not player then return end
@@ -371,38 +549,42 @@ local cinderMacro = macro(200, function()
     -- ── Phase 2: inside the portal ────────────────────────────────────────────
     if insidePortal then
 
-        -- ── Fire Snake mechanic ──────────────────────────────────────────────
-        -- Strategy: one-time run to 12 o'clock (top-center wall) on first detection,
-        -- then hold until snake is within 5 tiles (Chebyshev), then move clockwise
-        -- along the boundary. autoWalk committed once per target; re-picked only on
-        -- arrival or emergency (≤2 tiles). Arena bounds computed dynamically.
+        -- ── Safety: force-exit if portal exit messages never fire (game/text bug)
+        if insidePortalSince > 0 and os.clock() - insidePortalSince > PORTAL_MAX_DURATION then
+            cinderLogActive("fireSnake", string.format(
+                "[TIMEOUT] inside portal %ds with no exit message — forcing FAIL",
+                math.floor(os.clock() - insidePortalSince)))
+            log(string.format("Portal timeout (%ds) — forcing FAIL recovery.",
+                math.floor(os.clock() - insidePortalSince)))
+            processPortalExit("FAIL")
+            return
+        end
+
+        -- ── Fire Snake mechanic (V9 — V1 logic, circular bounds, rich logging) ──
+        -- V1 scoring restored: `snakeDist*2 + edgeBonus` over candidates with
+        -- snakeDist [5,8] and dpf [3,6]. Two-pass wall fallback (pass 1 prefers
+        -- tiles ≤5 from wall, pass 2 any). V1 had 50-70% success with this.
+        -- Updates: circular arena bounds (V1 used wrong rectangular bounds that
+        -- accidentally disabled the edge filter); overshooting guard via plain
+        -- autoWalk/findPath (no ignoreNonPathable). Rich logging tags from V7+.
         local snakeTiles = getFireSnakeTiles(playerPos)
         if #snakeTiles > 0 then
             local ok, err = pcall(function()
 
-            -- ── Arena bounds (computed once on first detection) ───────────────
-            if not snakeArenaBounds then
-                snakeArenaBounds = computeSnakeArenaBounds(playerPos)
-                local b = snakeArenaBounds
-                -- 12 o'clock: top-center, 1 tile inside top wall
-                snakeInitialTarget = { x = b.centerX, y = b.minY, z = playerPos.z }
+            if not snakeArena then
+                snakeArena = computeSnakeArena(playerPos)
+                local a = snakeArena
                 cinderLog("fireSnake", string.format(
-                    "[BOUNDS] raw=(%d-%d, %d-%d) walkable=(%d-%d, %d-%d) center=%d,%d size=%dx%d",
-                    b.rawMinX, b.rawMaxX, b.rawMinY, b.rawMaxY,
-                    b.minX, b.maxX, b.minY, b.maxY,
-                    b.centerX, b.centerY, b.width, b.height))
-                cinderLog("fireSnake", string.format(
-                    "[INIT TARGET] 12 o'clock → %d,%d | player=%d,%d dist=%d",
-                    snakeInitialTarget.x, snakeInitialTarget.y,
-                    playerPos.x, playerPos.y,
-                    getDistanceBetween(playerPos, snakeInitialTarget)))
-                log("Fire snake — running to 12 o'clock")
+                    "[ARENA] center=%d,%d radius=%d bbox=(%d-%d, %d-%d) tiles=%d",
+                    a.centerX, a.centerY, a.radius,
+                    a.minX, a.maxX, a.minY, a.maxY, a.tileCount))
             end
 
-            local b       = snakeArenaBounds
-            local nearest = minDistToSnake(playerPos, snakeTiles)
+            local a        = snakeArena
+            local snakeLen = #snakeTiles
+            local nearest  = minDistToSnake(playerPos, snakeTiles)
 
-            -- ── Head tracking ─────────────────────────────────────────────────
+            -- Head = nearest snake tile (informational only — used for logging).
             local head, headDist = nil, math.huge
             for _, sp in ipairs(snakeTiles) do
                 local d = getDistanceBetween(playerPos, sp)
@@ -410,213 +592,109 @@ local cinderMacro = macro(200, function()
             end
             if head and (not snakeHeadLastPos or
                head.x ~= snakeHeadLastPos.x or head.y ~= snakeHeadLastPos.y) then
-                local prevX = snakeHeadLastPos and snakeHeadLastPos.x or head.x
-                local prevY = snakeHeadLastPos and snakeHeadLastPos.y or head.y
-                snakeHeadLastPos = head
                 cinderLog("fireSnake", string.format(
-                    "[HEAD] %d,%d → %d,%d | dist=%d | player=%d,%d | snakeLen=%d",
-                    prevX, prevY, head.x, head.y, headDist,
-                    playerPos.x, playerPos.y, #snakeTiles))
+                    "[HEAD] %d,%d → %d,%d dist=%d player=%d,%d len=%d",
+                    snakeHeadLastPos and snakeHeadLastPos.x or head.x,
+                    snakeHeadLastPos and snakeHeadLastPos.y or head.y,
+                    head.x, head.y, headDist,
+                    playerPos.x, playerPos.y, snakeLen))
+                snakeHeadLastPos = { x = head.x, y = head.y }
             end
-
-            -- ── Wall context (logged throughout for boundary verification) ─────
-            local dN = playerPos.y - b.minY
-            local dS = b.maxY - playerPos.y
-            local dW = playerPos.x - b.minX
-            local dE = b.maxX - playerPos.x
-            local wallDist = math.min(dN, dS, dW, dE)
-            local wallName = (wallDist == dN) and "N" or
-                             (wallDist == dS) and "S" or
-                             (wallDist == dW) and "W" or "E"
-
-            -- ── Clockwise tangent from arena center ────────────────────────────
-            -- In Tibia coords (Y increases south), CW tangent of radius (rx,ry) is (-ry, rx)
-            local rx = playerPos.x - b.centerX
-            local ry = playerPos.y - b.centerY
-            local radLen = math.sqrt(rx * rx + ry * ry)
-            local cwX = radLen > 0 and (-ry / radLen) or 1
-            local cwY = radLen > 0 and ( rx / radLen) or 0
 
             if nearest == 0 then
                 cinderLog("fireSnake", string.format(
-                    "[EMERGENCY] standing ON snake tile at %d,%d | wall=%s(%d)",
-                    playerPos.x, playerPos.y, wallName, wallDist))
+                    "[ON SNAKE] standing on snake tile | player=%d,%d",
+                    playerPos.x, playerPos.y))
             end
 
-            -- ── Adaptive scaling based on snake length ────────────────────────
-            -- t=0 at len=1 (early/slow), t=1 at len=12 (max/fast)
-            local snakeLen     = #snakeTiles
-            local t            = math.min(snakeLen - 1, 11) / 11
-            local dynTrigger   = math.floor(4 + t * 2)   -- 4 → 6 tiles
-            local dynMaxDist   = math.floor(4 + t * 3)   -- 4 → 7 tiles from player
-            local dynEmergency = math.floor(2 + t)       -- 2 → 3 tiles
-
-            -- ── Phase 1: initial run to 12 o'clock ────────────────────────────
-            if snakeInitialPhase then
-                local distToInit = getDistanceBetween(playerPos, snakeInitialTarget)
-                if distToInit == 0 or nearest <= dynTrigger then
-                    snakeInitialPhase = false
+            local trigger = FIRE_SNAKE_SAFE_DISTANCE
+            if nearest > trigger then
+                local clk = os.clock()
+                if clk - snakeIdleLogAt >= 2 then
+                    snakeIdleLogAt = clk
                     cinderLog("fireSnake", string.format(
-                        "[INIT DONE] player=%d,%d distToTarget=%d snakeDist=%d wall=%s(%d)",
-                        playerPos.x, playerPos.y, distToInit, nearest, wallName, wallDist))
-                else
-                    if not snakeWalkIssued or os.clock() - snakeWalkAt >= 1 then
-                        autoWalk(snakeInitialTarget, 20, { ignoreNonPathable = true })
-                        snakeWalkIssued = true
-                        snakeWalkAt     = os.clock()
-                        cinderLog("fireSnake", string.format(
-                            "[INIT WALK] → %d,%d | distToTarget=%d snakeDist=%d wall=%s(%d)",
-                            snakeInitialTarget.x, snakeInitialTarget.y,
-                            distToInit, nearest, wallName, wallDist))
-                    end
-                    return
-                end
-            end
-
-            -- ── Phase 2: hold unless snake within dynTrigger tiles ────────────
-            if nearest > dynTrigger then
-                if snakeActivePhase then
-                    snakeActivePhase = false
-                    snakeWalkTarget  = nil
-                    snakeWalkIssued  = false
-                    cinderLog("fireSnake", string.format(
-                        "[IDLE] Snake retreated to %d tiles — holding | player=%d,%d wall=%s(%d) len=%d trigger=%d maxDist=%d",
-                        nearest, playerPos.x, playerPos.y, wallName, wallDist, snakeLen, dynTrigger, dynMaxDist))
-                else
-                    local clk = os.clock()
-                    if clk - snakeIdleLogAt >= 2 then
-                        snakeIdleLogAt = clk
-                        cinderLog("fireSnake", string.format(
-                            "[IDLE] snakeDist=%d player=%d,%d wall=%s(%d) len=%d trigger=%d maxDist=%d",
-                            nearest, playerPos.x, playerPos.y,
-                            wallName, wallDist, snakeLen, dynTrigger, dynMaxDist))
-                    end
+                        "[IDLE] snakeDist=%d trigger=%d | player=%d,%d len=%d",
+                        nearest, trigger, playerPos.x, playerPos.y, snakeLen))
                 end
                 return
             end
 
-            -- ── Phase 3: active — snake ≤ dynTrigger tiles, move clockwise ──────
-            if not snakeActivePhase then
-                snakeActivePhase = true
+            if not snakeActiveSeen then
+                snakeActiveSeen = true
                 cinderLog("fireSnake", string.format(
-                    "[ACTIVE] Snake %d tiles | head=%d,%d | player=%d,%d | wall=%s(%d) | len=%d trigger=%d maxDist=%d emergency=%d",
-                    nearest,
-                    head and head.x or 0, head and head.y or 0,
-                    playerPos.x, playerPos.y, wallName, wallDist,
-                    snakeLen, dynTrigger, dynMaxDist, dynEmergency))
+                    "[ACTIVE] head=%d,%d dist=%d | player=%d,%d | len=%d trigger=%d",
+                    head and head.x or 0, head and head.y or 0, headDist,
+                    playerPos.x, playerPos.y, snakeLen, trigger))
+                log("Fire snake — active")
             end
 
-            -- Check if current target is still valid
-            if snakeWalkTarget then
-                local distToTarget = getDistanceBetween(playerPos, snakeWalkTarget)
-                if distToTarget == 0 then
-                    cinderLog("fireSnake", string.format(
-                        "[ARRIVED] %d,%d | wall=%s(%d) | snakeDist=%d | CW=(%.2f,%.2f)",
-                        playerPos.x, playerPos.y, wallName, wallDist, nearest, cwX, cwY))
-                    snakeWalkTarget = nil
-                    snakeWalkIssued = false
-                elseif nearest <= dynEmergency and os.clock() - snakeEmergencyAt >= 0.5 then
-                    snakeEmergencyAt = os.clock()
-                    cinderLog("fireSnake", string.format(
-                        "[EMERGENCY REROUTE] snake %d tiles (threshold=%d) | was → %d,%d | player=%d,%d wall=%s(%d) len=%d",
-                        nearest, dynEmergency, snakeWalkTarget.x, snakeWalkTarget.y,
-                        playerPos.x, playerPos.y, wallName, wallDist, snakeLen))
-                    snakeWalkTarget = nil
-                    snakeWalkIssued = false
-                end
-            end
-
-            -- Pick new target if needed
-            if not snakeWalkTarget then
-                local bestTile, bestScore = nil, -math.huge
-                local bestSnakeDist, bestEdgeDist, bestCwAlign, bestPass = 0, 0, 0, 0
-
-                for pass = 1, 2 do
-                    -- Pass 1: tight to wall (edgeDist ≤ 3). Pass 2: allow up to 8.
-                    local edgeLimit = (pass == 1) and 3 or 8
-                    for _, tile in ipairs(g_map.getTiles(playerPos.z)) do
-                        local tp  = tile:getPosition()
-                        local dpf = getDistanceBetween(playerPos, tp)
-                        if dpf >= 2 and dpf <= dynMaxDist then
-                            local isSnake = false
-                            for _, sp in ipairs(snakeTiles) do
-                                if sp.x == tp.x and sp.y == tp.y then isSnake = true; break end
-                            end
-                            if not isSnake and not (tile:getTopCreature() ~= nil) then
-                                local snakeDist   = minDistToSnake(tp, snakeTiles)
-                                local minClear    = nearest <= 2 and 3 or FIRE_SNAKE_MIN_CLEARANCE
-                                if snakeDist >= minClear then
-                                    local eN = tp.y - b.minY
-                                    local eS = b.maxY - tp.y
-                                    local eW = tp.x - b.minX
-                                    local eE = b.maxX - tp.x
-                                    local edgeDist = math.min(eN, eS, eW, eE)
-                                    if edgeDist >= 0 and edgeDist <= edgeLimit then
-                                        local cdx  = tp.x - playerPos.x
-                                        local cdy  = tp.y - playerPos.y
-                                        local cdLen = math.sqrt(cdx * cdx + cdy * cdy)
-                                        local cwAlign = cdLen > 0
-                                            and ((cdx / cdLen) * cwX + (cdy / cdLen) * cwY)
-                                            or 0
-                                        local score = snakeDist * 3
-                                            + math.max(0, 8 - edgeDist) * 2
-                                            + cwAlign * 20
-                                        if score > bestScore and
-                                           findPath(playerPos, tp, 10, { ignoreNonPathable = true })
-                                        then
-                                            bestScore    = score
-                                            bestTile     = tp
-                                            bestSnakeDist = snakeDist
-                                            bestEdgeDist  = edgeDist
-                                            bestCwAlign   = cwAlign
-                                            bestPass      = pass
-                                        end
+            -- V9.1 three-pass search (2026-05-28):
+            --   Pass 1 (wall):     edgeDist ≤ 5, snakeDist ≥ FIRE_SNAKE_MIN_CLEARANCE (5)
+            --   Pass 2 (any):      any tile,     snakeDist ≥ FIRE_SNAKE_MIN_CLEARANCE (5)
+            --   Pass 3 (panic):    any tile,     snakeDist ≥ FIRE_SNAKE_FALLBACK_CLEARANCE (3)
+            -- Score: snakeDist*2 (safety primary) + max(0,15-edgeDist) (wall bonus).
+            -- Pass 3 only fires when passes 1+2 found nothing — addresses the 40% of
+            -- V9 fails that died with [NO TARGET] cascades at speed surge (snake length
+            -- 11+ makes clearance≥5 impossible). Strict superset of V9 — cannot regress
+            -- when snake is short enough that pass 1 or 2 finds a tile.
+            local bestTile, bestScore = nil, -1
+            local bestSnakeDist, bestEdgeDist, bestPass = 0, 0, ""
+            for pass = 1, 3 do
+                local passClearance = (pass == 3) and FIRE_SNAKE_FALLBACK_CLEARANCE
+                                                  or  FIRE_SNAKE_MIN_CLEARANCE
+                for _, tile in ipairs(g_map.getTiles(playerPos.z)) do
+                    local tp  = tile:getPosition()
+                    local dpf = getDistanceBetween(playerPos, tp)
+                    if dpf >= 3 and dpf <= 6 then
+                        local isSnake = false
+                        for _, sp in ipairs(snakeTiles) do
+                            if sp.x == tp.x and sp.y == tp.y then isSnake = true; break end
+                        end
+                        if not isSnake and not (tile:getTopCreature() ~= nil) then
+                            local snakeDist = minDistToSnake(tp, snakeTiles)
+                            if snakeDist >= passClearance
+                               and snakeDist <= FIRE_SNAKE_MAX_CLEARANCE then
+                                local distFromCenter = math.max(
+                                    math.abs(tp.x - a.centerX),
+                                    math.abs(tp.y - a.centerY))
+                                local edgeDist = math.max(0, a.radius - distFromCenter)
+                                if pass >= 2 or edgeDist <= 5 then
+                                    local score = snakeDist * 2 + math.max(0, 15 - edgeDist)
+                                    if score > bestScore
+                                       and findPath(playerPos, tp, 7, {}) then
+                                        bestScore     = score
+                                        bestTile      = tp
+                                        bestSnakeDist = snakeDist
+                                        bestEdgeDist  = edgeDist
+                                        bestPass      = (pass == 1) and "wall"
+                                                     or (pass == 2) and "any"
+                                                     or "panic"
                                     end
                                 end
                             end
                         end
                     end
-                    if bestTile then break end
                 end
-
-                if bestTile then
-                    snakeWalkTarget = bestTile
-                    snakeWalkIssued = false
-                    cinderLog("fireSnake", string.format(
-                        "[TARGET] %d,%d | score=%.1f snakeDist=%d edgeDist=%d cwAlign=%.2f pass=%d | player=%d,%d wall=%s(%d) len=%d trigger=%d maxDist=%d",
-                        bestTile.x, bestTile.y, bestScore,
-                        bestSnakeDist, bestEdgeDist, bestCwAlign, bestPass,
-                        playerPos.x, playerPos.y, wallName, wallDist,
-                        snakeLen, dynTrigger, dynMaxDist))
-                else
-                    cinderLog("fireSnake", string.format(
-                        "[NO TARGET] snakeDist=%d player=%d,%d wall=%s(%d) len=%d trigger=%d maxDist=%d",
-                        nearest, playerPos.x, playerPos.y,
-                        wallName, wallDist, snakeLen, dynTrigger, dynMaxDist))
-                end
+                if bestTile then break end
             end
 
-            -- Issue walk (once per target, retry if stalled >1s)
-            if snakeWalkTarget then
-                if not snakeWalkIssued then
-                    autoWalk(snakeWalkTarget, 10, { ignoreNonPathable = true })
-                    snakeWalkIssued = true
-                    snakeWalkAt     = os.clock()
-                    cinderLog("fireSnake", string.format(
-                        "[WALK] → %d,%d dist=%d snakeDist=%d wall=%s(%d)",
-                        snakeWalkTarget.x, snakeWalkTarget.y,
-                        getDistanceBetween(playerPos, snakeWalkTarget),
-                        nearest, wallName, wallDist))
-                elseif os.clock() - snakeWalkAt >= 1 then
-                    local elapsed = os.clock() - snakeWalkAt
-                    autoWalk(snakeWalkTarget, 10, { ignoreNonPathable = true })
-                    snakeWalkAt = os.clock()
-                    cinderLog("fireSnake", string.format(
-                        "[WALK RETRY] → %d,%d dist=%d elapsed=%.1fs snakeDist=%d wall=%s(%d)",
-                        snakeWalkTarget.x, snakeWalkTarget.y,
-                        getDistanceBetween(playerPos, snakeWalkTarget),
-                        elapsed, nearest, wallName, wallDist))
-                end
+            if bestTile then
+                cinderLog("fireSnake", string.format(
+                    "[TARGET] %d,%d | score=%d snakeDist=%d edgeDist=%d pass=%s | player=%d,%d nearest=%d len=%d",
+                    bestTile.x, bestTile.y, bestScore,
+                    bestSnakeDist, bestEdgeDist, bestPass,
+                    playerPos.x, playerPos.y, nearest, snakeLen))
+                autoWalk(bestTile, 7, {})
+                cinderLog("fireSnake", string.format(
+                    "[WALK] → %d,%d dpf=%d",
+                    bestTile.x, bestTile.y,
+                    getDistanceBetween(playerPos, bestTile)))
+                delay(FIRE_SNAKE_WALK_DELAY)  -- V1 thrash guard
+            else
+                cinderLog("fireSnake", string.format(
+                    "[NO TARGET] snakeDist=%d player=%d,%d head=%d,%d len=%d",
+                    nearest, playerPos.x, playerPos.y,
+                    head and head.x or 0, head and head.y or 0, snakeLen))
             end
 
             end)  -- pcall
@@ -779,7 +857,7 @@ local cinderMacro = macro(200, function()
                         "[WALK] → %d,%d dist=%d | player=%d,%d",
                         blueFlameTarget.x, blueFlameTarget.y, dist,
                         playerPos.x, playerPos.y))
-                elseif os.clock() - blueFlameWalkAt >= 1 then
+                elseif os.clock() - blueFlameWalkAt >= 1 and dist > 2 then
                     local elapsed = os.clock() - blueFlameWalkAt
                     blueFlameRetryCount = blueFlameRetryCount + 1
                     autoWalk(blueFlameTarget, 15, { ignoreNonPathable = true })
@@ -827,6 +905,16 @@ local cinderMacro = macro(200, function()
     end
 end)
 
+-- ── POS trail (complete tile-by-tile capture for fire snake analysis) ────────
+-- Uses position-change callback so every single tile walked is logged, not
+-- just per-200ms-tick samples. Gated on cinderLogActive so it only records
+-- once the fire snake log file is already open (avoids creating a fire snake
+-- log entry for portals where no snake ever appears).
+onPlayerPositionChange(function(newPos, oldPos)
+    if not insidePortal then return end
+    cinderLogActive("fireSnake", string.format("[POS] %d,%d", newPos.x, newPos.y))
+end)
+
 -- ── Portal entry detection ────────────────────────────────────────────────────
 onPlayerPositionChange(function(newPos, oldPos)
     if not cinderMacro.isOn() then return end
@@ -837,6 +925,7 @@ onPlayerPositionChange(function(newPos, oldPos)
         -- walking distance, causing false positives when pathing around obstacles.
         if getDistanceBetween(newPos, oldPos) > 5 then
             insidePortal       = true
+            insidePortalSince  = os.clock()
             portalTriggered    = false
             portalLastSeenPos  = nil
             CinderPortalActive = true
@@ -869,7 +958,7 @@ end)
 -- Other "cinder points" amounts are mid-event participation rewards and must be ignored.
 local pendingSuccessScheduled = false
 
-local function processPortalExit(outcome)
+processPortalExit = function(outcome)
     if not insidePortal then return end
     local result = outcome == "SUCCESS"
         and "SUCCESS — 750 cinder points"
@@ -903,8 +992,15 @@ end)
 -- hasRedGem  (24934)                  → logs to "Soccer Ball"
 -- hasBombs   (46113)                  → logs to "Bombs"
 
-local effectIdsToDodge       = {78, 79, 80, 188}
-local effectIdsSafe          = {575, 277, 404}
+-- 329, 790 added 2026-05-27: discovered in community Event.lua. Likely explain
+-- the [HIT]=0 death pattern — un-detected effects damaging player without
+-- triggering hasDangerousEffect(). 60662 and 46113 stay separate (they're snake
+-- and bombs IDs handled by their own mechanics).
+local effectIdsToDodge       = {78, 79, 80, 188, 329, 790}
+-- 47295 (BLUE_FLAME_ID) added 2026-05-27: blue flame tiles are walkable, so
+-- standing on one clears any blacklist entry from a previous dangerous effect
+-- that has since faded.
+local effectIdsSafe          = {575, 277, 404, 47295}
 local dodgeAvoidItemId       = 1949
 local dodgeMaxDistance       = 7
 local dodgeReentryDelay      = 5
@@ -1007,32 +1103,71 @@ local function findAndWalkToSafeTile(playerPos, logKey)
             " | nearby danger: " .. nearbyDanger .. " tiles | blacklist: " .. blacklistSize .. " tiles")
     end
 
-    for distance = 1, dodgeMaxDistance do
-        local candidates = {}
-        for _, tile in ipairs(g_map.getTiles(playerPos.z)) do
-            local tilePos = tile:getPosition()
-            if tilePos and getDistanceBetween(playerPos, tilePos) == distance then
-                table.insert(candidates, tile)
-            end
-        end
-        for _, tile in ipairs(candidates) do
-            local tilePos = tile:getPosition()
-            if not isTileDangerous(tile)
-               and not isTileRecentlyDangerous(tilePos)
-               and not (tile:getTopCreature() ~= nil)
-               and findPath(playerPos, tilePos, 15, dodgeFlags)
-            then
-                autoWalk(tilePos, 15, dodgeFlags)
-                dodgeTargetPos = tilePos
-                cinderLog(logKey, "Walking to safe tile at dist " .. distance .. " — " .. tilePos.x .. "," .. tilePos.y)
-                CaveBot.delay(500)
-                delay(500)
-                return true
-            end
+    -- Track rejected candidates for [CANDIDATES] diagnostic on failure.
+    -- Each entry: "x,y(d<dist>:<reason>)" — capped at 12 to keep the log line readable.
+    local rejected = {}
+    local function trackReject(d, tp, reason)
+        if #rejected < 12 then
+            table.insert(rejected, string.format("%d,%d(d%d:%s)", tp.x, tp.y, d, reason))
         end
     end
-    cinderLog(logKey, "WARNING: No safe tile found | nearby danger: " .. nearbyDanger ..
-        " | blacklist: " .. blacklistSize .. " | pos: " .. playerPos.x .. "," .. playerPos.y)
+
+    -- Helper: attempt one full scan with an optional blacklist bypass.
+    -- Returns true if a walk was issued.
+    local function scanForSafe(ignoreBlacklist)
+        for distance = 1, dodgeMaxDistance do
+            local candidates = {}
+            for _, tile in ipairs(g_map.getTiles(playerPos.z)) do
+                local tilePos = tile:getPosition()
+                if tilePos and getDistanceBetween(playerPos, tilePos) == distance then
+                    table.insert(candidates, tile)
+                end
+            end
+            for _, tile in ipairs(candidates) do
+                local tilePos = tile:getPosition()
+                if isTileDangerous(tile) then
+                    if not ignoreBlacklist then trackReject(distance, tilePos, "danger") end
+                elseif (not ignoreBlacklist) and isTileRecentlyDangerous(tilePos) then
+                    trackReject(distance, tilePos, "blist")
+                elseif dodgeAttemptedThisEvent[dodgePosKey(tilePos)] then
+                    -- Pattern A: never re-pick a tile already attempted this event,
+                    -- even under PANIC. A tile that just hit us cannot help us now.
+                    trackReject(distance, tilePos, "tried")
+                elseif tile:getTopCreature() ~= nil then
+                    if not ignoreBlacklist then trackReject(distance, tilePos, "creat") end
+                elseif not findPath(playerPos, tilePos, 15, dodgeFlags) then
+                    if not ignoreBlacklist then trackReject(distance, tilePos, "nopth") end
+                else
+                    autoWalk(tilePos, 15, dodgeFlags)
+                    dodgeTargetPos = tilePos
+                    dodgeAttemptedThisEvent[dodgePosKey(tilePos)] = true
+                    cinderLog(logKey, "Walking to safe tile at dist " .. distance .. " — " ..
+                        tilePos.x .. "," .. tilePos.y ..
+                        (ignoreBlacklist and " [PANIC: blacklist ignored]" or ""))
+                    CaveBot.delay(500)
+                    delay(500)
+                    return true
+                end
+            end
+        end
+        return false
+    end
+
+    -- Primary scan: respect blacklist
+    if scanForSafe(false) then return true end
+
+    -- Panic fallback: ignore blacklist (any non-currently-dangerous tile beats standing still)
+    cinderLog(logKey, string.format(
+        "[NO SAFE] nearby_danger=%d blacklist=%d max_dist=%d pos=%d,%d — entering PANIC (ignore blacklist)",
+        nearbyDanger, blacklistSize, dodgeMaxDistance, playerPos.x, playerPos.y))
+    if #rejected > 0 then
+        cinderLog(logKey, "[CANDIDATES] rejected: " .. table.concat(rejected, " | "))
+    end
+    if scanForSafe(true) then return true end
+
+    cinderLog(logKey, string.format(
+        "[PANIC FAILED] no candidate even with blacklist ignored | pos=%d,%d — standing still",
+        playerPos.x, playerPos.y))
     return false
 end
 
@@ -1094,6 +1229,7 @@ local cinderDodge = macro(200, function()
     cleanupBySafeEffect()
 
     -- ── Bombs mechanic (predictive + reactive hybrid) ────────────────────────────
+    local bombsHandled = false  -- set true inside pcall when firestorm must be skipped
     local _bombOk, _bombErr = pcall(function()
     local bombs        = getBombPositions(playerPos.z)
     local reactiveDanger = hasDangerousEffect(playerTile)
@@ -1203,7 +1339,7 @@ local cinderDodge = macro(200, function()
             end
         end
 
-        return  -- never enters firestorm logic
+        bombsHandled = true; return  -- never enters firestorm logic
     end
 
     -- Bombs cleared (scan returned 0) — but if this is a bombs portal, keep gating firestorm.
@@ -1215,7 +1351,7 @@ local cinderDodge = macro(200, function()
             cinderLog("bombs", string.format("[BOMBS CLEAR] No bombs on floor — safe at %d,%d",
                 playerPos.x, playerPos.y))
         end
-        return  -- still a bombs portal — never fall through to firestorm
+        bombsHandled = true; return  -- still a bombs portal — never fall through to firestorm
     end
 
     if dodgeBombsActive then
@@ -1230,6 +1366,7 @@ local cinderDodge = macro(200, function()
         cinderLog("bombs", "[ERROR] " .. tostring(_bombErr))
         log("Bombs ERROR: " .. tostring(_bombErr))
     end
+    if bombsHandled then return end
 
     -- ── Firestorm / Soccer dodge ──────────────────────────────────────────────
     local _dodgeOk, _dodgeErr = pcall(function()
@@ -1237,6 +1374,55 @@ local cinderDodge = macro(200, function()
     local soccerDanger    = hasRedGem(playerTile)
     local currentDanger   = firestormDanger or soccerDanger
     local logKey          = soccerDanger and "soccerBall" or "firestorm"
+
+    -- [HIT] — if we're already in an active dodge event AND still on a danger tile,
+    -- something went wrong (walked onto danger / dest became dangerous mid-walk).
+    -- Suppress on the initial event tick (dodgeFirestormActive only just turned true).
+    if currentDanger and dodgeFirestormActive then
+        cinderLog(logKey, string.format(
+            "[HIT] still on danger mid-dodge | pos=%d,%d firestormDanger=%s soccerDanger=%s targetPos=%s",
+            playerPos.x, playerPos.y,
+            tostring(firestormDanger), tostring(soccerDanger),
+            dodgeTargetPos and (dodgeTargetPos.x .. "," .. dodgeTargetPos.y) or "nil"))
+    end
+
+    -- [STALE DEST] — dodgeTargetPos unchanged for >1.5s suggests the walk command
+    -- didn't reach (autoWalk stalled, pathing failed silently, or character is wedged).
+    if dodgeTargetPos then
+        local key = dodgeTargetPos.x .. "," .. dodgeTargetPos.y
+        if key == dodgeStaleDestKey then
+            if not dodgeStaleLogged and os.clock() - dodgeStaleDestStartAt > 1.5 then
+                dodgeStaleLogged = true
+                cinderLog(logKey, string.format(
+                    "[STALE DEST] target=%d,%d unchanged for %.1fs | player=%d,%d",
+                    dodgeTargetPos.x, dodgeTargetPos.y,
+                    os.clock() - dodgeStaleDestStartAt,
+                    playerPos.x, playerPos.y))
+            end
+        else
+            dodgeStaleDestKey     = key
+            dodgeStaleDestStartAt = os.clock()
+            dodgeStaleLogged      = false
+        end
+    else
+        dodgeStaleDestKey = nil
+        dodgeStaleLogged  = false
+    end
+
+    -- [BLACKLIST] periodic dump — only during active firestorm games (not blue-flame/soccer)
+    if firestormEventCount > 0 and os.clock() - dodgeBlacklistLogAt >= 5 then
+        dodgeBlacklistLogAt = os.clock()
+        local count, oldestAge = 0, 0
+        local now_ = os.clock()
+        for _, ts in pairs(dodgeRecentlyDangerous) do
+            count = count + 1
+            local age = now_ - ts
+            if age > oldestAge then oldestAge = age end
+        end
+        cinderLog("firestorm", string.format(
+            "[BLACKLIST] count=%d oldest_age=%.1fs (decay at %ds)",
+            count, oldestAge, dodgeReentryDelay))
+    end
 
     local needReroute = false
     local rerouteKey  = "firestorm"
@@ -1248,7 +1434,10 @@ local cinderDodge = macro(200, function()
             if destTile and (hasDangerousEffect(destTile) or hasDodgeAvoidItem(destTile) or hasRedGem(destTile)) then
                 rerouteKey = getDangerKey(destTile)
                 dodgeRecentlyDangerous[dodgePosKey(dodgeTargetPos)] = os.clock()
-                cinderLog(rerouteKey, "Destination " .. dodgeTargetPos.x .. "," .. dodgeTargetPos.y .. " became dangerous — re-routing")
+                local distWalked = getDistanceBetween(playerPos, dodgeTargetPos)
+                cinderLog(rerouteKey, string.format(
+                    "Destination %d,%d became dangerous — re-routing | %d tiles still to walk",
+                    dodgeTargetPos.x, dodgeTargetPos.y, distWalked))
                 dodgeTargetPos = nil
                 needReroute    = true
                 if not currentDanger then logKey = rerouteKey end
@@ -1261,9 +1450,11 @@ local cinderDodge = macro(200, function()
             dodgeRecentlyDangerous[dodgePosKey(playerPos)] = os.clock()
             if logKey == "soccerBall" and not dodgeSoccerActive then
                 dodgeSoccerActive = true
+                dodgeAttemptedThisEvent = {}  -- Pattern A: fresh event, clear attempted-tile set
                 cinderLog("soccerBall", "Red gem at " .. playerPos.x .. "," .. playerPos.y .. " — dodging")
             elseif logKey == "firestorm" and not dodgeFirestormActive then
                 dodgeFirestormActive  = true
+                dodgeAttemptedThisEvent = {}  -- Pattern A: fresh event, clear attempted-tile set
                 firestormEventCount   = firestormEventCount + 1
                 firestormWalkCount    = 0
                 local interval = firestormLastClearedAt > 0
@@ -1286,10 +1477,12 @@ local cinderDodge = macro(200, function()
             if dodgeFirestormActive then
                 dodgeFirestormActive = false
                 firestormLastClearedAt = os.clock()
+                dodgeAttemptedThisEvent = {}  -- Pattern A: defensive clear on dodge-event end
                 cinderLog("firestorm", "Firestorm cleared — safe at " .. playerPos.x .. "," .. playerPos.y)
             end
             if dodgeSoccerActive then
                 dodgeSoccerActive = false
+                dodgeAttemptedThisEvent = {}  -- Pattern A: defensive clear on dodge-event end
                 cinderLog("soccerBall", "Red gem cleared — safe at " .. playerPos.x .. "," .. playerPos.y)
             end
             if dodgeBombsActive then

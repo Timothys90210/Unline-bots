@@ -66,109 +66,19 @@
       "exevo frigo hur": 1
     },
     "RP": {
-      "utito tempo san": 10,
-      "exevo vis": 0,
       "exori con ani": 0,
-      "exevo mas san": 9,
+      "exevo vis": 0,
+      "exevo tempo mas san": 0,
+      "utevo grav san": 0,
       "exori gran con": 1,
       "exori san": 0,
-      "exevo tempo mas san": 0,
       "exori con": 0,
-      "utevo grav san": 0,
+      "exevo mas san": 9,
+      "utito tempo san": 10,
       "exori mas con": 0
     }
   },
   "stashActionMaxRetries": 2,
-  "imbuingConfig": {
-    "shield": [
-      0,
-      0,
-      0
-    ],
-    "doll": [
-      8,
-      0,
-      0
-    ],
-    "helmet": [
-      9,
-      41,
-      321
-    ],
-    "armor": [
-      6,
-      20,
-      0
-    ],
-    "weapon": [
-      6,
-      8,
-      2
-    ]
-  },
-  "specialDeposit": {
-    "height": 380,
-    "items": [
-
-    ]
-  },
-  "ingame_hotkeys": "local function applyPanelWidth()\n    local interface = modules.game_interface\n    if not interface then return end\n    local leftPanel = interface:getLeftPanel()\n    if leftPanel then leftPanel:setWidth(230) end\nend\napplyPanelWidth()\n",
-  "teleportWaypoint": "15",
-  "_configs": {
-    "cavebot_configs": {
-      "selected": "Falcons2",
-      "enabled": true
-    },
-    "targetbot_configs": {
-      "enabled": true,
-      "selected": "Requiem_RP"
-    }
-  },
-  "equipCheckShield": 0,
-  "foodItems": [
-    {
-      "id": 3583,
-      "count": 3
-    },
-    {
-      "id": 3723,
-      "count": 88
-    },
-    {
-      "id": 3725,
-      "count": 100
-    },
-    {
-      "id": 3731,
-      "count": 100
-    },
-    {
-      "id": 3607,
-      "count": 1
-    },
-    {
-      "id": 3585,
-      "count": 1
-    },
-    {
-      "id": 3592,
-      "count": 1
-    },
-    {
-      "id": 3600,
-      "count": 1
-    },
-    {
-      "id": 3601,
-      "count": 1
-    },
-    {
-      "id": 3582,
-      "count": 5
-    }
-  ],
-  "equipCheckHelmet": 33164,
-  "targetBotTargets": 6,
   "stashDeposits": {
     "items": [
       {
@@ -180,11 +90,6 @@
         "tolerance": 50,
         "count": 100,
         "id": 238
-      },
-      {
-        "tolerance": 50,
-        "count": 300,
-        "id": 3447
       },
       {
         "tolerance": 50,
@@ -248,10 +153,38 @@
       }
     ]
   },
-  "MS_enabled": false,
+  "specialDeposit": {
+    "height": 380,
+    "items": [
+
+    ]
+  },
+  "followLeader": "Requiem",
+  "teleportWaypoint": "15",
+  "equipCheckHelmet": 33164,
+  "ingame_hotkeys": "local function applyPanelWidth()\n    local interface = modules.game_interface\n    if not interface then return end\n    local leftPanel = interface:getLeftPanel()\n    if leftPanel then leftPanel:setWidth(230) end\nend\napplyPanelWidth()\n",
+  "equipCheckShield": 0,
+  "equipCheckWeapon": 27480,
+  "RP_enabled": true,
+  "targetBotTargets": 3,
+  "useGroundIndex": 1,
   "fName": "Index Zero",
-  "checkVersion": 1779466143,
-  "targetBotDynamicLureDelayValue": 300,
+  "moneyItems": [
+    {
+      "count": 1,
+      "id": 3031
+    },
+    {
+      "count": 1,
+      "id": 3035
+    },
+    {
+      "count": 0,
+      "id": 3043
+    }
+  ],
+  "checkVersion": 1779936609,
+  "autoSpellStopOnTrainer": false,
   "autoSpellCounts": {
     "EK": {
       "exeta amp res": 1,
@@ -319,15 +252,15 @@
       "exevo frigo hur": 1
     },
     "RP": {
-      "utito tempo san": 1,
-      "exevo vis": 1,
       "exori con ani": 1,
-      "exevo mas san": 4,
+      "exevo vis": 1,
+      "exevo tempo mas san": 1,
+      "utevo grav san": 1,
       "exori gran con": 1,
       "exori san": 1,
-      "exevo tempo mas san": 1,
       "exori con": 1,
-      "utevo grav san": 1,
+      "exevo mas san": 4,
+      "utito tempo san": 1,
       "exori mas con": 8
     }
   },
@@ -344,7 +277,44 @@
       "Index Two"
     ]
   },
-  "useGroundIndex": 1,
+  "alarms": {
+    "privateMsg": [
+
+    ],
+    "customMessage": {
+      "value": ""
+    },
+    "flashClient": [
+
+    ],
+    "lowMana": {
+      "value": 20
+    },
+    "creatureDetected": [
+
+    ],
+    "damageTaken": [
+
+    ],
+    "playerAttack": [
+
+    ],
+    "ignoreFriends": [
+
+    ],
+    "defaultMsg": [
+
+    ],
+    "playerDetected": [
+
+    ],
+    "lowHealth": {
+      "value": 20
+    },
+    "creatureName": {
+      "value": ""
+    }
+  },
   "Ninja_enabled": false,
   "autoTradeMessage": "I'm using OTClientV8!",
   "equipCheckDoll": 0,
@@ -352,23 +322,6 @@
     "vocations": [
 
     ],
-    "groups": [
-
-    ],
-    "enabled": true,
-    "conditions": {
-      "party": true,
-      "knights": true,
-      "friends": true,
-      "botserver": false,
-      "paladins": true,
-      "druids": false,
-      "sorcerers": false,
-      "guild": false
-    },
-    "customPlayers": {
-      " Serena": 80
-    },
     "priorities": [
       {
         "custom": true,
@@ -401,6 +354,23 @@
         "mana": true
       }
     ],
+    "enabled": true,
+    "groups": [
+
+    ],
+    "customPlayers": {
+      " Serena": 80
+    },
+    "conditions": {
+      "druids": false,
+      "knights": true,
+      "friends": true,
+      "botserver": false,
+      "paladins": true,
+      "sorcerers": false,
+      "party": true,
+      "guild": false
+    },
     "settings": [
       {
         "type": "HealItem",
@@ -445,58 +415,34 @@
     ]
   },
   "stashWithdrawsDelay": 500,
-  "ED_enabled": false,
-  "equipCheckWeapon": 27480,
-  "petName": "",
-  "petHealerPanel": {
-    "healingRuneId": 3160,
-    "healPercent": 60,
-    "petName": "Serena"
-  },
-  "dropper": {
-    "enabled": false,
-    "trashItems": [
+  "openFullBPs": {
+    "containers": [
       {
-        "id": 25757,
-        "count": 100
-      },
-      {
-        "id": 284,
-        "count": 1
-      },
-      {
-        "id": 285,
-        "count": 1
-      },
-      {
-        "id": 3372,
-        "count": 1
-      },
-      {
-        "id": 3354,
-        "count": 1
-      },
-      {
-        "id": 7773,
-        "count": 1
-      },
-      {
-        "id": 3327,
-        "count": 1
-      },
-      {
-        "id": 7774,
+        "id": 2865,
         "count": 1
       }
     ],
-    "useItems": [
+    "enabled": true
+  },
+  "petName": "",
+  "_configs": {
+    "cavebot_configs": {
+      "selected": "Falcons2",
+      "enabled": true
+    },
+    "targetbot_configs": {
+      "enabled": true,
+      "selected": "Requiem_RP"
+    }
+  },
+  "equipCheckArmor": 22531,
+  "EquipperPanel": {
+    "bosses": [
 
     ],
-    "capItems": [
-      {
-        "count": 1,
-        "id": 3370
-      }
+    "enabled": false,
+    "rules": [
+
     ]
   },
   "extras": {
@@ -565,33 +511,18 @@
     "Esconde Mensagens Laranjas": true,
     "Send message on trade": false
   },
-  "equipCheckArmor": 22531,
-  "TargetBotLure": true,
+  "petHealerPanel": {
+    "healingRuneId": 3160,
+    "healPercent": 60,
+    "petName": "Serena"
+  },
+  "TargetBotLure": false,
   "ArrowSwitch": {
-    "enabled": true
+    "enabled": false
   },
-  "EquipperPanel": {
-    "bosses": [
-
-    ],
-    "enabled": false,
-    "rules": [
-
-    ]
-  },
+  "stashDepositsDelay": 500,
   "caveBot": [
 
-  ],
-  "stashDepositsDelay": 500,
-  "cavebotSell": [
-    {
-      "id": 23544,
-      "count": 1
-    },
-    {
-      "id": 3081,
-      "count": 1
-    }
   ],
   "_icons": {
     "Pilar": {
@@ -599,9 +530,9 @@
       "x": 0.01,
       "enabled": false
     },
-    "petHealer": {
-      "y": 0.05,
-      "x": 0.01,
+    "CinderEvent": {
+      "y": 0.55807365439093,
+      "x": 0.0087440381558029,
       "enabled": true
     },
     "resetCursorIcon": {
@@ -624,29 +555,29 @@
       "x": 0.01,
       "enabled": false
     },
-    "Dodge": {
-      "y": 0.45042492917847,
-      "x": 0.007154213036566,
-      "enabled": true
-    },
     "ConjureDiamond": {
       "y": 0.11898016997167,
       "x": 0.015898251192369,
       "enabled": true
     },
+    "petHealer": {
+      "y": 0.05,
+      "x": 0.01,
+      "enabled": true
+    },
     "DiamondTrainers": {
       "y": 0.48866855524079,
       "x": 0.0063593004769475,
-      "enabled": true
+      "enabled": false
     },
     "DustTracker": {
       "y": 0.24645892351275,
       "x": 0.060413354531002,
       "enabled": false
     },
-    "CinderEvent": {
-      "y": 0.55807365439093,
-      "x": 0.0087440381558029,
+    "Dodge": {
+      "y": 0.45042492917847,
+      "x": 0.007154213036566,
       "enabled": true
     },
     "SpellCaster": {
@@ -655,7 +586,63 @@
       "enabled": false
     }
   },
+  "cavebotSell": [
+    {
+      "id": 23544,
+      "count": 1
+    },
+    {
+      "id": 3081,
+      "count": 1
+    }
+  ],
   "stashActionRetryWait": 200,
+  "dropper": {
+    "enabled": false,
+    "trashItems": [
+      {
+        "id": 25757,
+        "count": 100
+      },
+      {
+        "id": 284,
+        "count": 1
+      },
+      {
+        "id": 285,
+        "count": 1
+      },
+      {
+        "id": 3372,
+        "count": 1
+      },
+      {
+        "id": 3354,
+        "count": 1
+      },
+      {
+        "id": 7773,
+        "count": 1
+      },
+      {
+        "id": 3327,
+        "count": 1
+      },
+      {
+        "id": 7774,
+        "count": 1
+      }
+    ],
+    "useItems": [
+
+    ],
+    "capItems": [
+      {
+        "count": 1,
+        "id": 3370
+      }
+    ]
+  },
   "targetBotLureMax": 7,
   "stashWithdraws": {
     "items": [
@@ -681,61 +668,48 @@
       }
     ]
   },
-  "autoEquip": [
-    {
-      "item1": 3098,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": false,
-      "slot": 9
-    },
-    {
-      "item1": 3447,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": false,
-      "slot": 5
-    },
-    {
-      "item1": 25757,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": true,
-      "slot": 5
-    }
-  ],
+  "ED_enabled": false,
   "stashWithdrawsTolerance": 1,
   "stashDepositsTolerance": 50,
-  "openFullBPs": {
-    "containers": [
-      {
-        "id": 2865,
-        "count": 1
-      }
-    ],
-    "enabled": true
+  "monsterID": {
+    "savedTargetBotOn": false,
+    "engaged": false,
+    "savedCaveBotOn": false
   },
-  "RP_enabled": true,
+  "imbuingConfig": {
+    "shield": [
+      0,
+      0,
+      0
+    ],
+    "doll": [
+      8,
+      0,
+      0
+    ],
+    "helmet": [
+      9,
+      41,
+      321
+    ],
+    "armor": [
+      6,
+      20,
+      0
+    ],
+    "weapon": [
+      6,
+      8,
+      2
+    ]
+  },
   "autofollow": {
     "player": "name"
   },
   "stashNumFields": 30,
   "EK_enabled": false,
-  "autoSpellStopOnTrainer": false,
-  "moneyItems": [
-    {
-      "count": 1,
-      "id": 3031
-    },
-    {
-      "count": 1,
-      "id": 3035
-    },
-    {
-      "count": 0,
-      "id": 3043
-    }
-  ],
+  "MS_enabled": false,
+  "targetBotDynamicLureDelayValue": 300,
   "playerList": {
     "enemyList": [
 
@@ -751,44 +725,48 @@
 
     ]
   },
-  "alarms": {
-    "privateMsg": [
-
-    ],
-    "customMessage": {
-      "value": ""
+  "foodItems": [
+    {
+      "id": 3583,
+      "count": 3
     },
-    "flashClient": [
-
-    ],
-    "lowMana": {
-      "value": 20
+    {
+      "id": 3723,
+      "count": 88
     },
-    "creatureDetected": [
-
-    ],
-    "damageTaken": [
-
-    ],
-    "playerAttack": [
-
-    ],
-    "ignoreFriends": [
-
-    ],
-    "defaultMsg": [
-
-    ],
-    "playerDetected": [
-
-    ],
-    "lowHealth": {
-      "value": 20
+    {
+      "id": 3725,
+      "count": 100
     },
-    "creatureName": {
-      "value": ""
+    {
+      "id": 3731,
+      "count": 100
+    },
+    {
+      "id": 3607,
+      "count": 1
+    },
+    {
+      "id": 3585,
+      "count": 1
+    },
+    {
+      "id": 3592,
+      "count": 1
+    },
+    {
+      "id": 3600,
+      "count": 1
+    },
+    {
+      "id": 3601,
+      "count": 1
+    },
+    {
+      "id": 3582,
+      "count": 5
     }
-  },
+  ],
   "renameContainers": {
     "sort": true,
     "forceOpen": true,
@@ -1309,5 +1287,27 @@
     "lootBag": false
   },
   "teleportCity": "3",
-  "followLeader": "Requiem"
+  "autoEquip": [
+    {
+      "item1": 3098,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 9
+    },
+    {
+      "item1": 3447,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 5
+    },
+    {
+      "item1": 25757,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": true,
+      "slot": 5
+    }
+  ]
 }

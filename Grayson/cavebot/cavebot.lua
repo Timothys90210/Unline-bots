@@ -283,6 +283,23 @@ local function loadCavebot(name, enabled, data)
 end
 
 config = Config.setup("cavebot_configs", configWidget, "cfg", function(name, enabled, data)
+  -- This callback fires when external code calls CaveBot.setOn()/setOff()
+  -- (CinderEvent portal exit, monster_identifier disengage, etc.). The
+  -- framework's setOn rewrites storage._configs.cavebot_configs.selected to
+  -- match its own hidden combobox (a root-level file), so we can't rely on
+  -- that key to remember the user's subfolder choice. We use our own
+  -- storage.cavebotSubfolderPath key which the framework never touches.
+  local subStored = storage.cavebotSubfolderPath
+  if subStored and subStored ~= "" then
+    local subPath = configsRoot .. "/" .. subStored .. ".cfg"
+    if g_resources.fileExists(subPath) then
+      subfolderActive = subStored
+      subfolderIsOn   = enabled
+      loadCavebot(subStored, enabled,
+                  Config.parse(g_resources.readFileContents(subPath)))
+      return
+    end
+  end
   subfolderActive = nil
   loadCavebot(name, enabled, data)
 end)
@@ -304,6 +321,7 @@ caveOnOffPanel.caveOnOff.onClick = function(widget)
             if g_resources.fileExists(filePath) then
                 local data = Config.parse(g_resources.readFileContents(filePath))
                 storage._configs.cavebot_configs.selected = subfolderActive
+                storage.cavebotSubfolderPath = subfolderActive
                 subfolderIsOn = true
                 loadCavebot(subfolderActive, true, data)
             end
@@ -339,8 +357,12 @@ end
 
 -- Sync visual state of our combos with the profile Config.setup already loaded.
 -- Callbacks are defined AFTER this block so startup population doesn't trigger them.
-local savedProfile = (storage._configs and storage._configs.cavebot_configs and
-                      storage._configs.cavebot_configs.selected) or ""
+-- Prefer our cavebotSubfolderPath key (framework-untouchable) over the
+-- framework's storage._configs key (which gets overwritten by external setOn).
+local savedProfile = storage.cavebotSubfolderPath
+                  or (storage._configs and storage._configs.cavebot_configs and
+                      storage._configs.cavebot_configs.selected)
+                  or ""
 
 if savedProfile:find("/", 1, true) then
     local savedFolder = savedProfile:match("^([^/]+)/")
@@ -374,6 +396,7 @@ filePanel.fileSelect.onOptionChange = function()
         local fullPath = currentFullProfile()
         if folder == "/" then
             subfolderActive = nil
+            storage.cavebotSubfolderPath = nil  -- clear our key when returning to root
             local wasOn = config.isOn()
             CaveBot.setCurrentProfile(fullPath)
             if not wasOn then config.setOff() end
@@ -386,6 +409,7 @@ filePanel.fileSelect.onOptionChange = function()
             local wasOn = subfolderActive and subfolderIsOn or config.isOn()
             local data = Config.parse(g_resources.readFileContents(filePath))
             storage._configs.cavebot_configs.selected = fullPath
+            storage.cavebotSubfolderPath = fullPath  -- our key, framework-untouchable
             subfolderActive = fullPath
             subfolderIsOn = wasOn
             loadCavebot(fullPath, wasOn, data)

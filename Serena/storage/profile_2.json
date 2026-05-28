@@ -66,15 +66,15 @@
       "exevo frigo hur": 1
     },
     "RP": {
-      "exori con ani": 1,
+      "utito tempo san": 1,
       "exevo vis": 1,
-      "exevo tempo mas san": 1,
-      "utevo grav san": 1,
+      "exori con ani": 1,
+      "exevo mas san": 1,
       "exori gran con": 1,
       "exori san": 1,
+      "exevo tempo mas san": 1,
       "exori con": 1,
-      "exevo mas san": 1,
-      "utito tempo san": 1,
+      "utevo grav san": 1,
       "exori mas con": 1
     }
   },
@@ -113,10 +113,10 @@
       }
     ]
   },
-  "RP_enabled": false,
+  "ingame_hotkeys": "local function applyPanelWidth()\n    local interface = modules.game_interface\n    if not interface then return end\n    local leftPanel = interface:getLeftPanel()\n    if leftPanel then leftPanel:setWidth(230) end\nend\napplyPanelWidth()\n",
   "teleportWaypoint": "9",
-  "equipCheckShield": 0,
-  "equipCheckEnabled": true,
+  "walkDelayAmount": 2,
+  "guardSwitchMainWeapon": 27736,
   "targetBotTargets": 1,
   "imbuementChecker": {
     "lastCheck": 1762865163,
@@ -243,10 +243,10 @@
       "x": 0.013333333333333,
       "enabled": true
     },
-    "Dodge": {
-      "y": 0.1685552407932,
-      "x": 0.054848966613672,
-      "enabled": false
+    "CinderEvent": {
+      "y": 0.53116147308782,
+      "x": 0.0039745627980922,
+      "enabled": true
     },
     "petHealer": {
       "y": 0.05,
@@ -263,9 +263,9 @@
       "x": 0.0087440381558029,
       "enabled": true
     },
-    "Pilar": {
-      "y": 0.05,
-      "x": 0.01,
+    "Dodge": {
+      "y": 0.1685552407932,
+      "x": 0.054848966613672,
       "enabled": false
     },
     "buffIcon": {
@@ -298,10 +298,10 @@
       "x": 0.0081481481481481,
       "enabled": false
     },
-    "CinderEvent": {
-      "y": 0.53116147308782,
-      "x": 0.0039745627980922,
-      "enabled": true
+    "Pilar": {
+      "y": 0.05,
+      "x": 0.01,
+      "enabled": false
     },
     "CheckPillars": {
       "y": 0.053191489361702,
@@ -315,6 +315,11 @@
     }
   },
   "petName": "tind",
+  "monsterID": {
+    "savedCaveBotOn": false,
+    "savedTargetBotOn": false,
+    "engaged": false
+  },
   "autofollow": {
     "player": "Requiem"
   },
@@ -865,8 +870,8 @@
 
     ]
   },
-  "followLeader": "",
-  "checkVersion": 1779458767,
+  "ED_enabled": false,
+  "checkVersion": 1779898216,
   "autoSpellCounts": {
     "EK": {
       "exeta amp res": 5,
@@ -934,15 +939,15 @@
       "exevo frigo hur": 1
     },
     "RP": {
-      "exori con ani": 1,
+      "utito tempo san": 1,
       "exevo vis": 1,
-      "exevo tempo mas san": 1,
-      "utevo grav san": 1,
+      "exori con ani": 1,
+      "exevo mas san": 1,
       "exori gran con": 1,
       "exori san": 1,
+      "exevo tempo mas san": 1,
       "exori con": 1,
-      "exevo mas san": 1,
-      "utito tempo san": 1,
+      "utevo grav san": 1,
       "exori mas con": 1
     }
   },
@@ -950,22 +955,213 @@
 
   ],
   "stashDepositsDelay": 500,
-  "ED_enabled": false,
-  "walkDelayAmount": 2,
-  "autoParty": {
-    "onMove": true,
+  "RP_enabled": false,
+  "equipCheckShield": 0,
+  "_configs": {
+    "cavebot_configs": {
+      "selected": "NVIP-fbooks",
+      "enabled": true
+    },
+    "targetbot_configs": {
+      "enabled": true,
+      "selected": "Serena_EK"
+    }
+  },
+  "imbuePosY": "522",
+  "fName": "Requiem",
+  "alarms": {
+    "privateMsg": [
+
+    ],
+    "customMessage": {
+      "value": ""
+    },
+    "flashClient": [
+
+    ],
+    "lowMana": {
+      "value": 20
+    },
+    "creatureDetected": [
+
+    ],
+    "damageTaken": [
+
+    ],
+    "playerAttack": [
+
+    ],
+    "ignoreFriends": [
+
+    ],
+    "defaultMsg": [
+
+    ],
+    "playerDetected": [
+
+    ],
+    "lowHealth": {
+      "value": 20
+    },
+    "creatureName": {
+      "value": ""
+    }
+  },
+  "equipCheckWeapon": 27736,
+  "guardSwitchTrainWeapon": 52474,
+  "petHealerPanel": {
+    "healingRuneId": 3160,
+    "healPercent": 60,
+    "petName": "Tind"
+  },
+  "TargetBotLure": true,
+  "autoSpellStopOnTrainer": false,
+  "imbueMachinePos": "500,522,7",
+  "caveBot": {
+    "backOffline": false,
+    "backTrainers": false,
+    "forceRefill": false,
+    "backStop": false
+  },
+  "autoEquip": [
+    {
+      "item1": 3048,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 9
+    },
+    {
+      "item1": 25757,
+      "title": "Auto Equip",
+      "item2": 25758,
+      "on": false,
+      "slot": 5
+    },
+    {
+      "item1": 3081,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 2
+    }
+  ],
+  "equipCheckEnabled": true,
+  "followDistance": "6",
+  "targetBotLureMax": 8,
+  "EquipperPanel": {
+    "bosses": [
+
+    ],
     "enabled": false,
-    "leaderName": "Serena",
-    "autoPartyList": [
-      "Grayson",
-      "Low",
-      "Testing"
+    "rules": [
+
     ]
   },
+  "stashWithdraws": {
+    "items": [
+      {
+        "tolerance": 50,
+        "count": 50,
+        "id": 52813
+      },
+      {
+        "tolerance": 50,
+        "count": 100,
+        "id": 238
+      },
+      {
+        "tolerance": 50,
+        "count": 30,
+        "id": 3731
+      },
+      {
+        "tolerance": 50,
+        "count": 200,
+        "id": 23375
+      }
+    ]
+  },
+  "MS_enabled": false,
+  "stashWithdrawsTolerance": 1,
+  "stashDepositsTolerance": 50,
+  "openFullBPs": {
+    "containers": [
+      {
+        "count": 1,
+        "id": 2871
+      },
+      {
+        "count": 1,
+        "id": 2865
+      },
+      {
+        "count": 1,
+        "id": 9602
+      }
+    ],
+    "enabled": true
+  },
+  "stashWithdrawsDelay": 500,
+  "extras": {
+    "rope": 9596,
+    "bless": false,
+    "gotoMaxDistance": 30,
+    "holdMwall": true,
+    "checkPlayer": false,
+    "looting": 35,
+    "suppliesControl": false,
+    "killUnder": 1,
+    "joinBot": true,
+    "lootLast": false,
+    "holdMwHot": "F5",
+    "shovel": 9596,
+    "pet": true,
+    "autoOpenDoors": true,
+    "stake": false,
+    "nextBackpack": true,
+    "title": true,
+    "reUse": false,
+    "height": 360,
+    "pathfinding": true,
+    "machete": 9596,
+    "separatePm": true,
+    "useAll": "space",
+    "lootDelay": 200,
+    "holdWgHot": "F6",
+    "huntRoutes": 1,
+    "antiKick": true,
+    "talkDelay": 1,
+    "reachable": false,
+    "oberon": true,
+    "highlightTarget": true,
+    "scythe": 9596,
+    "timers": true
+  },
+  "stashNumFields": 30,
   "newHealer": {
     "vocations": [
 
     ],
+    "groups": [
+
+    ],
+    "enabled": false,
+    "conditions": {
+      "party": true,
+      "knights": false,
+      "friends": false,
+      "botserver": false,
+      "paladins": true,
+      "druids": false,
+      "sorcerers": false,
+      "guild": false
+    },
+    "customPlayers": {
+      " Index One": 80,
+      " Index Two": 80,
+      " Index Zero": 80
+    },
     "priorities": [
       {
         "custom": true,
@@ -998,25 +1194,6 @@
         "mana": true
       }
     ],
-    "enabled": false,
-    "groups": [
-
-    ],
-    "customPlayers": {
-      " Index One": 80,
-      " Index Two": 80,
-      " Index Zero": 80
-    },
-    "conditions": {
-      "druids": false,
-      "knights": false,
-      "friends": false,
-      "botserver": false,
-      "paladins": true,
-      "sorcerers": false,
-      "party": true,
-      "guild": false
-    },
     "settings": [
       {
         "type": "HealItem",
@@ -1060,6 +1237,8 @@
       }
     ]
   },
+  "useGroundIndex": 1,
+  "targetBotDynamicLureDelayValue": 400,
   "playerList": {
     "enemyList": [
 
@@ -1077,189 +1256,6 @@
 
     ]
   },
-  "ingame_hotkeys": "local function applyPanelWidth()\n    local interface = modules.game_interface\n    if not interface then return end\n    local leftPanel = interface:getLeftPanel()\n    if leftPanel then leftPanel:setWidth(230) end\nend\napplyPanelWidth()\n",
-  "equipCheckWeapon": 27736,
-  "fName": "Requiem",
-  "petHealerPanel": {
-    "healingRuneId": 3160,
-    "healPercent": 60,
-    "petName": "Tind"
-  },
-  "TargetBotLure": true,
-  "useGroundIndex": 1,
-  "imbueMachinePos": "500,522,7",
-  "caveBot": {
-    "backOffline": false,
-    "backTrainers": false,
-    "forceRefill": false,
-    "backStop": false
-  },
-  "_configs": {
-    "cavebot_configs": {
-      "selected": "NVIP-fbooks",
-      "enabled": false
-    },
-    "targetbot_configs": {
-      "enabled": true,
-      "selected": "Serena_EK"
-    }
-  },
-  "imbuePosY": "522",
-  "followDistance": "6",
-  "stashWithdrawsDelay": 500,
-  "EquipperPanel": {
-    "bosses": [
-
-    ],
-    "enabled": false,
-    "rules": [
-
-    ]
-  },
-  "stashWithdraws": {
-    "items": [
-      {
-        "tolerance": 50,
-        "count": 50,
-        "id": 52813
-      },
-      {
-        "tolerance": 50,
-        "count": 100,
-        "id": 238
-      },
-      {
-        "tolerance": 50,
-        "count": 30,
-        "id": 3731
-      },
-      {
-        "tolerance": 50,
-        "count": 200,
-        "id": 23375
-      }
-    ]
-  },
-  "targetBotLureMax": 8,
-  "stashWithdrawsTolerance": 1,
-  "stashDepositsTolerance": 50,
-  "openFullBPs": {
-    "containers": [
-      {
-        "count": 1,
-        "id": 2871
-      },
-      {
-        "count": 1,
-        "id": 2865
-      },
-      {
-        "count": 1,
-        "id": 9602
-      }
-    ],
-    "enabled": true
-  },
-  "autoEquip": [
-    {
-      "item1": 3048,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": false,
-      "slot": 9
-    },
-    {
-      "item1": 25757,
-      "title": "Auto Equip",
-      "item2": 25758,
-      "on": false,
-      "slot": 5
-    },
-    {
-      "item1": 3081,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": false,
-      "slot": 2
-    }
-  ],
-  "extras": {
-    "rope": 9596,
-    "bless": false,
-    "gotoMaxDistance": 30,
-    "holdMwall": true,
-    "checkPlayer": false,
-    "looting": 35,
-    "suppliesControl": false,
-    "killUnder": 1,
-    "joinBot": true,
-    "lootLast": false,
-    "holdMwHot": "F5",
-    "shovel": 9596,
-    "pet": true,
-    "autoOpenDoors": true,
-    "stake": false,
-    "nextBackpack": true,
-    "title": true,
-    "reUse": false,
-    "height": 360,
-    "pathfinding": true,
-    "machete": 9596,
-    "separatePm": true,
-    "useAll": "space",
-    "lootDelay": 200,
-    "holdWgHot": "F6",
-    "huntRoutes": 1,
-    "antiKick": true,
-    "talkDelay": 1,
-    "reachable": false,
-    "oberon": true,
-    "highlightTarget": true,
-    "scythe": 9596,
-    "timers": true
-  },
-  "stashNumFields": 30,
-  "targetBotDynamicLureDelayValue": 400,
-  "MS_enabled": false,
-  "alarms": {
-    "privateMsg": [
-
-    ],
-    "customMessage": {
-      "value": ""
-    },
-    "flashClient": [
-
-    ],
-    "lowMana": {
-      "value": 20
-    },
-    "creatureDetected": [
-
-    ],
-    "damageTaken": [
-
-    ],
-    "playerAttack": [
-
-    ],
-    "ignoreFriends": [
-
-    ],
-    "defaultMsg": [
-
-    ],
-    "playerDetected": [
-
-    ],
-    "lowHealth": {
-      "value": 20
-    },
-    "creatureName": {
-      "value": ""
-    }
-  },
-  "guardSwitchTrainWeapon": 52474,
   "foodItems": [
     {
       "count": 3,
@@ -1298,7 +1294,17 @@
       "count": 1
     }
   ],
-  "guardSwitchMainWeapon": 27736,
+  "autoParty": {
+    "onMove": true,
+    "enabled": false,
+    "leaderName": "Serena",
+    "autoPartyList": [
+      "Grayson",
+      "Low",
+      "Testing",
+      "Requiem"
+    ]
+  },
   "equipCheckHelmet": 27373,
-  "autoSpellStopOnTrainer": false
+  "followLeader": ""
 }

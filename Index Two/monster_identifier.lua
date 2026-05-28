@@ -1,7 +1,6 @@
 --------------------------------- Monster Identifier --------------------------------------------
--- CaveBot state logging — shared with CinderEvent.lua (defined once via guard)
 -- CaveBot diagnostic logging — disabled (no-ops while commented out)
--- To re-enable: uncomment this entire block and remove the stubs below
+-- To re-enable: uncomment this entire block and remove the stub functions below
 --[[
 if not CaveBotStateLogDefined then
     CaveBotStateLogDefined = true
@@ -54,13 +53,10 @@ if not CaveBotStateLogDefined then
 end
 --]]
 
--- Stubs so call sites don't error while logging is disabled
-if not CaveBotStateLogDefined then
-    CaveBotStateLogDefined = true
-    function logCaveBotOff(reason) end
-    function logCaveBotOn(reason) end
-    function logCaveBotSkipped(reason) end
-end
+-- Stub functions so call sites below don't error while logging is disabled
+local function logCaveBotOff(reason) end
+local function logCaveBotOn(reason) end
+local function logCaveBotSkipped(reason) end
 
 -- Priority: Champion (emblem 3) > Elite (emblem 2) > Veteran (emblem 1) > Normal (0)
 -- When emblem >= 1 creature found:
@@ -78,6 +74,38 @@ local markedCreature = nil
 local savedCaveBotOn = false
 local savedTargetBotOn = false
 local cavebotRestoreAt = nil
+
+-- Persistence so engagement state survives script reload. Without this, a reload
+-- mid-engagement leaves CaveBot stuck off forever (engage() set it off; disengage()
+-- never fires because engagedId reset to nil on reload).
+storage.monsterID = storage.monsterID or {}
+
+local function persistEngageState()
+    storage.monsterID.engaged          = engagedId ~= nil
+    storage.monsterID.savedCaveBotOn   = savedCaveBotOn
+    storage.monsterID.savedTargetBotOn = savedTargetBotOn
+end
+
+local function clearPersistedEngageState()
+    storage.monsterID.engaged          = false
+    storage.monsterID.savedCaveBotOn   = false
+    storage.monsterID.savedTargetBotOn = false
+end
+
+-- One-shot recovery: if storage shows we were mid-engagement when the script
+-- last unloaded, restore CaveBot/TargetBot to their saved pre-engagement state.
+-- CinderEvent owns the CaveBot lifecycle while inside a portal — defer there.
+if storage.monsterID.engaged then
+    if not CinderPortalActive then
+        if storage.monsterID.savedCaveBotOn and not CaveBot.isOn() then
+            CaveBot.setOn()
+        end
+        if storage.monsterID.savedTargetBotOn and not TargetBot.isOn() then
+            TargetBot.setOn()
+        end
+        clearPersistedEngageState()
+    end
+end
 
 -- Orb collection state
 local orbFxIds       = {231, 544, 551, 552, 553}
@@ -141,7 +169,9 @@ end
 local function findBestSpecialMonster()
     local pos = player:getPosition()
     local specs = g_map.getSpectatorsInRange(pos, false, 10, 10)
-    local best, bestPriority = nil, 0
+    -- Threshold = 1 → emblem 2 (Elite) and 3 (Champion) qualify. Veterans (1)
+    -- are ignored. Change to 2 for Champion only, 0 to include Veterans.
+    local best, bestPriority = nil, 1
     for _, creature in ipairs(specs) do
         pcall(function()
             if creature:isMonster() and not creature:isDead() then
@@ -173,16 +203,26 @@ local function log(msg)
 end
 
 local function engage(creature)
-    savedCaveBotOn = CaveBot.isOn()
+    -- CaveBot may already be off because of an active orb pause. Treat that as
+    -- "was on before the orb paused it" so disengage() can restore it instead
+    -- of leaving the orb timer to race the engagement (which would turn CaveBot
+    -- back on mid-fight). After this, consume the orb-pause state so it stops
+    -- competing with the engagement.
+    savedCaveBotOn   = CaveBot.isOn() or cavebotOffByOrb
     savedTargetBotOn = TargetBot.isOn()
-    engagedId = creature:getId()
+    engagedId        = creature:getId()
 
-    if savedCaveBotOn then CaveBot.setOff() end
+    cavebotOffByOrb  = false
+    orbPauseEndTime  = 0
+
+    if CaveBot.isOn() then CaveBot.setOff() end
     if savedTargetBotOn then TargetBot.setOff() end
 
     g_game.setChaseMode(1)
     g_game.attack(creature)
     markCreature(creature)
+
+    persistEngageState()
 
     local ok, name = pcall(function() return creature:getName() end)
     local emblem = getMonsterPriority(creature)
@@ -205,6 +245,7 @@ local function disengage()
     else
         log("Creature gone. Resuming TargetBot.")
     end
+    clearPersistedEngageState()
 end
 
 -- Single macro — icon and button both control this
