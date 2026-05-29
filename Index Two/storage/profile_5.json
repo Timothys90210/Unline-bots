@@ -66,15 +66,15 @@
       "exevo frigo hur": 1
     },
     "RP": {
-      "exori con ani": 0,
+      "utito tempo san": 10,
       "exevo vis": 0,
-      "exevo tempo mas san": 0,
-      "utevo grav san": 0,
+      "exori con ani": 0,
+      "exevo mas san": 9,
       "exori gran con": 1,
       "exori san": 0,
+      "exevo tempo mas san": 0,
       "exori con": 0,
-      "exevo mas san": 9,
-      "utito tempo san": 10,
+      "utevo grav san": 0,
       "exori mas con": 0
     }
   },
@@ -87,6 +87,41 @@
     "healPercent": 60,
     "petName": "Serena"
   },
+  "imbuingConfig": {
+    "weapon": [
+      6,
+      9,
+      2
+    ],
+    "doll": [
+      8,
+      0,
+      0
+    ],
+    "helmet": [
+      9,
+      41,
+      0
+    ],
+    "armor": [
+      5,
+      0,
+      0
+    ],
+    "shield": [
+      0,
+      0,
+      0
+    ]
+  },
+  "specialDeposit": {
+    "height": 380,
+    "items": [
+
+    ]
+  },
+  "ingame_hotkeys": "local function applyPanelWidth()\n    local interface = modules.game_interface\n    if not interface then return end\n    local leftPanel = interface:getLeftPanel()\n    if leftPanel then leftPanel:setWidth(230) end\nend\napplyPanelWidth()\n\n",
+  "teleportWaypoint": "14",
   "foodItems": [
     {
       "id": 3583,
@@ -129,21 +164,12 @@
       "count": 5
     }
   ],
-  "specialDeposit": {
-    "height": 380,
-    "items": [
-
-    ]
-  },
-  "ingame_hotkeys": "local function applyPanelWidth()\n    local interface = modules.game_interface\n    if not interface then return end\n    local leftPanel = interface:getLeftPanel()\n    if leftPanel then leftPanel:setWidth(230) end\nend\napplyPanelWidth()\n\n",
-  "teleportWaypoint": "14",
-  "followLeader": "Requiem",
   "teleportCity": "3",
   "equipCheckShield": 0,
-  "ED_enabled": false,
+  "RP_enabled": true,
   "lastOperationType": "deposit",
-  "targetBotDynamicLureDelayValue": 380,
-  "targetBotTargets": 3,
+  "followLeader": "Requiem",
+  "targetBotTargets": 4,
   "fName": "Index Zero",
   "alarms": {
     "privateMsg": [
@@ -183,9 +209,22 @@
       "value": ""
     }
   },
-  "useGroundIndex": 1,
-  "checkVersion": 1779954134,
   "autoSpellStopOnTrainer": false,
+  "checkVersion": 1779954134,
+  "moneyItems": [
+    {
+      "count": 1,
+      "id": 3031
+    },
+    {
+      "count": 1,
+      "id": 3035
+    },
+    {
+      "count": 0,
+      "id": 3043
+    }
+  ],
   "autoSpellCounts": {
     "EK": {
       "exeta amp res": 1,
@@ -253,15 +292,15 @@
       "exevo frigo hur": 1
     },
     "RP": {
-      "exori con ani": 1,
+      "utito tempo san": 1,
       "exevo vis": 1,
-      "exevo tempo mas san": 1,
-      "utevo grav san": 1,
+      "exori con ani": 1,
+      "exevo mas san": 3,
       "exori gran con": 1,
       "exori san": 1,
+      "exevo tempo mas san": 1,
       "exori con": 1,
-      "exevo mas san": 3,
-      "utito tempo san": 1,
+      "utevo grav san": 1,
       "exori mas con": 1
     }
   },
@@ -278,35 +317,9 @@
     ],
     "leaderName": "Requiem"
   },
-  "imbuingConfig": {
-    "weapon": [
-      6,
-      9,
-      2
-    ],
-    "doll": [
-      8,
-      0,
-      0
-    ],
-    "helmet": [
-      9,
-      41,
-      0
-    ],
-    "armor": [
-      5,
-      0,
-      0
-    ],
-    "shield": [
-      0,
-      0,
-      0
-    ]
-  },
+  "MS_enabled": false,
   "Ninja_enabled": false,
-  "RP_enabled": true,
+  "ED_enabled": false,
   "openFullBPs": {
     "containers": [
       {
@@ -324,6 +337,23 @@
     "vocations": [
 
     ],
+    "groups": [
+
+    ],
+    "enabled": false,
+    "conditions": {
+      "party": true,
+      "knights": true,
+      "friends": true,
+      "botserver": false,
+      "paladins": true,
+      "druids": false,
+      "sorcerers": false,
+      "guild": false
+    },
+    "customPlayers": {
+      " Serena": 80
+    },
     "priorities": [
       {
         "custom": true,
@@ -356,23 +386,6 @@
         "mana": true
       }
     ],
-    "enabled": false,
-    "groups": [
-
-    ],
-    "customPlayers": {
-      " Serena": 80
-    },
-    "conditions": {
-      "druids": false,
-      "knights": true,
-      "friends": true,
-      "botserver": false,
-      "paladins": true,
-      "sorcerers": false,
-      "party": true,
-      "guild": false
-    },
     "settings": [
       {
         "type": "HealItem",
@@ -424,9 +437,9 @@
       "x": 0.01,
       "enabled": false
     },
-    "CinderEvent": {
-      "y": 0.55240793201133,
-      "x": 0.0087440381558029,
+    "petHealer": {
+      "y": 0.05,
+      "x": 0.01,
       "enabled": true
     },
     "ConjureDiamond": {
@@ -449,15 +462,15 @@
       "x": 0.01,
       "enabled": false
     },
+    "Dodge": {
+      "y": 0.45,
+      "x": 0.01,
+      "enabled": true
+    },
     "DustTracker": {
       "y": 0.27645502645503,
       "x": 0.007154213036566,
       "enabled": false
-    },
-    "petHealer": {
-      "y": 0.05,
-      "x": 0.01,
-      "enabled": true
     },
     "DiamondTrainers": {
       "y": 0.11507936507937,
@@ -469,9 +482,9 @@
       "x": 0.01033386327504,
       "enabled": false
     },
-    "Dodge": {
-      "y": 0.45,
-      "x": 0.01,
+    "CinderEvent": {
+      "y": 0.55240793201133,
+      "x": 0.0087440381558029,
       "enabled": true
     },
     "SpellCaster": {
@@ -479,31 +492,6 @@
       "x": 0.0095389507154213,
       "enabled": false
     }
-  },
-  "equipCheckWeapon": 27480,
-  "targetBotLureMax": 7,
-  "combobot": {
-    "attackSpellEnabled": false,
-    "attackLeaderTargetEnabled": false,
-    "onShootEnabled": false,
-    "item": 3155,
-    "serverLeaderTarget": false,
-    "onCastEnabled": false,
-    "serverEnabled": false,
-    "attack": "",
-    "onSayEnabled": false,
-    "sayLeader": "",
-    "spell": "",
-    "shootLeader": "",
-    "attackItemToggle": false,
-    "followLeaderEnabled": false,
-    "commandsEnabled": true,
-    "sayPhrase": "",
-    "serverTriggers": true,
-    "serverLeader": "",
-    "enabled": false,
-    "follow": "",
-    "castLeader": ""
   },
   "extras": {
     "rope": 9596,
@@ -518,7 +506,7 @@
     "lootLast": false,
     "holdMwHot": "F5",
     "shovel": 9596,
-    "pet": true,
+    "reachable": false,
     "autoOpenDoors": true,
     "stake": false,
     "nextBackpack": true,
@@ -534,14 +522,39 @@
     "huntRoutes": 50,
     "antiKick": true,
     "talkDelay": 900,
-    "reachable": false,
+    "pet": true,
     "oberon": true,
     "highlightTarget": true,
     "scythe": 9596,
     "timers": true
   },
+  "targetBotLureMax": 7,
+  "combobot": {
+    "attackSpellEnabled": false,
+    "attackLeaderTargetEnabled": false,
+    "onShootEnabled": false,
+    "item": 3155,
+    "followLeaderEnabled": false,
+    "serverTriggers": true,
+    "serverEnabled": false,
+    "attack": "",
+    "onSayEnabled": false,
+    "sayLeader": "",
+    "spell": "",
+    "shootLeader": "",
+    "attackItemToggle": false,
+    "serverLeaderTarget": false,
+    "commandsEnabled": true,
+    "sayPhrase": "",
+    "onCastEnabled": false,
+    "serverLeader": "",
+    "enabled": false,
+    "follow": "",
+    "castLeader": ""
+  },
+  "equipCheckWeapon": 27480,
   "_macros": {
-    "": false,
+    "": true,
     "Follow": false,
     "Loot Channel": true,
     "AutoSpell MS": false,
@@ -555,23 +568,23 @@
     "AutoSpell ED": false,
     "AutoSpell EK": false,
     "Monster Identifier": true,
-    "Might Ring": false,
+    "Claude Follow": false,
     "Dodge Effects": true,
     "Stop near Trainers/Dummy": false,
     "Gather Orbs": true,
     "AutoSpell RP": true,
     "Cast Food": false,
-    "Claude Follow": false,
-    "Revisar pilares y activar": false,
+    "Might Ring": false,
+    "Filter Damage Messages": true,
     "Girar pilares (con armor)": false,
     "Bot off if no bless": true,
     "Fast Tiles": false,
-    "Filter Damage Messages": true,
+    "Revisar pilares y activar": false,
     "Auto Stash": false,
     "Exchange money": true,
     "Toggle spell text": false,
-    "Equip Check": true,
-    "Idle Mode": false
+    "Idle Mode": false,
+    "Equip Check": true
   },
   "autoEquip": [
     {
@@ -696,7 +709,7 @@
       }
     ]
   },
-  "equipCheckHelmet": 33164,
+  "equipCheckDoll": 0,
   "_configs": {
     "cavebot_configs": {
       "selected": "LavaDragons",
@@ -709,9 +722,9 @@
   },
   "petName": "tortoise pet",
   "monsterID": {
-    "savedCaveBotOn": false,
     "savedTargetBotOn": false,
-    "engaged": false
+    "engaged": false,
+    "savedCaveBotOn": false
   },
   "autoTradeMessage": "I'm using OTClientV8!",
   "autofollow": {
@@ -719,35 +732,22 @@
   },
   "stashNumFields": 30,
   "EK_enabled": false,
-  "MS_enabled": false,
-  "moneyItems": [
-    {
-      "count": 1,
-      "id": 3031
-    },
-    {
-      "count": 1,
-      "id": 3035
-    },
-    {
-      "count": 0,
-      "id": 3043
-    }
-  ],
+  "useGroundIndex": 1,
+  "targetBotDynamicLureDelayValue": 380,
   "playerList": {
     "enemyList": [
 
     ],
     "outfits": false,
+    "groupMembers": true,
     "friendList": [
       "Serena"
     ],
-    "groupMembers": true,
     "highlight": false,
+    "marks": false,
     "blackList": [
 
-    ],
-    "marks": false
+    ]
   },
   "equipCheckArmor": 8060,
   "renameContainers": {
@@ -1236,7 +1236,7 @@
     "height": 170,
     "lootBag": false
   },
-  "equipCheckDoll": 0,
+  "equipCheckHelmet": 33164,
   "stashDeposits": {
     "items": [
       {

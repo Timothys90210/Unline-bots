@@ -204,6 +204,17 @@ local dodgeBlacklistLogAt   = 0    -- last time we dumped [BLACKLIST] (rate-limi
 -- and on clear. Independent of the 5s decay blacklist.
 local dodgeAttemptedThisEvent = {}
 
+-- ── V4 Dodge Smooth state (active firestorm/soccer implementation, 2026-05-29) ─
+-- Kept separate from the v9.1 firestorm vars above so the archived original code
+-- can be revived intact without state-name conflicts.
+local v4DodgeActive       = false   -- true while a V4 dodge event is being handled
+local v4ChaseDisabled     = false   -- chase mode disabled flag (no-op in portal — no creatures)
+local v4LastDangerAt      = 0       -- os.clock when last seen on danger
+local v4EventCount        = 0       -- per-portal event counter for log routing
+local v4WalkCount         = 0       -- per-event walk attempt counter
+local v4LastClearedAt     = 0       -- os.clock when last "Firestorm cleared"
+local v4BlacklistLogAt    = 0       -- last [BLACKLIST] dump (rate-limited 5s)
+
 local bombScanLogAt        = 0
 local bombsGameActive      = false  -- latched true on first bomb detection; gates firestorm for full portal
 
@@ -245,6 +256,18 @@ local function resetState()
     dodgeStaleLogged         = false
     dodgeBlacklistLogAt      = 0
     dodgeAttemptedThisEvent  = {}
+    -- V4 Dodge Smooth state reset (per-portal). Restore chase mode defensively
+    -- in case a portal exits while v4ChaseDisabled is still true.
+    if v4ChaseDisabled and g_game and g_game.setChaseMode then
+        pcall(function() g_game.setChaseMode(1) end)
+    end
+    v4DodgeActive            = false
+    v4ChaseDisabled          = false
+    v4LastDangerAt           = 0
+    v4EventCount             = 0
+    v4WalkCount              = 0
+    v4LastClearedAt          = 0
+    v4BlacklistLogAt         = 0
     bombScanLogAt            = 0
     bombsGameActive          = false
     pendingSuccessScheduled  = false
@@ -1084,7 +1107,125 @@ local function cleanupBySafeEffect()
     end
 end
 
+-- ── Firestorm / Soccer Ball selector — V4 Dodge Smooth port (2026-05-29) ─────
+-- Active implementation: V4 Suite's 03_DodgeSurvival_Smooth_V4.lua mechanic.
+-- Pure V4 — no Pattern A, no PANIC fallback, no STALE DEST. Includes:
+--   • single-pass dist 1..7 closest-safe-tile scan
+--   • direct g_game.walk for adjacent dodges (V4's directStepIfAdjacent)
+--   • chase-mode toggle on entry / 5s after clear (no-op in cinder portals — no creatures)
+--   • safe-effect blacklist clearing (handled by shared cleanupBySafeEffect)
+-- Rich logging is preserved as a separate code path — same tags/format as the
+-- prior implementation so historical Fire Storm_* / Soccer Ball_* log analysis
+-- still applies.
+--
+-- ORIGINAL Firestorm v9.1 + Pattern A code preserved below the V4 block in a
+-- --[[ ... --]] version-history archive for clean revert.
+
+-- V4 direction lookup for direct adjacent step
+local V4_DIRS = {
+    [-1] = {[-1] = NorthWest, [0] = West,  [1] = SouthWest},
+    [0]  = {[-1] = North,                  [1] = South},
+    [1]  = {[-1] = NorthEast, [0] = East,  [1] = SouthEast},
+}
+
+local function v4Sign(v)
+    if v > 0 then return 1 end
+    if v < 0 then return -1 end
+    return 0
+end
+
+local function v4DirectionTo(fromPos, toPos)
+    local dx = v4Sign(toPos.x - fromPos.x)
+    local dy = v4Sign(toPos.y - fromPos.y)
+    if dx == 0 and dy == 0 then return nil end
+    return V4_DIRS[dx] and V4_DIRS[dx][dy] or nil
+end
+
+local function v4DirectStepIfAdjacent(pos, playerPos)
+    if getDistanceBetween(playerPos, pos) ~= 1 then return false end
+    local dir = v4DirectionTo(playerPos, pos)
+    if not dir then return false end
+    if g_game and g_game.walk then
+        g_game.walk(dir, false)
+        return true
+    end
+    return false
+end
+
+-- V4 routing — observability only. V4's mechanism does not distinguish firestorm
+-- from soccer ball (both are red-tile dodges). For log file routing only, we
+-- check red-gem presence at the moment of danger entry to preserve our existing
+-- Fire Storm vs Soccer Ball log split convention.
+local function v4LogKey(tile)
+    return hasRedGem(tile) and "soccerBall" or "firestorm"
+end
+
+-- V4 selector: closest safe tile, distance 1..7, single pass. Walks via direct
+-- g_game.walk when dist=1, else autoWalk. No PANIC retry, no per-event tile
+-- skip set — pure V4 mechanism.
 local function findAndWalkToSafeTile(playerPos, logKey)
+    local blacklistSize = 0
+    for _ in pairs(dodgeRecentlyDangerous) do blacklistSize = blacklistSize + 1 end
+
+    local nearbyDanger = 0
+    for _, tile in ipairs(g_map.getTiles(playerPos.z)) do
+        local tp = tile:getPosition()
+        if getDistanceBetween(playerPos, tp) <= 3 and isTileDangerous(tile) then
+            nearbyDanger = nearbyDanger + 1
+        end
+    end
+
+    v4WalkCount = v4WalkCount + 1
+    cinderLog(logKey, "Dodge attempt #" .. v4WalkCount ..
+        " | nearby danger: " .. nearbyDanger .. " tiles | blacklist: " .. blacklistSize .. " tiles")
+
+    for distance = 1, dodgeMaxDistance do
+        local candidates = {}
+        for _, tile in ipairs(g_map.getTiles(playerPos.z)) do
+            local tilePos = tile:getPosition()
+            if tilePos and getDistanceBetween(playerPos, tilePos) == distance then
+                table.insert(candidates, tile)
+            end
+        end
+        for _, tile in ipairs(candidates) do
+            local tilePos = tile:getPosition()
+            -- V4 danger check: effects + avoid items only. Red gem (24934) is
+            -- NOT a dodge trigger — it's safe to walk on. Red tiles can still
+            -- spawn on top of it via effects and will be caught above.
+            if not hasDangerousEffect(tile)
+               and not hasDodgeAvoidItem(tile)
+               and not isTileRecentlyDangerous(tilePos)
+               and tile:getTopCreature() == nil
+               and findPath(playerPos, tilePos, 15, dodgeFlags) then
+                local mode = "auto"
+                if v4DirectStepIfAdjacent(tilePos, playerPos) then
+                    mode = "direct"
+                else
+                    autoWalk(tilePos, 15, dodgeFlags)
+                end
+                dodgeTargetPos = tilePos
+                cinderLog(logKey, string.format(
+                    "Walking to safe tile (%s) at dist %d — %d,%d",
+                    mode, distance, tilePos.x, tilePos.y))
+                CaveBot.delay(500)
+                delay(500)
+                return true
+            end
+        end
+    end
+
+    -- V4 sits still if no candidate found. Log it so we can spot the failure mode.
+    cinderLog(logKey, string.format(
+        "[NO SAFE — STAYING] nearby_danger=%d blacklist=%d max_dist=%d pos=%d,%d",
+        nearbyDanger, blacklistSize, dodgeMaxDistance, playerPos.x, playerPos.y))
+    return false
+end
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- VERSION HISTORY: original Firestorm v9.1 + Pattern A selector (paused 2026-05-29)
+-- Restore by deleting the V4 block above and uncommenting this archive.
+--[[
+local function findAndWalkToSafeTile_v91(playerPos, logKey)
     local blacklistSize = 0
     for _ in pairs(dodgeRecentlyDangerous) do blacklistSize = blacklistSize + 1 end
 
@@ -1103,8 +1244,6 @@ local function findAndWalkToSafeTile(playerPos, logKey)
             " | nearby danger: " .. nearbyDanger .. " tiles | blacklist: " .. blacklistSize .. " tiles")
     end
 
-    -- Track rejected candidates for [CANDIDATES] diagnostic on failure.
-    -- Each entry: "x,y(d<dist>:<reason>)" — capped at 12 to keep the log line readable.
     local rejected = {}
     local function trackReject(d, tp, reason)
         if #rejected < 12 then
@@ -1112,8 +1251,6 @@ local function findAndWalkToSafeTile(playerPos, logKey)
         end
     end
 
-    -- Helper: attempt one full scan with an optional blacklist bypass.
-    -- Returns true if a walk was issued.
     local function scanForSafe(ignoreBlacklist)
         for distance = 1, dodgeMaxDistance do
             local candidates = {}
@@ -1130,8 +1267,6 @@ local function findAndWalkToSafeTile(playerPos, logKey)
                 elseif (not ignoreBlacklist) and isTileRecentlyDangerous(tilePos) then
                     trackReject(distance, tilePos, "blist")
                 elseif dodgeAttemptedThisEvent[dodgePosKey(tilePos)] then
-                    -- Pattern A: never re-pick a tile already attempted this event,
-                    -- even under PANIC. A tile that just hit us cannot help us now.
                     trackReject(distance, tilePos, "tried")
                 elseif tile:getTopCreature() ~= nil then
                     if not ignoreBlacklist then trackReject(distance, tilePos, "creat") end
@@ -1153,10 +1288,8 @@ local function findAndWalkToSafeTile(playerPos, logKey)
         return false
     end
 
-    -- Primary scan: respect blacklist
     if scanForSafe(false) then return true end
 
-    -- Panic fallback: ignore blacklist (any non-currently-dangerous tile beats standing still)
     cinderLog(logKey, string.format(
         "[NO SAFE] nearby_danger=%d blacklist=%d max_dist=%d pos=%d,%d — entering PANIC (ignore blacklist)",
         nearbyDanger, blacklistSize, dodgeMaxDistance, playerPos.x, playerPos.y))
@@ -1170,6 +1303,7 @@ local function findAndWalkToSafeTile(playerPos, logKey)
         playerPos.x, playerPos.y))
     return false
 end
+--]]
 
 -- Cross pattern offsets: bomb tile + 3 tiles in each cardinal direction (13 tiles total)
 local BOMB_CROSS = { {0,0},{1,0},{2,0},{3,0},{-1,0},{-2,0},{-3,0},{0,1},{0,2},{0,3},{0,-1},{0,-2},{0,-3} }
@@ -1368,16 +1502,124 @@ local cinderDodge = macro(200, function()
     end
     if bombsHandled then return end
 
-    -- ── Firestorm / Soccer dodge ──────────────────────────────────────────────
+    -- ── Firestorm / Soccer dodge — V4 Dodge Smooth port (2026-05-29) ─────────
+    -- Pure V4 mechanism wrapped in our rich-logging conventions.
+    -- Original v9.1 + Pattern A dodge block preserved in --[[ ... --]] archive
+    -- below for clean revert.
+    local _v4Ok, _v4Err = pcall(function()
+    -- V4 danger detection: effects + avoid items only. Red gem (24934) is NOT
+    -- a danger trigger in V4 (the gem itself is safe to stand on). Red tiles
+    -- can still spawn on top of it via effects, which are caught here.
+    local currentDanger = hasDangerousEffect(playerTile) or hasDodgeAvoidItem(playerTile)
+    -- Log routing: if a red gem is present on the player's tile when danger
+    -- triggers, route logs to soccerBall to preserve our log file split.
+    local logKey = v4LogKey(playerTile)
+
+    -- [HIT] — already dodging but still on danger tile
+    if currentDanger and v4DodgeActive then
+        cinderLog(logKey, string.format(
+            "[HIT] still on danger mid-dodge | pos=%d,%d firestormDanger=%s targetPos=%s",
+            playerPos.x, playerPos.y, tostring(currentDanger),
+            dodgeTargetPos and (dodgeTargetPos.x .. "," .. dodgeTargetPos.y) or "nil"))
+    end
+
+    -- [BLACKLIST] periodic dump (rate-limited 5s) while a V4 event has occurred
+    if v4EventCount > 0 and os.clock() - v4BlacklistLogAt >= 5 then
+        v4BlacklistLogAt = os.clock()
+        local count, oldestAge = 0, 0
+        local nowT = os.clock()
+        for _, ts in pairs(dodgeRecentlyDangerous) do
+            count = count + 1
+            local age = nowT - ts
+            if age > oldestAge then oldestAge = age end
+        end
+        cinderLog("firestorm", string.format(
+            "[BLACKLIST] count=%d oldest_age=%.1fs (decay at %ds)",
+            count, oldestAge, dodgeReentryDelay))
+    end
+
+    -- Destination became dangerous mid-walk — re-route
+    local needReroute = false
+    if dodgeTargetPos then
+        if getDistanceBetween(playerPos, dodgeTargetPos) == 0 then
+            dodgeTargetPos = nil
+        else
+            local destTile = g_map.getTile(dodgeTargetPos)
+            if destTile and (hasDangerousEffect(destTile) or hasDodgeAvoidItem(destTile)) then
+                dodgeRecentlyDangerous[dodgePosKey(dodgeTargetPos)] = os.clock()
+                local distWalked = getDistanceBetween(playerPos, dodgeTargetPos)
+                cinderLog(logKey, string.format(
+                    "Destination %d,%d became dangerous — re-routing | %d tiles still to walk",
+                    dodgeTargetPos.x, dodgeTargetPos.y, distWalked))
+                dodgeTargetPos = nil
+                needReroute = true
+            end
+        end
+    end
+
+    if currentDanger or needReroute then
+        if currentDanger then
+            dodgeRecentlyDangerous[dodgePosKey(playerPos)] = os.clock()
+            v4LastDangerAt = os.clock()
+
+            -- V4 chase-mode disable on first entry (no creatures in portal — observably a no-op,
+            -- but kept for V4 mechanical fidelity)
+            if not v4ChaseDisabled and g_game and g_game.setChaseMode then
+                pcall(function() g_game.setChaseMode(0) end)
+                v4ChaseDisabled = true
+                cinderLog(logKey, "[CHASE MODE] disabled")
+            end
+
+            if not v4DodgeActive then
+                v4DodgeActive = true
+                v4EventCount  = v4EventCount + 1
+                v4WalkCount   = 0
+                local interval = v4LastClearedAt > 0
+                    and string.format("%.1f", os.clock() - v4LastClearedAt) .. "s since last clear"
+                    or  "first event"
+                local effectIds = {}
+                for _, fx in ipairs(playerTile:getEffects()) do
+                    table.insert(effectIds, fx:getId())
+                end
+                cinderLog(logKey, "Event #" .. v4EventCount ..
+                    " | " .. interval ..
+                    " | effect IDs: [" .. table.concat(effectIds, ",") .. "]" ..
+                    " | at " .. playerPos.x .. "," .. playerPos.y)
+            end
+        end
+        findAndWalkToSafeTile(playerPos, logKey)
+    elseif v4DodgeActive and not dodgeTargetPos then
+        v4DodgeActive   = false
+        v4LastClearedAt = os.clock()
+        cinderLog(logKey, "Firestorm cleared — safe at " .. playerPos.x .. "," .. playerPos.y)
+    end
+
+    -- V4 chase-mode restore after 5s of clear (matches V4's reentryDelay)
+    if v4ChaseDisabled and not currentDanger
+       and (os.clock() - v4LastDangerAt) >= dodgeReentryDelay then
+        if g_game and g_game.setChaseMode then
+            pcall(function() g_game.setChaseMode(1) end)
+        end
+        v4ChaseDisabled = false
+        cinderLog("firestorm", "[CHASE MODE] restored")
+    end
+    end)  -- V4 dodge pcall
+    if not _v4Ok then
+        cinderLog("firestorm", "[V4 ERROR] " .. tostring(_v4Err))
+        log("V4 Dodge ERROR: " .. tostring(_v4Err))
+    end
+
+    -- ─────────────────────────────────────────────────────────────────────────
+    -- VERSION HISTORY: original Firestorm v9.1 + Pattern A dodge block
+    -- (paused 2026-05-29). Restore by deleting the V4 block above and
+    -- uncommenting this archive (and the matching _v91 selector above).
+    --[[
     local _dodgeOk, _dodgeErr = pcall(function()
     local firestormDanger = hasDangerousEffect(playerTile) or hasDodgeAvoidItem(playerTile)
     local soccerDanger    = hasRedGem(playerTile)
     local currentDanger   = firestormDanger or soccerDanger
     local logKey          = soccerDanger and "soccerBall" or "firestorm"
 
-    -- [HIT] — if we're already in an active dodge event AND still on a danger tile,
-    -- something went wrong (walked onto danger / dest became dangerous mid-walk).
-    -- Suppress on the initial event tick (dodgeFirestormActive only just turned true).
     if currentDanger and dodgeFirestormActive then
         cinderLog(logKey, string.format(
             "[HIT] still on danger mid-dodge | pos=%d,%d firestormDanger=%s soccerDanger=%s targetPos=%s",
@@ -1386,8 +1628,6 @@ local cinderDodge = macro(200, function()
             dodgeTargetPos and (dodgeTargetPos.x .. "," .. dodgeTargetPos.y) or "nil"))
     end
 
-    -- [STALE DEST] — dodgeTargetPos unchanged for >1.5s suggests the walk command
-    -- didn't reach (autoWalk stalled, pathing failed silently, or character is wedged).
     if dodgeTargetPos then
         local key = dodgeTargetPos.x .. "," .. dodgeTargetPos.y
         if key == dodgeStaleDestKey then
@@ -1409,7 +1649,6 @@ local cinderDodge = macro(200, function()
         dodgeStaleLogged  = false
     end
 
-    -- [BLACKLIST] periodic dump — only during active firestorm games (not blue-flame/soccer)
     if firestormEventCount > 0 and os.clock() - dodgeBlacklistLogAt >= 5 then
         dodgeBlacklistLogAt = os.clock()
         local count, oldestAge = 0, 0
@@ -1450,17 +1689,16 @@ local cinderDodge = macro(200, function()
             dodgeRecentlyDangerous[dodgePosKey(playerPos)] = os.clock()
             if logKey == "soccerBall" and not dodgeSoccerActive then
                 dodgeSoccerActive = true
-                dodgeAttemptedThisEvent = {}  -- Pattern A: fresh event, clear attempted-tile set
+                dodgeAttemptedThisEvent = {}
                 cinderLog("soccerBall", "Red gem at " .. playerPos.x .. "," .. playerPos.y .. " — dodging")
             elseif logKey == "firestorm" and not dodgeFirestormActive then
                 dodgeFirestormActive  = true
-                dodgeAttemptedThisEvent = {}  -- Pattern A: fresh event, clear attempted-tile set
+                dodgeAttemptedThisEvent = {}
                 firestormEventCount   = firestormEventCount + 1
                 firestormWalkCount    = 0
                 local interval = firestormLastClearedAt > 0
                     and string.format("%.1f", os.clock() - firestormLastClearedAt) .. "s since last clear"
                     or  "first event"
-                -- Collect the specific effect IDs on this tile for diagnosis
                 local effectIds = {}
                 for _, fx in ipairs(playerTile:getEffects()) do
                     table.insert(effectIds, fx:getId())
@@ -1471,18 +1709,18 @@ local cinderDodge = macro(200, function()
                     " | at " .. playerPos.x .. "," .. playerPos.y)
             end
         end
-        findAndWalkToSafeTile(playerPos, logKey)
+        findAndWalkToSafeTile_v91(playerPos, logKey)
     else
         if not dodgeTargetPos then
             if dodgeFirestormActive then
                 dodgeFirestormActive = false
                 firestormLastClearedAt = os.clock()
-                dodgeAttemptedThisEvent = {}  -- Pattern A: defensive clear on dodge-event end
+                dodgeAttemptedThisEvent = {}
                 cinderLog("firestorm", "Firestorm cleared — safe at " .. playerPos.x .. "," .. playerPos.y)
             end
             if dodgeSoccerActive then
                 dodgeSoccerActive = false
-                dodgeAttemptedThisEvent = {}  -- Pattern A: defensive clear on dodge-event end
+                dodgeAttemptedThisEvent = {}
                 cinderLog("soccerBall", "Red gem cleared — safe at " .. playerPos.x .. "," .. playerPos.y)
             end
             if dodgeBombsActive then
@@ -1491,11 +1729,12 @@ local cinderDodge = macro(200, function()
             end
         end
     end
-    end)  -- dodge pcall
+    end)
     if not _dodgeOk then
         cinderLog("firestorm", "[ERROR] " .. tostring(_dodgeErr))
         log("Dodge ERROR: " .. tostring(_dodgeErr))
     end
+    --]]
 end)
 
 -- ── Single icon controls all features ────────────────────────────────────────

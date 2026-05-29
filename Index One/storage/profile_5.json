@@ -66,15 +66,15 @@
       "exevo frigo hur": 1
     },
     "RP": {
-      "exori con ani": 0,
+      "utito tempo san": 10,
       "exevo vis": 0,
-      "exevo tempo mas san": 0,
-      "utevo grav san": 0,
+      "exori con ani": 0,
+      "exevo mas san": 9,
       "exori gran con": 1,
       "exori san": 0,
+      "exevo tempo mas san": 0,
       "exori con": 0,
-      "exevo mas san": 9,
-      "utito tempo san": 10,
+      "utevo grav san": 0,
       "exori mas con": 0
     }
   },
@@ -159,30 +159,54 @@
 
     ]
   },
-  "followLeader": "Requiem",
-  "teleportWaypoint": "15",
-  "equipCheckHelmet": 33164,
   "ingame_hotkeys": "local function applyPanelWidth()\n    local interface = modules.game_interface\n    if not interface then return end\n    local leftPanel = interface:getLeftPanel()\n    if leftPanel then leftPanel:setWidth(230) end\nend\napplyPanelWidth()\n",
+  "teleportWaypoint": "15",
+  "equipCheckDoll": 0,
+  "followLeader": "Requiem",
   "equipCheckShield": 0,
   "equipCheckWeapon": 27480,
   "RP_enabled": true,
-  "targetBotTargets": 3,
+  "targetBotTargets": 6,
   "useGroundIndex": 1,
   "fName": "Index Zero",
-  "moneyItems": [
-    {
-      "count": 1,
-      "id": 3031
+  "alarms": {
+    "privateMsg": [
+
+    ],
+    "customMessage": {
+      "value": ""
     },
-    {
-      "count": 1,
-      "id": 3035
+    "flashClient": [
+
+    ],
+    "lowMana": {
+      "value": 20
     },
-    {
-      "count": 0,
-      "id": 3043
+    "creatureDetected": [
+
+    ],
+    "damageTaken": [
+
+    ],
+    "playerAttack": [
+
+    ],
+    "ignoreFriends": [
+
+    ],
+    "defaultMsg": [
+
+    ],
+    "playerDetected": [
+
+    ],
+    "lowHealth": {
+      "value": 20
+    },
+    "creatureName": {
+      "value": ""
     }
-  ],
+  },
   "checkVersion": 1779936609,
   "autoSpellStopOnTrainer": false,
   "autoSpellCounts": {
@@ -252,15 +276,15 @@
       "exevo frigo hur": 1
     },
     "RP": {
-      "exori con ani": 1,
+      "utito tempo san": 1,
       "exevo vis": 1,
-      "exevo tempo mas san": 1,
-      "utevo grav san": 1,
+      "exori con ani": 1,
+      "exevo mas san": 4,
       "exori gran con": 1,
       "exori san": 1,
+      "exevo tempo mas san": 1,
       "exori con": 1,
-      "exevo mas san": 4,
-      "utito tempo san": 1,
+      "utevo grav san": 1,
       "exori mas con": 8
     }
   },
@@ -277,51 +301,31 @@
       "Index Two"
     ]
   },
-  "alarms": {
-    "privateMsg": [
-
-    ],
-    "customMessage": {
-      "value": ""
-    },
-    "flashClient": [
-
-    ],
-    "lowMana": {
-      "value": 20
-    },
-    "creatureDetected": [
-
-    ],
-    "damageTaken": [
-
-    ],
-    "playerAttack": [
-
-    ],
-    "ignoreFriends": [
-
-    ],
-    "defaultMsg": [
-
-    ],
-    "playerDetected": [
-
-    ],
-    "lowHealth": {
-      "value": 20
-    },
-    "creatureName": {
-      "value": ""
-    }
-  },
+  "targetBotDynamicLureDelayValue": 300,
   "Ninja_enabled": false,
   "autoTradeMessage": "I'm using OTClientV8!",
-  "equipCheckDoll": 0,
+  "equipCheckHelmet": 33164,
   "newHealer": {
     "vocations": [
 
     ],
+    "groups": [
+
+    ],
+    "enabled": true,
+    "conditions": {
+      "party": true,
+      "knights": true,
+      "friends": true,
+      "botserver": false,
+      "paladins": true,
+      "druids": false,
+      "sorcerers": false,
+      "guild": false
+    },
+    "customPlayers": {
+      " Serena": 80
+    },
     "priorities": [
       {
         "custom": true,
@@ -354,23 +358,6 @@
         "mana": true
       }
     ],
-    "enabled": true,
-    "groups": [
-
-    ],
-    "customPlayers": {
-      " Serena": 80
-    },
-    "conditions": {
-      "druids": false,
-      "knights": true,
-      "friends": true,
-      "botserver": false,
-      "paladins": true,
-      "sorcerers": false,
-      "party": true,
-      "guild": false
-    },
     "settings": [
       {
         "type": "HealItem",
@@ -458,7 +445,7 @@
     "lootLast": false,
     "holdMwHot": "F5",
     "shovel": 9596,
-    "reachable": true,
+    "pet": true,
     "autoOpenDoors": true,
     "stake": true,
     "nextBackpack": true,
@@ -474,7 +461,7 @@
     "huntRoutes": 50,
     "antiKick": true,
     "talkDelay": 900,
-    "pet": true,
+    "reachable": true,
     "oberon": true,
     "highlightTarget": true,
     "scythe": 9596,
@@ -530,9 +517,9 @@
       "x": 0.01,
       "enabled": false
     },
-    "CinderEvent": {
-      "y": 0.55807365439093,
-      "x": 0.0087440381558029,
+    "petHealer": {
+      "y": 0.05,
+      "x": 0.01,
       "enabled": true
     },
     "resetCursorIcon": {
@@ -555,14 +542,14 @@
       "x": 0.01,
       "enabled": false
     },
+    "Dodge": {
+      "y": 0.45042492917847,
+      "x": 0.007154213036566,
+      "enabled": true
+    },
     "ConjureDiamond": {
       "y": 0.11898016997167,
       "x": 0.015898251192369,
-      "enabled": true
-    },
-    "petHealer": {
-      "y": 0.05,
-      "x": 0.01,
       "enabled": true
     },
     "DiamondTrainers": {
@@ -575,9 +562,9 @@
       "x": 0.060413354531002,
       "enabled": false
     },
-    "Dodge": {
-      "y": 0.45042492917847,
-      "x": 0.007154213036566,
+    "CinderEvent": {
+      "y": 0.55807365439093,
+      "x": 0.0087440381558029,
       "enabled": true
     },
     "SpellCaster": {
@@ -672,9 +659,9 @@
   "stashWithdrawsTolerance": 1,
   "stashDepositsTolerance": 50,
   "monsterID": {
-    "savedTargetBotOn": false,
     "engaged": false,
-    "savedCaveBotOn": false
+    "savedCaveBotOn": false,
+    "savedTargetBotOn": false
   },
   "imbuingConfig": {
     "shield": [
@@ -709,21 +696,34 @@
   "stashNumFields": 30,
   "EK_enabled": false,
   "MS_enabled": false,
-  "targetBotDynamicLureDelayValue": 300,
+  "moneyItems": [
+    {
+      "count": 1,
+      "id": 3031
+    },
+    {
+      "count": 1,
+      "id": 3035
+    },
+    {
+      "count": 0,
+      "id": 3043
+    }
+  ],
   "playerList": {
     "enemyList": [
 
     ],
     "outfits": false,
-    "groupMembers": true,
     "friendList": [
 
     ],
+    "groupMembers": true,
     "highlight": false,
-    "marks": false,
     "blackList": [
 
-    ]
+    ],
+    "marks": false
   },
   "foodItems": [
     {
