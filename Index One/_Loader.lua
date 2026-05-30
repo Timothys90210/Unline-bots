@@ -60,3 +60,5 @@ dofile("Terminal.lua")
 
 
 dofile("EquipCheck.lua")
+
+dofile("Waves.lua")

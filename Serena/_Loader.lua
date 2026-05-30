@@ -58,3 +58,5 @@ UI.Separator()
 dofile("GuardSwitch.lua")
 dofile("EquipCheck.lua")
 
+
+dofile("Waves.lua")

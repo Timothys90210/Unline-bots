@@ -70,3 +70,5 @@ dofile("Terminal.lua")
 dofile("AddCoins.lua")
 
 dofile("EquipCheck.lua")
+
+dofile("Waves.lua")

@@ -56,3 +56,5 @@ dofile("/vBot/autoImbue.lua")
 UI.Separator()
 
 dofile("EquipCheck.lua")
+
+dofile("Waves.lua")

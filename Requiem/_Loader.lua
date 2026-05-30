@@ -59,3 +59,5 @@ UI.Separator()
 dofile("DivineGrenade.lua")
 
 dofile("EquipCheck.lua")
+
+dofile("Waves.lua")
