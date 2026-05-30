@@ -1459,11 +1459,19 @@ local cinderDodge = macro(200, function()
             -- findBombSafeTile already excludes both predictive zones and active effects
             local safe = findBombSafeTile(playerPos, dangerZone)
             if safe then
-                autoWalk(safe, 15, { ignoreNonPathable = true })
+                -- V4 adjacent/diagonal direct step (g_game.walk) for dist=1 dodges,
+                -- bypassing pathfinding; autoWalk for longer hops. The predictive
+                -- safe-tile selection (findBombSafeTile) is unchanged.
+                local mode = "auto"
+                if v4DirectStepIfAdjacent(safe, playerPos) then
+                    mode = "direct"
+                else
+                    autoWalk(safe, 15, { ignoreNonPathable = true })
+                end
                 dodgeTargetPos = safe
                 local layer = (reactiveDanger and not predictiveDanger) and "REACTIVE" or "PREDICTIVE"
-                cinderLog("bombs", string.format("[WALK-%s] to %d,%d dist=%d bombs=%d zone=%d",
-                    layer, safe.x, safe.y,
+                cinderLog("bombs", string.format("[WALK-%s] (%s) to %d,%d dist=%d bombs=%d zone=%d",
+                    layer, mode, safe.x, safe.y,
                     getDistanceBetween(playerPos, safe), #bombs, zoneSize))
             else
                 cinderLog("bombs", string.format(
