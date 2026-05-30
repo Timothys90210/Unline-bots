@@ -57,4 +57,6 @@ UI.Separator()
 
 dofile("EquipCheck.lua")
 
+dofile("Stances.lua")
+
 dofile("Waves.lua")

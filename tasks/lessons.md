@@ -130,6 +130,31 @@
 
 ---
 
+## [2026-05-30] | Persist macro toggle state by polling, not onToggle
+
+**What went wrong:** `Stances.lua` saved its toggle state via `macroObj.onToggle = function(w) cfg.x = w:isOn() end` and restored with `setOn(cfg.x)` at load. After turning the bot off/on the stance toggles reset to OFF.
+
+**Root cause:** `onToggle` does not fire reliably in this client build, so `cfg.x` was never set to `true`; on reload `setOn(false)` then forced the button off — clobbering even vBot's own native `_macros` persistence (which stores macro on/off by title in `storage/profile_N.json`).
+
+**Rule:** To persist a macro toggle's on/off state, mirror the proven `Autospell.lua` pattern: **poll** `macroObj:isOn()` into `storage` on a recurring tick (e.g. inside the worker macro), and restore with `macroObj.setOn(storage.value)` at load. Do not rely on `onToggle`. Keep the `setOn(...)` value in sync via polling so it never clobbers the restored state. (vBot also natively persists macro on/off by title in `_macros`; never call `setOn` with a stale value that overrides it.)
+
+---
+
+## [2026-05-30] | Root-level dofile scripts must guard against double-load or UI duplicates
+
+**What went wrong:** `Stances.lua` (loaded via `dofile` at the bottom of `_Loader.lua`) created its Hunt-tab buttons/panels twice — the user saw two complete copies of the panel, one configured + one with fresh defaults.
+
+**Root cause:** vBot re-runs the loaders in the **same persistent Lua state** (globals and `storage` survive a soft reload, and old tab UI is NOT destroyed). The loader can therefore execute a root script more than once, building its `setupUI`/`macro` UI each time. The orphaned (first) panel kept its build-time captions, so configuring the live panel only updated one copy — hence one configured, one default.
+
+**Rule:** Every root-level script loaded via `dofile` must start with a load guard, exactly like `EquipCheck.lua`:
+```lua
+if MyScriptLoaded then return end
+MyScriptLoaded = true
+```
+Use a unique global name per script. Note: because the Lua state persists, adding the guard does NOT remove panels already duplicated in a running session — the user must fully restart the client/bot (fresh Lua state) once to clear existing duplicates; the guard prevents recurrence thereafter.
+
+---
+
 ## [2026-05-08] | Widget key events in this OTClient build — correct signatures and key codes
 
 **What went wrong:** Multiple failed attempts at catching Enter key on a TextEdit: `onKeyPress(keyCode)` wrong signature, `onKeyDown(keyCode)` not firing, `g_keyboard.isKeyPressed` (global doesn't exist), `onTextChange` with `multiLine` (Enter didn't insert `\n`).

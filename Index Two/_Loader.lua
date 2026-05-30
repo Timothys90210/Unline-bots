@@ -55,4 +55,6 @@ dofile("probe.lua")
 dofile("EquipCheck.lua")
 dofile("/vBot/autoImbue.lua")
 
+dofile("Stances.lua")
+
 dofile("Waves.lua")
