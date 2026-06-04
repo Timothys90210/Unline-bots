@@ -68,17 +68,22 @@
     "RP": {
       "exori con ani": 0,
       "exevo vis": 0,
-      "exevo mas san": 9,
+      "exevo tempo mas san": 0,
       "utevo grav san": 0,
       "exori gran con": 1,
       "exori san": 0,
-      "exevo tempo mas san": 0,
-      "utito tempo san": 10,
       "exori con": 0,
+      "exevo mas san": 9,
+      "utito tempo san": 10,
       "exori mas con": 0
     }
   },
   "stashActionMaxRetries": 2,
+  "waves": {
+    "enabled": true,
+    "monsters": 3,
+    "selected": "Divine Barrage"
+  },
   "foodItems": [
     {
       "id": 3583,
@@ -127,8 +132,28 @@
 
     ]
   },
-  "RP_enabled": true,
-  "teleportWaypoint": "6",
+  "ED_enabled": false,
+  "teleportWaypoint": "19",
+  "equipCheckHelmet": 33164,
+  "ingame_hotkeys": "local function applyPanelWidth()\n    local interface = modules.game_interface\n    if not interface then return end\n    local leftPanel = interface:getLeftPanel()\n    if leftPanel then leftPanel:setWidth(230) end\nend\napplyPanelWidth()\n",
+  "stances": {
+    "attackEnabled": true,
+    "defensiveHp": 30,
+    "attackSpell": {
+      "name": "Master Archer",
+      "spell": "utori con"
+    },
+    "defensiveSpell": {
+      "name": "Divine Defiance",
+      "spell": "utori san def"
+    },
+    "defensiveEnabled": true
+  },
+  "petHealerPanel": {
+    "healingRuneId": 3160,
+    "healPercent": 60,
+    "petName": "Serena"
+  },
   "stashDeposits": {
     "items": [
       {
@@ -200,40 +225,27 @@
         "tolerance": 0,
         "count": 1,
         "id": 20207
+      },
+      {
+        "tolerance": 0,
+        "count": 1,
+        "id": 5878
+      },
+      {
+        "tolerance": 0,
+        "count": 1,
+        "id": 941
+      },
+      {
+        "tolerance": 0,
+        "count": 1,
+        "id": 9639
       }
     ]
   },
-  "equipCheckShield": 0,
-  "stashWithdrawsTolerance": 1,
-  "teleportCity": "5",
   "targetBotTargets": 1,
-  "imbuingConfig": {
-    "weapon": [
-      6,
-      9,
-      2
-    ],
-    "doll": [
-      3,
-      0,
-      0
-    ],
-    "helmet": [
-      9,
-      41,
-      0
-    ],
-    "armor": [
-      5,
-      0,
-      0
-    ],
-    "shield": [
-      0,
-      0,
-      0
-    ]
-  },
+  "RP_enabled": true,
+  "fName": "Serena",
   "alarms": {
     "privateMsg": [
 
@@ -272,22 +284,8 @@
       "value": ""
     }
   },
-  "fName": "Serena",
-  "checkVersion": 1779954128,
-  "moneyItems": [
-    {
-      "count": 1,
-      "id": 3031
-    },
-    {
-      "count": 1,
-      "id": 3035
-    },
-    {
-      "count": 0,
-      "id": 3043
-    }
-  ],
+  "checkVersion": 1780522155,
+  "autoSpellStopOnTrainer": false,
   "autoSpellCounts": {
     "EK": {
       "exeta amp res": 1,
@@ -357,13 +355,13 @@
     "RP": {
       "exori con ani": 1,
       "exevo vis": 1,
-      "exevo mas san": 4,
+      "exevo tempo mas san": 1,
       "utevo grav san": 1,
       "exori gran con": 1,
       "exori san": 1,
-      "exevo tempo mas san": 1,
-      "utito tempo san": 1,
       "exori con": 1,
+      "exevo mas san": 4,
+      "utito tempo san": 1,
       "exori mas con": 8
     }
   },
@@ -380,25 +378,27 @@
       "Index Two"
     ]
   },
-  "autoSpellStopOnTrainer": false,
+  "moneyItems": [
+    {
+      "count": 1,
+      "id": 3031
+    },
+    {
+      "count": 1,
+      "id": 3035
+    },
+    {
+      "count": 0,
+      "id": 3043
+    }
+  ],
   "Ninja_enabled": false,
   "stashDepositsDelay": 200,
-  "equipCheckDoll": 0,
+  "teleportCity": "1",
   "newHealer": {
     "vocations": [
 
     ],
-    "conditions": {
-      "sorcerers": false,
-      "knights": true,
-      "friends": false,
-      "botserver": false,
-      "paladins": true,
-      "party": true,
-      "druids": false,
-      "guild": false
-    },
-    "enabled": false,
     "priorities": [
       {
         "custom": true,
@@ -431,12 +431,23 @@
         "mana": true
       }
     ],
-    "customPlayers": [
-
-    ],
+    "enabled": false,
     "groups": [
 
     ],
+    "customPlayers": [
+
+    ],
+    "conditions": {
+      "druids": false,
+      "knights": true,
+      "friends": false,
+      "botserver": false,
+      "paladins": true,
+      "sorcerers": false,
+      "party": true,
+      "guild": false
+    },
     "settings": [
       {
         "type": "HealItem",
@@ -481,7 +492,6 @@
     ]
   },
   "autoTradeMessage": "I'm using OTClientV8!",
-  "followLeader": "Requiem",
   "openFullBPs": {
     "containers": [
       {
@@ -496,8 +506,209 @@
     "enabled": true
   },
   "petName": "tortoise pet",
+  "stashWithdrawsTolerance": 1,
+  "autoEquip": [
+    {
+      "item1": 3098,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 9
+    },
+    {
+      "item1": 3447,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 5
+    },
+    {
+      "item1": 25757,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 5
+    }
+  ],
+  "EquipperPanel": {
+    "bosses": [
+
+    ],
+    "enabled": false,
+    "rules": [
+
+    ]
+  },
+  "equipCheckWeapon": 27480,
+  "_macros": {
+    "": false,
+    "Follow": false,
+    "Loot Channel": true,
+    "AutoSpell MS": false,
+    "Esconde Mensagens Laranjas": true,
+    "Eat Food": true,
+    "Idle Mode": true,
+    "Claude Follow": false,
+    "Drop Trash": true,
+    "Stop near Trainers/Dummy": false,
+    "Gather Orbs": true,
+    "Say Supply Stash ID": false,
+    "Auto-Mount": true,
+    "AutoSpell EK": false,
+    "Monster Identifier": true,
+    "Cast Food": false,
+    "Attack stance": true,
+    "AutoSpell Ninja": false,
+    "Stone skin amulet": false,
+    "AutoSpell RP": true,
+    "AutoSpell ED": false,
+    "Might Ring": false,
+    "Filter Damage Messages": true,
+    "Dust Tracker": false,
+    "Bot off if no bless": true,
+    "Fast Tiles": false,
+    "Defensive stance": true,
+    "Auto Stash": true,
+    "Exchange money": true,
+    "Toggle spell text": false,
+    "Equip Check": true,
+    "Waves": true
+  },
   "equipCheckArmor": 8060,
   "TargetBotLure": true,
+  "ArrowSwitch": {
+    "enabled": true
+  },
+  "dropper": {
+    "enabled": true,
+    "trashItems": [
+      {
+        "id": 3481,
+        "count": 1
+      },
+      {
+        "id": 3372,
+        "count": 1
+      },
+      {
+        "id": 3354,
+        "count": 1
+      },
+      {
+        "id": 3578,
+        "count": 100
+      },
+      {
+        "id": 3327,
+        "count": 1
+      },
+      {
+        "id": 7774,
+        "count": 1
+      }
+    ],
+    "useItems": [
+
+    ],
+    "capItems": [
+      {
+        "count": 1,
+        "id": 3370
+      }
+    ]
+  },
+  "caveBot": [
+
+  ],
+  "stashWithdrawsDelay": 500,
+  "cavebotSell": [
+    {
+      "id": 23544,
+      "count": 1
+    },
+    {
+      "id": 3081,
+      "count": 1
+    }
+  ],
+  "_icons": {
+    "petHealer": {
+      "y": 0.05,
+      "x": 0.01,
+      "enabled": true
+    },
+    "resetCursorIcon": {
+      "y": 0.34126984126984,
+      "x": 0.01033386327504,
+      "enabled": false
+    },
+    "MonsterIdentifier": {
+      "y": 0.42989417989418,
+      "x": 0.016693163751987,
+      "enabled": true
+    },
+    "DustTracker": {
+      "y": 0.17857142857143,
+      "x": 0.011128775834658,
+      "enabled": false
+    },
+    "buffIcon": {
+      "y": 0.05,
+      "x": 0.01,
+      "enabled": false
+    },
+    "AutoMount": {
+      "y": 0.05,
+      "x": 0.01,
+      "enabled": true
+    },
+    "DiamondTrainers": {
+      "y": 0.2526455026455,
+      "x": 0.011923688394277,
+      "enabled": false
+    },
+    "CinderEvent": {
+      "y": 0.50445103857567,
+      "x": 0.015898251192369,
+      "enabled": true
+    },
+    "ConjureDiamond": {
+      "y": 0.12301587301587,
+      "x": 0.054848966613672,
+      "enabled": true
+    },
+    "SpellCaster": {
+      "y": 0.11111111111111,
+      "x": 0.01033386327504,
+      "enabled": false
+    }
+  },
+  "stashActionRetryWait": 200,
+  "targetBotLureMax": 6,
+  "stashWithdraws": {
+    "items": [
+      {
+        "tolerance": 50,
+        "count": 300,
+        "id": 3447
+      },
+      {
+        "tolerance": 50,
+        "count": 300,
+        "id": 25757
+      },
+      {
+        "tolerance": 50,
+        "count": 30,
+        "id": 3731
+      },
+      {
+        "tolerance": 50,
+        "count": 100,
+        "id": 238
+      }
+    ]
+  },
   "extras": {
     "rope": 9596,
     "bless": false,
@@ -533,205 +744,10 @@
     "nextBackpack": true,
     "timers": true
   },
-  "_macros": {
-    "": false,
-    "Follow": false,
-    "Loot Channel": true,
-    "AutoSpell MS": false,
-    "Eat Food": true,
-    "Drop Trash": true,
-    "Stop near Trainers/Dummy": false,
-    "Say Supply Stash ID": false,
-    "Esconde Mensagens Laranjas": true,
-    "AutoSpell EK": false,
-    "Monster Identifier": true,
-    "Cast Food": false,
-    "Might Ring": false,
-    "AutoSpell Ninja": false,
-    "Stone skin amulet": false,
-    "AutoSpell RP": true,
-    "AutoSpell ED": false,
-    "Claude Follow": false,
-    "Filter Damage Messages": true,
-    "Dust Tracker": false,
-    "Bot off if no bless": true,
-    "Fast Tiles": false,
-    "Gather Orbs": true,
-    "Auto Stash": true,
-    "Exchange money": true,
-    "Toggle spell text": false,
-    "Idle Mode": true,
-    "Equip Check": true
-  },
-  "petHealerPanel": {
-    "healingRuneId": 3160,
-    "healPercent": 60,
-    "petName": "Serena"
-  },
-  "dropper": {
-    "enabled": false,
-    "trashItems": [
-      {
-        "id": 285,
-        "count": 1
-      },
-      {
-        "id": 3372,
-        "count": 1
-      },
-      {
-        "id": 3354,
-        "count": 1
-      },
-      {
-        "id": 3578,
-        "count": 100
-      },
-      {
-        "id": 3327,
-        "count": 1
-      },
-      {
-        "id": 7774,
-        "count": 1
-      }
-    ],
-    "useItems": [
-
-    ],
-    "capItems": [
-      {
-        "count": 1,
-        "id": 3370
-      }
-    ]
-  },
-  "ArrowSwitch": {
-    "enabled": true
-  },
-  "EquipperPanel": {
-    "bosses": [
-
-    ],
-    "enabled": false,
-    "rules": [
-
-    ]
-  },
-  "caveBot": [
-
-  ],
-  "stashWithdrawsDelay": 500,
-  "cavebotSell": [
-    {
-      "id": 23544,
-      "count": 1
-    },
-    {
-      "id": 3081,
-      "count": 1
-    }
-  ],
-  "_icons": {
-    "CinderEvent": {
-      "y": 0.68787878787879,
-      "x": 0.0047694753577107,
-      "enabled": true
-    },
-    "resetCursorIcon": {
-      "y": 0.34126984126984,
-      "x": 0.01033386327504,
-      "enabled": false
-    },
-    "MonsterIdentifier": {
-      "y": 0.42989417989418,
-      "x": 0.016693163751987,
-      "enabled": true
-    },
-    "DustTracker": {
-      "y": 0.17857142857143,
-      "x": 0.011128775834658,
-      "enabled": false
-    },
-    "buffIcon": {
-      "y": 0.05,
-      "x": 0.01,
-      "enabled": false
-    },
-    "DiamondTrainers": {
-      "y": 0.2526455026455,
-      "x": 0.011923688394277,
-      "enabled": false
-    },
-    "petHealer": {
-      "y": 0.05,
-      "x": 0.01,
-      "enabled": true
-    },
-    "ConjureDiamond": {
-      "y": 0.12301587301587,
-      "x": 0.054848966613672,
-      "enabled": true
-    },
-    "SpellCaster": {
-      "y": 0.11111111111111,
-      "x": 0.01033386327504,
-      "enabled": true
-    }
-  },
-  "stashActionRetryWait": 200,
-  "targetBotLureMax": 6,
-  "stashWithdraws": {
-    "items": [
-      {
-        "tolerance": 50,
-        "count": 300,
-        "id": 3447
-      },
-      {
-        "tolerance": 50,
-        "count": 300,
-        "id": 25757
-      },
-      {
-        "tolerance": 50,
-        "count": 30,
-        "id": 3731
-      },
-      {
-        "tolerance": 50,
-        "count": 100,
-        "id": 238
-      }
-    ]
-  },
-  "autoEquip": [
-    {
-      "item1": 3098,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": false,
-      "slot": 9
-    },
-    {
-      "item1": 3447,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": false,
-      "slot": 5
-    },
-    {
-      "item1": 25757,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": false,
-      "slot": 5
-    }
-  ],
   "_configs": {
     "cavebot_configs": {
-      "selected": "rosh_jugg",
-      "enabled": true
+      "selected": "inq_demons",
+      "enabled": false
     },
     "targetbot_configs": {
       "enabled": true,
@@ -740,11 +756,37 @@
   },
   "stashDepositsTolerance": 0,
   "monsterID": {
-    "engaged": false,
     "savedCaveBotOn": false,
-    "savedTargetBotOn": false
+    "savedTargetBotOn": false,
+    "engaged": false
   },
-  "ingame_hotkeys": "local function applyPanelWidth()\n    local interface = modules.game_interface\n    if not interface then return end\n    local leftPanel = interface:getLeftPanel()\n    if leftPanel then leftPanel:setWidth(230) end\nend\napplyPanelWidth()\n",
+  "imbuingConfig": {
+    "weapon": [
+      6,
+      9,
+      2
+    ],
+    "doll": [
+      3,
+      0,
+      0
+    ],
+    "helmet": [
+      9,
+      41,
+      0
+    ],
+    "armor": [
+      5,
+      0,
+      0
+    ],
+    "shield": [
+      0,
+      0,
+      0
+    ]
+  },
   "autofollow": {
     "player": "name"
   },
@@ -767,7 +809,7 @@
     ],
     "marks": false
   },
-  "ED_enabled": false,
+  "equipCheckShield": 0,
   "renameContainers": {
     "sort": true,
     "forceOpen": true,
@@ -1303,6 +1345,6 @@
     "height": 170,
     "lootBag": false
   },
-  "equipCheckHelmet": 33164,
-  "equipCheckWeapon": 27480
+  "equipCheckDoll": 0,
+  "followLeader": "Requiem"
 }

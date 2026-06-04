@@ -34,19 +34,19 @@
       "Conditions": true,
       "itemTable": [
         {
-          "enabled": true,
-          "index": 1,
-          "origin": "MP%",
-          "item": 238,
+          "enabled": false,
           "value": 30,
+          "index": 1,
+          "item": 238,
+          "origin": "MP%",
           "sign": "<"
         },
         {
           "enabled": true,
-          "origin": "HP%",
-          "value": 30,
-          "item": 47453,
           "index": 2,
+          "origin": "HP%",
+          "item": 47453,
+          "value": 30,
           "sign": "<"
         }
       ],

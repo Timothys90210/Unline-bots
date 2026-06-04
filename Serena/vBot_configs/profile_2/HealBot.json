@@ -6,15 +6,15 @@
     "ignoreInPz": true,
     "bleedCost": 45,
     "cureCurse": false,
-    "stopHaste": false,
+    "burnCost": 30,
     "holdHaste": true,
     "curePosion": false,
     "hasteSpell": "utani mas hur",
-    "curePoison": false,
     "uturaType": "Utura Gran",
+    "curePoison": false,
     "cureBleed": false,
     "holdUtura": true,
-    "utanaCost": 440,
+    "hasteCost": 80,
     "paralyseSpell": "utani mas hur",
     "cureParalyse": true,
     "poisonCost": 20,
@@ -24,172 +24,172 @@
     "cureElectrify": false,
     "holdUtamo": false,
     "paralyseCost": 40,
-    "hasteCost": 80,
+    "utanaCost": 440,
     "holdUtana": false,
-    "burnCost": 30
+    "stopHaste": false
   },
   "currentHealBotProfile": 1,
   "healbot": [
     {
       "MessageDelay": false,
-      "Conditions": true,
-      "itemTable": [
-        {
-          "enabled": false,
-          "index": 1,
-          "origin": "HP%",
-          "item": 3160,
-          "value": 70,
-          "sign": "<"
-        },
-        {
-          "enabled": false,
-          "index": 2,
-          "origin": "HP%",
-          "item": 52813,
-          "value": 65,
-          "sign": "<"
-        },
-        {
-          "enabled": true,
-          "origin": "MP%",
-          "value": 30,
-          "item": 238,
-          "index": 3,
-          "sign": "<"
-        },
-        {
-          "enabled": false,
-          "index": 4,
-          "origin": "HP%",
-          "item": 7643,
-          "value": 75,
-          "sign": "<"
-        },
-        {
-          "sign": "<",
-          "value": 75,
-          "index": 5,
-          "item": 23375,
-          "origin": "HP%",
-          "enabled": true
-        },
-        {
-          "enabled": false,
-          "index": 6,
-          "origin": "MP%",
-          "item": 238,
-          "value": 70,
-          "sign": "<"
-        },
-        {
-          "enabled": false,
-          "index": 7,
-          "origin": "HP%",
-          "item": 23375,
-          "value": 90,
-          "sign": "<"
-        }
-      ],
-      "Delay": true,
       "Visible": true,
+      "Interval": true,
+      "Delay": true,
+      "Conditions": true,
       "Cooldown": true,
       "spellTable": [
         {
           "enabled": false,
-          "value": 80,
-          "origin": "HP%",
-          "sign": "<",
-          "spell": "exura gran ico",
           "index": 1,
+          "origin": "HP%",
+          "spell": "exura gran ico",
+          "sign": "<",
+          "value": 80,
           "cost": 90
         },
         {
           "enabled": true,
-          "value": 90,
-          "origin": "HP%",
-          "sign": "<",
-          "spell": "exura gran ico",
           "index": 2,
+          "origin": "HP%",
+          "spell": "exura gran ico",
+          "sign": "<",
+          "value": 90,
           "cost": 90
         },
         {
           "enabled": false,
-          "value": 99,
-          "origin": "HP%",
-          "sign": "<",
-          "spell": "exura gran ico",
           "index": 3,
+          "origin": "HP%",
+          "spell": "exura gran ico",
+          "sign": "<",
+          "value": 99,
           "cost": 90
         }
       ],
       "enabled": true,
       "name": "Profile #1",
-      "Interval": true
+      "itemTable": [
+        {
+          "sign": "<",
+          "origin": "HP%",
+          "value": 70,
+          "item": 3160,
+          "index": 1,
+          "enabled": false
+        },
+        {
+          "sign": "<",
+          "origin": "HP%",
+          "value": 65,
+          "item": 52813,
+          "index": 2,
+          "enabled": false
+        },
+        {
+          "sign": "<",
+          "value": 30,
+          "index": 3,
+          "item": 238,
+          "origin": "MP%",
+          "enabled": true
+        },
+        {
+          "sign": "<",
+          "origin": "HP%",
+          "value": 75,
+          "item": 7643,
+          "index": 4,
+          "enabled": false
+        },
+        {
+          "enabled": true,
+          "index": 5,
+          "origin": "HP%",
+          "item": 23375,
+          "value": 75,
+          "sign": "<"
+        },
+        {
+          "sign": "<",
+          "origin": "MP%",
+          "value": 70,
+          "item": 238,
+          "index": 6,
+          "enabled": false
+        },
+        {
+          "sign": "<",
+          "origin": "HP%",
+          "value": 90,
+          "item": 23375,
+          "index": 7,
+          "enabled": false
+        }
+      ]
     },
     {
       "MessageDelay": false,
-      "Conditions": true,
-      "itemTable": [
-
-      ],
-      "Delay": true,
       "Visible": true,
+      "Interval": true,
+      "Delay": true,
+      "Conditions": true,
       "Cooldown": true,
       "spellTable": [
 
       ],
       "enabled": true,
       "name": "Profile #2",
-      "Interval": true
+      "itemTable": [
+
+      ]
     },
     {
       "MessageDelay": false,
-      "Conditions": true,
-      "itemTable": [
-
-      ],
-      "Delay": true,
       "Visible": true,
+      "Interval": true,
+      "Delay": true,
+      "Conditions": true,
       "Cooldown": true,
       "spellTable": [
 
       ],
       "enabled": false,
       "name": "Profile #3",
-      "Interval": true
+      "itemTable": [
+
+      ]
     },
     {
       "MessageDelay": false,
-      "Conditions": true,
-      "itemTable": [
-
-      ],
-      "Delay": true,
       "Visible": true,
+      "Interval": true,
+      "Delay": true,
+      "Conditions": true,
       "Cooldown": true,
       "spellTable": [
 
       ],
       "enabled": false,
       "name": "Profile #4",
-      "Interval": true
+      "itemTable": [
+
+      ]
     },
     {
       "MessageDelay": false,
-      "Conditions": true,
-      "itemTable": [
-
-      ],
-      "Delay": true,
       "Visible": true,
+      "Interval": true,
+      "Delay": true,
+      "Conditions": true,
       "Cooldown": true,
       "spellTable": [
 
       ],
       "enabled": false,
       "name": "Profile #5",
-      "Interval": true
+      "itemTable": [
+
+      ]
     }
   ]
 }

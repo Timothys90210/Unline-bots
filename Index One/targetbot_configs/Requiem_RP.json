@@ -133,7 +133,7 @@
       "lureCount": 1,
       "avoidAttacks": false,
       "rePositionAmount": 5,
-      "lureMax": 7,
+      "lureMax": 8,
       "regex": "^.*$",
       "chase": false,
       "priority": 1,

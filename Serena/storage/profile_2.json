@@ -4,15 +4,15 @@
       "exeta amp res": 0,
       "exeta res": 0,
       "exeta hur": 0,
-      "exori ico": 0,
+      "exori": 0,
       "exori gran": 0,
       "exori amp kor": 4,
-      "exori mas": 0,
-      "exori": 0,
+      "exori gran ico": 0,
+      "exori ico": 0,
       "uber exori": 0,
       "exori min": 0,
       "exori hur": 0,
-      "exori gran ico": 0
+      "exori mas": 0
     },
     "MS": {
       "exevo gran vis": 1,
@@ -20,31 +20,43 @@
       "exevo vis lux": 1,
       "exori vis": 1,
       "exori gran vis": 1,
-      "exori tera": 1,
+      "exevo gran mas vis": 1,
       "exevo gran mas mort": 1,
       "exevo gran mas flam": 1,
       "exori max vis": 1,
       "exevo flam hur": 1,
-      "exevo vis hur": 1,
+      "exori mort": 1,
       "exevo gran vis lux": 1,
-      "exori flam": 1,
+      "exori frigo": 1,
       "exevo gran flam hur": 1,
-      "exevo gran mas vis": 1,
+      "exori tera": 1,
       "exevo max mort": 1,
       "adana sio vis": 1,
-      "exori frigo": 1,
-      "exori mort": 1
+      "exori flam": 1,
+      "exevo vis hur": 1
     },
     "Ninja": {
-      "exori mas cruentus": 1,
+      "utevo mas chain": 1,
       "ignis rumptur": 1,
       "exori cruentus": 1,
       "exevo lux velox": 1,
       "pectus cruentus": 1,
       "utevo ignis fiamma": 1,
-      "utevo mas chain": 1,
+      "exori mas cruentus": 1,
       "exevo extra lumen": 1,
       "exevo intra lumen": 1
+    },
+    "RP": {
+      "exori con ani": 1,
+      "exevo vis": 1,
+      "utevo grav san": 1,
+      "exevo mas san": 1,
+      "exori gran con": 1,
+      "exori san": 1,
+      "exevo tempo mas san": 1,
+      "utito tempo san": 1,
+      "exori con": 1,
+      "exori mas con": 1
     },
     "ED": {
       "exevo gran mas frigo": 1,
@@ -57,28 +69,21 @@
       "exori max tera": 1,
       "exori frigo": 1,
       "exevo tera hur": 1,
-      "exori gran frigo": 1,
-      "exori flam": 1,
       "exori max frigo": 1,
+      "exori flam": 1,
+      "exori gran frigo": 1,
       "exori gran tera": 1,
       "exevo gran mas tera": 1,
       "exevo gran tera": 1,
       "exevo frigo hur": 1
-    },
-    "RP": {
-      "utito tempo san": 1,
-      "exevo vis": 1,
-      "exori con ani": 1,
-      "exevo mas san": 1,
-      "exori gran con": 1,
-      "exori san": 1,
-      "exevo tempo mas san": 1,
-      "exori con": 1,
-      "utevo grav san": 1,
-      "exori mas con": 1
     }
   },
   "guardSwitchEnabled": true,
+  "waves": {
+    "enabled": false,
+    "selected": "Shield Bash",
+    "monsters": 2
+  },
   "stashDeposits": {
     "items": [
       {
@@ -110,1051 +115,80 @@
         "tolerance": 0,
         "count": 1,
         "id": 27283
+      },
+      {
+        "tolerance": 0,
+        "count": 1,
+        "id": 21194
       }
     ]
   },
-  "ingame_hotkeys": "local function applyPanelWidth()\n    local interface = modules.game_interface\n    if not interface then return end\n    local leftPanel = interface:getLeftPanel()\n    if leftPanel then leftPanel:setWidth(230) end\nend\napplyPanelWidth()\n",
+  "RP_enabled": false,
   "teleportWaypoint": "9",
   "walkDelayAmount": 2,
-  "guardSwitchMainWeapon": 27736,
-  "targetBotTargets": 1,
-  "imbuementChecker": {
-    "lastCheck": 1762865163,
-    "waitingForWindow": false
-  },
-  "Ninja_enabled": false,
-  "autoTradeMessage": "I'm using OTClientV8!",
-  "imbuePosX": "500",
-  "guardSwitchShield": 26763,
-  "_macros": {
-    "": false,
-    "Follow Change": false,
-    "Loot Channel": true,
-    "AutoSpell MS": false,
-    "Distance Follow": false,
-    "Drop Trash": false,
-    "Say Supply Stash ID": false,
-    "AutoSpell EK": true,
-    "Stop near Trainers/Dummy": false,
-    "Stone skin amulet": false,
-    "AutoSpell ED": false,
-    "Filter Damage Messages": true,
-    "Bot off if no bless": true,
-    "Fast Tiles": false,
-    "Drop empty BP": true,
-    "Auto-Orbs CaveBot": false,
-    "Follow": false,
-    "Dust Tracker": false,
-    "Eat Food": true,
-    "Gather Orbs": true,
-    "Equip Check": true,
-    "Monster Identifier": true,
-    "Revisar pilares y activar": false,
-    "Dodge Effects": false,
-    "AutoSpell Ninja": false,
-    "Auto-Portals": false,
-    "AutoSpell RP": false,
-    "Girar pilares (con armor)": false,
-    "Might Ring": false,
-    "Claude Follow": false,
-    "ImbuementChecker": false,
-    "Idle Mode": false,
-    "CaveBot Watchdog": false,
-    "Cast Food": false,
-    "Auto Stash": true,
-    "Exchange money": true,
-    "Toggle spell text": false,
-    "Esconde Mensagens Laranjas": true,
-    "Enable Imbuement Checker": false
-  },
-  "equipCheckArmor": 26703,
-  "dropper": {
-    "enabled": false,
-    "trashItems": [
-      {
-        "id": 830,
-        "count": 1
-      },
-      {
-        "id": 2903,
-        "count": 1
-      },
-      {
-        "id": 285,
-        "count": 1
-      },
-      {
-        "id": 3372,
-        "count": 1
-      },
-      {
-        "id": 3354,
-        "count": 1
-      },
-      {
-        "id": 7773,
-        "count": 1
-      },
-      {
-        "id": 3327,
-        "count": 1
-      },
-      {
-        "id": 7774,
-        "count": 1
-      }
-    ],
-    "useItems": [
-
-    ],
-    "capItems": [
-      {
-        "id": 3360,
-        "count": 1
-      },
-      {
-        "id": 14247,
-        "count": 1
-      },
-      {
-        "id": 7383,
-        "count": 1
-      },
-      {
-        "id": 16163,
-        "count": 1
-      }
-    ]
-  },
-  "cavebotSell": [
-    {
-      "id": 23544,
-      "count": 1
-    },
-    {
-      "id": 3081,
-      "count": 1
-    }
-  ],
-  "stashActionRetryWait": 200,
-  "_icons": {
-    "Hallowen": {
-      "y": 0.11741935483871,
-      "x": 0.013333333333333,
-      "enabled": true
-    },
-    "CinderEvent": {
-      "y": 0.53116147308782,
-      "x": 0.0039745627980922,
-      "enabled": true
-    },
-    "petHealer": {
-      "y": 0.05,
-      "x": 0.01,
-      "enabled": true
-    },
-    "resetCursorIcon": {
-      "y": 0.44475920679887,
-      "x": 0.0015898251192369,
-      "enabled": false
-    },
-    "MonsterIdentifier": {
-      "y": 0.25070821529745,
-      "x": 0.0087440381558029,
-      "enabled": true
-    },
-    "Dodge": {
-      "y": 0.1685552407932,
-      "x": 0.054848966613672,
-      "enabled": false
-    },
-    "buffIcon": {
-      "y": 0.16903225806452,
-      "x": 0.011111111111111,
-      "enabled": false
-    },
-    "AutoOrbs": {
-      "y": 0.10198675496689,
-      "x": 0.0096296296296296,
-      "enabled": true
-    },
-    "DustTracker": {
-      "y": 0.26912181303116,
-      "x": 0.0079491255961844,
-      "enabled": false
-    },
-    "GuardSwitch": {
-      "y": 0.34419263456091,
-      "x": 0.0047694753577107,
-      "enabled": true
-    },
-    "AutoRetrain": {
-      "y": 0.01,
-      "x": 0.010482180293501,
-      "enabled": false
-    },
-    "AutoAccept": {
-      "y": 0.16516129032258,
-      "x": 0.0081481481481481,
-      "enabled": false
-    },
-    "Pilar": {
-      "y": 0.05,
-      "x": 0.01,
-      "enabled": false
-    },
-    "CheckPillars": {
-      "y": 0.053191489361702,
-      "x": 0.087619047619048,
-      "enabled": false
-    },
-    "SpellCaster": {
-      "y": 0.1643059490085,
-      "x": 0.0031796502384738,
-      "enabled": true
-    }
-  },
-  "petName": "tind",
-  "monsterID": {
-    "savedCaveBotOn": false,
-    "savedTargetBotOn": false,
-    "engaged": false
-  },
-  "autofollow": {
-    "player": "Requiem"
-  },
-  "EK_enabled": true,
-  "moneyItems": [
-    {
-      "id": 3031,
-      "count": 1
-    },
-    {
-      "id": 3035,
-      "count": 1
-    },
-    {
-      "id": 3043,
-      "count": 1
-    }
-  ],
-  "renameContainers": {
-    "sort": true,
-    "forceOpen": true,
-    "list": [
-      {
-        "items": [
-          {
-            "id": 3457,
-            "count": 1
-          },
-          {
-            "id": 3306,
-            "count": 1
-          },
-          {
-            "id": 3725,
-            "count": 39
-          },
-          {
-            "id": 3456,
-            "count": 1
-          },
-          {
-            "id": 3003,
-            "count": 1
-          },
-          {
-            "id": 3308,
-            "count": 1
-          },
-          {
-            "id": 3731,
-            "count": 16
-          }
-        ],
-        "value": "Tools and Food",
-        "enabled": true,
-        "min": true,
-        "item": 2870
-      },
-      {
-        "items": [
-          {
-            "id": 3360,
-            "count": 1
-          },
-          {
-            "id": 3364,
-            "count": 1
-          },
-          {
-            "id": 14247,
-            "count": 1
-          },
-          {
-            "id": 16163,
-            "count": 1
-          },
-          {
-            "id": 3414,
-            "count": 1
-          },
-          {
-            "id": 7383,
-            "count": 1
-          },
-          {
-            "id": 3392,
-            "count": 1
-          },
-          {
-            "id": 3366,
-            "count": 1
-          },
-          {
-            "id": 3420,
-            "count": 1
-          },
-          {
-            "id": 16096,
-            "count": 1
-          },
-          {
-            "id": 10438,
-            "count": 1
-          },
-          {
-            "id": 7407,
-            "count": 1
-          },
-          {
-            "id": 816,
-            "count": 1
-          },
-          {
-            "id": 9304,
-            "count": 1
-          },
-          {
-            "id": 3320,
-            "count": 1
-          },
-          {
-            "id": 7382,
-            "count": 1
-          },
-          {
-            "id": 7393,
-            "count": 1
-          },
-          {
-            "id": 3055,
-            "count": 1
-          },
-          {
-            "id": 830,
-            "count": 1
-          }
-        ],
-        "value": "Loot",
-        "item": 2865,
-        "enabled": true,
-        "min": true,
-        "openNext": false
-      },
-      {
-        "items": [
-          {
-            "count": 30,
-            "id": 238
-          },
-          {
-            "count": 100,
-            "id": 23375
-          },
-          {
-            "count": 50,
-            "id": 52813
-          },
-          {
-            "count": 100,
-            "id": 52764
-          }
-        ],
-        "value": "Runes n Rings",
-        "enabled": true,
-        "min": true,
-        "item": 2868
-      },
-      {
-        "items": [
-          {
-            "count": 100,
-            "id": 25757
-          },
-          {
-            "count": 100,
-            "id": 3447
-          },
-          {
-            "count": 100,
-            "id": 25758
-          }
-        ],
-        "value": "Ammo",
-        "enabled": true,
-        "min": true,
-        "item": 2869
-      },
-      {
-        "items": [
-          {
-            "id": 3035,
-            "count": 70
-          },
-          {
-            "id": 3043,
-            "count": 0
-          },
-          {
-            "id": 3031,
-            "count": 0
-          },
-          {
-            "id": 14112,
-            "count": 1
-          },
-          {
-            "id": 2866,
-            "count": 1
-          }
-        ],
-        "value": "Main BP",
-        "enabled": true,
-        "min": false,
-        "item": 26772
-      },
-      {
-        "items": [
-          {
-            "id": 16121,
-            "count": 29
-          },
-          {
-            "id": 3038,
-            "count": 21
-          },
-          {
-            "id": 16120,
-            "count": 20
-          },
-          {
-            "id": 3036,
-            "count": 30
-          },
-          {
-            "id": 3037,
-            "count": 26
-          },
-          {
-            "id": 3041,
-            "count": 25
-          },
-          {
-            "id": 16119,
-            "count": 25
-          },
-          {
-            "id": 6569,
-            "count": 47
-          },
-          {
-            "id": 12309,
-            "count": 1
-          },
-          {
-            "id": 9058,
-            "count": 1
-          },
-          {
-            "id": 282,
-            "count": 1
-          },
-          {
-            "id": 281,
-            "count": 1
-          },
-          {
-            "id": 16125,
-            "count": 3
-          },
-          {
-            "id": 3039,
-            "count": 17
-          },
-          {
-            "id": 16127,
-            "count": 8
-          },
-          {
-            "id": 16126,
-            "count": 1
-          },
-          {
-            "id": 6546,
-            "count": 1
-          },
-          {
-            "id": 29934,
-            "count": 2
-          },
-          {
-            "id": 6499,
-            "count": 4
-          },
-          {
-            "id": 9661,
-            "count": 27
-          },
-          {
-            "id": 30255,
-            "count": 2
-          },
-          {
-            "id": 32577,
-            "count": 1
-          },
-          {
-            "id": 32578,
-            "count": 1
-          },
-          {
-            "id": 30256,
-            "count": 1
-          },
-          {
-            "id": 30254,
-            "count": 0
-          },
-          {
-            "id": 814,
-            "count": 1
-          },
-          {
-            "id": 8082,
-            "count": 1
-          },
-          {
-            "id": 3286,
-            "count": 1
-          },
-          {
-            "id": 7440,
-            "count": 1
-          },
-          {
-            "id": 27283,
-            "count": 1
-          },
-          {
-            "id": 27284,
-            "count": 1
-          },
-          {
-            "id": 3115,
-            "count": 1
-          },
-          {
-            "id": 7439,
-            "count": 1
-          },
-          {
-            "id": 3367,
-            "count": 1
-          },
-          {
-            "id": 3276,
-            "count": 1
-          },
-          {
-            "id": 3411,
-            "count": 1
-          },
-          {
-            "id": 3065,
-            "count": 1
-          },
-          {
-            "id": 811,
-            "count": 1
-          },
-          {
-            "id": 9663,
-            "count": 1
-          }
-        ],
-        "value": "Collectables",
-        "enabled": true,
-        "min": true,
-        "item": 52506
-      },
-      {
-        "items": [
-          {
-            "count": 1,
-            "id": 2854
-          }
-        ],
-        "value": "SSA RINGS",
-        "enabled": true,
-        "min": true,
-        "item": 14249
-      },
-      {
-        "items": [
-          {
-            "id": 43160,
-            "count": 1
-          },
-          {
-            "id": 26810,
-            "count": 1
-          },
-          {
-            "id": 26763,
-            "count": 1
-          },
-          {
-            "id": 27736,
-            "count": 1
-          },
-          {
-            "id": 26773,
-            "count": 1
-          },
-          {
-            "id": 26503,
-            "count": 1
-          },
-          {
-            "id": 52474,
-            "count": 1
-          },
-          {
-            "id": 52829,
-            "count": 1
-          }
-        ],
-        "value": "Main weapons",
-        "enabled": true,
-        "min": false,
-        "item": 9605
-      },
-      {
-        "items": [
-          {
-            "id": 39217,
-            "count": 1
-          },
-          {
-            "id": 39215,
-            "count": 1
-          }
-        ],
-        "value": "Naga water",
-        "enabled": true,
-        "min": true,
-        "item": 5801
-      },
-      {
-        "items": [
-          {
-            "count": 1,
-            "id": 3030
-          },
-          {
-            "count": 1,
-            "id": 3032
-          },
-          {
-            "count": 1,
-            "id": 3033
-          },
-          {
-            "count": 0,
-            "id": 3029
-          },
-          {
-            "count": 0,
-            "id": 3028
-          },
-          {
-            "count": 7,
-            "id": 9057
-          }
-        ],
-        "value": "Small gems",
-        "enabled": true,
-        "min": true,
-        "item": 2871
-      },
-      {
-        "items": [
-          {
-            "id": 2903,
-            "count": 1
-          },
-          {
-            "id": 10422,
-            "count": 1
-          },
-          {
-            "id": 8073,
-            "count": 1
-          },
-          {
-            "id": 3062,
-            "count": 1
-          },
-          {
-            "id": 830,
-            "count": 1
-          }
-        ],
-        "value": "Tasks",
-        "enabled": true,
-        "min": false,
-        "item": 9602
-      }
-    ],
-    "purse": false,
-    "enabled": false,
-    "height": 170,
-    "lootBag": false
-  },
-  "equipCheckDoll": 32154,
-  "minImbuementTimeInput": "7200",
-  "stashActionMaxRetries": 2,
-  "imbuePosZ": "7",
-  "imbuingConfig": {
-    "weapon": [
-      6,
-      9,
-      3
-    ],
-    "doll": [
-      6,
-      0,
-      0
-    ],
-    "helmet": [
-      9,
-      39,
-      0
-    ],
-    "armor": [
-      6,
-      21,
-      0
-    ],
-    "shield": [
-      21,
-      0,
-      0
-    ]
-  },
-  "specialDeposit": {
-    "height": 380,
-    "items": [
-
-    ]
-  },
-  "ED_enabled": false,
-  "checkVersion": 1779898216,
-  "autoSpellCounts": {
-    "EK": {
-      "exeta amp res": 5,
-      "exeta res": 1,
-      "exeta hur": 1,
-      "exori ico": 1,
-      "exori gran": 3,
-      "exori amp kor": 1,
-      "exori mas": 3,
-      "exori": 1,
-      "uber exori": 5,
-      "exori min": 1,
-      "exori hur": 1,
-      "exori gran ico": 4
-    },
-    "MS": {
-      "exevo gran vis": 1,
-      "exevo gran mas vis lux": 1,
-      "exevo vis lux": 1,
-      "exori vis": 1,
-      "exori gran vis": 1,
-      "exori tera": 1,
-      "exevo gran mas mort": 1,
-      "exevo gran mas flam": 1,
-      "exori max vis": 1,
-      "exevo flam hur": 1,
-      "exevo vis hur": 1,
-      "exevo gran vis lux": 1,
-      "exori flam": 1,
-      "exevo gran flam hur": 1,
-      "exevo gran mas vis": 1,
-      "exevo max mort": 1,
-      "adana sio vis": 1,
-      "exori frigo": 1,
-      "exori mort": 1
-    },
-    "Ninja": {
-      "exori mas cruentus": 1,
-      "ignis rumptur": 1,
-      "exori cruentus": 1,
-      "exevo lux velox": 1,
-      "pectus cruentus": 1,
-      "utevo ignis fiamma": 1,
-      "utevo mas chain": 1,
-      "exevo extra lumen": 1,
-      "exevo intra lumen": 1
-    },
-    "ED": {
-      "exevo gran mas frigo": 1,
-      "exevo gran gran tera": 1,
-      "exevo gran frigo hur": 1,
-      "exori vis": 1,
-      "exori tera": 1,
-      "exevo ulus frigo": 1,
-      "exori moe ico": 1,
-      "exori max tera": 1,
-      "exori frigo": 1,
-      "exevo tera hur": 1,
-      "exori gran frigo": 1,
-      "exori flam": 1,
-      "exori max frigo": 1,
-      "exori gran tera": 1,
-      "exevo gran mas tera": 1,
-      "exevo gran tera": 1,
-      "exevo frigo hur": 1
-    },
-    "RP": {
-      "utito tempo san": 1,
-      "exevo vis": 1,
-      "exori con ani": 1,
-      "exevo mas san": 1,
-      "exori gran con": 1,
-      "exori san": 1,
-      "exevo tempo mas san": 1,
-      "exori con": 1,
-      "utevo grav san": 1,
-      "exori mas con": 1
-    }
-  },
-  "textDetectionLog": [
-
-  ],
-  "stashDepositsDelay": 500,
-  "RP_enabled": false,
-  "equipCheckShield": 0,
-  "_configs": {
-    "cavebot_configs": {
-      "selected": "NVIP-fbooks",
-      "enabled": true
-    },
-    "targetbot_configs": {
-      "enabled": true,
-      "selected": "Serena_EK"
-    }
-  },
-  "imbuePosY": "522",
-  "fName": "Requiem",
-  "alarms": {
-    "privateMsg": [
-
-    ],
-    "customMessage": {
-      "value": ""
-    },
-    "flashClient": [
-
-    ],
-    "lowMana": {
-      "value": 20
-    },
-    "creatureDetected": [
-
-    ],
-    "damageTaken": [
-
-    ],
-    "playerAttack": [
-
-    ],
-    "ignoreFriends": [
-
-    ],
-    "defaultMsg": [
-
-    ],
-    "playerDetected": [
-
-    ],
-    "lowHealth": {
-      "value": 20
-    },
-    "creatureName": {
-      "value": ""
-    }
-  },
-  "equipCheckWeapon": 27736,
-  "guardSwitchTrainWeapon": 52474,
-  "petHealerPanel": {
-    "healingRuneId": 3160,
-    "healPercent": 60,
-    "petName": "Tind"
-  },
-  "TargetBotLure": true,
-  "autoSpellStopOnTrainer": false,
-  "imbueMachinePos": "500,522,7",
-  "caveBot": {
-    "backOffline": false,
-    "backTrainers": false,
-    "forceRefill": false,
-    "backStop": false
-  },
-  "autoEquip": [
-    {
-      "item1": 3048,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": false,
-      "slot": 9
-    },
-    {
-      "item1": 25757,
-      "title": "Auto Equip",
-      "item2": 25758,
-      "on": false,
-      "slot": 5
-    },
-    {
-      "item1": 3081,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": false,
-      "slot": 2
-    }
-  ],
   "equipCheckEnabled": true,
-  "followDistance": "6",
-  "targetBotLureMax": 8,
-  "EquipperPanel": {
-    "bosses": [
-
-    ],
+  "targetBotTargets": 1,
+  "autoParty": {
+    "onMove": true,
     "enabled": false,
-    "rules": [
-
-    ]
-  },
-  "stashWithdraws": {
-    "items": [
-      {
-        "tolerance": 50,
-        "count": 50,
-        "id": 52813
-      },
-      {
-        "tolerance": 50,
-        "count": 100,
-        "id": 238
-      },
-      {
-        "tolerance": 50,
-        "count": 30,
-        "id": 3731
-      },
-      {
-        "tolerance": 50,
-        "count": 200,
-        "id": 23375
-      }
-    ]
-  },
-  "MS_enabled": false,
-  "stashWithdrawsTolerance": 1,
-  "stashDepositsTolerance": 50,
-  "openFullBPs": {
-    "containers": [
-      {
-        "count": 1,
-        "id": 2871
-      },
-      {
-        "count": 1,
-        "id": 2865
-      },
-      {
-        "count": 1,
-        "id": 9602
-      }
+    "autoPartyList": [
+      "Grayson",
+      "Low",
+      "Testing"
     ],
-    "enabled": true
+    "leaderName": "Serena"
   },
-  "stashWithdrawsDelay": 500,
-  "extras": {
-    "rope": 9596,
-    "bless": false,
-    "gotoMaxDistance": 30,
-    "holdMwall": true,
-    "checkPlayer": false,
-    "looting": 35,
-    "suppliesControl": false,
-    "killUnder": 1,
-    "joinBot": true,
-    "lootLast": false,
-    "holdMwHot": "F5",
-    "shovel": 9596,
-    "pet": true,
-    "autoOpenDoors": true,
-    "stake": false,
-    "nextBackpack": true,
-    "title": true,
-    "reUse": false,
-    "height": 360,
-    "pathfinding": true,
-    "machete": 9596,
-    "separatePm": true,
-    "useAll": "space",
-    "lootDelay": 200,
-    "holdWgHot": "F6",
-    "huntRoutes": 1,
-    "antiKick": true,
-    "talkDelay": 1,
-    "reachable": false,
-    "oberon": true,
-    "highlightTarget": true,
-    "scythe": 9596,
-    "timers": true
-  },
-  "stashNumFields": 30,
   "newHealer": {
-    "vocations": [
-
+    "settings": [
+      {
+        "type": "HealItem",
+        "value": 268,
+        "text": "Mana Item "
+      },
+      {
+        "type": "HealScroll",
+        "value": 6,
+        "text": "Item Range: "
+      },
+      {
+        "type": "HealItem",
+        "value": 52813,
+        "text": "Health Item "
+      },
+      {
+        "type": "HealScroll",
+        "value": 2,
+        "text": "Mas Res Players: "
+      },
+      {
+        "type": "HealScroll",
+        "value": 80,
+        "text": "Heal Friend at: "
+      },
+      {
+        "type": "HealScroll",
+        "value": 80,
+        "text": "Use Gran Sio at: "
+      },
+      {
+        "type": "HealScroll",
+        "value": 80,
+        "text": "Min Player HP%: "
+      },
+      {
+        "type": "HealScroll",
+        "value": 50,
+        "text": "Min Player MP%: "
+      }
     ],
-    "groups": [
-
-    ],
-    "enabled": false,
     "conditions": {
-      "party": true,
+      "sorcerers": false,
       "knights": false,
       "friends": false,
       "botserver": false,
       "paladins": true,
+      "party": true,
       "druids": false,
-      "sorcerers": false,
       "guild": false
     },
     "customPlayers": {
@@ -1194,117 +228,1114 @@
         "mana": true
       }
     ],
-    "settings": [
+    "enabled": false,
+    "groups": [
+
+    ],
+    "vocations": [
+
+    ]
+  },
+  "stashWithdrawsDelay": 500,
+  "imbuePosX": "500",
+  "guardSwitchShield": 26763,
+  "_macros": {
+    "": false,
+    "Follow Change": false,
+    "Loot Channel": true,
+    "AutoSpell MS": false,
+    "Distance Follow": false,
+    "Drop Trash": true,
+    "Say Supply Stash ID": false,
+    "Auto-Mount": false,
+    "AutoSpell EK": true,
+    "Stop near Trainers/Dummy": false,
+    "Gather Orbs": true,
+    "Cast Food": false,
+    "Filter Damage Messages": true,
+    "Bot off if no bless": true,
+    "Fast Tiles": false,
+    "Idle Mode": false,
+    "Auto-Orbs CaveBot": false,
+    "Follow": false,
+    "Dust Tracker": false,
+    "Eat Food": true,
+    "Monster Identifier": true,
+    "Esconde Mensagens Laranjas": true,
+    "Girar pilares (con armor)": false,
+    "Revisar pilares y activar": false,
+    "Waves": false,
+    "Enable Imbuement Checker": false,
+    "CaveBot Watchdog": false,
+    "Dodge Effects": false,
+    "AutoSpell Ninja": false,
+    "Drop empty BP": true,
+    "AutoSpell RP": false,
+    "Might Ring": false,
+    "Attack stance": true,
+    "Auto-Portals": false,
+    "ImbuementChecker": false,
+    "AutoSpell ED": false,
+    "Claude Follow": false,
+    "Defensive stance": true,
+    "Auto Stash": true,
+    "Exchange money": true,
+    "Toggle spell text": false,
+    "Equip Check": true,
+    "Stone skin amulet": false
+  },
+  "equipCheckArmor": 47303,
+  "dropper": {
+    "enabled": false,
+    "trashItems": [
       {
-        "type": "HealItem",
-        "text": "Mana Item ",
-        "value": 268
+        "count": 1,
+        "id": 830
       },
       {
-        "type": "HealScroll",
-        "text": "Item Range: ",
-        "value": 6
+        "count": 1,
+        "id": 2903
       },
       {
-        "type": "HealItem",
-        "text": "Health Item ",
-        "value": 52813
+        "count": 1,
+        "id": 285
       },
       {
-        "type": "HealScroll",
-        "text": "Mas Res Players: ",
-        "value": 2
+        "count": 1,
+        "id": 3372
       },
       {
-        "type": "HealScroll",
-        "text": "Heal Friend at: ",
-        "value": 80
+        "count": 1,
+        "id": 3354
       },
       {
-        "type": "HealScroll",
-        "text": "Use Gran Sio at: ",
-        "value": 80
+        "count": 1,
+        "id": 7773
       },
       {
-        "type": "HealScroll",
-        "text": "Min Player HP%: ",
-        "value": 80
+        "count": 1,
+        "id": 3327
       },
       {
-        "type": "HealScroll",
-        "text": "Min Player MP%: ",
-        "value": 50
+        "count": 1,
+        "id": 7774
+      }
+    ],
+    "useItems": [
+
+    ],
+    "capItems": [
+      {
+        "count": 1,
+        "id": 3360
+      },
+      {
+        "count": 1,
+        "id": 14247
+      },
+      {
+        "count": 1,
+        "id": 7383
+      },
+      {
+        "count": 1,
+        "id": 16163
       }
     ]
   },
-  "useGroundIndex": 1,
+  "cavebotSell": [
+    {
+      "count": 1,
+      "id": 23544
+    },
+    {
+      "count": 1,
+      "id": 3081
+    }
+  ],
+  "targetBotLureMax": 8,
+  "_icons": {
+    "Hallowen": {
+      "y": 0.11741935483871,
+      "x": 0.013333333333333,
+      "enabled": true
+    },
+    "petHealer": {
+      "y": 0.05,
+      "x": 0.01,
+      "enabled": true
+    },
+    "Pilar": {
+      "y": 0.05,
+      "x": 0.01,
+      "enabled": false
+    },
+    "CinderEvent": {
+      "y": 0.53116147308782,
+      "x": 0.0039745627980922,
+      "enabled": true
+    },
+    "resetCursorIcon": {
+      "y": 0.44475920679887,
+      "x": 0.0015898251192369,
+      "enabled": false
+    },
+    "MonsterIdentifier": {
+      "y": 0.25070821529745,
+      "x": 0.0087440381558029,
+      "enabled": true
+    },
+    "CheckPillars": {
+      "y": 0.053191489361702,
+      "x": 0.087619047619048,
+      "enabled": false
+    },
+    "AutoRetrain": {
+      "y": 0.01,
+      "x": 0.010482180293501,
+      "enabled": false
+    },
+    "AutoOrbs": {
+      "y": 0.10198675496689,
+      "x": 0.0096296296296296,
+      "enabled": true
+    },
+    "DustTracker": {
+      "y": 0.26912181303116,
+      "x": 0.0079491255961844,
+      "enabled": false
+    },
+    "GuardSwitch": {
+      "y": 0.34419263456091,
+      "x": 0.0047694753577107,
+      "enabled": true
+    },
+    "AutoMount": {
+      "y": 0.05,
+      "x": 0.01,
+      "enabled": false
+    },
+    "AutoAccept": {
+      "y": 0.16516129032258,
+      "x": 0.0081481481481481,
+      "enabled": false
+    },
+    "buffIcon": {
+      "y": 0.16903225806452,
+      "x": 0.011111111111111,
+      "enabled": false
+    },
+    "Dodge": {
+      "y": 0.1685552407932,
+      "x": 0.054848966613672,
+      "enabled": false
+    },
+    "SpellCaster": {
+      "y": 0.1643059490085,
+      "x": 0.0031796502384738,
+      "enabled": true
+    }
+  },
+  "petName": "tind",
+  "monsterID": {
+    "savedTargetBotOn": false,
+    "engaged": false,
+    "savedCaveBotOn": false
+  },
+  "autofollow": {
+    "player": "Requiem"
+  },
+  "EK_enabled": true,
+  "moneyItems": [
+    {
+      "count": 1,
+      "id": 3031
+    },
+    {
+      "count": 1,
+      "id": 3035
+    },
+    {
+      "count": 1,
+      "id": 3043
+    }
+  ],
+  "renameContainers": {
+    "sort": true,
+    "forceOpen": true,
+    "list": [
+      {
+        "items": [
+          {
+            "count": 1,
+            "id": 3457
+          },
+          {
+            "count": 1,
+            "id": 3306
+          },
+          {
+            "count": 39,
+            "id": 3725
+          },
+          {
+            "count": 1,
+            "id": 3456
+          },
+          {
+            "count": 1,
+            "id": 3003
+          },
+          {
+            "count": 1,
+            "id": 3308
+          },
+          {
+            "count": 16,
+            "id": 3731
+          }
+        ],
+        "value": "Tools and Food",
+        "enabled": true,
+        "min": true,
+        "item": 2870
+      },
+      {
+        "items": [
+          {
+            "count": 1,
+            "id": 3360
+          },
+          {
+            "count": 1,
+            "id": 3364
+          },
+          {
+            "count": 1,
+            "id": 14247
+          },
+          {
+            "count": 1,
+            "id": 16163
+          },
+          {
+            "count": 1,
+            "id": 3414
+          },
+          {
+            "count": 1,
+            "id": 7383
+          },
+          {
+            "count": 1,
+            "id": 3392
+          },
+          {
+            "count": 1,
+            "id": 3366
+          },
+          {
+            "count": 1,
+            "id": 3420
+          },
+          {
+            "count": 1,
+            "id": 16096
+          },
+          {
+            "count": 1,
+            "id": 10438
+          },
+          {
+            "count": 1,
+            "id": 7407
+          },
+          {
+            "count": 1,
+            "id": 816
+          },
+          {
+            "count": 1,
+            "id": 9304
+          },
+          {
+            "count": 1,
+            "id": 3320
+          },
+          {
+            "count": 1,
+            "id": 7382
+          },
+          {
+            "count": 1,
+            "id": 7393
+          },
+          {
+            "count": 1,
+            "id": 3055
+          },
+          {
+            "count": 1,
+            "id": 830
+          }
+        ],
+        "value": "Loot",
+        "item": 2865,
+        "enabled": true,
+        "min": true,
+        "openNext": false
+      },
+      {
+        "items": [
+          {
+            "id": 238,
+            "count": 30
+          },
+          {
+            "id": 23375,
+            "count": 100
+          },
+          {
+            "id": 52813,
+            "count": 50
+          },
+          {
+            "id": 52764,
+            "count": 100
+          }
+        ],
+        "value": "Runes n Rings",
+        "enabled": true,
+        "min": true,
+        "item": 2868
+      },
+      {
+        "items": [
+          {
+            "id": 25757,
+            "count": 100
+          },
+          {
+            "id": 3447,
+            "count": 100
+          },
+          {
+            "id": 25758,
+            "count": 100
+          }
+        ],
+        "value": "Ammo",
+        "enabled": true,
+        "min": true,
+        "item": 2869
+      },
+      {
+        "items": [
+          {
+            "count": 70,
+            "id": 3035
+          },
+          {
+            "count": 0,
+            "id": 3043
+          },
+          {
+            "count": 0,
+            "id": 3031
+          },
+          {
+            "count": 1,
+            "id": 14112
+          },
+          {
+            "count": 1,
+            "id": 2866
+          }
+        ],
+        "value": "Main BP",
+        "enabled": true,
+        "min": true,
+        "item": 61493
+      },
+      {
+        "items": [
+          {
+            "count": 29,
+            "id": 16121
+          },
+          {
+            "count": 21,
+            "id": 3038
+          },
+          {
+            "count": 20,
+            "id": 16120
+          },
+          {
+            "count": 30,
+            "id": 3036
+          },
+          {
+            "count": 26,
+            "id": 3037
+          },
+          {
+            "count": 25,
+            "id": 3041
+          },
+          {
+            "count": 25,
+            "id": 16119
+          },
+          {
+            "count": 47,
+            "id": 6569
+          },
+          {
+            "count": 1,
+            "id": 12309
+          },
+          {
+            "count": 1,
+            "id": 9058
+          },
+          {
+            "count": 1,
+            "id": 282
+          },
+          {
+            "count": 1,
+            "id": 281
+          },
+          {
+            "count": 3,
+            "id": 16125
+          },
+          {
+            "count": 17,
+            "id": 3039
+          },
+          {
+            "count": 8,
+            "id": 16127
+          },
+          {
+            "count": 1,
+            "id": 16126
+          },
+          {
+            "count": 1,
+            "id": 6546
+          },
+          {
+            "count": 2,
+            "id": 29934
+          },
+          {
+            "count": 4,
+            "id": 6499
+          },
+          {
+            "count": 27,
+            "id": 9661
+          },
+          {
+            "count": 2,
+            "id": 30255
+          },
+          {
+            "count": 1,
+            "id": 32577
+          },
+          {
+            "count": 1,
+            "id": 32578
+          },
+          {
+            "count": 1,
+            "id": 30256
+          },
+          {
+            "count": 0,
+            "id": 30254
+          },
+          {
+            "count": 1,
+            "id": 814
+          },
+          {
+            "count": 1,
+            "id": 8082
+          },
+          {
+            "count": 1,
+            "id": 3286
+          },
+          {
+            "count": 1,
+            "id": 7440
+          },
+          {
+            "count": 1,
+            "id": 27283
+          },
+          {
+            "count": 1,
+            "id": 27284
+          },
+          {
+            "count": 1,
+            "id": 3115
+          },
+          {
+            "count": 1,
+            "id": 7439
+          },
+          {
+            "count": 1,
+            "id": 3367
+          },
+          {
+            "count": 1,
+            "id": 3276
+          },
+          {
+            "count": 1,
+            "id": 3411
+          },
+          {
+            "count": 1,
+            "id": 3065
+          },
+          {
+            "count": 1,
+            "id": 811
+          },
+          {
+            "count": 1,
+            "id": 9663
+          }
+        ],
+        "value": "Collectables",
+        "enabled": true,
+        "min": true,
+        "item": 52506
+      },
+      {
+        "items": [
+          {
+            "id": 2854,
+            "count": 1
+          }
+        ],
+        "value": "SSA RINGS",
+        "enabled": true,
+        "min": true,
+        "item": 14249
+      },
+      {
+        "items": [
+          {
+            "count": 1,
+            "id": 43160
+          },
+          {
+            "count": 1,
+            "id": 26810
+          },
+          {
+            "count": 1,
+            "id": 26763
+          },
+          {
+            "count": 1,
+            "id": 27736
+          },
+          {
+            "count": 1,
+            "id": 26773
+          },
+          {
+            "count": 1,
+            "id": 26503
+          },
+          {
+            "count": 1,
+            "id": 52474
+          },
+          {
+            "count": 1,
+            "id": 52829
+          }
+        ],
+        "value": "Main weapons",
+        "enabled": true,
+        "min": false,
+        "item": 9605
+      },
+      {
+        "items": [
+          {
+            "count": 1,
+            "id": 39217
+          },
+          {
+            "count": 1,
+            "id": 39215
+          }
+        ],
+        "value": "Naga water",
+        "enabled": true,
+        "min": true,
+        "item": 5801
+      },
+      {
+        "items": [
+          {
+            "id": 3030,
+            "count": 1
+          },
+          {
+            "id": 3032,
+            "count": 1
+          },
+          {
+            "id": 3033,
+            "count": 1
+          },
+          {
+            "id": 3029,
+            "count": 0
+          },
+          {
+            "id": 3028,
+            "count": 0
+          },
+          {
+            "id": 9057,
+            "count": 7
+          }
+        ],
+        "value": "Small gems",
+        "enabled": true,
+        "min": true,
+        "item": 2871
+      },
+      {
+        "items": [
+          {
+            "count": 1,
+            "id": 2903
+          },
+          {
+            "count": 1,
+            "id": 10422
+          },
+          {
+            "count": 1,
+            "id": 8073
+          },
+          {
+            "count": 1,
+            "id": 3062
+          },
+          {
+            "count": 1,
+            "id": 830
+          }
+        ],
+        "value": "Tasks",
+        "enabled": true,
+        "min": false,
+        "item": 9602
+      }
+    ],
+    "purse": false,
+    "enabled": false,
+    "height": 170,
+    "lootBag": false
+  },
+  "equipCheckDoll": 61550,
+  "minImbuementTimeInput": "7200",
+  "stashActionMaxRetries": 2,
+  "imbuePosZ": "7",
+  "imbuingConfig": {
+    "shield": [
+      21,
+      0,
+      0
+    ],
+    "doll": [
+      6,
+      0,
+      0
+    ],
+    "helmet": [
+      9,
+      39,
+      0
+    ],
+    "armor": [
+      6,
+      21,
+      0
+    ],
+    "weapon": [
+      6,
+      9,
+      3
+    ]
+  },
+  "specialDeposit": {
+    "height": 380,
+    "items": [
+
+    ]
+  },
+  "followLeader": "",
+  "stances": {
+    "attackEnabled": true,
+    "defensiveHp": 30,
+    "attackSpell": {
+      "name": "Berserker Stance",
+      "spell": "utito stancia"
+    },
+    "defensiveSpell": {
+      "name": "Guardian Stance",
+      "spell": "utamo stancia"
+    },
+    "defensiveEnabled": true
+  },
+  "checkVersion": 1780517504,
+  "autoSpellCounts": {
+    "EK": {
+      "exeta amp res": 5,
+      "exeta res": 1,
+      "exeta hur": 1,
+      "exori": 1,
+      "exori gran": 3,
+      "exori amp kor": 1,
+      "exori gran ico": 4,
+      "exori ico": 1,
+      "uber exori": 5,
+      "exori min": 1,
+      "exori hur": 1,
+      "exori mas": 3
+    },
+    "MS": {
+      "exevo gran vis": 1,
+      "exevo gran mas vis lux": 1,
+      "exevo vis lux": 1,
+      "exori vis": 1,
+      "exori gran vis": 1,
+      "exevo gran mas vis": 1,
+      "exevo gran mas mort": 1,
+      "exevo gran mas flam": 1,
+      "exori max vis": 1,
+      "exevo flam hur": 1,
+      "exori mort": 1,
+      "exevo gran vis lux": 1,
+      "exori frigo": 1,
+      "exevo gran flam hur": 1,
+      "exori tera": 1,
+      "exevo max mort": 1,
+      "adana sio vis": 1,
+      "exori flam": 1,
+      "exevo vis hur": 1
+    },
+    "Ninja": {
+      "utevo mas chain": 1,
+      "ignis rumptur": 1,
+      "exori cruentus": 1,
+      "exevo lux velox": 1,
+      "pectus cruentus": 1,
+      "utevo ignis fiamma": 1,
+      "exori mas cruentus": 1,
+      "exevo extra lumen": 1,
+      "exevo intra lumen": 1
+    },
+    "RP": {
+      "exori con ani": 1,
+      "exevo vis": 1,
+      "utevo grav san": 1,
+      "exevo mas san": 1,
+      "exori gran con": 1,
+      "exori san": 1,
+      "exevo tempo mas san": 1,
+      "utito tempo san": 1,
+      "exori con": 1,
+      "exori mas con": 1
+    },
+    "ED": {
+      "exevo gran mas frigo": 1,
+      "exevo gran gran tera": 1,
+      "exevo gran frigo hur": 1,
+      "exori vis": 1,
+      "exori tera": 1,
+      "exevo ulus frigo": 1,
+      "exori moe ico": 1,
+      "exori max tera": 1,
+      "exori frigo": 1,
+      "exevo tera hur": 1,
+      "exori max frigo": 1,
+      "exori flam": 1,
+      "exori gran frigo": 1,
+      "exori gran tera": 1,
+      "exevo gran mas tera": 1,
+      "exevo gran tera": 1,
+      "exevo frigo hur": 1
+    }
+  },
+  "textDetectionLog": [
+
+  ],
+  "stashDepositsDelay": 500,
+  "guardSwitchMainWeapon": 27686,
+  "stashWithdrawsTolerance": 1,
+  "imbuementChecker": {
+    "lastCheck": 1762865163,
+    "waitingForWindow": false
+  },
+  "equipCheckShield": 0,
+  "guardSwitchTrainWeapon": 52474,
   "targetBotDynamicLureDelayValue": 400,
+  "equipCheckWeapon": 27686,
+  "useGroundIndex": 1,
+  "autoEquip": [
+    {
+      "item1": 3048,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 9
+    },
+    {
+      "item1": 25757,
+      "title": "Auto Equip",
+      "item2": 25758,
+      "on": false,
+      "slot": 5
+    },
+    {
+      "item1": 3081,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 2
+    }
+  ],
+  "TargetBotLure": true,
+  "ingame_hotkeys": "local function applyPanelWidth()\n    local interface = modules.game_interface\n    if not interface then return end\n    local leftPanel = interface:getLeftPanel()\n    if leftPanel then leftPanel:setWidth(230) end\nend\napplyPanelWidth()\n",
+  "imbueMachinePos": "500,522,7",
+  "caveBot": {
+    "forceRefill": false,
+    "backStop": false,
+    "backTrainers": false,
+    "backOffline": false
+  },
   "playerList": {
     "enemyList": [
 
     ],
     "outfits": false,
     "groupMembers": true,
+    "marks": false,
+    "highlight": false,
+    "blackList": [
+
+    ],
     "friendList": [
       "Index Zero",
       "Index One",
       "Index Two"
+    ]
+  },
+  "MS_enabled": false,
+  "petHealerPanel": {
+    "healingRuneId": 3160,
+    "healPercent": 60,
+    "petName": "Tind"
+  },
+  "imbuePosY": "522",
+  "EquipperPanel": {
+    "enabled": false,
+    "bosses": [
+
     ],
-    "highlight": false,
-    "marks": false,
-    "blackList": [
+    "rules": [
 
     ]
   },
-  "foodItems": [
-    {
-      "count": 3,
-      "id": 3583
-    },
-    {
-      "count": 88,
-      "id": 3723
-    },
-    {
-      "count": 100,
-      "id": 3725
-    },
-    {
-      "count": 100,
-      "id": 3731
-    },
-    {
-      "id": 3607,
-      "count": 1
-    },
-    {
-      "id": 3585,
-      "count": 1
-    },
-    {
-      "id": 3592,
-      "count": 1
-    },
-    {
-      "id": 3600,
-      "count": 1
-    },
-    {
-      "id": 3601,
-      "count": 1
-    }
-  ],
-  "autoParty": {
-    "onMove": true,
-    "enabled": false,
-    "leaderName": "Serena",
-    "autoPartyList": [
-      "Grayson",
-      "Low",
-      "Testing",
-      "Requiem"
+  "stashWithdraws": {
+    "items": [
+      {
+        "tolerance": 50,
+        "count": 50,
+        "id": 52813
+      },
+      {
+        "tolerance": 50,
+        "count": 100,
+        "id": 238
+      },
+      {
+        "tolerance": 50,
+        "count": 30,
+        "id": 3731
+      },
+      {
+        "tolerance": 50,
+        "count": 200,
+        "id": 23375
+      }
     ]
   },
-  "equipCheckHelmet": 27373,
-  "followLeader": ""
+  "stashActionRetryWait": 200,
+  "_configs": {
+    "targetbot_configs": {
+      "selected": "Serena_EK",
+      "enabled": true
+    },
+    "cavebot_configs": {
+      "enabled": false,
+      "selected": "NVIP_ibooks"
+    }
+  },
+  "stashDepositsTolerance": 50,
+  "openFullBPs": {
+    "containers": [
+      {
+        "id": 2871,
+        "count": 1
+      },
+      {
+        "id": 2865,
+        "count": 1
+      },
+      {
+        "id": 9602,
+        "count": 1
+      }
+    ],
+    "enabled": true
+  },
+  "followDistance": "6",
+  "autoTradeMessage": "I'm using OTClientV8!",
+  "stashNumFields": 30,
+  "extras": {
+    "rope": 9596,
+    "bless": false,
+    "gotoMaxDistance": 30,
+    "holdMwall": true,
+    "checkPlayer": false,
+    "looting": 35,
+    "suppliesControl": false,
+    "killUnder": 1,
+    "joinBot": true,
+    "lootLast": false,
+    "holdMwHot": "F5",
+    "shovel": 9596,
+    "pet": true,
+    "autoOpenDoors": true,
+    "stake": false,
+    "scythe": 9596,
+    "title": true,
+    "reUse": false,
+    "height": 360,
+    "pathfinding": true,
+    "machete": 9596,
+    "separatePm": true,
+    "useAll": "space",
+    "lootDelay": 200,
+    "holdWgHot": "F6",
+    "oberon": true,
+    "antiKick": true,
+    "talkDelay": 1,
+    "timers": true,
+    "huntRoutes": 1,
+    "highlightTarget": true,
+    "nextBackpack": true,
+    "reachable": false
+  },
+  "autoSpellStopOnTrainer": false,
+  "alarms": {
+    "privateMsg": [
+
+    ],
+    "customMessage": {
+      "value": ""
+    },
+    "flashClient": [
+
+    ],
+    "lowMana": {
+      "value": 20
+    },
+    "creatureDetected": [
+
+    ],
+    "damageTaken": [
+
+    ],
+    "playerAttack": [
+
+    ],
+    "ignoreFriends": [
+
+    ],
+    "defaultMsg": [
+
+    ],
+    "creatureName": {
+      "value": ""
+    },
+    "lowHealth": {
+      "value": 20
+    },
+    "playerDetected": [
+
+    ]
+  },
+  "fName": "Requiem",
+  "ED_enabled": false,
+  "Ninja_enabled": false,
+  "equipCheckHelmet": 47300,
+  "foodItems": [
+    {
+      "id": 3583,
+      "count": 3
+    },
+    {
+      "id": 3723,
+      "count": 88
+    },
+    {
+      "id": 3725,
+      "count": 100
+    },
+    {
+      "id": 3731,
+      "count": 100
+    },
+    {
+      "count": 1,
+      "id": 3607
+    },
+    {
+      "count": 1,
+      "id": 3585
+    },
+    {
+      "count": 1,
+      "id": 3592
+    },
+    {
+      "count": 1,
+      "id": 3600
+    },
+    {
+      "count": 1,
+      "id": 3601
+    }
+  ]
 }

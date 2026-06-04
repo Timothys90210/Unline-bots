@@ -83,7 +83,7 @@
   "targeting": [
     {
       "lureDelay": 400,
-      "lureMin": 5,
+      "lureMin": 3,
       "maxDistance": 10,
       "anchorRange": 3,
       "lureCount": 1,

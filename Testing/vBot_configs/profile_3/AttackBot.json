@@ -3,42 +3,6 @@
     {
       "attackTable": [
         {
-          "pattern": 5,
-          "mana": 5,
-          "description": "[Large Area] 4+ Any Creatures: exevo gran mas vis lux, absolute (0%-100%)",
-          "monsters": true,
-          "category": 5,
-          "spell": "exevo gran mas vis lux",
-          "orMore": true,
-          "creatures": "*",
-          "tooltip": false,
-          "patternCategory": 4,
-          "enabled": false,
-          "cooldown": 20,
-          "maxHp": 100,
-          "count": 4,
-          "minHp": 0,
-          "itemId": 0
-        },
-        {
-          "pattern": 5,
-          "mana": 3,
-          "description": "[Large Area] 3+ Any Creatures: exevo gran mas vis, absolute (0%-100%)",
-          "monsters": true,
-          "category": 5,
-          "spell": "exevo gran mas vis",
-          "orMore": true,
-          "creatures": "*",
-          "tooltip": false,
-          "patternCategory": 4,
-          "enabled": false,
-          "cooldown": 6,
-          "maxHp": 100,
-          "count": 3,
-          "minHp": 0,
-          "itemId": 0
-        },
-        {
           "pattern": 10,
           "mana": 1,
           "description": "[10 Sqm Range] 1+ Any Creatures: rune 52807, targeted (0%-100%)",
@@ -55,6 +19,24 @@
           "count": 1,
           "minHp": 0,
           "itemId": 52807
+        },
+        {
+          "description": "[Adjacent] 3+ Any Creatures: exevo echo mort, absolute (0%-100%)",
+          "mana": 1,
+          "orMore": true,
+          "monsters": true,
+          "category": 5,
+          "spell": "exevo echo mort",
+          "pattern": 1,
+          "creatures": "*",
+          "tooltip": false,
+          "patternCategory": 4,
+          "enabled": true,
+          "cooldown": 4,
+          "maxHp": 100,
+          "count": 3,
+          "minHp": 0,
+          "itemId": 0
         },
         {
           "pattern": 5,
@@ -93,6 +75,24 @@
           "itemId": 0
         },
         {
+          "description": "[7 Sqm Range] 2+ Any Creatures: rune 52764, targeted (0%-100%)",
+          "mana": 1,
+          "orMore": true,
+          "monsters": true,
+          "category": 3,
+          "spell": "spell name",
+          "pattern": 7,
+          "creatures": "*",
+          "tooltip": false,
+          "patternCategory": 3,
+          "enabled": false,
+          "cooldown": 2,
+          "maxHp": 100,
+          "count": 2,
+          "minHp": 0,
+          "itemId": 52764
+        },
+        {
           "pattern": 3,
           "mana": 1,
           "description": "[3 Sqm Range] 3+ Any Creatures: rune 52811, targeted (0%-100%)",
@@ -109,12 +109,48 @@
           "count": 3,
           "minHp": 0,
           "itemId": 52811
+        },
+        {
+          "itemId": 0,
+          "mana": 1,
+          "minHp": 0,
+          "monsters": true,
+          "category": 5,
+          "spell": "exevo gran mas vis",
+          "count": 2,
+          "creatures": "*",
+          "tooltip": false,
+          "patternCategory": 4,
+          "enabled": false,
+          "cooldown": 2,
+          "maxHp": 100,
+          "orMore": true,
+          "description": "[Large Area] 2+ Any Creatures: exevo gran mas vis, absolute (0%-100%)",
+          "pattern": 5
+        },
+        {
+          "description": "[Medium Area] 3+ Any Creatures: exevo echo mort, absolute (0%-100%)",
+          "mana": 1,
+          "orMore": true,
+          "monsters": true,
+          "category": 5,
+          "spell": "exevo echo mort",
+          "pattern": 4,
+          "creatures": "*",
+          "tooltip": false,
+          "patternCategory": 4,
+          "enabled": false,
+          "cooldown": 2,
+          "maxHp": 100,
+          "count": 3,
+          "minHp": 0,
+          "itemId": 0
         }
       ],
       "Visible": true,
-      "ignoreMana": true,
+      "Kills": false,
       "KillsAmount": 1,
-      "BlackListSafe": false,
+      "ignoreMana": true,
       "PvpSafe": true,
       "AntiRsRange": 5,
       "pvpMode": false,
@@ -122,7 +158,7 @@
       "Rotate": false,
       "enabled": true,
       "name": "Pro #1",
-      "Kills": false
+      "BlackListSafe": false
     },
     {
       "attackTable": [
@@ -182,9 +218,9 @@
         }
       ],
       "Visible": true,
-      "ignoreMana": true,
+      "Kills": false,
       "KillsAmount": 1,
-      "BlackListSafe": false,
+      "ignoreMana": true,
       "PvpSafe": true,
       "AntiRsRange": 5,
       "pvpMode": false,
@@ -192,16 +228,16 @@
       "Rotate": false,
       "enabled": true,
       "name": "Pro #2",
-      "Kills": false
+      "BlackListSafe": false
     },
     {
       "attackTable": [
 
       ],
       "Visible": true,
-      "ignoreMana": true,
+      "Kills": false,
       "KillsAmount": 1,
-      "BlackListSafe": false,
+      "ignoreMana": true,
       "PvpSafe": true,
       "AntiRsRange": 5,
       "pvpMode": false,
@@ -209,16 +245,16 @@
       "Rotate": false,
       "enabled": true,
       "name": "Pro #3",
-      "Kills": false
+      "BlackListSafe": false
     },
     {
       "attackTable": [
 
       ],
       "Visible": true,
-      "ignoreMana": true,
+      "Kills": false,
       "KillsAmount": 1,
-      "BlackListSafe": false,
+      "ignoreMana": true,
       "PvpSafe": true,
       "AntiRsRange": 5,
       "pvpMode": false,
@@ -226,16 +262,16 @@
       "Rotate": false,
       "enabled": false,
       "name": "Pro #4",
-      "Kills": false
+      "BlackListSafe": false
     },
     {
       "attackTable": [
 
       ],
       "Visible": true,
-      "ignoreMana": true,
+      "Kills": false,
       "KillsAmount": 1,
-      "BlackListSafe": false,
+      "ignoreMana": true,
       "PvpSafe": true,
       "AntiRsRange": 5,
       "pvpMode": false,
@@ -243,7 +279,7 @@
       "Rotate": false,
       "enabled": false,
       "name": "Pro #5",
-      "Kills": false
+      "BlackListSafe": false
     }
   ],
   "currentBotProfile": 1

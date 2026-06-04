@@ -150,14 +150,14 @@
   },
   "targeting": [
     {
-      "lureDelay": 254,
+      "lureDelay": 250,
       "lureMin": 3,
       "maxDistance": 10,
       "anchorRange": 3,
       "lureCount": 1,
       "avoidAttacks": false,
       "rePositionAmount": 4,
-      "lureMax": 6,
+      "lureMax": 9,
       "regex": "^.*$",
       "chase": false,
       "priority": 1,
