@@ -7,3 +7,15 @@ logs/
 
 # Claude Code internal files
 .claude/
+
+# Inactive characters / backups / junk dirs — not the 9 active characters
+# (active: Durian, Grayson, Index One, Index Two, Index Zero, Low, Requiem, Serena, Testing)
+/Don/
+/Dreadfull/
+/Full Bot/
+/Jokrik/
+/MARIO/
+/Tranky/
+/backups/
+/cavebot_1.3/
+/zirona War - Copy/
