@@ -3,7 +3,7 @@ setDefaultTab("BOSS")
 local amulet = {
     amuletEquip   = 3081,  -- SSA
     hpEquip       = 50,    -- equip threshold
-    amuletUnequip = 26773, -- Emerald
+    amuletUnequip = 61241, -- Cinder necklace
     hpUnequip     = 95     -- unequip threshold
 }
 

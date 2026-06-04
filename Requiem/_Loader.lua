@@ -52,7 +52,7 @@ for i, file in ipairs(luaFiles) do
   loadScript(file)
 end
 
-setDefaultTab("_")
+-- setDefaultTab("_")
 UI.Separator()
 dofile("/vBot/autoImbue.lua")
 UI.Separator()
@@ -61,6 +61,4 @@ dofile("DivineGrenade.lua")
 
 dofile("EquipCheck.lua")
 
-dofile("Stances.lua")
-
-dofile("Waves.lua")
+dofile("Stances_main.lua")
