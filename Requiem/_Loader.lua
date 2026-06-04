@@ -35,6 +35,7 @@ local luaFiles = {
   "drop_empty_bp",
   "Containers",
   "tools",
+  "AutoMount",
   "imbuing_config",
   "eat_food",
   "equip",
