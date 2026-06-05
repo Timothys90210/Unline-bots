@@ -75,8 +75,10 @@ Panel
     width: 22
     text: Dir:
     font: verdana-11px-rounded
-  ComboBox
+  Button
     id: folderSelect
+    text-align: left
+    text-offset: 4 0
     anchors.top: parent.top
     anchors.bottom: parent.bottom
     anchors.left: folderIcon.right
@@ -88,8 +90,10 @@ local filePanel = setupUI([[
 Panel
   height: 21
   margin-bottom: 2
-  ComboBox
+  Button
     id: fileSelect
+    text-align: left
+    text-offset: 4 0
     anchors.fill: parent
 ]])
 
@@ -138,9 +142,119 @@ Panel
 ]])
 
 
-folderPanel.folderSelect:addOption("/")
+-- Scrollable dropdown backed by a TextList popup (replaces the unscrollable
+-- core ComboBox). Exposes a ComboBox-like API so the callbacks below are
+-- unchanged in spirit: addOption / clearOptions / setText / getText / onChange.
+local function makeScrollCombo(button)
+    local self = { button = button, options = {}, current = nil, onChange = nil, popup = nil }
+
+    function self:getText() return self.current or "" end
+
+    function self:setText(t)               -- updates display only, never fires onChange
+        self.current = t
+        self.button:setText(t or "")
+    end
+
+    function self:clearOptions()
+        self.options = {}
+        self.current = nil
+        self.button:setText("")
+    end
+
+    function self:addOption(t)
+        table.insert(self.options, t)
+        if self.current == nil then self:setText(t) end  -- first option becomes current (matches ComboBox)
+    end
+
+    function self:closePopup()
+        if self.popup then
+            self.popup:destroy()
+            self.popup = nil
+        end
+    end
+
+    function self:open()
+        self:closePopup()
+        if #self.options == 0 then return end
+        local root = g_ui.getRootWidget()
+        local ok, overlay = pcall(g_ui.createWidget, "CaveScrollOverlay", root)
+        if not ok or not overlay then
+            return warn("[CaveBot] scroll dropdown could not be created: " .. tostring(overlay))
+        end
+        self.popup = overlay
+        -- Click anywhere not consumed by the box (i.e. outside) closes the popup.
+        overlay.onMousePress = function()
+            self:closePopup()
+            return true
+        end
+
+        local box = overlay.box
+        local currentRow = nil
+        for _, opt in ipairs(self.options) do
+            local row = g_ui.createWidget("CaveScrollOption", box.list)
+            row:setText(opt)
+            local isCurrent = (opt == self.current)
+            if isCurrent then
+                currentRow = row
+                row:setBackgroundColor("#1f6fb2")
+            end
+            -- Hover highlight driven from Lua (the $hover style state is unreliable
+            -- on these rows); selected row keeps its blue when not hovered.
+            row.onHoverChange = function(w, hovered)
+                if hovered then
+                    w:setBackgroundColor("#3b556e")
+                else
+                    w:setBackgroundColor(isCurrent and "#1f6fb2" or "alpha")
+                end
+            end
+        end
+
+        -- TextList drives selection via child focus (clicking a row focuses it),
+        -- so hook onChildFocusChange rather than per-row onClick.
+        local ready = false
+        box.list.onChildFocusChange = function(_, newChild)
+            if not ready or not newChild then return end
+            local opt = newChild:getText()
+            local changed = (opt ~= self.current)
+            self:closePopup()
+            if changed then
+                self:setText(opt)
+                if self.onChange then self.onChange(opt) end
+            end
+        end
+
+        -- Size and position the box directly below the button (flip above if it
+        -- would run off the bottom of the screen).
+        local bx, by = button:getX(), button:getY()
+        local bw, bh = button:getWidth(), button:getHeight()
+        local rowH, maxVisible = 16, 12
+        local h = math.min(#self.options, maxVisible) * rowH + 4
+        box:setWidth(bw)
+        box:setHeight(h)
+        box:setX(bx)
+        local belowY = by + bh
+        if belowY + h > root:getHeight() and (by - h) >= 0 then
+            box:setY(by - h)
+        else
+            box:setY(belowY)
+        end
+        overlay:raise()
+
+        -- Highlight the current selection without triggering the change handler.
+        if currentRow then currentRow:focus() end
+        ready = true
+    end
+
+    button.onClick = function() self:open() end
+    return self
+end
+
+local folderCombo = makeScrollCombo(folderPanel.folderSelect)
+local fileCombo   = makeScrollCombo(filePanel.fileSelect)
+
+folderCombo:addOption("/")
 for _, dir in ipairs(getSubfolders()) do
-    folderPanel.folderSelect:addOption(dir)
+    folderCombo:addOption(dir)
 end
 -- ─────────────────────────────────────────────────────────────────────────────
 
@@ -339,20 +453,17 @@ macro(200, function()
 end)
 
 local function currentFullProfile()
-    local file   = filePanel.fileSelect:getCurrentOption().text
-    local folder = folderPanel.folderSelect:getCurrentOption().text
+    local file   = fileCombo:getText()
+    local folder = folderCombo:getText()
     folder = folder == "/" and "" or folder
     return folder == "" and file or (folder .. "/" .. file)
 end
 
-local populatingFiles = false
 local function populateFileCombo(folder)
-    populatingFiles = true
-    filePanel.fileSelect:clearOptions()
+    fileCombo:clearOptions()
     for _, name in ipairs(getCfgFilesInFolder(folder)) do
-        filePanel.fileSelect:addOption(name)
+        fileCombo:addOption(name)
     end
-    populatingFiles = false
 end
 
 -- Sync visual state of our combos with the profile Config.setup already loaded.
@@ -367,7 +478,7 @@ local savedProfile = storage.cavebotSubfolderPath
 if savedProfile:find("/", 1, true) then
     local savedFolder = savedProfile:match("^([^/]+)/")
     if savedFolder then
-        folderPanel.folderSelect:setCurrentOption(savedFolder)
+        folderCombo:setText(savedFolder)
         populateFileCombo(savedFolder)
     else
         populateFileCombo("")
@@ -378,21 +489,18 @@ end
 
 if savedProfile ~= "" then
     local savedFile = savedProfile:match("([^/]+)$") or savedProfile
-    filePanel.fileSelect:setCurrentOption(savedFile)
+    fileCombo:setText(savedFile)
 end
 
-folderPanel.folderSelect.onOptionChange = function()
-    local sel    = folderPanel.folderSelect:getCurrentOption().text
+folderCombo.onChange = function(sel)
     local folder = sel == "/" and "" or sel
     if sel == "/" then subfolderActive = nil end
     populateFileCombo(folder)
 end
 
-filePanel.fileSelect.onOptionChange = function()
-    if populatingFiles then return end
-    local sel = filePanel.fileSelect:getCurrentOption().text
+fileCombo.onChange = function(sel)
     if sel and sel ~= "" then
-        local folder = folderPanel.folderSelect:getCurrentOption().text
+        local folder = folderCombo:getText()
         local fullPath = currentFullProfile()
         if folder == "/" then
             subfolderActive = nil

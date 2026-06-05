@@ -164,3 +164,13 @@ Use a unique global name per script. Note: because the Lua state persists, addin
 2. Widget-level key callbacks take `(widget, keyCode, keyboardModifiers)` — widget is always the first argument.
 
 **Rule:** For widget key handling use `widget.onKeyPress = function(widget, keyCode, keyboardModifiers)`. Enter key is `keyCode == 5`. Reference: `vBot_4.8/vBot/playerlist.lua` line 288. Never use `g_keyboard` (doesn't exist), never assume `KeyReturn` constant is defined.
+
+---
+
+## [2026-06-05] | `.otui` (OTML) files do NOT support `--` comments
+
+**What went wrong:** Added a scrollable-dropdown popup to the Cave tab. Put Lua-style `-- comment` lines inside the new `cavebot.otui` style blocks. In-game the dropdown buttons appeared but clicking them showed nothing — the popup never opened.
+
+**Root cause:** `.otui` files are OTML markup, not Lua. OTML has no `--` comment syntax (a `--` line at column 0 is parsed as a stray node), which corrupted/blocked registration of the `CaveScrollOverlay` style. `g_ui.createWidget("CaveScrollOverlay", root)` then threw, so the click handler aborted silently. Confirmed by: zero `.otui` files in the entire repo use any comment (`--`, `//`, or `#`).
+
+**Rule:** Never put comments in `.otui` files — keep explanatory comments in the `.lua` side only. When a widget "doesn't appear" on click, suspect the style failed to register; wrap `g_ui.createWidget` in `pcall` and `warn` on failure so it surfaces instead of failing silently. For scrollable lists, mirror the proven waypoint-list pattern exactly: `TextList` with `anchors.fill: parent` + `margin-right: 15` + `vertical-scrollbar: <id>`, and a sibling `VerticalScrollBar` anchored top/bottom/right (see [[cave-folder-nav]]).

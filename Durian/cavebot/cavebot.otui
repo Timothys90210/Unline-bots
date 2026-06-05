@@ -6,6 +6,42 @@ CaveBotAction < Label
   $focus:
     background-color: #00000055
 
+CaveScrollOption < UIWidget
+  background-color: alpha
+  color: #cccccc
+  text-align: left
+  text-offset: 4 0
+  font: verdana-11px-rounded
+  height: 16
+  focusable: true
+
+CaveScrollOverlay < UIWidget
+  anchors.fill: parent
+  background-color: alpha
+  focusable: true
+
+  Panel
+    id: box
+    image-source: /images/ui/panel_flat
+    image-border: 6
+
+    TextList
+      id: list
+      anchors.fill: parent
+      vertical-scrollbar: scroll
+      margin: 3
+      margin-right: 15
+      focusable: false
+
+    VerticalScrollBar
+      id: scroll
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.right: parent.right
+      margin: 2
+      pixels-scroll: true
+      step: 16
+
 
 CaveBotPanel < Panel
   layout:
