@@ -97,6 +97,7 @@ end
 
 local massacreMacro = macro(100, function()
   if not config.info.on then return end
+  if CinderPortalActive then return end   -- never bomb inside a cinder portal; the mini-games run their own logic
   if player:getHealthPercent() < minHP then return end
 
   local data      = config.info
