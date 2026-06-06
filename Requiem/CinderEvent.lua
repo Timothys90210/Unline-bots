@@ -18,15 +18,6 @@ local FIRE_SNAKE_FALLBACK_CLEARANCE = 3  -- pass 3 (panic): when primary passes 
                                          -- with [NO TARGET] cascades at speed surge when snake length
                                          -- 11+ makes clearance≥5 geometrically impossible.
 
--- ── Haste-on-entry (2026-06-05) ───────────────────────────────────────────────
--- Movement is the bottleneck for every cinder mini-game. Being hasted the whole
--- time inside a portal materially improves reach. A character knows only ONE of
--- these spells; we try both — the unknown one is rejected by the server with no
--- ill effect. Re-cast is gated by hasHaste() so we never spam once hasted.
-local HASTE_SPELLS = { "utani gran hur", "utani mas hur" }
-local HASTE_RECAST_COOLDOWN = 1.0  -- s between haste attempts while unhasted in portal
-local hasteLastCastAt = 0
-
 -- ── Logging ───────────────────────────────────────────────────────────────────
 local botConfigName = modules.game_bot.contentsPanel.config:getCurrentOption().text
 
@@ -183,7 +174,6 @@ local blueFlameWalkIssued    = false
 local blueFlameWalkAt        = 0
 local blueFlameArrivedLogged = false
 local blueFlameRetryCount    = 0
-local blueFlameLastDist      = nil    -- prev tick's dist to target (overshoot watch)
 local blueFlameSetActive     = false  -- true while a set is currently visible
 local blueFlameSetNumber     = 0      -- 0-indexed; logged before increment
 
@@ -248,7 +238,6 @@ local function resetState()
     blueFlameWalkAt        = 0
     blueFlameArrivedLogged = false
     blueFlameRetryCount    = 0
-    blueFlameLastDist      = nil
     blueFlameSetActive     = false
     blueFlameSetNumber     = 0
     snakeArena         = nil
@@ -282,24 +271,7 @@ local function resetState()
     bombScanLogAt            = 0
     bombsGameActive          = false
     pendingSuccessScheduled  = false
-    hasteLastCastAt          = 0
     resetLogs()
-end
-
--- ── Haste cast helper (2026-06-05) ────────────────────────────────────────────
--- Casts haste while inside the portal whenever the character is not hasted.
--- Tries both known haste spell variants; the character knows only one, so the
--- other is harmlessly rejected by the server. Rate-limited to avoid spamming.
--- `reason` is a short tag for the log ("entry" or "recast").
-local function castHasteIfNeeded(reason)
-    if hasHaste() then return false end
-    if os.clock() - hasteLastCastAt < HASTE_RECAST_COOLDOWN then return false end
-    hasteLastCastAt = os.clock()
-    for _, spell in ipairs(HASTE_SPELLS) do
-        say(spell)
-    end
-    log(string.format("[HASTE] %s — casting (%s)", reason, table.concat(HASTE_SPELLS, " / ")))
-    return true
 end
 
 -- ── Helpers ───────────────────────────────────────────────────────────────────
@@ -560,54 +532,21 @@ end
 --           reachable flames when late-round sets place all flames far from center.
 local BLUE_FLAME_BLEND_SET = 7
 
--- Far-target override (2026-06-05). Center targeting is ALWAYS preferred. Only
--- when the center pick is unreachably far from the player (>= FAR threshold; we
--- measured dist 4 as the knee and dist 5+ as clearly unsafe) do we fall back —
--- and the fallback deliberately picks the reachable flame CLOSEST TO CENTER
--- (not closest to the player), so the character is pulled back toward the middle
--- rather than drifting to / clustering on the arena edge. If nothing reachable
--- exists, we keep the original (far) center pick — there is no better option.
-local BLUE_FLAME_FAR_OVERRIDE = 5   -- center pick this far (player-dist) triggers override
-local BLUE_FLAME_REACHABLE    = 3   -- fallback only considers flames within this player-dist
-
 local function findCenterFlame(flameSet, centerX, centerY, playerPos, setNumber)
-    local function dC(pos) return math.max(math.abs(pos.x - centerX), math.abs(pos.y - centerY)) end
-    local function dP(pos) return playerPos and math.max(math.abs(pos.x - playerPos.x), math.abs(pos.y - playerPos.y)) or 0 end
-
     local bestPos, bestScore = nil, math.huge
     for _, pos in pairs(flameSet) do
+        local distToCenter = math.max(math.abs(pos.x - centerX), math.abs(pos.y - centerY))
         local score
         if setNumber and playerPos and setNumber >= BLUE_FLAME_BLEND_SET then
-            score = dP(pos) * 2 + dC(pos)
+            local distToPlayer = math.max(math.abs(pos.x - playerPos.x), math.abs(pos.y - playerPos.y))
+            score = distToPlayer * 2 + distToCenter
         else
-            score = dC(pos)
+            score = distToCenter
         end
         if score < bestScore then bestScore, bestPos = score, pos end
     end
-
-    -- Far-target override: only when the chosen flame is >= 5 tiles from the player.
-    if bestPos and playerPos and dP(bestPos) >= BLUE_FLAME_FAR_OVERRIDE then
-        -- Among flames the player can actually reach in time, pick the one
-        -- nearest CENTER (anti-edge-drift). Strictly safe: only flames are
-        -- considered, so the result is always a valid safe tile.
-        local altPos, altCenterDist = nil, math.huge
-        for _, pos in pairs(flameSet) do
-            if dP(pos) <= BLUE_FLAME_REACHABLE and dC(pos) < altCenterDist then
-                altCenterDist, altPos = dC(pos), pos
-            end
-        end
-        if altPos then
-            cinderLog("blueFlame", string.format(
-                "[FAR OVERRIDE] center pick %d,%d (pdist=%d) unreachable — using reachable-central %d,%d (pdist=%d centerdist=%d) set=%d",
-                bestPos.x, bestPos.y, dP(bestPos), altPos.x, altPos.y, dP(altPos), altCenterDist,
-                setNumber or -1))
-            bestPos = altPos
-        end
-        -- else: no reachable flame exists (Pattern C) — keep the far center pick.
-    end
-
     -- Return position and its distance from center for logging
-    local distFromCenter = bestPos and dC(bestPos) or 0
+    local distFromCenter = bestPos and math.max(math.abs(bestPos.x - centerX), math.abs(bestPos.y - centerY)) or 0
     return bestPos, distFromCenter
 end
 
@@ -868,7 +807,6 @@ local cinderMacro = macro(200, function()
             blueFlameWalkIssued    = false
             blueFlameArrivedLogged = false
             blueFlameRetryCount    = 0
-            blueFlameLastDist      = nil
             local blendActive = blueFlameSetNumber >= BLUE_FLAME_BLEND_SET
             cinderLog("blueFlame", string.format(
                 "[NEW SET #%d] size=%d (filtered from scan=%d) | player=%d,%d | targeting=%s",
@@ -901,7 +839,6 @@ local cinderMacro = macro(200, function()
             blueFlameWalkIssued    = false
             blueFlameArrivedLogged = false
             blueFlameRetryCount    = 0
-            blueFlameLastDist      = nil
             local blendActive = blueFlameSetNumber >= BLUE_FLAME_BLEND_SET
             cinderLog("blueFlame", string.format(
                 "[NEW SET #%d] size=%d | player=%d,%d | targeting=%s",
@@ -934,26 +871,16 @@ local cinderMacro = macro(200, function()
                         os.clock() - blueFlameWalkAt, blueFlameRetryCount))
                 end
             elseif not blueFlameArrivedLogged then
-                -- Only walk if not yet arrived — holds position after arrival.
-                -- Overshoot protection is provided by blueFlameArrivedLogged (set
-                -- only when dist==0): once on the tile, this whole branch is skipped
-                -- forever for the set, so re-walks cannot push us off it.
+                -- Only walk if not yet arrived — holds position after arrival
                 if not blueFlameWalkIssued then
                     autoWalk(blueFlameTarget, 15, { ignoreNonPathable = true })
                     blueFlameWalkIssued = true
                     blueFlameWalkAt     = os.clock()
-                    blueFlameLastDist   = dist
                     cinderLog("blueFlame", string.format(
                         "[WALK] → %d,%d dist=%d | player=%d,%d",
                         blueFlameTarget.x, blueFlameTarget.y, dist,
                         playerPos.x, playerPos.y))
-                elseif os.clock() - blueFlameWalkAt >= 1 and dist >= 1 then
-                    -- CHANGED 2026-06-05: guard was `dist > 2`, which created a fatal
-                    -- dead zone — a stalled autoWalk to a dist<=2 target was never
-                    -- retried (not >2) and never marked arrived (not ==0), so the
-                    -- character froze until the set expired. `dist >= 1` retries any
-                    -- not-yet-arrived stall. OVERSHOOT WATCH below verifies this does
-                    -- not reintroduce the previously-fixed overshoot behaviour.
+                elseif os.clock() - blueFlameWalkAt >= 1 and dist > 2 then
                     local elapsed = os.clock() - blueFlameWalkAt
                     blueFlameRetryCount = blueFlameRetryCount + 1
                     autoWalk(blueFlameTarget, 15, { ignoreNonPathable = true })
@@ -963,17 +890,6 @@ local cinderMacro = macro(200, function()
                         blueFlameRetryCount, blueFlameTarget.x, blueFlameTarget.y,
                         dist, elapsed, playerPos.x, playerPos.y))
                 end
-                -- OVERSHOOT WATCH: if distance to target INCREASED since last tick
-                -- while still walking (not arrived), that is the overshoot signature
-                -- we must never reintroduce. Log it loudly with context so a single
-                -- grep ([OVERSHOOT]) tells us if the dist>=1 change is harmful.
-                if blueFlameLastDist and dist > blueFlameLastDist then
-                    cinderLog("blueFlame", string.format(
-                        "[OVERSHOOT] dist rose %d→%d (target %d,%d player %d,%d) retries=%d — investigate",
-                        blueFlameLastDist, dist, blueFlameTarget.x, blueFlameTarget.y,
-                        playerPos.x, playerPos.y, blueFlameRetryCount))
-                end
-                blueFlameLastDist = dist
             end
         end
         end)  -- pcall
@@ -1037,8 +953,6 @@ onPlayerPositionChange(function(newPos, oldPos)
             portalLastSeenPos  = nil
             CinderPortalActive = true
             log("Portal entered — all mechanics now active.")
-            -- Immediately cast haste on entry (try both spells; only the known one lands)
-            castHasteIfNeeded("entry")
         end
     end
 end)
@@ -1438,11 +1352,6 @@ end
 local cinderDodge = macro(200, function()
     if not player then return end
     if not insidePortal then return end
-
-    -- Highest priority inside a portal: stay hasted. Movement is the bottleneck
-    -- for every mini-game. This re-casts (rate-limited, gated by hasHaste) if the
-    -- character is ever unhasted while inside. Does not block dodge logic below.
-    castHasteIfNeeded("recast")
 
     local playerPos  = player:getPosition()
 
