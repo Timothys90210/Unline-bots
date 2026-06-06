@@ -174,3 +174,23 @@ Use a unique global name per script. Note: because the Lua state persists, addin
 **Root cause:** `.otui` files are OTML markup, not Lua. OTML has no `--` comment syntax (a `--` line at column 0 is parsed as a stray node), which corrupted/blocked registration of the `CaveScrollOverlay` style. `g_ui.createWidget("CaveScrollOverlay", root)` then threw, so the click handler aborted silently. Confirmed by: zero `.otui` files in the entire repo use any comment (`--`, `//`, or `#`).
 
 **Rule:** Never put comments in `.otui` files — keep explanatory comments in the `.lua` side only. When a widget "doesn't appear" on click, suspect the style failed to register; wrap `g_ui.createWidget` in `pcall` and `warn` on failure so it surfaces instead of failing silently. For scrollable lists, mirror the proven waypoint-list pattern exactly: `TextList` with `anchors.fill: parent` + `margin-right: 15` + `vertical-scrollbar: <id>`, and a sibling `VerticalScrollBar` anchored top/bottom/right (see [[cave-folder-nav]]).
+
+---
+
+## [2026-06-06] | Never re-issue autoWalk on a close (dist≤2) target — it overshoots
+
+**What went wrong:** A blue-flame "fix" (commit `bfab67b`) changed the walk-retry guard from `dist > 2` to `dist >= 1` to rescue a stalled close walk. It caused a fleet-wide regression: blue flame win rate fell 87.4% (n=1029) → 63.1% (n=176), down on 8 of 9 characters. Reverted via `git revert bfab67b`.
+
+**Root cause:** Re-issuing `autoWalk` when the character is only 1 tile from the target sends a duplicate step that lands the character ONE tile PAST the target (overshoot). In blue flame that means arriving adjacent to (not on) the flame → death. The original `dist > 2` guard existed precisely to suppress these close-approach re-issues. (Same family as the existing lesson: "autoWalk re-issued every 200ms causes oscillation" — re-issuing before a step completes corrupts movement.)
+
+**Rule:** Do not re-issue `autoWalk` to a target that is dist≤2 away. To rescue a genuine stall, gate the retry on a TRUE stall (player position unchanged for >1s), or take a single `g_game.walk(dir, false)` direct step. Distance-based retry guards must stay at `dist > 2`.
+
+---
+
+## [2026-06-06] | A detector inside a gated branch can be blind to the very thing it watches
+
+**What went wrong:** The same commit added an `[OVERSHOOT]` log to "prove" the `dist >= 1` change was safe — it would fire if distance-to-target ever increased while walking. It logged only once fleet-wide, giving false confidence, while overshoot was actually killing runs en masse (85% of post-deploy fails carried the close-retry fingerprint). The commit message even claimed overshoot "stays prevented by the independent arrival gate."
+
+**Root cause:** The `[OVERSHOOT]` check lived inside the walk branch gated by `not blueFlameArrivedLogged`. The fatal overshoot lands AFTER arrival is logged (the re-issued autoWalk packet is already in flight when the `dist==0` gate closes), so the detector's branch was already disabled at the moment it needed to fire. An arrival gate stops future re-walks but cannot recall a packet already sent to the server.
+
+**Rule:** When adding a safety/diagnostic check to validate a risky change, make sure it runs OUTSIDE the branch the change might short-circuit — otherwise "0 occurrences" proves nothing. Validate risky movement/UI changes against real outcome logs (win-rate split at deploy time), never against a self-referential detector alone. And never trust a commit message's "this is safe/independent" assertion over measured outcomes.
