@@ -18,6 +18,15 @@ local FIRE_SNAKE_FALLBACK_CLEARANCE = 3  -- pass 3 (panic): when primary passes 
                                          -- with [NO TARGET] cascades at speed surge when snake length
                                          -- 11+ makes clearance≥5 geometrically impossible.
 
+-- ── Haste-on-entry (2026-06-05) ───────────────────────────────────────────────
+-- Movement is the bottleneck for every cinder mini-game. Being hasted the whole
+-- time inside a portal materially improves reach. A character knows only ONE of
+-- these spells; we try both — the unknown one is rejected by the server with no
+-- ill effect. Re-cast is gated by hasHaste() so we never spam once hasted.
+local HASTE_SPELLS = { "utani gran hur", "utani mas hur" }
+local HASTE_RECAST_COOLDOWN = 1.0  -- s between haste attempts while unhasted in portal
+local hasteLastCastAt = 0
+
 -- ── Logging ───────────────────────────────────────────────────────────────────
 local botConfigName = modules.game_bot.contentsPanel.config:getCurrentOption().text
 
@@ -271,7 +280,24 @@ local function resetState()
     bombScanLogAt            = 0
     bombsGameActive          = false
     pendingSuccessScheduled  = false
+    hasteLastCastAt          = 0
     resetLogs()
+end
+
+-- ── Haste cast helper (2026-06-05) ────────────────────────────────────────────
+-- Casts haste while inside the portal whenever the character is not hasted.
+-- Tries both known haste spell variants; the character knows only one, so the
+-- other is harmlessly rejected by the server. Rate-limited to avoid spamming.
+-- `reason` is a short tag for the log ("entry" or "recast").
+local function castHasteIfNeeded(reason)
+    if hasHaste() then return false end
+    if os.clock() - hasteLastCastAt < HASTE_RECAST_COOLDOWN then return false end
+    hasteLastCastAt = os.clock()
+    for _, spell in ipairs(HASTE_SPELLS) do
+        say(spell)
+    end
+    log(string.format("[HASTE] %s — casting (%s)", reason, table.concat(HASTE_SPELLS, " / ")))
+    return true
 end
 
 -- ── Helpers ───────────────────────────────────────────────────────────────────
@@ -953,6 +979,8 @@ onPlayerPositionChange(function(newPos, oldPos)
             portalLastSeenPos  = nil
             CinderPortalActive = true
             log("Portal entered — all mechanics now active.")
+            -- Immediately cast haste on entry (try both spells; only the known one lands)
+            castHasteIfNeeded("entry")
         end
     end
 end)
@@ -1352,6 +1380,11 @@ end
 local cinderDodge = macro(200, function()
     if not player then return end
     if not insidePortal then return end
+
+    -- Highest priority inside a portal: stay hasted. Movement is the bottleneck
+    -- for every mini-game. This re-casts (rate-limited, gated by hasHaste) if the
+    -- character is ever unhasted while inside. Does not block dodge logic below.
+    castHasteIfNeeded("recast")
 
     local playerPos  = player:getPosition()
 
