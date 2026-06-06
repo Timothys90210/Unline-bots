@@ -185,6 +185,12 @@ local blueFlameArrivedLogged = false
 local blueFlameRetryCount    = 0
 local blueFlameSetActive     = false  -- true while a set is currently visible
 local blueFlameSetNumber     = 0      -- 0-indexed; logged before increment
+-- DIAGNOSTIC (2026-06-06, Index One/Two/Zero): movement state at portal entry, so
+-- blue-flame logs show whether the character was paralysed / hasted on the way
+-- in (the suspected cause of set#0 "never reached a flame" deaths).
+local blueFlameEntryParalyzed = false
+local blueFlameEntryHasted    = false
+local blueFlameEntryHasteCast = false
 
 local snakeArena         = nil   -- circular arena: {centerX, centerY, radius, ...}
 local snakeActiveSeen    = false -- true after first movement trigger (gates one-time [ACTIVE] log)
@@ -249,6 +255,9 @@ local function resetState()
     blueFlameRetryCount    = 0
     blueFlameSetActive     = false
     blueFlameSetNumber     = 0
+    blueFlameEntryParalyzed = false
+    blueFlameEntryHasted    = false
+    blueFlameEntryHasteCast = false
     snakeArena         = nil
     snakeActiveSeen    = false
     snakeIdleLogAt     = 0
@@ -845,6 +854,10 @@ local cinderMacro = macro(200, function()
             cinderLog("blueFlame", string.format(
                 "[TARGET] center flame=%d,%d distFromCenter=%d | player=%d,%d",
                 target.x, target.y, distFromCenter, playerPos.x, playerPos.y))
+            cinderLog("blueFlame", string.format(
+                "[MOVE] paralyzed=%s hasted=%s | entry par=%s haste=%s hasteCast=%s",
+                tostring(isParalyzed()), tostring(hasHaste()),
+                tostring(blueFlameEntryParalyzed), tostring(blueFlameEntryHasted), tostring(blueFlameEntryHasteCast)))
             log("Flame set #" .. blueFlameSetNumber .. " — " .. target.x .. "," .. target.y)
             blueFlameSetNumber = blueFlameSetNumber + 1
             -- Fall through to walk management
@@ -877,6 +890,10 @@ local cinderMacro = macro(200, function()
             cinderLog("blueFlame", string.format(
                 "[TARGET] center flame=%d,%d distFromCenter=%d | player=%d,%d",
                 target.x, target.y, distFromCenter, playerPos.x, playerPos.y))
+            cinderLog("blueFlame", string.format(
+                "[MOVE] paralyzed=%s hasted=%s | entry par=%s haste=%s hasteCast=%s",
+                tostring(isParalyzed()), tostring(hasHaste()),
+                tostring(blueFlameEntryParalyzed), tostring(blueFlameEntryHasted), tostring(blueFlameEntryHasteCast)))
             log("Flame set #" .. blueFlameSetNumber .. " — " .. target.x .. "," .. target.y)
             blueFlameSetNumber = blueFlameSetNumber + 1
         end
@@ -979,8 +996,13 @@ onPlayerPositionChange(function(newPos, oldPos)
             portalLastSeenPos  = nil
             CinderPortalActive = true
             log("Portal entered — all mechanics now active.")
+            -- Snapshot movement state at entry for blue-flame diagnostics (emitted
+            -- in the [MOVE] line at each new set). castHasteIfNeeded returns true
+            -- only if it actually fired a cast this call.
+            blueFlameEntryParalyzed = isParalyzed()
+            blueFlameEntryHasted    = hasHaste()
             -- Immediately cast haste on entry (try both spells; only the known one lands)
-            castHasteIfNeeded("entry")
+            blueFlameEntryHasteCast = castHasteIfNeeded("entry")
         end
     end
 end)

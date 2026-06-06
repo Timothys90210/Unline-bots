@@ -4,6 +4,14 @@
 local SPELL = "exevo gran con hur"
 
 local conjureDiamond = macro(5000, function()
+    -- Yield the shared spell-group cooldown when movement matters: this conjure
+    -- (exevo gran con hur) shares cooldown with utani mas hur, which is the
+    -- paralyse-cure / haste spell. Skipping it while paralysed lets the cure fire
+    -- immediately; skipping it inside a cinder portal keeps the haste free for
+    -- portal movement. (Index One/Two/Zero, 2026-06-06.)
+    if isParalyzed() then return end
+    if CinderPortalActive then return end
+
     local mana = player:getMana()
     local maxMana = player:getMaxMana()
     if maxMana <= 0 then return end
