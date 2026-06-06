@@ -239,7 +239,7 @@ refreshButton()
 -- ###########################################################################
 local lastCast = 0
 
-macro(200, function()
+macro(100, function()
   -- Persist toggle state so it survives the bot being turned off/on.
   local on = wavesMacro.isOn()
   cfg.enabled = on
@@ -248,11 +248,19 @@ macro(200, function()
   if not player then return end
 
   -- Cheap early rejects before scanning creatures.
-  if not target() then return end          -- only cast with an active target
+  if not target() then return end          -- only cast with an active locked target
   local spell = getSelectedSpell()
   if not spell then return end
   if isInPz() then return end
-  if (now - lastCast) < (spell.cooldown * 1000) then return end
+
+  -- Cooldown: gate on the spell's OWN cooldown icon only. The shared attack-spell
+  -- GROUP cooldown is deliberately NOT gated here — if the group is briefly busy
+  -- from another attack, we still attempt and the server rejects it; the 400ms
+  -- floor makes us retry until it lands, instead of waiting politely and missing
+  -- the window.
+  local sdata = getSpellData(spell.spell)
+  if sdata and modules.game_cooldown.isCooldownIconActive(sdata.id) then return end
+  if (now - lastCast) < 400 then return end  -- tiny anti-double-cast floor
   if player:getMana() < spell.mana then return end
 
   local threshold = tonumber(cfg.monsters) or 0
@@ -292,18 +300,20 @@ macro(200, function()
 
   if maxCount < threshold then return end
 
-  -- Pick the best facing, preferring the current one on a tie (less turning).
+  -- D: if the CURRENT facing already meets the threshold, cast immediately —
+  -- don't burn a tick (and risk turn-thrash) chasing a marginally better facing.
   local curDir = player:getDirection()
-  local bestDir
-  if curDir and curDir <= 3 and counts[curDir] == maxCount then
-    bestDir = curDir
-  else
-    for dir = 0, 3 do
-      if counts[dir] == maxCount then bestDir = dir break end
-    end
+  if curDir and curDir <= 3 and counts[curDir] >= threshold then
+    say(spell.spell)
+    lastCast = now
+    return
   end
 
-  -- Face the monsters first, then cast on the next tick.
+  -- Otherwise turn to the best facing, then cast on the next tick.
+  local bestDir
+  for dir = 0, 3 do
+    if counts[dir] == maxCount then bestDir = dir break end
+  end
   if player:getDirection() ~= bestDir then
     turn(bestDir)
     return
