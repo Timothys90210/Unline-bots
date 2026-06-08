@@ -1,0 +1,524 @@
+{
+  "autoSpellPriorities": [
+
+  ],
+  "stashActionMaxRetries": 2,
+  "waves": {
+    "monsters": 2,
+    "enabled": false
+  },
+  "stashDeposits": {
+    "items": [
+
+    ]
+  },
+  "specialDeposit": {
+    "height": 380,
+    "items": [
+
+    ]
+  },
+  "followLeader": "Name",
+  "stowAllEnabled": false,
+  "equipCheckShield": 0,
+  "targetBotTargets": 0,
+  "checkVersion": 1780917933,
+  "Ninja_enabled": false,
+  "autoSpellCounts": [
+
+  ],
+  "textDetectionLog": [
+
+  ],
+  "autoParty": {
+    "onMove": false,
+    "enabled": true,
+    "leaderName": "Leader",
+    "autoPartyList": [
+
+    ]
+  },
+  "RP_enabled": false,
+  "stowAllItems": [
+
+  ],
+  "ED_enabled": false,
+  "MS_enabled": false,
+  "newHealer": {
+    "conditions": {
+      "sorcerers": false,
+      "knights": true,
+      "friends": false,
+      "botserver": false,
+      "paladins": true,
+      "party": true,
+      "druids": false,
+      "guild": false
+    },
+    "settings": [
+      {
+        "type": "HealItem",
+        "value": 268,
+        "text": "Mana Item "
+      },
+      {
+        "type": "HealScroll",
+        "value": 6,
+        "text": "Item Range: "
+      },
+      {
+        "type": "HealItem",
+        "value": 3160,
+        "text": "Health Item "
+      },
+      {
+        "type": "HealScroll",
+        "value": 2,
+        "text": "Mas Res Players: "
+      },
+      {
+        "type": "HealScroll",
+        "value": 80,
+        "text": "Heal Friend at: "
+      },
+      {
+        "type": "HealScroll",
+        "value": 80,
+        "text": "Use Gran Sio at: "
+      },
+      {
+        "type": "HealScroll",
+        "value": 80,
+        "text": "Min Player HP%: "
+      },
+      {
+        "type": "HealScroll",
+        "value": 50,
+        "text": "Min Player MP%: "
+      }
+    ],
+    "priorities": [
+      {
+        "custom": true,
+        "enabled": false,
+        "name": "Custom Spell"
+      },
+      {
+        "strong": true,
+        "enabled": true,
+        "name": "Exura Gran Sio"
+      },
+      {
+        "normal": true,
+        "enabled": true,
+        "name": "Exura Sio"
+      },
+      {
+        "enabled": true,
+        "name": "Exura Gran Mas Res",
+        "area": true
+      },
+      {
+        "health": true,
+        "enabled": true,
+        "name": "Health Item"
+      },
+      {
+        "enabled": true,
+        "name": "Mana Item",
+        "mana": true
+      }
+    ],
+    "groups": [
+
+    ],
+    "customPlayers": [
+
+    ],
+    "enabled": false,
+    "vocations": [
+
+    ]
+  },
+  "stashDepositsDelay": 500,
+  "monsterID": [
+
+  ],
+  "equipCheckWeapon": 0,
+  "_icons": {
+    "AutoUtamoVita": {
+      "y": 0.65,
+      "x": 0.01,
+      "enabled": false
+    },
+    "buffIcon": {
+      "y": 0.05,
+      "x": 0.01,
+      "enabled": false
+    },
+    "CinderEvent": {
+      "y": 0.25,
+      "x": 0.01,
+      "enabled": false
+    },
+    "resetCursorIcon": {
+      "y": 0.45,
+      "x": 0.01,
+      "enabled": false
+    },
+    "MonsterIdentifier": {
+      "y": 0.05,
+      "x": 0.11,
+      "enabled": false
+    },
+    "AutoMount": {
+      "y": 0.85,
+      "x": 0.01,
+      "enabled": false
+    }
+  },
+  "autoEquip": [
+    {
+      "item1": 3052,
+      "title": "Auto Equip",
+      "item2": 3089,
+      "on": false,
+      "slot": 9
+    },
+    {
+      "item1": 0,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 0
+    },
+    {
+      "item1": 0,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 0
+    }
+  ],
+  "stowAllDelay": 1000,
+  "foodItems": [
+    {
+      "count": 1,
+      "id": 3582
+    },
+    {
+      "count": 1,
+      "id": 3577
+    }
+  ],
+  "extras": {
+    "rope": 9596,
+    "pathfinding": true,
+    "machete": 9596,
+    "highlightTarget": true,
+    "nextBackpack": true,
+    "gotoMaxDistance": 30,
+    "holdWgHot": "F6",
+    "holdMwall": true,
+    "checkPlayer": true,
+    "separatePm": false,
+    "suppliesControl": false,
+    "killUnder": 1,
+    "joinBot": false,
+    "lootLast": true,
+    "holdMwHot": "F5",
+    "looting": 40,
+    "shovel": 9596,
+    "lootDelay": 200,
+    "pet": true,
+    "autoOpenDoors": true,
+    "stake": false,
+    "scythe": 9596,
+    "oberon": true,
+    "huntRoutes": 50,
+    "antiKick": true,
+    "title": true,
+    "timers": true,
+    "useAll": "space",
+    "reUse": false,
+    "talkDelay": 1000,
+    "reachable": false
+  },
+  "_macros": {
+    "": false,
+    "AutoSpell Ninja": false,
+    "AutoSpell MS": false,
+    "AutoSpell ED": false,
+    "Attack stance": false,
+    "AutoSpell RP": false,
+    "Auto Utamo Vita": false,
+    "Defensive stance": false,
+    "Waves": false,
+    "Auto-Mount": false,
+    "AutoSpell EK": false,
+    "Monster Identifier": false,
+    "Stop near Trainers/Dummy": false
+  },
+  "equipCheckArmor": 0,
+  "dropper": {
+    "enabled": false,
+    "trashItems": [
+      {
+        "count": 1,
+        "id": 283
+      },
+      {
+        "count": 1,
+        "id": 284
+      },
+      {
+        "count": 1,
+        "id": 285
+      },
+      {
+        "count": 1,
+        "id": 3372
+      },
+      {
+        "count": 1,
+        "id": 3354
+      },
+      {
+        "count": 1,
+        "id": 7773
+      },
+      {
+        "count": 1,
+        "id": 3327
+      },
+      {
+        "count": 1,
+        "id": 7774
+      },
+      {
+        "count": 1,
+        "id": 3723
+      },
+      {
+        "count": 1,
+        "id": 16277
+      }
+    ],
+    "useItems": [
+      {
+        "count": 1,
+        "id": 21203
+      },
+      {
+        "count": 1,
+        "id": 14758
+      }
+    ],
+    "capItems": [
+      {
+        "count": 1,
+        "id": 21175
+      }
+    ]
+  },
+  "imbuingConfig": {
+    "doll": [
+      0,
+      0,
+      0
+    ],
+    "helmet": [
+      0,
+      0,
+      0
+    ],
+    "weapon": [
+      0,
+      0,
+      0
+    ],
+    "armor": [
+      0,
+      0,
+      0
+    ],
+    "shield": [
+      0,
+      0,
+      0
+    ]
+  },
+  "autoTradeMessage": "I'm using OTClientV8!",
+  "caveBot": {
+    "backOffline": false,
+    "backTrainers": false,
+    "forceRefill": false,
+    "backStop": false
+  },
+  "moneyItems": [
+    {
+      "count": 1,
+      "id": 3031
+    },
+    {
+      "count": 1,
+      "id": 3035
+    }
+  ],
+  "cavebotSell": [
+    {
+      "count": 1,
+      "id": 23544
+    },
+    {
+      "count": 1,
+      "id": 3081
+    }
+  ],
+  "EquipperPanel": {
+    "enabled": false,
+    "bosses": [
+
+    ],
+    "rules": [
+
+    ]
+  },
+  "petName": "",
+  "stashActionRetryWait": 200,
+  "stashWithdraws": {
+    "items": [
+
+    ]
+  },
+  "playerList": {
+    "enemyList": [
+
+    ],
+    "outfits": false,
+    "groupMembers": true,
+    "marks": false,
+    "highlight": false,
+    "blackList": [
+
+    ],
+    "friendList": [
+
+    ]
+  },
+  "_configs": {
+    "targetbot_configs": {
+      "selected": "Cobra",
+      "enabled": false
+    },
+    "cavebot_configs": {
+      "selected": "FalconKnights1",
+      "enabled": false
+    }
+  },
+  "stashDepositsTolerance": 1,
+  "openFullBPs": {
+    "containers": [
+
+    ],
+    "enabled": false
+  },
+  "equipCheckHelmet": 0,
+  "stashWithdrawsDelay": 500,
+  "stashNumFields": 30,
+  "EK_enabled": false,
+  "autoSpellStopOnTrainer": false,
+  "alarms": {
+    "privateMsg": [
+
+    ],
+    "customMessage": {
+      "value": ""
+    },
+    "flashClient": [
+
+    ],
+    "lowMana": {
+      "value": 20
+    },
+    "creatureDetected": [
+
+    ],
+    "damageTaken": [
+
+    ],
+    "playerAttack": [
+
+    ],
+    "ignoreFriends": [
+
+    ],
+    "defaultMsg": [
+
+    ],
+    "creatureName": {
+      "value": ""
+    },
+    "lowHealth": {
+      "value": 20
+    },
+    "playerDetected": [
+
+    ]
+  },
+  "fName": "name",
+  "stashWithdrawsTolerance": 1,
+  "renameContainers": {
+    "purse": true,
+    "enabled": false,
+    "height": 170,
+    "list": [
+      {
+        "items": [
+          3081,
+          3048
+        ],
+        "value": "Main Backpack",
+        "item": 9601,
+        "min": false,
+        "enabled": true
+      },
+      {
+        "items": [
+          3161,
+          3180
+        ],
+        "value": "Runes",
+        "item": 2866,
+        "min": true,
+        "enabled": true
+      },
+      {
+        "items": [
+          3031,
+          3035,
+          3043
+        ],
+        "value": "Money",
+        "item": 2871,
+        "min": true,
+        "enabled": true
+      },
+      {
+        "items": [
+
+        ],
+        "value": "Purse",
+        "item": 23396,
+        "min": true,
+        "enabled": true
+      }
+    ]
+  },
+  "equipCheckDoll": 0,
+  "stances": {
+    "defensiveHp": 30,
+    "attackEnabled": false,
+    "defensiveEnabled": false
+  }
+}

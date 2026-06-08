@@ -48,7 +48,7 @@
           "cost": 70
         },
         {
-          "enabled": false,
+          "enabled": true,
           "index": 2,
           "origin": "HP%",
           "spell": "exura vita",
@@ -102,7 +102,7 @@
           "cost": 400
         },
         {
-          "enabled": true,
+          "enabled": false,
           "value": 95,
           "origin": "HP%",
           "sign": "<",
@@ -115,43 +115,35 @@
       "name": "Profile #1",
       "itemTable": [
         {
-          "sign": "<",
+          "enabled": false,
           "index": 1,
           "origin": "MP%",
-          "item": 238,
-          "value": 60,
-          "enabled": true
-        },
-        {
-          "enabled": false,
+          "item": 27283,
           "value": 70,
-          "index": 2,
-          "item": 27283,
-          "origin": "MP%",
           "sign": "<"
         },
         {
           "sign": "<",
-          "index": 3,
           "origin": "MP%",
-          "item": 27283,
           "value": 40,
+          "item": 27283,
+          "index": 2,
           "enabled": true
         },
         {
           "enabled": false,
-          "origin": "MP%",
           "value": 95,
+          "index": 3,
           "item": 27283,
-          "index": 4,
+          "origin": "MP%",
           "sign": "<"
         },
         {
           "sign": "<",
-          "value": 85,
-          "index": 5,
-          "item": 27283,
+          "index": 4,
           "origin": "MP%",
+          "item": 27283,
+          "value": 85,
           "enabled": false
         }
       ]
@@ -179,10 +171,10 @@
       "itemTable": [
         {
           "enabled": true,
-          "value": 95,
           "index": 1,
-          "item": 27283,
           "origin": "MP%",
+          "item": 27283,
+          "value": 95,
           "sign": "<"
         }
       ]

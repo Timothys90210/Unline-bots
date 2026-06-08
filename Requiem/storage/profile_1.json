@@ -275,14 +275,15 @@
       }
     ]
   },
-  "stashWithdrawsDelay": 500,
+  "autoTradeMessage": "",
+  "stowAllDelay": 1000,
   "_macros": {
     "": false,
     "AutoSpell MS": false,
     "Distance Follow": false,
     "Stamina Display": false,
     "Portal Bot Watchdog": true,
-    "Auto-Wings": false,
+    "Energy: Equip": true,
     "Say Supply Stash ID": false,
     "Auto-Mount": false,
     "AutoSpell EK": false,
@@ -307,7 +308,7 @@
     "Walk Rainbow Outfit": false,
     "Might: Equip": false,
     "Drop Trash": false,
-    "Training Check": true,
+    "Drop Diamond Arrows": false,
     "Stop near Trainers/Dummy": true,
     "Stone skin amulet": false,
     "Filter Damage Messages": true,
@@ -336,17 +337,17 @@
     "Mana Shield switch": false,
     "Drop Items": true,
     "UTAMO": false,
-    "AutoSpell ED": false,
+    "Auto-Wings": false,
     "KEEP: Stone skin amulet": false,
     "Walk Mount": false,
-    "Drop Diamond Arrows": false,
+    "AutoSpell ED": false,
     "Cinder Dodge": false,
-    "Energy: Equip": true,
+    "Training Check": true,
     "Auto-Portals": false,
     "Claude Follow": false,
     "Dodge Effects": true,
     "Defensive stance": true,
-    "Auto Stash": true,
+    "Auto Stash": false,
     "Exchange money": true,
     "Toggle spell text": false,
     "Esconde Mensagens Laranjas": true,
@@ -354,27 +355,23 @@
   },
   "equipCheckArmor": 43157,
   "dropper": {
-    "enabled": false,
+    "enabled": true,
     "trashItems": [
       {
-        "id": 7393,
-        "count": 1
+        "count": 1,
+        "id": 3280
       },
       {
-        "id": 3286,
-        "count": 1
+        "count": 100,
+        "id": 14112
       },
       {
-        "id": 8082,
-        "count": 1
+        "count": 1,
+        "id": 814
       },
       {
-        "id": 814,
-        "count": 1
-      },
-      {
-        "id": 16115,
-        "count": 1
+        "count": 1,
+        "id": 7393
       }
     ],
     "useItems": [
@@ -739,6 +736,14 @@
           {
             "id": 7412,
             "count": 1
+          },
+          {
+            "id": 3280,
+            "count": 1
+          },
+          {
+            "id": 7393,
+            "count": 1
           }
         ],
         "value": "Loot",
@@ -826,52 +831,84 @@
       {
         "items": [
           {
-            "id": 3035,
-            "count": 70
+            "count": 70,
+            "id": 3035
           },
           {
-            "id": 3043,
-            "count": 0
+            "count": 0,
+            "id": 3043
           },
           {
-            "id": 3031,
-            "count": 0
+            "count": 0,
+            "id": 3031
           },
           {
-            "id": 14112,
-            "count": 1
+            "count": 1,
+            "id": 14112
           },
           {
-            "id": 52478,
-            "count": 1
+            "count": 1,
+            "id": 52478
           },
           {
-            "id": 34761,
-            "count": 1
+            "count": 1,
+            "id": 34761
           },
           {
-            "id": 26503,
-            "count": 1
+            "count": 1,
+            "id": 26503
           },
           {
-            "id": 39532,
-            "count": 1
+            "count": 1,
+            "id": 39532
           },
           {
-            "id": 19124,
-            "count": 1
+            "count": 1,
+            "id": 19124
           },
           {
-            "id": 33878,
-            "count": 1
+            "count": 1,
+            "id": 33878
           },
           {
-            "id": 22027,
-            "count": 1
+            "count": 1,
+            "id": 22027
           },
           {
-            "id": 22026,
-            "count": 1
+            "count": 1,
+            "id": 22026
+          },
+          {
+            "count": 8,
+            "id": 52769
+          },
+          {
+            "count": 1,
+            "id": 46088
+          },
+          {
+            "count": 11,
+            "id": 45864
+          },
+          {
+            "count": 53,
+            "id": 45842
+          },
+          {
+            "count": 2,
+            "id": 45865
+          },
+          {
+            "count": 1,
+            "id": 60057
+          },
+          {
+            "count": 1,
+            "id": 60058
+          },
+          {
+            "count": 1,
+            "id": 31795
           }
         ],
         "value": "Main BP",
@@ -1138,34 +1175,51 @@
     "lootBag": false
   },
   "equipCheckDoll": 61550,
+  "stowAllItems": [
+    {
+      "count": 24,
+      "id": 25757
+    }
+  ],
   "stashActionMaxRetries": 2,
-  "imbuingConfig": {
-    "weapon": [
-      5,
-      9,
-      41
-    ],
-    "doll": [
-      6,
-      0,
-      0
-    ],
-    "helmet": [
-      8,
-      41,
-      0
-    ],
-    "armor": [
-      6,
-      12,
-      24
-    ],
-    "shield": [
-      0,
-      0,
-      0
-    ]
-  },
+  "foodItems": [
+    {
+      "count": 3,
+      "id": 3583
+    },
+    {
+      "count": 88,
+      "id": 3723
+    },
+    {
+      "count": 100,
+      "id": 3725
+    },
+    {
+      "count": 100,
+      "id": 3731
+    },
+    {
+      "id": 3607,
+      "count": 1
+    },
+    {
+      "id": 3585,
+      "count": 1
+    },
+    {
+      "id": 3592,
+      "count": 1
+    },
+    {
+      "id": 3600,
+      "count": 1
+    },
+    {
+      "id": 3601,
+      "count": 1
+    }
+  ],
   "specialDeposit": {
     "height": 380,
     "items": [
@@ -1173,6 +1227,7 @@
     ]
   },
   "ED_enabled": false,
+  "stowAllEnabled": false,
   "stances": {
     "attackSpell": {
       "name": "Master Archer",
@@ -1186,7 +1241,7 @@
     "attackEnabled": true,
     "defensiveEnabled": true
   },
-  "checkVersion": 1780536889,
+  "checkVersion": 1780870701,
   "autoSpellCounts": {
     "EK": {
       "exeta amp res": 1,
@@ -1270,96 +1325,12 @@
     "lastSeen": "2026-04-25 02:08:20"
   },
   "stashDepositsDelay": 750,
-  "followLeader": "Serena",
+  "ingame_hotkeys": "local function applyPanelWidth()\n    local interface = modules.game_interface\n    if not interface then return end\n    local leftPanel = interface:getLeftPanel()\n    if leftPanel then leftPanel:setWidth(230) end\nend\napplyPanelWidth()\n",
   "equipCheckHelmet": 26701,
-  "alarms": {
-    "privateMsg": [
-
-    ],
-    "customMessage": {
-      "value": ""
-    },
-    "flashClient": [
-
-    ],
-    "lowMana": {
-      "value": 20
-    },
-    "creatureDetected": [
-
-    ],
-    "damageTaken": [
-
-    ],
-    "playerAttack": [
-
-    ],
-    "ignoreFriends": [
-
-    ],
-    "defaultMsg": [
-
-    ],
-    "playerDetected": [
-
-    ],
-    "enabled": false,
-    "lowHealth": {
-      "value": 20
-    },
-    "creatureName": {
-      "value": ""
-    }
-  },
-  "autoTradeMessage": "",
+  "stashWithdrawsDelay": 500,
   "weaponConfig": {
     "crossbow": 47297,
     "bow": 52477
-  },
-  "fName": "Serena",
-  "extras": {
-    "rope": 9596,
-    "bless": false,
-    "gotoMaxDistance": 30,
-    "holdMwall": false,
-    "checkPlayer": false,
-    "looting": 36,
-    "suppliesControl": false,
-    "killUnder": 1,
-    "joinBot": true,
-    "lootLast": false,
-    "holdMwHot": "",
-    "shovel": 9596,
-    "pet": true,
-    "autoOpenDoors": true,
-    "stake": true,
-    "scythe": 9596,
-    "title": true,
-    "reUse": false,
-    "height": 360,
-    "pathfinding": true,
-    "machete": 9596,
-    "separatePm": true,
-    "useAll": "space",
-    "lootDelay": 200,
-    "holdWgHot": "",
-    "huntRoutes": 50,
-    "antiKick": true,
-    "talkDelay": 400,
-    "reachable": true,
-    "oberon": false,
-    "highlightTarget": true,
-    "nextBackpack": true,
-    "timers": true
-  },
-  "colorDamageLog": {
-    "Holy": 1010763,
-    "Energy": 3236340,
-    "Ice": 384693,
-    "Death": 29381887,
-    "Physical": 119863640,
-    "Fire": 69260876,
-    "Earth": 8330169
   },
   "autoEquip": [
     {
@@ -1405,53 +1376,116 @@
       "slot": 0
     }
   ],
+  "extras": {
+    "rope": 9596,
+    "bless": false,
+    "gotoMaxDistance": 30,
+    "holdMwall": false,
+    "checkPlayer": false,
+    "looting": 36,
+    "suppliesControl": false,
+    "killUnder": 1,
+    "joinBot": true,
+    "lootLast": false,
+    "holdMwHot": "",
+    "shovel": 9596,
+    "pet": true,
+    "autoOpenDoors": true,
+    "stake": true,
+    "scythe": 9596,
+    "title": true,
+    "reUse": false,
+    "height": 360,
+    "pathfinding": true,
+    "machete": 9596,
+    "separatePm": true,
+    "useAll": "space",
+    "lootDelay": 200,
+    "holdWgHot": "",
+    "huntRoutes": 50,
+    "antiKick": true,
+    "talkDelay": 400,
+    "reachable": true,
+    "oberon": false,
+    "highlightTarget": true,
+    "nextBackpack": true,
+    "timers": true
+  },
+  "playerList": {
+    "enemyList": [
+
+    ],
+    "outfits": false,
+    "groupMembers": true,
+    "friendList": [
+      "Kawasick",
+      "Pfft",
+      "Syrax",
+      "Kangrymanu",
+      "Serena",
+      "Lara Croft",
+      "Mortival Aeternix",
+      "Chakuano"
+    ],
+    "highlight": false,
+    "marks": false,
+    "blackList": [
+
+    ]
+  },
+  "petHealerPanel": {
+    "healingRuneId": 52813,
+    "healPercent": 50,
+    "petName": "Joyee"
+  },
   "TargetBotLure": true,
-  "foodItems": [
-    {
-      "count": 3,
-      "id": 3583
+  "alarms": {
+    "privateMsg": [
+
+    ],
+    "customMessage": {
+      "value": ""
     },
-    {
-      "count": 88,
-      "id": 3723
+    "flashClient": [
+
+    ],
+    "lowMana": {
+      "value": 20
     },
-    {
-      "count": 100,
-      "id": 3725
+    "creatureDetected": [
+
+    ],
+    "damageTaken": [
+
+    ],
+    "playerAttack": [
+
+    ],
+    "ignoreFriends": [
+
+    ],
+    "defaultMsg": [
+
+    ],
+    "playerDetected": [
+
+    ],
+    "enabled": false,
+    "lowHealth": {
+      "value": 20
     },
-    {
-      "count": 100,
-      "id": 3731
-    },
-    {
-      "id": 3607,
-      "count": 1
-    },
-    {
-      "id": 3585,
-      "count": 1
-    },
-    {
-      "id": 3592,
-      "count": 1
-    },
-    {
-      "id": 3600,
-      "count": 1
-    },
-    {
-      "id": 3601,
-      "count": 1
+    "creatureName": {
+      "value": ""
     }
-  ],
+  },
   "useGroundIndex": 1,
   "caveBot": [
 
   ],
-  "ingame_hotkeys": "local function applyPanelWidth()\n    local interface = modules.game_interface\n    if not interface then return end\n    local leftPanel = interface:getLeftPanel()\n    if leftPanel then leftPanel:setWidth(230) end\nend\napplyPanelWidth()\n",
+  "equipCheckWeapon": 52477,
+  "autoSpellStopOnTrainer": true,
+  "Ninja_enabled": false,
   "petName": "",
-  "cavebotSubfolderPath": "tasks/master/void-souls",
-  "dmgStartTime": 1780388606,
   "EquipperPanel": {
     "bosses": [
 
@@ -1594,11 +1628,11 @@
       }
     ]
   },
-  "targetBotLureMax": 9,
+  "dmgStartTime": 1780388606,
   "_configs": {
     "cavebot_configs": {
-      "selected": "CBasement-Wide-FULL",
-      "enabled": true
+      "selected": "v.plagues_VIP",
+      "enabled": false
     },
     "targetbot_configs": {
       "enabled": true,
@@ -1619,41 +1653,48 @@
     ],
     "enabled": true
   },
-  "Ninja_enabled": false,
+  "targetBotLureMax": 9,
   "stashWithdrawsTolerance": 50,
   "stashNumFields": 30,
-  "petHealerPanel": {
-    "healingRuneId": 52813,
-    "healPercent": 50,
-    "petName": "Joyee"
+  "colorDamageLog": {
+    "Holy": 1487087,
+    "Energy": 9461581,
+    "Ice": 1043356,
+    "Death": 88314754,
+    "Physical": 378102307,
+    "Fire": 191760038,
+    "Earth": 26684395
   },
-  "autoSpellStopOnTrainer": true,
+  "MS_enabled": false,
   "targetBotDynamicLureDelayValue": 250,
-  "playerList": {
-    "enemyList": [
-
+  "fName": "Serena",
+  "imbuingConfig": {
+    "weapon": [
+      5,
+      8,
+      30
     ],
-    "outfits": false,
-    "groupMembers": true,
-    "friendList": [
-      "Kawasick",
-      "Pfft",
-      "Syrax",
-      "Kangrymanu",
-      "Serena",
-      "Lara Croft",
-      "Mortival Aeternix",
-      "Chakuano"
+    "doll": [
+      5,
+      0,
+      0
     ],
-    "highlight": false,
-    "marks": false,
-    "blackList": [
-
+    "helmet": [
+      8,
+      30,
+      0
+    ],
+    "armor": [
+      6,
+      12,
+      24
+    ],
+    "shield": [
+      0,
+      0,
+      0
     ]
   },
-  "equipCheckWeapon": 52477,
-  "MS_enabled": false,
-  "teleportCity": "3",
   "itemsToEquip": [
     {
       "count": 1,
@@ -1663,5 +1704,7 @@
       "count": 1,
       "id": 3006
     }
-  ]
+  ],
+  "teleportCity": "3",
+  "followLeader": "Serena"
 }

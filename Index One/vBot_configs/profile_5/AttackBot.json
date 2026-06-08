@@ -40,9 +40,9 @@
         }
       ],
       "Visible": true,
-      "Kills": false,
-      "KillsAmount": 1,
       "ignoreMana": true,
+      "KillsAmount": 1,
+      "BlackListSafe": false,
       "PvpSafe": true,
       "AntiRsRange": 5,
       "pvpMode": false,
@@ -50,16 +50,16 @@
       "Rotate": false,
       "enabled": true,
       "name": "Pro #1",
-      "BlackListSafe": false
+      "Kills": false
     },
     {
       "attackTable": [
 
       ],
       "Visible": true,
-      "Kills": false,
-      "KillsAmount": 1,
       "ignoreMana": true,
+      "KillsAmount": 1,
+      "BlackListSafe": false,
       "PvpSafe": true,
       "AntiRsRange": 5,
       "pvpMode": false,
@@ -67,16 +67,16 @@
       "Rotate": false,
       "enabled": false,
       "name": "Pro #2",
-      "BlackListSafe": false
+      "Kills": false
     },
     {
       "attackTable": [
 
       ],
       "Visible": true,
-      "Kills": false,
-      "KillsAmount": 1,
       "ignoreMana": true,
+      "KillsAmount": 1,
+      "BlackListSafe": false,
       "PvpSafe": true,
       "AntiRsRange": 5,
       "pvpMode": false,
@@ -84,16 +84,16 @@
       "Rotate": false,
       "enabled": false,
       "name": "Pro #3",
-      "BlackListSafe": false
+      "Kills": false
     },
     {
       "attackTable": [
 
       ],
       "Visible": true,
-      "Kills": false,
-      "KillsAmount": 1,
       "ignoreMana": true,
+      "KillsAmount": 1,
+      "BlackListSafe": false,
       "PvpSafe": true,
       "AntiRsRange": 5,
       "pvpMode": false,
@@ -101,16 +101,16 @@
       "Rotate": false,
       "enabled": false,
       "name": "Pro #4",
-      "BlackListSafe": false
+      "Kills": false
     },
     {
       "attackTable": [
 
       ],
       "Visible": true,
-      "Kills": false,
-      "KillsAmount": 1,
       "ignoreMana": true,
+      "KillsAmount": 1,
+      "BlackListSafe": false,
       "PvpSafe": true,
       "AntiRsRange": 5,
       "pvpMode": false,
@@ -118,7 +118,7 @@
       "Rotate": false,
       "enabled": false,
       "name": "Pro #5",
-      "BlackListSafe": false
+      "Kills": false
     }
   ],
   "currentBotProfile": 1

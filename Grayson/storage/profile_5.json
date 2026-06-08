@@ -49,13 +49,13 @@
     "RP": {
       "exori con ani": 0,
       "exevo vis": 0,
-      "exevo tempo mas san": 0,
+      "utevo grav san": 0,
       "exevo mas san": 9,
       "exori gran con": 1,
       "exori san": 0,
-      "exori con": 0,
-      "utevo grav san": 0,
+      "exevo tempo mas san": 0,
       "utito tempo san": 10,
+      "exori con": 0,
       "exori mas con": 0
     },
     "ED": {
@@ -78,40 +78,9 @@
       "exevo frigo hur": 1
     }
   },
-  "pendingDeposits": {
-    "62097": 1000
-  },
-  "stashActionMaxRetries": 2,
-  "imbuingConfig": {
-    "weapon": [
-      6,
-      8,
-      42
-    ],
-    "doll": [
-      8,
-      0,
-      0
-    ],
-    "helmet": [
-      9,
-      41,
-      321
-    ],
-    "armor": [
-      6,
-      20,
-      0
-    ],
-    "shield": [
-      0,
-      0,
-      0
-    ]
-  },
   "waves": {
     "enabled": true,
-    "monsters": 4,
+    "monsters": 3,
     "selected": "Divine Barrage"
   },
   "stashDeposits": {
@@ -185,125 +154,18 @@
         "tolerance": 50,
         "count": 700,
         "id": 62097
+      },
+      {
+        "tolerance": 50,
+        "count": 100,
+        "id": 47453
       }
     ]
   },
-  "specialDeposit": {
-    "height": 380,
-    "items": [
-
-    ]
-  },
-  "RP_enabled": true,
-  "teleportWaypoint": "14",
-  "ED_enabled": false,
-  "equipCheckDoll": 52736,
-  "equipCheckShield": 0,
-  "equipCheckHelmet": 26701,
-  "lastOperationType": "deposit",
-  "playerList": {
-    "enemyList": [
-
-    ],
-    "outfits": false,
-    "groupMembers": true,
-    "marks": false,
-    "highlight": false,
-    "blackList": [
-
-    ],
-    "friendList": [
-
-    ]
-  },
-  "targetBotTargets": 1,
-  "targetBotDynamicLureDelayValue": 150,
-  "useGroundIndex": 1,
-  "autoSpellStopOnTrainer": false,
-  "checkVersion": 1780522155,
   "ingame_hotkeys": "local function applyPanelWidth()\n    local interface = modules.game_interface\n    if not interface then return end\n    local leftPanel = interface:getLeftPanel()\n    if leftPanel then leftPanel:setWidth(230) end\nend\napplyPanelWidth()\n\n",
-  "autoSpellCounts": {
-    "EK": {
-      "exeta amp res": 1,
-      "exeta res": 1,
-      "exeta hur": 1,
-      "exori": 1,
-      "exori gran": 1,
-      "exori amp kor": 1,
-      "exori gran ico": 1,
-      "exori ico": 1,
-      "uber exori": 1,
-      "exori min": 1,
-      "exori hur": 1,
-      "exori mas": 1
-    },
-    "MS": {
-      "exevo gran vis": 1,
-      "exevo gran mas vis lux": 1,
-      "exevo vis lux": 1,
-      "exori vis": 1,
-      "exori gran vis": 1,
-      "exevo gran mas vis": 1,
-      "exevo gran mas mort": 1,
-      "exevo gran mas flam": 1,
-      "exori max vis": 1,
-      "exevo flam hur": 1,
-      "exori mort": 1,
-      "exevo gran vis lux": 1,
-      "exori frigo": 1,
-      "exevo gran flam hur": 1,
-      "exori tera": 1,
-      "exevo max mort": 1,
-      "adana sio vis": 1,
-      "exori flam": 1,
-      "exevo vis hur": 1
-    },
-    "Ninja": {
-      "utevo mas chain": 1,
-      "ignis rumptur": 1,
-      "exori cruentus": 1,
-      "exevo lux velox": 1,
-      "pectus cruentus": 1,
-      "utevo ignis fiamma": 1,
-      "exori mas cruentus": 1,
-      "exevo extra lumen": 1,
-      "exevo intra lumen": 1
-    },
-    "RP": {
-      "exori con ani": 1,
-      "exevo vis": 1,
-      "exevo tempo mas san": 1,
-      "exevo mas san": 4,
-      "exori gran con": 1,
-      "exori san": 1,
-      "exori con": 1,
-      "utevo grav san": 1,
-      "utito tempo san": 1,
-      "exori mas con": 8
-    },
-    "ED": {
-      "exevo gran mas frigo": 1,
-      "exevo gran gran tera": 1,
-      "exevo gran frigo hur": 1,
-      "exori vis": 1,
-      "exori tera": 1,
-      "exevo ulus frigo": 1,
-      "exori moe ico": 1,
-      "exori max tera": 1,
-      "exori frigo": 1,
-      "exevo tera hur": 1,
-      "exori max frigo": 1,
-      "exori flam": 1,
-      "exori gran frigo": 1,
-      "exori gran tera": 1,
-      "exevo gran mas tera": 1,
-      "exevo gran tera": 1,
-      "exevo frigo hur": 1
-    }
-  },
-  "textDetectionLog": [
-
-  ],
+  "teleportWaypoint": "14",
+  "equipCheckShield": 0,
+  "targetBotTargets": 9,
   "autoParty": {
     "onMove": true,
     "enabled": false,
@@ -314,212 +176,9 @@
     ],
     "leaderName": "Serena"
   },
-  "alarms": {
-    "privateMsg": [
-
-    ],
-    "customMessage": {
-      "value": ""
-    },
-    "flashClient": [
-
-    ],
-    "lowMana": {
-      "value": 20
-    },
-    "creatureDetected": [
-
-    ],
-    "damageTaken": [
-
-    ],
-    "playerAttack": [
-
-    ],
-    "ignoreFriends": [
-
-    ],
-    "defaultMsg": [
-
-    ],
-    "creatureName": {
-      "value": ""
-    },
-    "lowHealth": {
-      "value": 20
-    },
-    "playerDetected": [
-
-    ]
-  },
-  "stashDepositsDelay": 500,
-  "openFullBPs": {
-    "containers": [
-      {
-        "count": 1,
-        "id": 2865
-      },
-      {
-        "count": 1,
-        "id": 2867
-      }
-    ],
-    "enabled": true
-  },
-  "stashDepositsTolerance": 50,
-  "newHealer": {
-    "settings": [
-      {
-        "type": "HealItem",
-        "value": 268,
-        "text": "Mana Item "
-      },
-      {
-        "type": "HealScroll",
-        "value": 6,
-        "text": "Item Range: "
-      },
-      {
-        "type": "HealItem",
-        "value": 52813,
-        "text": "Health Item "
-      },
-      {
-        "type": "HealScroll",
-        "value": 2,
-        "text": "Mas Res Players: "
-      },
-      {
-        "type": "HealScroll",
-        "value": 80,
-        "text": "Heal Friend at: "
-      },
-      {
-        "type": "HealScroll",
-        "value": 80,
-        "text": "Use Gran Sio at: "
-      },
-      {
-        "type": "HealScroll",
-        "value": 80,
-        "text": "Min Player HP%: "
-      },
-      {
-        "type": "HealScroll",
-        "value": 50,
-        "text": "Min Player MP%: "
-      }
-    ],
-    "priorities": [
-      {
-        "custom": true,
-        "enabled": false,
-        "name": "Custom Spell"
-      },
-      {
-        "strong": true,
-        "enabled": false,
-        "name": "Exura Gran Sio"
-      },
-      {
-        "normal": true,
-        "enabled": false,
-        "name": "Exura Sio"
-      },
-      {
-        "enabled": false,
-        "name": "Exura Gran Mas Res",
-        "area": true
-      },
-      {
-        "health": true,
-        "enabled": true,
-        "name": "Health Item"
-      },
-      {
-        "enabled": false,
-        "name": "Mana Item",
-        "mana": true
-      }
-    ],
-    "customPlayers": {
-      " Serena": 80
-    },
-    "groups": [
-
-    ],
-    "enabled": true,
-    "conditions": {
-      "druids": false,
-      "knights": true,
-      "friends": true,
-      "botserver": false,
-      "paladins": true,
-      "sorcerers": false,
-      "party": true,
-      "guild": false
-    },
-    "vocations": [
-
-    ]
-  },
+  "Ninja_enabled": false,
   "stashWithdrawsDelay": 500,
-  "stashWithdrawsTolerance": 1,
-  "foodItems": [
-    {
-      "count": 3,
-      "id": 3583
-    },
-    {
-      "count": 88,
-      "id": 3723
-    },
-    {
-      "count": 100,
-      "id": 3725
-    },
-    {
-      "count": 100,
-      "id": 3731
-    },
-    {
-      "count": 1,
-      "id": 3607
-    },
-    {
-      "count": 1,
-      "id": 3585
-    },
-    {
-      "count": 1,
-      "id": 3592
-    },
-    {
-      "count": 1,
-      "id": 3600
-    },
-    {
-      "count": 1,
-      "id": 3601
-    },
-    {
-      "count": 5,
-      "id": 3582
-    }
-  ],
-  "stashActionRetryWait": 200,
-  "EquipperPanel": {
-    "enabled": false,
-    "bosses": [
-
-    ],
-    "rules": [
-
-    ]
-  },
-  "equipCheckArmor": 26703,
-  "TargetBotLure": true,
-  "equipCheckWeapon": 27735,
+  "stowAllDelay": 1000,
   "_macros": {
     "": false,
     "Loot Channel": true,
@@ -540,7 +199,7 @@
     "Dust Tracker": false,
     "Eat Food": true,
     "Waves": true,
-    "Monster Identifier": true,
+    "Monster Identifier": false,
     "Dodge Effects": true,
     "AutoSpell Ninja": false,
     "AutoSpell RP": true,
@@ -550,44 +209,18 @@
     "Esconde Mensagens Laranjas": true,
     "Revisar pilares y activar": false,
     "Defensive stance": true,
-    "Auto Stash": false,
+    "Auto Stash": true,
     "Exchange money": true,
     "Toggle spell text": false,
     "Equip Check": true,
     "Claude Follow": false
   },
-  "autoEquip": [
-    {
-      "item1": 3098,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": false,
-      "slot": 9
-    },
-    {
-      "item1": 62097,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": true,
-      "slot": 5
-    },
-    {
-      "item1": 25757,
-      "title": "Auto Equip",
-      "item2": 0,
-      "on": false,
-      "slot": 5
-    }
-  ],
+  "equipCheckArmor": 26703,
   "dropper": {
-    "enabled": false,
+    "enabled": true,
     "trashItems": [
       {
-        "id": 7393,
-        "count": 1
-      },
-      {
-        "id": 284,
+        "id": 37165,
         "count": 1
       },
       {
@@ -628,11 +261,6 @@
   "ArrowSwitch": {
     "enabled": false
   },
-  "autoTradeMessage": "I'm using OTClientV8!",
-  "caveBot": [
-
-  ],
-  "Ninja_enabled": false,
   "cavebotSell": [
     {
       "count": 1,
@@ -643,104 +271,7 @@
       "id": 3081
     }
   ],
-  "petHealerPanel": {
-    "healingRuneId": 3160,
-    "healPercent": 60,
-    "petName": "Serena"
-  },
-  "extras": {
-    "rope": 9596,
-    "bless": false,
-    "gotoMaxDistance": 30,
-    "holdMwall": true,
-    "checkPlayer": false,
-    "looting": 36,
-    "suppliesControl": false,
-    "killUnder": 1,
-    "joinBot": true,
-    "lootLast": false,
-    "holdMwHot": "F5",
-    "shovel": 9596,
-    "reachable": true,
-    "autoOpenDoors": true,
-    "stake": false,
-    "scythe": 9596,
-    "title": true,
-    "reUse": false,
-    "height": 360,
-    "pathfinding": true,
-    "machete": 9596,
-    "separatePm": true,
-    "useAll": "space",
-    "lootDelay": 200,
-    "holdWgHot": "F6",
-    "oberon": true,
-    "antiKick": true,
-    "talkDelay": 900,
-    "timers": true,
-    "huntRoutes": 50,
-    "highlightTarget": true,
-    "nextBackpack": true,
-    "pet": true
-  },
   "targetBotLureMax": 7,
-  "stashWithdraws": {
-    "items": [
-      {
-        "tolerance": 50,
-        "count": 100,
-        "id": 3447
-      },
-      {
-        "tolerance": 50,
-        "count": 700,
-        "id": 25757
-      },
-      {
-        "tolerance": 50,
-        "count": 30,
-        "id": 3731
-      },
-      {
-        "tolerance": 50,
-        "count": 100,
-        "id": 52764
-      },
-      {
-        "tolerance": 50,
-        "count": 700,
-        "id": 62097
-      }
-    ]
-  },
-  "massacreBomb": {
-    "minTargets": 3,
-    "info": {
-      "max": 100,
-      "title": "HP%",
-      "min": 1,
-      "item": 52764,
-      "on": false,
-      "subType": 0
-    },
-    "radius": 7
-  },
-  "_configs": {
-    "targetbot_configs": {
-      "selected": "Requiem_RP",
-      "enabled": true
-    },
-    "cavebot_configs": {
-      "enabled": false,
-      "selected": "LavaDemons"
-    }
-  },
-  "petName": "",
-  "monsterID": {
-    "savedTargetBotOn": false,
-    "engaged": false,
-    "savedCaveBotOn": false
-  },
   "_icons": {
     "Pilar": {
       "y": 0.05,
@@ -760,7 +291,7 @@
     "MonsterIdentifier": {
       "y": 0.3371104815864,
       "x": 0.015898251192369,
-      "enabled": true
+      "enabled": false
     },
     "buffIcon": {
       "y": 0.05,
@@ -813,12 +344,16 @@
       "enabled": false
     }
   },
+  "petName": "",
+  "monsterID": {
+    "savedCaveBotOn": false,
+    "savedTargetBotOn": false,
+    "engaged": false
+  },
   "autofollow": {
     "player": "name"
   },
-  "stashNumFields": 30,
   "EK_enabled": false,
-  "MS_enabled": false,
   "moneyItems": [
     {
       "id": 3031,
@@ -833,20 +368,6 @@
       "count": 0
     }
   ],
-  "fName": "Serena",
-  "stances": {
-    "defensiveSpell": {
-      "name": "Divine Defiance",
-      "spell": "utori san def"
-    },
-    "defensiveHp": 40,
-    "attackEnabled": true,
-    "attackSpell": {
-      "name": "Master Archer",
-      "spell": "utori con"
-    },
-    "defensiveEnabled": true
-  },
   "renameContainers": {
     "sort": true,
     "forceOpen": true,
@@ -1020,6 +541,10 @@
           {
             "count": 1,
             "id": 3063
+          },
+          {
+            "count": 1,
+            "id": 7393
           }
         ],
         "value": "Loot",
@@ -1093,6 +618,38 @@
           {
             "id": 14112,
             "count": 1
+          },
+          {
+            "id": 31795,
+            "count": 13
+          },
+          {
+            "id": 46088,
+            "count": 29
+          },
+          {
+            "id": 60057,
+            "count": 18
+          },
+          {
+            "id": 60058,
+            "count": 12
+          },
+          {
+            "id": 52769,
+            "count": 5
+          },
+          {
+            "id": 45864,
+            "count": 11
+          },
+          {
+            "id": 45865,
+            "count": 2
+          },
+          {
+            "id": 45842,
+            "count": 2
           }
         ],
         "value": "Main BP",
@@ -1398,6 +955,495 @@
     "height": 170,
     "lootBag": false
   },
+  "equipCheckDoll": 52736,
+  "stowAllItems": [
+    {
+      "id": 62097,
+      "count": 100
+    }
+  ],
+  "stashActionMaxRetries": 2,
+  "foodItems": [
+    {
+      "count": 3,
+      "id": 3583
+    },
+    {
+      "count": 88,
+      "id": 3723
+    },
+    {
+      "count": 100,
+      "id": 3725
+    },
+    {
+      "count": 100,
+      "id": 3731
+    },
+    {
+      "count": 1,
+      "id": 3607
+    },
+    {
+      "count": 1,
+      "id": 3585
+    },
+    {
+      "count": 1,
+      "id": 3592
+    },
+    {
+      "count": 1,
+      "id": 3600
+    },
+    {
+      "count": 1,
+      "id": 3601
+    },
+    {
+      "count": 5,
+      "id": 3582
+    }
+  ],
+  "specialDeposit": {
+    "height": 380,
+    "items": [
+
+    ]
+  },
+  "ED_enabled": false,
+  "stowAllEnabled": false,
+  "stances": {
+    "attackSpell": {
+      "name": "Master Archer",
+      "spell": "utori con"
+    },
+    "defensiveHp": 40,
+    "defensiveSpell": {
+      "name": "Divine Defiance",
+      "spell": "utori san def"
+    },
+    "attackEnabled": true,
+    "defensiveEnabled": true
+  },
+  "checkVersion": 1780929333,
+  "autoSpellCounts": {
+    "EK": {
+      "exeta amp res": 1,
+      "exeta res": 1,
+      "exeta hur": 1,
+      "exori": 1,
+      "exori gran": 1,
+      "exori amp kor": 1,
+      "exori gran ico": 1,
+      "exori ico": 1,
+      "uber exori": 1,
+      "exori min": 1,
+      "exori hur": 1,
+      "exori mas": 1
+    },
+    "MS": {
+      "exevo gran vis": 1,
+      "exevo gran mas vis lux": 1,
+      "exevo vis lux": 1,
+      "exori vis": 1,
+      "exori gran vis": 1,
+      "exevo gran mas vis": 1,
+      "exevo gran mas mort": 1,
+      "exevo gran mas flam": 1,
+      "exori max vis": 1,
+      "exevo flam hur": 1,
+      "exori mort": 1,
+      "exevo gran vis lux": 1,
+      "exori frigo": 1,
+      "exevo gran flam hur": 1,
+      "exori tera": 1,
+      "exevo max mort": 1,
+      "adana sio vis": 1,
+      "exori flam": 1,
+      "exevo vis hur": 1
+    },
+    "Ninja": {
+      "utevo mas chain": 1,
+      "ignis rumptur": 1,
+      "exori cruentus": 1,
+      "exevo lux velox": 1,
+      "pectus cruentus": 1,
+      "utevo ignis fiamma": 1,
+      "exori mas cruentus": 1,
+      "exevo extra lumen": 1,
+      "exevo intra lumen": 1
+    },
+    "RP": {
+      "exori con ani": 1,
+      "exevo vis": 1,
+      "utevo grav san": 1,
+      "exevo mas san": 4,
+      "exori gran con": 1,
+      "exori san": 1,
+      "exevo tempo mas san": 1,
+      "utito tempo san": 1,
+      "exori con": 1,
+      "exori mas con": 8
+    },
+    "ED": {
+      "exevo gran mas frigo": 1,
+      "exevo gran gran tera": 1,
+      "exevo gran frigo hur": 1,
+      "exori vis": 1,
+      "exori tera": 1,
+      "exevo ulus frigo": 1,
+      "exori moe ico": 1,
+      "exori max tera": 1,
+      "exori frigo": 1,
+      "exevo tera hur": 1,
+      "exori max frigo": 1,
+      "exori flam": 1,
+      "exori gran frigo": 1,
+      "exori gran tera": 1,
+      "exevo gran mas tera": 1,
+      "exevo gran tera": 1,
+      "exevo frigo hur": 1
+    }
+  },
+  "textDetectionLog": [
+
+  ],
+  "stashDepositsDelay": 500,
+  "followLeader": "Requiem",
+  "extras": {
+    "rope": 9596,
+    "bless": false,
+    "gotoMaxDistance": 30,
+    "holdMwall": true,
+    "checkPlayer": false,
+    "looting": 36,
+    "suppliesControl": false,
+    "killUnder": 1,
+    "joinBot": true,
+    "lootLast": false,
+    "holdMwHot": "F5",
+    "shovel": 9596,
+    "reachable": true,
+    "autoOpenDoors": true,
+    "stake": false,
+    "scythe": 9596,
+    "title": true,
+    "reUse": false,
+    "height": 360,
+    "pathfinding": true,
+    "machete": 9596,
+    "separatePm": true,
+    "useAll": "space",
+    "lootDelay": 200,
+    "holdWgHot": "F6",
+    "oberon": true,
+    "antiKick": true,
+    "talkDelay": 900,
+    "timers": true,
+    "huntRoutes": 50,
+    "highlightTarget": true,
+    "nextBackpack": true,
+    "pet": true
+  },
+  "playerList": {
+    "enemyList": [
+
+    ],
+    "outfits": false,
+    "groupMembers": true,
+    "marks": false,
+    "highlight": false,
+    "blackList": [
+
+    ],
+    "friendList": [
+
+    ]
+  },
+  "petHealerPanel": {
+    "healingRuneId": 3160,
+    "healPercent": 60,
+    "petName": "Serena"
+  },
+  "TargetBotLure": false,
+  "MS_enabled": false,
+  "autoTradeMessage": "I'm using OTClientV8!",
+  "caveBot": [
+
+  ],
   "teleportCity": "3",
-  "followLeader": "Serena"
+  "RP_enabled": true,
+  "imbuingConfig": {
+    "weapon": [
+      6,
+      8,
+      30
+    ],
+    "doll": [
+      8,
+      0,
+      0
+    ],
+    "helmet": [
+      9,
+      30,
+      321
+    ],
+    "armor": [
+      6,
+      20,
+      0
+    ],
+    "shield": [
+      0,
+      0,
+      0
+    ]
+  },
+  "stashActionRetryWait": 200,
+  "EquipperPanel": {
+    "enabled": false,
+    "bosses": [
+
+    ],
+    "rules": [
+
+    ]
+  },
+  "stashWithdraws": {
+    "items": [
+      {
+        "tolerance": 50,
+        "count": 100,
+        "id": 3447
+      },
+      {
+        "tolerance": 50,
+        "count": 700,
+        "id": 25757
+      },
+      {
+        "tolerance": 50,
+        "count": 30,
+        "id": 3731
+      },
+      {
+        "tolerance": 50,
+        "count": 100,
+        "id": 52764
+      },
+      {
+        "tolerance": 50,
+        "count": 700,
+        "id": 62097
+      },
+      {
+        "tolerance": 50,
+        "count": 100,
+        "id": 47453
+      }
+    ]
+  },
+  "autoEquip": [
+    {
+      "item1": 3098,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 9
+    },
+    {
+      "item1": 62097,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": true,
+      "slot": 5
+    },
+    {
+      "item1": 25757,
+      "title": "Auto Equip",
+      "item2": 0,
+      "on": false,
+      "slot": 5
+    }
+  ],
+  "_configs": {
+    "targetbot_configs": {
+      "selected": "Requiem_RP",
+      "enabled": false
+    },
+    "cavebot_configs": {
+      "enabled": false,
+      "selected": "LavaDemons_NSC"
+    }
+  },
+  "stashDepositsTolerance": 50,
+  "openFullBPs": {
+    "containers": [
+      {
+        "count": 1,
+        "id": 2865
+      },
+      {
+        "count": 1,
+        "id": 2867
+      }
+    ],
+    "enabled": true
+  },
+  "massacreBomb": {
+    "minTargets": 1,
+    "info": {
+      "max": 100,
+      "title": "HP%",
+      "subType": 0,
+      "item": 52764,
+      "min": 1,
+      "on": false
+    },
+    "radius": 7
+  },
+  "equipCheckWeapon": 27735,
+  "stashNumFields": 30,
+  "newHealer": {
+    "settings": [
+      {
+        "type": "HealItem",
+        "value": 268,
+        "text": "Mana Item "
+      },
+      {
+        "type": "HealScroll",
+        "value": 6,
+        "text": "Item Range: "
+      },
+      {
+        "type": "HealItem",
+        "value": 52813,
+        "text": "Health Item "
+      },
+      {
+        "type": "HealScroll",
+        "value": 2,
+        "text": "Mas Res Players: "
+      },
+      {
+        "type": "HealScroll",
+        "value": 80,
+        "text": "Heal Friend at: "
+      },
+      {
+        "type": "HealScroll",
+        "value": 80,
+        "text": "Use Gran Sio at: "
+      },
+      {
+        "type": "HealScroll",
+        "value": 80,
+        "text": "Min Player HP%: "
+      },
+      {
+        "type": "HealScroll",
+        "value": 50,
+        "text": "Min Player MP%: "
+      }
+    ],
+    "conditions": {
+      "sorcerers": false,
+      "knights": true,
+      "friends": true,
+      "botserver": false,
+      "paladins": true,
+      "party": true,
+      "druids": false,
+      "guild": false
+    },
+    "customPlayers": {
+      " Serena": 80
+    },
+    "priorities": [
+      {
+        "custom": true,
+        "enabled": false,
+        "name": "Custom Spell"
+      },
+      {
+        "strong": true,
+        "enabled": false,
+        "name": "Exura Gran Sio"
+      },
+      {
+        "normal": true,
+        "enabled": false,
+        "name": "Exura Sio"
+      },
+      {
+        "enabled": false,
+        "name": "Exura Gran Mas Res",
+        "area": true
+      },
+      {
+        "health": true,
+        "enabled": true,
+        "name": "Health Item"
+      },
+      {
+        "enabled": false,
+        "name": "Mana Item",
+        "mana": true
+      }
+    ],
+    "enabled": true,
+    "groups": [
+
+    ],
+    "vocations": [
+
+    ]
+  },
+  "useGroundIndex": 1,
+  "targetBotDynamicLureDelayValue": 200,
+  "fName": "Requiem",
+  "stashWithdrawsTolerance": 1,
+  "alarms": {
+    "privateMsg": [
+
+    ],
+    "customMessage": {
+      "value": ""
+    },
+    "flashClient": [
+
+    ],
+    "lowMana": {
+      "value": 20
+    },
+    "creatureDetected": [
+
+    ],
+    "damageTaken": [
+
+    ],
+    "playerAttack": [
+
+    ],
+    "ignoreFriends": [
+
+    ],
+    "defaultMsg": [
+
+    ],
+    "creatureName": {
+      "value": ""
+    },
+    "lowHealth": {
+      "value": 20
+    },
+    "playerDetected": [
+
+    ]
+  },
+  "equipCheckHelmet": 26701,
+  "autoSpellStopOnTrainer": false
 }

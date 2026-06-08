@@ -9,13 +9,13 @@
     "stopHaste": false,
     "holdHaste": true,
     "curePosion": false,
-    "hasteSpell": "utani mas hur",
+    "hasteSpell": "utani gran hur",
     "uturaType": "Utura Gran",
-    "curePoison": false,
+    "curePoison": true,
     "cureBleed": false,
     "holdUtura": true,
     "utanaCost": 440,
-    "paralyseSpell": "utani mas hur",
+    "paralyseSpell": "utani gran hur",
     "cureParalyse": true,
     "poisonCost": 20,
     "utamoCost": 40,
@@ -28,67 +28,43 @@
     "holdUtana": false,
     "burnCost": 30
   },
-  "currentHealBotProfile": 1,
+  "currentHealBotProfile": 4,
   "healbot": [
     {
       "MessageDelay": false,
       "Conditions": true,
       "itemTable": [
         {
-          "sign": "<",
-          "index": 1,
-          "origin": "HP%",
-          "item": 47453,
-          "value": 60,
-          "enabled": true
-        },
-        {
-          "sign": "<",
-          "origin": "MP%",
-          "value": 75,
-          "item": 47453,
-          "index": 2,
-          "enabled": false
-        },
-        {
           "enabled": false,
-          "value": 95,
-          "index": 3,
-          "item": 47453,
           "origin": "MP%",
+          "value": 50,
+          "item": 238,
+          "index": 1,
+          "sign": "<"
+        },
+        {
+          "enabled": true,
+          "origin": "HP%",
+          "value": 60,
+          "item": 3160,
+          "index": 2,
           "sign": "<"
         },
         {
           "sign": "<",
+          "index": 3,
+          "origin": "HP%",
+          "item": 3160,
+          "value": 85,
+          "enabled": false
+        },
+        {
+          "enabled": false,
+          "value": 90,
           "index": 4,
+          "item": 3160,
           "origin": "HP%",
-          "item": 47453,
-          "value": 80,
-          "enabled": false
-        },
-        {
-          "sign": "<",
-          "origin": "MP%",
-          "value": 60,
-          "item": 47453,
-          "index": 5,
-          "enabled": false
-        },
-        {
-          "sign": "<",
-          "value": 70,
-          "index": 6,
-          "item": 47453,
-          "origin": "HP%",
-          "enabled": true
-        },
-        {
-          "sign": "<",
-          "origin": "MP%",
-          "value": 30,
-          "item": 238,
-          "index": 7,
-          "enabled": false
+          "sign": "<"
         }
       ],
       "Delay": true,
@@ -124,11 +100,29 @@
         },
         {
           "enabled": false,
+          "index": 4,
+          "origin": "MP",
+          "spell": "exevo gran con vis",
+          "sign": ">",
+          "value": 1000,
+          "cost": 1000
+        },
+        {
+          "enabled": false,
           "value": 35,
           "origin": "MP%",
           "sign": ">",
           "spell": "exevo gran con vis",
-          "index": 4,
+          "index": 5,
+          "cost": 1000
+        },
+        {
+          "enabled": true,
+          "index": 6,
+          "origin": "MP%",
+          "spell": "exevo gran con hur",
+          "sign": ">",
+          "value": 30,
           "cost": 1000
         },
         {
@@ -137,71 +131,17 @@
           "origin": "MP%",
           "sign": "<",
           "spell": "exevo con",
-          "index": 5,
-          "cost": 100
-        },
-        {
-          "enabled": false,
-          "value": 1200,
-          "origin": "MP",
-          "sign": ">",
-          "spell": "exevo gran con hur",
-          "index": 6,
-          "cost": 1000
-        },
-        {
-          "enabled": false,
           "index": 7,
-          "origin": "MP%",
-          "spell": "exevo gran con hur",
-          "sign": ">",
-          "value": 60,
-          "cost": 1000
-        },
-        {
-          "enabled": false,
-          "value": 95,
-          "origin": "HP%",
-          "sign": "<",
-          "spell": "exura gran san",
-          "index": 8,
-          "cost": 210
-        },
-        {
-          "enabled": false,
-          "index": 9,
-          "origin": "MP%",
-          "spell": "exevo gran con hur",
-          "sign": ">",
-          "value": 95,
-          "cost": 1000
-        },
-        {
-          "enabled": false,
-          "value": 20,
-          "origin": "MP%",
-          "sign": ">",
-          "spell": "exevo con",
-          "index": 10,
           "cost": 100
         },
         {
           "enabled": false,
-          "index": 11,
-          "origin": "HP%",
-          "spell": "exura gran san",
-          "sign": "<",
-          "value": 75,
-          "cost": 210
-        },
-        {
-          "enabled": false,
-          "index": 12,
-          "origin": "HP%",
-          "spell": "exura gran san",
-          "sign": "<",
           "value": 99,
-          "cost": 210
+          "origin": "HP%",
+          "sign": "<",
+          "spell": "utura gran",
+          "index": 8,
+          "cost": 165
         }
       ],
       "enabled": true,
@@ -212,20 +152,70 @@
       "MessageDelay": false,
       "Conditions": true,
       "itemTable": [
-
+        {
+          "sign": "<",
+          "index": 1,
+          "origin": "MP%",
+          "item": 238,
+          "value": 50,
+          "enabled": false
+        },
+        {
+          "sign": "<",
+          "index": 2,
+          "origin": "HP%",
+          "item": 3160,
+          "value": 60,
+          "enabled": false
+        },
+        {
+          "sign": "<",
+          "origin": "HP%",
+          "value": 70,
+          "item": 3160,
+          "index": 3,
+          "enabled": true
+        }
       ],
       "Delay": true,
       "Visible": true,
       "Cooldown": true,
       "spellTable": [
         {
-          "enabled": true,
-          "value": 90,
+          "enabled": false,
+          "value": 80,
           "origin": "HP%",
           "sign": "<",
-          "spell": "exevo gran san",
+          "spell": "exura ico",
           "index": 1,
-          "cost": 160
+          "cost": 20
+        },
+        {
+          "enabled": false,
+          "index": 2,
+          "origin": "HP%",
+          "spell": "exura gran san",
+          "sign": "<",
+          "value": 85,
+          "cost": 210
+        },
+        {
+          "enabled": false,
+          "index": 3,
+          "origin": "MP%",
+          "spell": "exevo gran con hur",
+          "sign": ">",
+          "value": 20,
+          "cost": 1000
+        },
+        {
+          "enabled": true,
+          "value": 80,
+          "origin": "HP%",
+          "sign": "<",
+          "spell": "exura gran ico",
+          "index": 4,
+          "cost": 100
         }
       ],
       "enabled": true,
@@ -236,15 +226,39 @@
       "MessageDelay": false,
       "Conditions": true,
       "itemTable": [
-
+        {
+          "sign": "<",
+          "value": 80,
+          "index": 1,
+          "item": 238,
+          "origin": "MP%",
+          "enabled": false
+        }
       ],
       "Delay": true,
       "Visible": true,
       "Cooldown": true,
       "spellTable": [
-
+        {
+          "enabled": false,
+          "index": 1,
+          "origin": "HP%",
+          "spell": "exura gran",
+          "sign": "<",
+          "value": 80,
+          "cost": 80
+        },
+        {
+          "enabled": true,
+          "index": 2,
+          "origin": "HP%",
+          "spell": "exura vita",
+          "sign": "<",
+          "value": 80,
+          "cost": 100
+        }
       ],
-      "enabled": false,
+      "enabled": true,
       "name": "Profile #3",
       "Interval": true
     },
@@ -252,15 +266,30 @@
       "MessageDelay": false,
       "Conditions": true,
       "itemTable": [
-
+        {
+          "enabled": false,
+          "index": 1,
+          "origin": "MP%",
+          "item": 238,
+          "value": 80,
+          "sign": "<"
+        }
       ],
       "Delay": true,
       "Visible": true,
       "Cooldown": true,
       "spellTable": [
-
+        {
+          "enabled": true,
+          "value": 80,
+          "origin": "HP%",
+          "sign": "<",
+          "spell": "exura gran",
+          "index": 1,
+          "cost": 100
+        }
       ],
-      "enabled": false,
+      "enabled": true,
       "name": "Profile #4",
       "Interval": true
     },

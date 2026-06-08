@@ -1,10 +1,6 @@
 {
   "AttackBot": [
     {
-      "BlackListSafe": false,
-      "ignoreMana": true,
-      "Visible": true,
-      "KillsAmount": 1,
       "attackTable": [
         {
           "itemId": 0,
@@ -43,6 +39,42 @@
           "itemId": 0
         },
         {
+          "pattern": 5,
+          "mana": 1,
+          "description": "[Large Area] 3+ Any Creatures: exevo gran gran frigo, absolute (0%-100%)",
+          "monsters": true,
+          "category": 5,
+          "spell": "exevo gran gran frigo",
+          "orMore": true,
+          "creatures": "*",
+          "tooltip": false,
+          "patternCategory": 4,
+          "enabled": false,
+          "cooldown": 20,
+          "maxHp": 100,
+          "count": 3,
+          "minHp": 0,
+          "itemId": 0
+        },
+        {
+          "pattern": 5,
+          "mana": 1,
+          "description": "[Large Area] 2+ Any Creatures: exevo gran mas frigo, absolute (0%-100%)",
+          "monsters": true,
+          "category": 5,
+          "spell": "exevo gran mas frigo",
+          "orMore": true,
+          "creatures": "*",
+          "tooltip": false,
+          "patternCategory": 4,
+          "enabled": false,
+          "cooldown": 10,
+          "maxHp": 100,
+          "count": 2,
+          "minHp": 0,
+          "itemId": 0
+        },
+        {
           "itemId": 0,
           "mana": 1,
           "minHp": 0,
@@ -77,6 +109,24 @@
           "orMore": true,
           "description": "[6 Sqm] 4+ Any Creatures: exevo ulus frigo, targeted (0%-100%)",
           "pattern": 6
+        },
+        {
+          "pattern": 10,
+          "mana": 1,
+          "description": "[10 Sqm Range] 1+ Any Creatures: rune 3191, targeted (0%-100%)",
+          "monsters": true,
+          "category": 3,
+          "spell": "spell name",
+          "orMore": true,
+          "creatures": "*",
+          "tooltip": false,
+          "patternCategory": 3,
+          "enabled": false,
+          "cooldown": 2,
+          "maxHp": 100,
+          "count": 1,
+          "minHp": 0,
+          "itemId": 3191
         },
         {
           "itemId": 0,
@@ -118,6 +168,24 @@
           "itemId": 52807
         },
         {
+          "pattern": 3,
+          "mana": 1,
+          "description": "[3 Sqm Range] 3+ Any Creatures: rune 52820, targeted (0%-100%)",
+          "monsters": true,
+          "category": 3,
+          "spell": "spell name",
+          "orMore": true,
+          "creatures": "*",
+          "tooltip": false,
+          "patternCategory": 3,
+          "enabled": true,
+          "cooldown": 2,
+          "maxHp": 100,
+          "count": 3,
+          "minHp": 0,
+          "itemId": 52820
+        },
+        {
           "itemId": 52764,
           "mana": 1,
           "minHp": 0,
@@ -136,9 +204,9 @@
           "pattern": 3
         },
         {
-          "pattern": 3,
+          "pattern": 10,
           "mana": 1,
-          "description": "[3 Sqm Range] 3+ Any Creatures: rune 52820, targeted (0%-100%)",
+          "description": "[10 Sqm Range] 1+ Any Creatures: rune 52764, targeted (0%-100%)",
           "monsters": true,
           "category": 3,
           "spell": "spell name",
@@ -146,14 +214,18 @@
           "creatures": "*",
           "tooltip": false,
           "patternCategory": 3,
-          "enabled": true,
+          "enabled": false,
           "cooldown": 2,
           "maxHp": 100,
-          "count": 3,
+          "count": 1,
           "minHp": 0,
-          "itemId": 52820
+          "itemId": 52764
         }
       ],
+      "ignoreMana": true,
+      "Visible": true,
+      "KillsAmount": 1,
+      "BlackListSafe": false,
       "PvpSafe": true,
       "pvpMode": false,
       "AntiRsRange": 5,
