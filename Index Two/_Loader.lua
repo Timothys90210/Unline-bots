@@ -59,3 +59,5 @@ dofile("/vBot/autoImbue.lua")
 dofile("Stances.lua")
 
 dofile("Waves.lua")
+
+dofile("StowAll.lua")

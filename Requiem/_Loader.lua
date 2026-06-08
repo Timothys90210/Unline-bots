@@ -57,8 +57,9 @@ UI.Separator()
 dofile("/vBot/autoImbue.lua")
 UI.Separator()
 UI.Separator()
-dofile("DivineGrenade.lua")
 
 dofile("EquipCheck.lua")
 
 dofile("Stances_main.lua")
+
+dofile("StowAll.lua")
