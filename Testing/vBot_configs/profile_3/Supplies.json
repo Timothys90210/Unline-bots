@@ -1,7 +1,7 @@
 {
   "supplies": {
     "Testing": {
-      "staminaSwitch": true,
+      "staminaSwitch": false,
       "items": {
         "27283": {
           "max": 100,
@@ -12,7 +12,7 @@
       "staminaValue": "840",
       "capSwitch": true,
       "capValue": "600",
-      "imbues": false,
+      "imbues": true,
       "SoftBoots": false
     },
     "currentProfile": "Testing"

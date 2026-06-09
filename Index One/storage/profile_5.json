@@ -66,15 +66,15 @@
       "exevo frigo hur": 1
     },
     "RP": {
-      "exori con ani": 0,
+      "utito tempo san": 10,
       "exevo vis": 0,
-      "exevo tempo mas san": 0,
-      "utevo grav san": 0,
+      "exori con ani": 0,
+      "exevo mas san": 9,
       "exori gran con": 1,
       "exori san": 0,
+      "exevo tempo mas san": 0,
       "exori con": 0,
-      "exevo mas san": 9,
-      "utito tempo san": 10,
+      "utevo grav san": 0,
       "exori mas con": 0
     }
   },
@@ -197,10 +197,10 @@
     ]
   },
   "Ninja_enabled": false,
-  "stashWithdrawsDelay": 500,
+  "autoTradeMessage": "I'm using OTClientV8!",
   "stowAllDelay": 1000,
   "_macros": {
-    "": false,
+    "": true,
     "Loot Channel": true,
     "AutoSpell MS": false,
     "Drop Trash": true,
@@ -209,8 +209,8 @@
     "AutoSpell EK": false,
     "Stop near Trainers/Dummy": false,
     "Gather Orbs": true,
-    "Cast Food": false,
-    "Filter Damage Messages": true,
+    "AutoSpell ED": false,
+    "Revisar pilares y activar": false,
     "Bot off if no bless": true,
     "Girar pilares (con armor)": false,
     "Idle Mode": true,
@@ -223,16 +223,16 @@
     "Dodge Effects": false,
     "AutoSpell Ninja": false,
     "AutoSpell RP": true,
-    "Claude Follow": false,
-    "Esconde Mensagens Laranjas": true,
     "Attack stance": true,
-    "Revisar pilares y activar": false,
+    "Esconde Mensagens Laranjas": true,
+    "Claude Follow": false,
+    "Filter Damage Messages": true,
     "Defensive stance": true,
-    "Auto Stash": false,
+    "Auto Stash": true,
     "Exchange money": true,
     "Toggle spell text": false,
     "Equip Check": true,
-    "AutoSpell ED": false
+    "Cast Food": false
   },
   "equipCheckArmor": 22531,
   "dropper": {
@@ -301,25 +301,25 @@
       "x": 0.054054054054054,
       "enabled": false
     },
-    "CinderEvent": {
-      "y": 0.55807365439093,
-      "x": 0.0087440381558029,
+    "petHealer": {
+      "y": 0.05,
+      "x": 0.01,
       "enabled": true
     },
-    "ConjureDiamond": {
-      "y": 0.11898016997167,
-      "x": 0.015898251192369,
-      "enabled": true
+    "resetCursorIcon": {
+      "y": 0.20899470899471,
+      "x": 0.0087440381558029,
+      "enabled": false
     },
     "MonsterIdentifier": {
       "y": 0.30594900849858,
       "x": 0.015898251192369,
       "enabled": true
     },
-    "Dodge": {
-      "y": 0.22432859399684,
-      "x": 0.058028616852146,
-      "enabled": false
+    "ConjureDiamond": {
+      "y": 0.11898016997167,
+      "x": 0.015898251192369,
+      "enabled": true
     },
     "CheckPillars": {
       "y": 0.21720116618076,
@@ -331,10 +331,10 @@
       "x": 0.01,
       "enabled": false
     },
-    "petHealer": {
-      "y": 0.05,
-      "x": 0.01,
-      "enabled": true
+    "Dodge": {
+      "y": 0.22432859399684,
+      "x": 0.058028616852146,
+      "enabled": false
     },
     "AutoMount": {
       "y": 0.42419825072886,
@@ -351,10 +351,10 @@
       "x": 0.060413354531002,
       "enabled": false
     },
-    "resetCursorIcon": {
-      "y": 0.20899470899471,
+    "CinderEvent": {
+      "y": 0.55807365439093,
       "x": 0.0087440381558029,
-      "enabled": false
+      "enabled": true
     },
     "SpellCaster": {
       "y": 0.38243626062323,
@@ -364,9 +364,9 @@
   },
   "petName": "",
   "monsterID": {
-    "savedTargetBotOn": false,
     "engaged": false,
-    "savedCaveBotOn": false
+    "savedCaveBotOn": false,
+    "savedTargetBotOn": false
   },
   "autofollow": {
     "player": "name"
@@ -966,19 +966,19 @@
   "ED_enabled": false,
   "stowAllEnabled": false,
   "stances": {
-    "defensiveSpell": {
-      "name": "Divine Defiance",
-      "spell": "utori san def"
-    },
-    "defensiveHp": 35,
     "attackEnabled": true,
+    "defensiveHp": 35,
     "attackSpell": {
       "name": "Master Archer",
       "spell": "utori con"
     },
+    "defensiveSpell": {
+      "name": "Divine Defiance",
+      "spell": "utori san def"
+    },
     "defensiveEnabled": true
   },
-  "checkVersion": 1780929309,
+  "checkVersion": 1780926437,
   "autoSpellCounts": {
     "EK": {
       "exeta amp res": 1,
@@ -1046,15 +1046,15 @@
       "exevo frigo hur": 1
     },
     "RP": {
-      "exori con ani": 1,
+      "utito tempo san": 1,
       "exevo vis": 1,
-      "exevo tempo mas san": 1,
-      "utevo grav san": 1,
+      "exori con ani": 1,
+      "exevo mas san": 4,
       "exori gran con": 1,
       "exori san": 1,
+      "exevo tempo mas san": 1,
       "exori con": 1,
-      "exevo mas san": 4,
-      "utito tempo san": 1,
+      "utevo grav san": 1,
       "exori mas con": 8
     }
   },
@@ -1075,7 +1075,7 @@
     "lootLast": false,
     "holdMwHot": "F5",
     "shovel": 9596,
-    "pet": true,
+    "reachable": true,
     "autoOpenDoors": true,
     "stake": false,
     "nextBackpack": true,
@@ -1091,7 +1091,7 @@
     "huntRoutes": 50,
     "antiKick": true,
     "talkDelay": 900,
-    "reachable": true,
+    "pet": true,
     "oberon": true,
     "highlightTarget": true,
     "scythe": 9596,
@@ -1102,15 +1102,15 @@
 
     ],
     "outfits": false,
+    "groupMembers": true,
     "friendList": [
 
     ],
-    "groupMembers": true,
     "highlight": false,
+    "marks": false,
     "blackList": [
 
-    ],
-    "marks": false
+    ]
   },
   "petHealerPanel": {
     "healingRuneId": 3160,
@@ -1119,102 +1119,7 @@
   },
   "TargetBotLure": true,
   "MS_enabled": false,
-  "newHealer": {
-    "vocations": [
-
-    ],
-    "priorities": [
-      {
-        "custom": true,
-        "enabled": false,
-        "name": "Custom Spell"
-      },
-      {
-        "strong": true,
-        "enabled": false,
-        "name": "Exura Gran Sio"
-      },
-      {
-        "normal": true,
-        "enabled": false,
-        "name": "Exura Sio"
-      },
-      {
-        "enabled": false,
-        "name": "Exura Gran Mas Res",
-        "area": true
-      },
-      {
-        "health": true,
-        "enabled": true,
-        "name": "Health Item"
-      },
-      {
-        "enabled": false,
-        "name": "Mana Item",
-        "mana": true
-      }
-    ],
-    "enabled": true,
-    "groups": [
-
-    ],
-    "customPlayers": {
-      " Serena": 80
-    },
-    "conditions": {
-      "druids": false,
-      "knights": true,
-      "friends": true,
-      "botserver": false,
-      "paladins": true,
-      "sorcerers": false,
-      "party": true,
-      "guild": false
-    },
-    "settings": [
-      {
-        "type": "HealItem",
-        "text": "Mana Item ",
-        "value": 268
-      },
-      {
-        "type": "HealScroll",
-        "text": "Item Range: ",
-        "value": 6
-      },
-      {
-        "type": "HealItem",
-        "text": "Health Item ",
-        "value": 52813
-      },
-      {
-        "type": "HealScroll",
-        "text": "Mas Res Players: ",
-        "value": 2
-      },
-      {
-        "type": "HealScroll",
-        "text": "Heal Friend at: ",
-        "value": 80
-      },
-      {
-        "type": "HealScroll",
-        "text": "Use Gran Sio at: ",
-        "value": 80
-      },
-      {
-        "type": "HealScroll",
-        "text": "Min Player HP%: ",
-        "value": 80
-      },
-      {
-        "type": "HealScroll",
-        "text": "Min Player MP%: ",
-        "value": 50
-      }
-    ]
-  },
+  "stashWithdrawsTolerance": 1,
   "caveBot": [
 
   ],
@@ -1323,11 +1228,11 @@
       }
     ]
   },
-  "targetBotDynamicLureDelayValue": 300,
+  "stashWithdrawsDelay": 500,
   "_configs": {
     "cavebot_configs": {
       "selected": "inq_hellgorak_NSC",
-      "enabled": false
+      "enabled": true
     },
     "targetbot_configs": {
       "enabled": true,
@@ -1345,9 +1250,104 @@
     "enabled": true
   },
   "equipCheckWeapon": 27480,
-  "autoTradeMessage": "I'm using OTClientV8!",
+  "newHealer": {
+    "vocations": [
+
+    ],
+    "groups": [
+
+    ],
+    "enabled": true,
+    "conditions": {
+      "party": true,
+      "knights": true,
+      "friends": true,
+      "botserver": false,
+      "paladins": true,
+      "druids": false,
+      "sorcerers": false,
+      "guild": false
+    },
+    "customPlayers": {
+      " Serena": 80
+    },
+    "priorities": [
+      {
+        "custom": true,
+        "enabled": false,
+        "name": "Custom Spell"
+      },
+      {
+        "strong": true,
+        "enabled": false,
+        "name": "Exura Gran Sio"
+      },
+      {
+        "normal": true,
+        "enabled": false,
+        "name": "Exura Sio"
+      },
+      {
+        "enabled": false,
+        "name": "Exura Gran Mas Res",
+        "area": true
+      },
+      {
+        "health": true,
+        "enabled": true,
+        "name": "Health Item"
+      },
+      {
+        "enabled": false,
+        "name": "Mana Item",
+        "mana": true
+      }
+    ],
+    "settings": [
+      {
+        "type": "HealItem",
+        "text": "Mana Item ",
+        "value": 268
+      },
+      {
+        "type": "HealScroll",
+        "text": "Item Range: ",
+        "value": 6
+      },
+      {
+        "type": "HealItem",
+        "text": "Health Item ",
+        "value": 52813
+      },
+      {
+        "type": "HealScroll",
+        "text": "Mas Res Players: ",
+        "value": 2
+      },
+      {
+        "type": "HealScroll",
+        "text": "Heal Friend at: ",
+        "value": 80
+      },
+      {
+        "type": "HealScroll",
+        "text": "Use Gran Sio at: ",
+        "value": 80
+      },
+      {
+        "type": "HealScroll",
+        "text": "Min Player HP%: ",
+        "value": 80
+      },
+      {
+        "type": "HealScroll",
+        "text": "Min Player MP%: ",
+        "value": 50
+      }
+    ]
+  },
   "stashNumFields": 30,
-  "stashWithdrawsTolerance": 1,
+  "targetBotDynamicLureDelayValue": 300,
   "autoSpellStopOnTrainer": false,
   "alarms": {
     "privateMsg": [
@@ -1388,8 +1388,8 @@
     }
   },
   "fName": "Requiem",
-  "followLeader": "Requiem",
   "useGroundIndex": 1,
+  "followLeader": "Requiem",
   "teleportCity": "1",
   "equipCheckHelmet": 33164
 }

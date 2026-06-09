@@ -2,7 +2,7 @@
   "supplies": {
     "currentProfile": "Default",
     "Default": {
-      "staminaSwitch": true,
+      "staminaSwitch": false,
       "items": {
         "27283": {
           "max": 20,
@@ -13,7 +13,7 @@
       "staminaValue": "840",
       "capSwitch": true,
       "capValue": "600",
-      "imbues": false
+      "imbues": true
     }
   }
 }
