@@ -1,0 +1,35 @@
+--Join Discord server for free scripts
+--https://discord.gg/RkQ9nyPMBH
+--Made By VivoDibra
+--Tested on vBot 4.8 / OTCV8 3.2 rev 4
+
+addButton("", "+ Free Scripts", function()
+  g_platform.openUrl("https://discord.gg/RkQ9nyPMBH")
+end)
+
+addLabel("Label", "Follow Name")
+addTextEdit("TxtEdit", storage.fName or "name", function(widget, text)
+  storage.fName = text
+end)
+--------------------------
+local lastPos = nil
+macro(200, "Follow", function()  
+  local leader = getCreatureByName(storage.fName)
+  local target = g_game.getAttackingCreature()
+  if leader then
+    if target and lastPos then
+      return player:autoWalk(lastPos)
+    end
+    if not g_game.getFollowingCreature() then
+      return g_game.follow(leader)
+    end
+  elseif lastPos then
+    player:autoWalk(lastPos)
+  end
+end)
+
+onCreaturePositionChange(function(creature, newPos, oldPos)
+  local leader = getCreatureByName(storage.fName)
+  if leader ~= creature or not newPos then return end
+  lastPos = newPos
+end)

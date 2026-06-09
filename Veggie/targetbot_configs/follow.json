@@ -1,0 +1,55 @@
+{
+  "looting": {
+    "items": [
+      {
+        "count": 1,
+        "id": 14247
+      },
+      {
+        "count": 1,
+        "id": 7404
+      }
+    ],
+    "maxDanger": 10,
+    "minCapacity": 100,
+    "containers": [
+      {
+        "count": 1,
+        "id": 2865
+      }
+    ],
+    "everyItem": false
+  },
+  "targeting": [
+    {
+      "lureDelay": 350,
+      "lureMin": 1,
+      "maxDistance": 10,
+      "anchorRange": 3,
+      "lureCount": 1,
+      "avoidAttacks": false,
+      "rePositionAmount": 5,
+      "lureMax": 5,
+      "rpSafe": false,
+      "chase": false,
+      "priority": 1,
+      "name": "*",
+      "keepDistance": false,
+      "keepDistanceRange": 5,
+      "danger": 1,
+      "dynamicLureDelay": true,
+      "delayFrom": 1,
+      "closeLure": false,
+      "faceMonster": false,
+      "lureCavebot": false,
+      "dontLoot": false,
+      "diamondArrows": false,
+      "lure": false,
+      "anchor": false,
+      "closeLureAmount": 3,
+      "rePosition": false,
+      "dynamicLure": true,
+      "regex": "^.*$"
+    }
+  ]
+}
