@@ -45,6 +45,7 @@ local luaFiles = {
   "hold_target",
   "bottools",
   "Open full BPs"
+
 }
 
 for i, file in ipairs(luaFiles) do
@@ -56,10 +57,13 @@ UI.Separator()
 UI.Label("Private Scripts:")
 UI.Separator()
 dofile("/vBot/autoImbue.lua")
+-- dofile("Terminal.lua")
 
 
-dofile("EquipCheck.lua")
+-- dofile("EquipCheck.lua")
 
-dofile("Stances.lua")
+-- dofile("Stances.lua")
 
-dofile("Waves.lua")
+-- dofile("Waves.lua")
+
+-- dofile("StowAll.lua")

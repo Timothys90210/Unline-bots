@@ -43,78 +43,6 @@
       },
       {
         "count": 1,
-        "id": 3079
-      },
-      {
-        "count": 1,
-        "id": 3392
-      },
-      {
-        "count": 1,
-        "id": 7383
-      },
-      {
-        "count": 1,
-        "id": 3420
-      },
-      {
-        "count": 1,
-        "id": 3414
-      },
-      {
-        "count": 1,
-        "id": 3063
-      },
-      {
-        "count": 1,
-        "id": 11657
-      },
-      {
-        "count": 1,
-        "id": 4033
-      },
-      {
-        "count": 1,
-        "id": 10385
-      },
-      {
-        "count": 1,
-        "id": 10390
-      },
-      {
-        "count": 1,
-        "id": 11651
-      },
-      {
-        "count": 1,
-        "id": 7404
-      },
-      {
-        "count": 1,
-        "id": 8057
-      },
-      {
-        "count": 1,
-        "id": 11691
-      },
-      {
-        "count": 1,
-        "id": 7427
-      },
-      {
-        "count": 1,
-        "id": 3554
-      },
-      {
-        "count": 1,
-        "id": 16160
-      },
-      {
-        "count": 1,
-        "id": 3391
-      },
-      {
-        "count": 1,
         "id": 3342
       },
       {
@@ -123,11 +51,27 @@
       },
       {
         "count": 1,
+        "id": 3420
+      },
+      {
+        "count": 1,
+        "id": 3063
+      },
+      {
+        "count": 1,
         "id": 3366
       },
       {
         "count": 1,
+        "id": 3392
+      },
+      {
+        "count": 1,
         "id": 3360
+      },
+      {
+        "count": 1,
+        "id": 3414
       },
       {
         "count": 1,
@@ -160,10 +104,6 @@
       {
         "count": 1,
         "id": 3019
-      },
-      {
-        "count": 1,
-        "id": 8895
       }
     ],
     "maxDanger": 10,
@@ -172,27 +112,35 @@
       {
         "count": 1,
         "id": 2865
+      },
+      {
+        "count": 1,
+        "id": 14249
+      },
+      {
+        "count": 1,
+        "id": 2871
       }
     ],
     "everyItem": false
   },
   "targeting": [
     {
-      "lureDelay": 250,
+      "lureDelay": 300,
       "lureMin": 1,
       "maxDistance": 10,
-      "anchorRange": 3,
+      "anchorRange": 6,
       "lureCount": 1,
       "avoidAttacks": false,
       "rePositionAmount": 5,
       "lureMax": 6,
       "regex": "^.*$",
       "chase": false,
-      "priority": 10,
+      "priority": 1,
       "keepDistance": false,
       "closeLure": false,
       "danger": 1,
-      "keepDistanceRange": 1,
+      "keepDistanceRange": 5,
       "lure": false,
       "dynamicLureDelay": true,
       "dynamicLure": true,
@@ -205,36 +153,6 @@
       "closeLureAmount": 3,
       "rePosition": false,
       "name": "*",
-      "rpSafe": false
-    },
-    {
-      "lureDelay": 250,
-      "lureMin": 1,
-      "maxDistance": 10,
-      "anchorRange": 3,
-      "lureCount": 1,
-      "avoidAttacks": false,
-      "rePositionAmount": 5,
-      "lureMax": 3,
-      "regex": "^blightwalker$",
-      "dynamicLureDelay": false,
-      "priority": 10,
-      "dynamicLure": false,
-      "keepDistance": false,
-      "danger": 1,
-      "chase": true,
-      "keepDistanceRange": 1,
-      "lure": false,
-      "closeLure": false,
-      "faceMonster": false,
-      "lureCavebot": false,
-      "dontLoot": true,
-      "diamondArrows": false,
-      "delayFrom": 2,
-      "anchor": false,
-      "closeLureAmount": 3,
-      "rePosition": false,
-      "name": "Blightwalker",
       "rpSafe": false
     }
   ]
